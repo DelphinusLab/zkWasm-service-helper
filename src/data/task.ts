@@ -4,7 +4,7 @@ import { ProvingTask, DeployTask } from "../Interface/task";
 import { QueryParams } from "../Interface/status";
 
 
-export async function loadStatus(endpoint: string, query: QueryParams) {
+export async function loadTasks(endpoint: string, query: QueryParams) {
     let headers = { 'Content-Type': 'application/json' };
     let queryJson = JSON.parse("{}");
     if (query.account != "") {
