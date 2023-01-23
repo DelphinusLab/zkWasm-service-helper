@@ -1,10 +1,10 @@
 #! /usr/bin/env node
 const taskObj = require('../dist/index.js');
+const yargs = require('yargs');
 
 console.log("AAA");
+console.log(yargs.argv);
 
-const args = process.argv.slice(2, process.argv.length);
-console.log(args);
 taskObj.sayHello();
 taskObj.sayGoodbye();
 
