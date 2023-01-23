@@ -1,0 +1,26 @@
+{
+  "name": "zkwasmservicehelper",
+  "version": "1.0.0",
+  "private": true,
+  "description": "helper lib to communicate with zkwasm service",
+  "dependencies": {
+    "axios": "^1.2.1",
+    "form-data": "^4.0.0",
+    "bn.js": "^5.1.1",
+    "servicehelper": "git+https://github.com/DelphinusLab/service-helper.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "npx tsc"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^18.11.17",
+    "@types/bn.js": "^5.1.1",
+    "typescript": "^4.3.4"
+  },
+  "bin": {
+    "zkwasm-service-helper": "bin/zkwasm-service-helper.js"
+  }
+}
