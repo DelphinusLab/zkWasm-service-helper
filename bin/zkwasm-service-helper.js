@@ -1,8 +1,7 @@
 #! /usr/bin/env node
-//import {sayHello, sayGoodbye} from "../dist/index";
+let a = require("../dist/cjs/index.js");
 
-//sayHello();
-//sayGoodbye();
+let b = new a.ZkWasmServiceHelper("", "", "");
 
 var { argv } = require("yargs")
   .scriptName("area")
@@ -30,5 +29,3 @@ var { argv } = require("yargs")
   .epilog("copyright 2019");
 
 console.log(argv);
-const { width, height } = argv;
-console.log(`The area is ${width * height}`);

@@ -1,72 +1,8 @@
 import axios from "axios";
 import FormData from "form-data";
-import BN from "bn.js";
-
-export function sayHello() {
-    console.log('hi')
-}
-export function sayGoodbye() {
-    console.log('goodbye')
-}
-
-
-export interface Task {
-   user_address: string;
-   md5: string;
-   task_type: string;
-   status: string;
-   proof: Uint8Array;
-   aux: Uint8Array;
-   instances: Uint8Array;
-   public_inputs: Array<string>;
-   private_inputs: Array<string>;
-   _id: any;
-}
-
-export interface ProvingTask {
-   user_address: string;
-   md5: string;
-   public_inputs: Array<string>;
-   private_inputs: Array<string>;
-}
-
-export interface DeployTask {
-   user_address: string;
-   md5: string;
-   chain_id: number;
-}
-
-export interface VerifyData {
-   proof: Array<BN>;
-   target_instances: Array<BN>;
-   aggregator_instances: Array<BN>;
-   aux_instances: Array<BN>; 
-}
-
-export interface StatusState {
-    tasks: Array<Task>,
-    loaded: boolean;
-}
-
-export interface QueryParams {
-    user_address: string;
-    md5: string;
-    id: string;
-    tasktype: string;
-    taskstatus: string;
-}
-
-export interface DeploymentInfo {
-    chain_id: number,
-    address: string,
-}
-
-export interface Image {
-    user_address: string,
-    md5: string,
-    deployment: Array<DeploymentInfo>
-}
-
+import { DeploymentInfo, Image } from "./interface/image";
+import { VerifyData, QueryParams, StatusState } from "./interface/status";
+import { Task, ProvingTask, DeployTask } from "./interface/task";
 export class ZkWasmServiceHelper {
     constructor(
         public endpoint: string,
@@ -142,16 +78,16 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
     async loadTasks(query: QueryParams) {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
-    
+
         //build query JSON
         let objKeys = Object.keys(query) as Array<keyof QueryParams>;
         objKeys.forEach((key) => {
-          if (query[key] != "") queryJson[key] = query[key];
+            if (query[key] != "") queryJson[key] = query[key];
         });
-    
+
         console.log("params:", query);
         console.log("json", queryJson);
-    
+
         let tasks = await this.invokeRequest("GET", `/tasks`, queryJson);
         console.log("loading task board!");
         return tasks;
