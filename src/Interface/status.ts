@@ -6,6 +6,9 @@ export interface StatusState {
 }
 
 export interface QueryParams {
-    account: string;
+    user_address: string;
     md5: string;
+    id: string;
+    tasktype: string;
+    taskstatus: string;
 }
