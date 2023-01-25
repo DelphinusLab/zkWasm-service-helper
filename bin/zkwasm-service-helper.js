@@ -1,7 +1,19 @@
 #! /usr/bin/env node
-let a = require("../dist/cjs/index.js");
+const fs = require("fs");
+const zkWasmHelper = require("../dist/cjs/index.js");
+const formdata = require("form-data");
 
-let b = new a.ZkWasmServiceHelper("", "", "");
+let formData = new formdata();
+let fileSelected = fs.readFileSync("/home/yyu/git/zkWASM-playground/client/arith.wasm");
+//let fileSelected  = new File("arith", "/home/yyu/git/zkWASM-playground/client/arith.wasm");
+
+formData.append("image", fileSelected, fileSelected.name);
+formData.append("user_address", "0x27990d2B01351dF3403c0A34A2dDdf98205f6d3d");
+
+const resturl = "http://127.0.0.1:8080"
+let b = new zkWasmHelper.ZkWasmServiceTaskHelper(resturl, "", "");
+b.addNewWasmImage(formData).then((_) => {console.log("use addNewWasmImage success!")});
+console.log("use zkwasmservicehelp success!");
 
 var { argv } = require("yargs")
   .scriptName("area")
