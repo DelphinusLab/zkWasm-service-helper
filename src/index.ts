@@ -1,17 +1,71 @@
 import axios from "axios";
 import FormData from "form-data";
+import BN from "bn.js";
 
-import { sayHello, sayGoodbye } from './hello';
+export function sayHello() {
+    console.log('hi')
+}
+export function sayGoodbye() {
+    console.log('goodbye')
+}
 
-import { Task, ProvingTask, DeployTask } from './Interface/task';
-import { StatusState, QueryParams } from './Interface/status';
-import { DeploymentInfo, Image } from './Interface/image';
-export {
-    sayHello, sayGoodbye,
-    Task, ProvingTask, DeployTask,
-    StatusState, QueryParams,
-    DeploymentInfo, Image
-};
+
+export interface Task {
+   user_address: string;
+   md5: string;
+   task_type: string;
+   status: string;
+   proof: Uint8Array;
+   aux: Uint8Array;
+   instances: Uint8Array;
+   public_inputs: Array<string>;
+   private_inputs: Array<string>;
+   _id: any;
+}
+
+export interface ProvingTask {
+   user_address: string;
+   md5: string;
+   public_inputs: Array<string>;
+   private_inputs: Array<string>;
+}
+
+export interface DeployTask {
+   user_address: string;
+   md5: string;
+   chain_id: number;
+}
+
+export interface VerifyData {
+   proof: Array<BN>;
+   target_instances: Array<BN>;
+   aggregator_instances: Array<BN>;
+   aux_instances: Array<BN>; 
+}
+
+export interface StatusState {
+    tasks: Array<Task>,
+    loaded: boolean;
+}
+
+export interface QueryParams {
+    user_address: string;
+    md5: string;
+    id: string;
+    tasktype: string;
+    taskstatus: string;
+}
+
+export interface DeploymentInfo {
+    chain_id: number,
+    address: string,
+}
+
+export interface Image {
+    user_address: string,
+    md5: string,
+    deployment: Array<DeploymentInfo>
+}
 
 export class ZkWasmServiceHelper {
     constructor(
