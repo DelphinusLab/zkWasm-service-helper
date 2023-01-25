@@ -1,4 +1,4 @@
-import { RestEndpoint } from "servicehelper";
+import axios from "axios";
 import FormData from "form-data";
 
 import { sayHello, sayGoodbye } from './hello';
@@ -14,10 +14,56 @@ export {
 };
 
 export class ZkWasmServiceHelper {
-    public endPoint: RestEndpoint;
+    constructor(
+        public endpoint: string,
+        public username: string,
+        public useraddress: string
+    ) { }
+    async prepareRequest(
+        method: "GET" | "POST",
+        url: string,
+        body: JSON | FormData | null,
+        headers?: {
+            [key: string]: string;
+        }
+    ) {
+        if (method === "GET") {
+            console.log(this.endpoint + url);
+            try {
+                let response = await axios.get(
+                    this.endpoint + url,
+                    body ? { params: body! } : {}
+                );
+                return response.data;
+            } catch (e: any) {
+                console.error(e);
+                throw Error("RestEndpointGetFailure");
+            }
+        } else {
+            try {
+                let response = await axios.post(
+                    this.endpoint + url,
+                    body ? body! : {},
+                    {
+                        headers: {
+                            ...headers,
+                        },
+                    }
+                );
+                return response.data;
+            } catch (e: any) {
+                console.log(e);
+                throw Error("RestEndpointPostFailure");
+            }
+        }
+    }
 
-    constructor(endpoint: string, username: string, useraddress: string) {
-        this.endPoint = new RestEndpoint(endpoint, username, useraddress);
+    async getJSONResponse(json: any) {
+        if (json["success"] !== true) {
+            console.error(json);
+            throw new Error("RequestError:" + json["error"]);
+        }
+        return json["result"];
     }
 
     async invokeRequest(
@@ -28,11 +74,9 @@ export class ZkWasmServiceHelper {
             [key: string]: string;
         }
     ) {
-
-        return await this.endPoint.invokeRequest(method, url, body, headers);
+        let response = await this.prepareRequest(method, url, body, headers);
+        return await this.getJSONResponse(response);
     }
-
-
 }
 
 export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
@@ -55,7 +99,7 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
         console.log("params:", query);
         console.log("json", queryJson);
 
-        const tasks = await this.endPoint.invokeRequest(
+        const tasks = await this.invokeRequest(
             "GET",
             "/tasks",
             queryJson
@@ -70,7 +114,7 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
         let headers = { 'Content-Type': 'multipart/form-data' };
         console.log("wait response", headers);
 
-        const response = await this.endPoint.invokeRequest(
+        const response = await this.invokeRequest(
             "POST",
             "/setup",
             formdata,
@@ -81,7 +125,7 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
     }
 
     async addProvingTask(task: ProvingTask) {
-        const response = await this.endPoint.invokeRequest(
+        const response = await this.invokeRequest(
             "POST",
             "/prove",
             JSON.parse(JSON.stringify(task))
@@ -94,7 +138,7 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
         task: DeployTask
     ) {
 
-        const response = await this.endPoint.invokeRequest(
+        const response = await this.invokeRequest(
             "POST",
             "/deploy",
             JSON.parse(JSON.stringify(task))
@@ -115,7 +159,7 @@ export class ZkWasmServiceImageHelper extends ZkWasmServiceHelper {
         let req = JSON.parse("{}");
         req["md5"] = md5;
 
-        const images = await this.endPoint.invokeRequest(
+        const images = await this.invokeRequest(
             "GET",
             "/image",
             req
@@ -128,7 +172,7 @@ export class ZkWasmServiceImageHelper extends ZkWasmServiceHelper {
         let req = JSON.parse("{}");
         req["md5"] = md5;
 
-        const images = await this.endPoint.invokeRequest(
+        const images = await this.invokeRequest(
             "GET",
             "/image",
             req

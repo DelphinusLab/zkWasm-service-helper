@@ -7,8 +7,7 @@
     "axios": "^1.2.1",
     "form-data": "^4.0.0",
     "bn.js": "^5.1.1",
-    "yargs": "17.6.2",
-    "servicehelper": "git+https://github.com/DelphinusLab/service-helper.git"
+    "yargs": "17.6.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
