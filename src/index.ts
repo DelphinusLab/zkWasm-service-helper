@@ -43,8 +43,16 @@ export interface VerifyData {
    aux_instances: Array<BN>; 
 }
 
+export interface Statistics {
+    totalImages: number;
+    totalProofs: number;
+    totalTasks: number;
+    totalDeployed: number;
+}
+
 export interface StatusState {
     tasks: Array<Task>,
+    statistics: Statistics,
     loaded: boolean;
 }
 
@@ -138,20 +146,36 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
         super(endpoint, useraddress, useraddress);
     }
 
+    async loadStatistics(): Promise<Statistics> {
+        let headers = { "Content-Type": "application/json" };
+        let queryJson = JSON.parse("{}");
+
+        let st = await this.invokeRequest("GET", `/statistics`, queryJson);
+        console.log("loading task board!");
+
+        return {
+            totalImages: st.total_images,
+            totalProofs: st.total_proofs,
+            totalTasks: st.total_tasks,
+            totalDeployed: st.total_deployed,
+        }
+    }
+
+
 
     async loadTasks(query: QueryParams) {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
-    
+
         //build query JSON
         let objKeys = Object.keys(query) as Array<keyof QueryParams>;
         objKeys.forEach((key) => {
           if (query[key] != "") queryJson[key] = query[key];
         });
-    
+
         console.log("params:", query);
         console.log("json", queryJson);
-    
+
         let tasks = await this.invokeRequest("GET", `/tasks`, queryJson);
         console.log("loading task board!");
         return tasks;
