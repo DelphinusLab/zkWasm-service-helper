@@ -12,6 +12,9 @@ export interface Task {
     public_inputs: Array<string>;
     private_inputs: Array<string>;
     _id: any;
+    submit_time: string;
+    process_started?: string;
+    process_finished?: string;
  }
  
  export interface ProvingTask {
