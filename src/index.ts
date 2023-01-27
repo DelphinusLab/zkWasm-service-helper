@@ -21,6 +21,9 @@ export interface Task {
    public_inputs: Array<string>;
    private_inputs: Array<string>;
    _id: any;
+   submit_time: Date;
+   process_started?: Date;
+   process_finished?: Date;
 }
 
 export interface ProvingTask {
