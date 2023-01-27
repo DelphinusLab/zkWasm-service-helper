@@ -66,7 +66,7 @@ export interface QueryParams {
   taskstatus: string;
   description_url: string;
   circuit_size: string;
-  icon_url: string;
+  avator_url: string;
 }
 
 export interface DeploymentInfo {
