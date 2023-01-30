@@ -163,20 +163,23 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
         return response;
     }
 
-    parseProvingTaskInput(rawInputs: string): boolean {
-        let parsedInputs = new Array();
-        for (var input of rawInputs) {
+    parseProvingTaskInput(rawInputs: string): Array<string> {
+        let inputs = rawInputs.split(" ");
+        let parsedInputs: Array<string> = [];
+        for (var input of inputs) {
             input = input.trim();
             if (input !== "") {
                 if (parseArg(input) != null) {
                     parsedInputs.push(input);
-                } else {
-                    console.log("parseProvingTaskInput failed: ", input);
-                    return false;
+                }
+                else {
+                    console.log("Failed to parse proving task input: ", input);
+                    throw new Error("Failed to parse proving task input: " + input);
                 }
             }
         }
-        return true;
+
+        return parsedInputs;     
     }
 
 
