@@ -1,7 +1,7 @@
 
-import {Task, ProvingTask, DeployTask, QueryParams, VerifyData, StatusState, DeploymentInfo, Image} from "./interface/interface";
+import {Task, ProvingTask, DeployTask, QueryParams, VerifyData, StatusState, DeploymentInfo, Image} from "./interface/interface.js";
 
-import {ZkWasmServiceHelper, ZkWasmServiceImageHelper, ZkWasmServiceTaskHelper, ZkWasmUtil} from "./helper/helper";
+import {ZkWasmServiceHelper, ZkWasmServiceImageHelper, ZkWasmServiceTaskHelper, ZkWasmUtil} from "./helper/helper.js";
 
 export {
     Task, ProvingTask, DeployTask, QueryParams, VerifyData, StatusState, DeploymentInfo, Image,
