@@ -7,3 +7,4 @@ export {
     Task, ProvingTask, DeployTask, QueryParams, VerifyData, StatusState, DeploymentInfo, Image,
     ZkWasmServiceHelper, ZkWasmServiceImageHelper, ZkWasmServiceTaskHelper, ZkWasmUtil
 };
+
