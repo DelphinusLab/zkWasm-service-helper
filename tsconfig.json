@@ -1,13 +1,8 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "module": "es6",
-    "moduleResolution": "node",
-    "target": "es2016",
-    "esModuleInterop": true,
-    "declaration": true,
-    "outDir": "./dist"
-  },
-  "include": [
-    "src/**/*"
-  ]
+    "module": "esnext",
+    "outDir": "dist/mjs",
+    "target": "esnext"
+  }
 }
