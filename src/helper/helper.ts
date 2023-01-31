@@ -2,7 +2,7 @@ import axios from "axios";
 import FormData from "form-data";
 import BN from "bn.js";
 
-import { QueryParams, ProvingTask, DeployTask } from "../interface/interface.js";
+import { QueryParams, ProvingTask, DeployTask, Statistics } from "../interface/interface.js";
 
 
 export class ZkWasmUtil {
@@ -19,13 +19,13 @@ export class ZkWasmUtil {
         let type = inputArray[1];
         let re1 = new RegExp(/^[0-9A-Fa-f]+$/); // hexdecimal
         let re2 = new RegExp(/^\d+$/); // decimal
-    
+
         // Check if value is a number
         if (!(re1.test(value.slice(2)) || re2.test(value))) {
             console.log("Error: input value is not an interger number");
             return null;
         }
-    
+
         // Convert value byte array
         if (type == "i64") {
             let v: BN;
@@ -120,6 +120,20 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
         super(endpoint, useraddress, useraddress);
     }
 
+    async loadStatistics(): Promise<Statistics> {
+        let headers = { "Content-Type": "application/json" };
+        let queryJson = JSON.parse("{}");
+
+        let st = await this.invokeRequest("GET", `/statistics`, queryJson);
+        console.log("loading task board!");
+
+        return {
+            totalImages: st.total_images,
+            totalProofs: st.total_proofs,
+            totalTasks: st.total_tasks,
+            totalDeployed: st.total_deployed,
+        }
+    }
 
     async loadTasks(query: QueryParams) {
         let headers = { "Content-Type": "application/json" };
@@ -181,7 +195,7 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
             }
         }
 
-        return parsedInputs;     
+        return parsedInputs;
     }
 
 
