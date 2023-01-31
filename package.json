@@ -1,5 +1,5 @@
 {
-  "name": "zkwasm-service-helper",
+  "name": "zkwasmservicehelper",
   "version": "1.0.0",
   "private": true,
   "description": "helper lib to communicate with zkwasm cloud service",
@@ -12,7 +12,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "npm run build",
-    "build": "npx tsc"
+    "build": "rm -fr dist/* && npx tsc"
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
