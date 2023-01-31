@@ -2,7 +2,7 @@ import axios from "axios";
 import FormData from "form-data";
 import BN from "bn.js";
 
-import { QueryParams, ProvingTask, DeployTask } from "../interface/interface.js";
+import { QueryParams, ProvingTask, DeployTask } from "../interface/interface";
 
 
 export class ZkWasmUtil {
