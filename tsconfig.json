@@ -19,9 +19,9 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"traceResolution": false,
-		"module": "CommonJS",
+		"module": "esnext",
     	"outDir": "dist",
-    	"target": "ESNext",
+    	"target": "esnext",
 		"types": [
 			"node"
 		]
