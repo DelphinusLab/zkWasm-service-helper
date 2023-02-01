@@ -2,7 +2,7 @@ import axios from "axios";
 import FormData from "form-data";
 import BN from "bn.js";
 
-import { QueryParams, ProvingTask, DeployTask, Statistics } from "../interface/interface.js";
+import { QueryParams, ProvingTask, DeployTask, Statistics, AddWasmImageTask } from "../interface/interface.js";
 
 
 export class ZkWasmUtil {
@@ -154,7 +154,14 @@ export class ZkWasmServiceTaskHelper extends ZkWasmServiceHelper {
     }
 
 
-    async addNewWasmImage(formdata: FormData) {
+    async addNewWasmImage(task: AddWasmImageTask) {
+        let formdata = new FormData();
+        formdata.append("image", task.image, task.name);
+        formdata.append("user_address", task.user_address);
+        formdata.append("description_url", task.description_url);
+        formdata.append("avator_url", task.avator_url);
+        formdata.append("circuit_size", task.circuit_size);
+
         console.log("wait response", formdata);
         let headers = { 'Content-Type': 'multipart/form-data' };
         console.log("wait response", headers);
