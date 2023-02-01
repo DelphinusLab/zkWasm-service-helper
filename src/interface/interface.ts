@@ -1,5 +1,6 @@
 
 import BN from "bn.js";
+import { FileChangeInfo } from "fs/promises";
 
 export interface Statistics {
     totalImages: number;
@@ -21,6 +22,15 @@ export interface Task {
     submit_time: string;
     process_started?: string;
     process_finished?: string;
+}
+
+export interface AddWasmImageTask {
+    name: string;
+    image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
+    user_address: string;
+    description_url: string;
+    avator_url: string;
+    circuit_size: number;
 }
 
 export interface ProvingTask {
