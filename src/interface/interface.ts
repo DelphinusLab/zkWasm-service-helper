@@ -26,7 +26,7 @@ export interface Task {
 
 export interface AddWasmImageTask {
     name: string;
-    image: Buffer;
+    image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
     user_address: string;
     description_url: string;
     avator_url: string;
