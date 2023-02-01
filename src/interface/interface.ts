@@ -26,7 +26,7 @@ export interface Task {
 
 export interface AddWasmImageTask {
     name: string;
-    image: ArrayBuffer;
+    image: Buffer;
     user_address: string;
     description_url: string;
     avator_url: string;
