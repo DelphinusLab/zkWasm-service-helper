@@ -1,4 +1,3 @@
-
 import BN from "bn.js";
 import { FileChangeInfo } from "fs/promises";
 
@@ -46,15 +45,12 @@ export interface DeployTask {
     chain_id: number;
 }
 
-
-
 export interface VerifyData {
     proof: Array<BN>;
     target_instances: Array<BN>;
     aggregator_instances: Array<BN>;
     aux_instances: Array<BN>;
 }
-
 
 export interface QueryParams {
     user_address: string;
@@ -65,17 +61,20 @@ export interface QueryParams {
 }
 
 export interface StatusState {
-    tasks: Array<Task>,
-    statistics: Statistics,
+    tasks: Array<Task>;
+    statistics: Statistics;
     loaded: boolean;
 }
 export interface DeploymentInfo {
-    chain_id: number,
-    address: string,
+    chain_id: number;
+    address: string;
 }
 
 export interface Image {
-    user_address: string,
-    md5: string,
-    deployment: Array<DeploymentInfo>
+    user_address: string;
+    md5: string;
+    deployment: Array<DeploymentInfo>;
+    description_url: string;
+    avator_url: string;
+    circuit_size: number;
 }
