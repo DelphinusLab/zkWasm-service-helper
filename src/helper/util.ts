@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import { Md5 } from "ts-md5";
 
 export class ZkWasmUtil {
     static hexToBNs(hexString: string): Array<BN> {
@@ -41,5 +42,9 @@ export class ZkWasmUtil {
             console.log("Unsupported input data type: %s", type);
             return null;
         }
+    }
+
+    static convertToMd5(value: string): string {
+        return Md5.hashStr(value);
     }
 }
