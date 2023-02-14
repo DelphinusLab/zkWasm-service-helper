@@ -25,7 +25,13 @@ export class ZkWasmServiceEndpoint {
                 return response.data;
             } catch (e: any) {
                 console.error(e);
-                throw Error("RestEndpointGetFailure");
+                return {
+                    success: false,
+                    error: {
+                        code: e.response.status,
+                        message: e.response.data,
+                    },
+                }
             }
         } else {
             try {
@@ -41,7 +47,14 @@ export class ZkWasmServiceEndpoint {
                 return response.data;
             } catch (e: any) {
                 console.log(e);
-                throw Error("RestEndpointPostFailure");
+                return {
+                    success: false,
+                    error: {
+                        code: e.response.status,
+                        message: e.response.data,
+                    },
+                }
+
             }
         }
     }
@@ -49,7 +62,7 @@ export class ZkWasmServiceEndpoint {
     async getJSONResponse(json: any) {
         if (json["success"] !== true) {
             console.error(json);
-            throw new Error("RequestError:" + json["error"]);
+            throw new Error(json["error"].message);
         }
         return json["result"];
     }
