@@ -29,7 +29,7 @@ export class ZkWasmServiceEndpoint {
                     success: false,
                     error: {
                         code: e.response.status,
-                        message: e.response.data,
+                        message: e.response.data ? e.response.data : e.message,
                     },
                 }
             }
@@ -51,7 +51,7 @@ export class ZkWasmServiceEndpoint {
                     success: false,
                     error: {
                         code: e.response.status,
-                        message: e.response.data,
+                        message: e.response.data ? e.response.data : e.message,
                     },
                 }
 
