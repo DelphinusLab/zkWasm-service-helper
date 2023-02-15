@@ -44,7 +44,11 @@ export class ZkWasmUtil {
         }
     }
 
-    static convertToMd5(value: string): string {
-        return Md5.hashStr(value);
+    static convertToMd5(value: Uint8Array): string {
+        let md5 = new Md5();
+        md5.appendByteArray(value);
+        let hash = md5.end();
+        if(!hash) return "";
+        return hash.toString();
     }
 }
