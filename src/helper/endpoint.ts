@@ -27,9 +27,12 @@ export class ZkWasmServiceEndpoint {
                 console.error(e);
                 return {
                     success: false,
-                    error: {
+                    error: e.response ? {
                         code: e.response.status,
-                        message: e.response.data ? e.response.data : e.message,
+                        message: e.response.data 
+                    } : {
+                        code: null,
+                        message: e.message,
                     },
                 }
             }
@@ -49,9 +52,12 @@ export class ZkWasmServiceEndpoint {
                 console.log(e);
                 return {
                     success: false,
-                    error: {
+                    error: e.response ? {
                         code: e.response.status,
-                        message: e.response.data ? e.response.data : e.message,
+                        message: e.response.data
+                    } : {
+                        code: null,
+                        message: e.message,
                     },
                 }
 
