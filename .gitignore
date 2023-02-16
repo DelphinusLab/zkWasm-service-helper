@@ -1,4 +1,3 @@
-/dist
 node_modules
 *.js
-!zkwasm-service-helper.js
+!/dist/**/*.js
