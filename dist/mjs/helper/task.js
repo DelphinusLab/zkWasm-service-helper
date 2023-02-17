@@ -41,6 +41,7 @@ export class ZkWasmServiceTaskHelper {
         formdata.append("description_url", task.description_url);
         formdata.append("avator_url", task.avator_url);
         formdata.append("circuit_size", task.circuit_size);
+        formdata.append("signature", task.signature);
         console.log("wait response", formdata);
         let headers = { 'Content-Type': 'multipart/form-data' };
         console.log("wait response", headers);

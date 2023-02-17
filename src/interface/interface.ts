@@ -30,6 +30,7 @@ export interface AddWasmImageTask {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    signature: string;
 }
 
 export interface ProvingTask {
@@ -37,12 +38,14 @@ export interface ProvingTask {
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    signature: string;
 }
 
 export interface DeployTask {
     user_address: string;
     md5: string;
     chain_id: number;
+    signature: string;
 }
 
 export interface VerifyData {
