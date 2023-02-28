@@ -20,24 +20,28 @@ export interface Task {
     process_started?: string;
     process_finished?: string;
 }
-export interface AddWasmImageTask {
+export interface AddImageParams {
     name: string;
     image: any;
+    md5: string;
     user_address: string;
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    signature: string;
 }
-export interface ProvingTask {
+export interface ProvingParams {
     user_address: string;
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    signature: string;
 }
-export interface DeployTask {
+export interface DeployParams {
     user_address: string;
     md5: string;
     chain_id: number;
+    signature: string;
 }
 export interface VerifyData {
     proof: Array<BN>;
@@ -51,6 +55,8 @@ export interface QueryParams {
     id: string;
     tasktype: string;
     taskstatus: string;
+    start?: number;
+    total?: number;
 }
 export interface StatusState {
     tasks: Array<Task>;
