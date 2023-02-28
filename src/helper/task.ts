@@ -1,6 +1,6 @@
 import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
-import { QueryParams, ProvingTask, DeployTask, Statistics, AddWasmImageTask } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js"
 
 export class ZkWasmServiceTaskHelper {
@@ -44,7 +44,7 @@ export class ZkWasmServiceTaskHelper {
     }
 
 
-    async addNewWasmImage(task: AddWasmImageTask) {
+    async addNewWasmImage(task: AddImageParams) {
         let formdata = new FormData();
         formdata.append("name", task.name);
         formdata.append("image", task.image);
@@ -68,7 +68,7 @@ export class ZkWasmServiceTaskHelper {
         return response;
     }
 
-    async addProvingTask(task: ProvingTask) {
+    async addProvingTask(task: ProvingParams) {
         const response = await this.endpoint.invokeRequest(
             "POST",
             "/prove",
@@ -99,7 +99,7 @@ export class ZkWasmServiceTaskHelper {
 
 
     async addDeployTask(
-        task: DeployTask
+        task: DeployParams
     ) {
 
         const response = await this.endpoint.invokeRequest(
@@ -111,5 +111,29 @@ export class ZkWasmServiceTaskHelper {
         return response;
 
     }
+
+    //this is form data 
+    createAddImageSignMessage(params: AddImageParams): string {
+        //sign all the fields except the image itself and signature
+        let message = "";
+        message += params.name;
+        message += params.md5;
+        message += params.user_address;
+        message += params.description_url;
+        message += params.avator_url;
+        message += params.circuit_size;
+        return message;
+    }
+
+    createProvingSignMessage(params: ProvingParams): string {
+        let {signature, ...rest} = params;
+        return JSON.stringify(rest);
+    }
+
+    createDeploySignMessage(params: DeployParams): string {
+        let {signature, ...rest} = params;
+        return JSON.stringify(rest);
+    }
+    
 
 }
