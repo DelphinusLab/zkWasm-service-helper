@@ -62,8 +62,8 @@ export interface QueryParams {
     id: string;
     tasktype: string;
     taskstatus: string;
-    start: number;
-    total: number;
+    start?: number;
+    total?: number;
 }
 
 export interface StatusState {
