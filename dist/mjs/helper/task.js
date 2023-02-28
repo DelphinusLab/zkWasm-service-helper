@@ -76,24 +76,4 @@ export class ZkWasmServiceTaskHelper {
         console.log("get addDeployTask response:", response.toString());
         return response;
     }
-    //this is form data 
-    createAddImageSignMessage(params) {
-        //sign all the fields except the image itself and signature
-        let message = "";
-        message += params.name;
-        message += params.md5;
-        message += params.user_address;
-        message += params.description_url;
-        message += params.avator_url;
-        message += params.circuit_size;
-        return message;
-    }
-    createProvingSignMessage(params) {
-        let { signature, ...rest } = params;
-        return JSON.stringify(rest);
-    }
-    createDeploySignMessage(params) {
-        let { signature, ...rest } = params;
-        return JSON.stringify(rest);
-    }
 }

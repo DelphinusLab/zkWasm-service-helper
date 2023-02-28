@@ -9,7 +9,4 @@ export declare class ZkWasmServiceTaskHelper {
     addProvingTask(task: ProvingParams): Promise<any>;
     parseProvingTaskInput(rawInputs: string): Array<string>;
     addDeployTask(task: DeployParams): Promise<any>;
-    createAddImageSignMessage(params: AddImageParams): string;
-    createProvingSignMessage(params: ProvingParams): string;
-    createDeploySignMessage(params: DeployParams): string;
 }

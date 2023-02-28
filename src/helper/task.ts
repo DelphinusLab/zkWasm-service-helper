@@ -112,28 +112,4 @@ export class ZkWasmServiceTaskHelper {
 
     }
 
-    //this is form data 
-    createAddImageSignMessage(params: AddImageParams): string {
-        //sign all the fields except the image itself and signature
-        let message = "";
-        message += params.name;
-        message += params.md5;
-        message += params.user_address;
-        message += params.description_url;
-        message += params.avator_url;
-        message += params.circuit_size;
-        return message;
-    }
-
-    createProvingSignMessage(params: ProvingParams): string {
-        let {signature, ...rest} = params;
-        return JSON.stringify(rest);
-    }
-
-    createDeploySignMessage(params: DeployParams): string {
-        let {signature, ...rest} = params;
-        return JSON.stringify(rest);
-    }
-    
-
 }
