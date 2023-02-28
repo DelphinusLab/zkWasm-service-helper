@@ -47,6 +47,7 @@ export class ZkWasmServiceTaskHelper {
     async addNewWasmImage(task: AddImageParams) {
         let formdata = new FormData();
         formdata.append("name", task.name);
+        formdata.append("md5", task.md5);
         formdata.append("image", task.image);
         formdata.append("user_address", task.user_address);
         formdata.append("description_url", task.description_url);
