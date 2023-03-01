@@ -56,7 +56,7 @@ export class ZkWasmUtil {
         //sign all the fields except the image itself and signature
         let message = "";
         message += params.name;
-        message += params.md5;
+        message += params.image_md5;
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;
@@ -64,11 +64,9 @@ export class ZkWasmUtil {
         return message;
     }
     static createProvingSignMessage(params) {
-        let { signature, ...rest } = params;
-        return JSON.stringify(rest);
+        return JSON.stringify(params);
     }
     static createDeploySignMessage(params) {
-        let { signature, ...rest } = params;
-        return JSON.stringify(rest);
+        return JSON.stringify(params);
     }
 }

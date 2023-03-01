@@ -1,6 +1,6 @@
 import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js"
 
 export class ZkWasmServiceTaskHelper {
@@ -44,10 +44,10 @@ export class ZkWasmServiceTaskHelper {
     }
 
 
-    async addNewWasmImage(task: AddImageParams) {
+    async addNewWasmImage(task: WithSignature<AddImageParams>) {
         let formdata = new FormData();
         formdata.append("name", task.name);
-        formdata.append("md5", task.md5);
+        formdata.append("md5", task.image_md5);
         formdata.append("image", task.image);
         formdata.append("user_address", task.user_address);
         formdata.append("description_url", task.description_url);
@@ -69,7 +69,7 @@ export class ZkWasmServiceTaskHelper {
         return response;
     }
 
-    async addProvingTask(task: ProvingParams) {
+    async addProvingTask(task: WithSignature<ProvingParams>) {
         const response = await this.endpoint.invokeRequest(
             "POST",
             "/prove",
@@ -100,7 +100,7 @@ export class ZkWasmServiceTaskHelper {
 
 
     async addDeployTask(
-        task: DeployParams
+        task: WithSignature<DeployParams>
     ) {
 
         const response = await this.endpoint.invokeRequest(

@@ -26,12 +26,11 @@ export interface Task {
 export interface AddImageParams {
     name: string;
     image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
-    md5: string;
+    image_md5: string;
     user_address: string;
     description_url: string;
     avator_url: string;
     circuit_size: number;
-    signature: string;
 }
 
 export interface ProvingParams {
@@ -39,15 +38,15 @@ export interface ProvingParams {
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
-    signature: string;
 }
 
 export interface DeployParams {
     user_address: string;
     md5: string;
     chain_id: number;
-    signature: string;
 }
+
+export type WithSignature<T> = T & { signature: string };
 
 export interface VerifyData {
     proof: Array<BN>;

@@ -55,7 +55,7 @@ class ZkWasmServiceTaskHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let formdata = new form_data_1.default();
             formdata.append("name", task.name);
-            formdata.append("md5", task.md5);
+            formdata.append("md5", task.image_md5);
             formdata.append("image", task.image);
             formdata.append("user_address", task.user_address);
             formdata.append("description_url", task.description_url);
