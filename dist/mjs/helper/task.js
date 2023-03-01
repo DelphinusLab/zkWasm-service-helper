@@ -36,11 +36,13 @@ export class ZkWasmServiceTaskHelper {
     async addNewWasmImage(task) {
         let formdata = new FormData();
         formdata.append("name", task.name);
+        formdata.append("md5", task.image_md5);
         formdata.append("image", task.image);
         formdata.append("user_address", task.user_address);
         formdata.append("description_url", task.description_url);
         formdata.append("avator_url", task.avator_url);
         formdata.append("circuit_size", task.circuit_size);
+        formdata.append("signature", task.signature);
         console.log("wait response", formdata);
         let headers = { 'Content-Type': 'multipart/form-data' };
         console.log("wait response", headers);

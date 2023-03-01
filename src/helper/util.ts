@@ -1,5 +1,6 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
+import { AddImageParams, ProvingParams, DeployParams } from "interface/interface";
 
 export class ZkWasmUtil {
     static hexToBNs(hexString: string): Array<BN> {
@@ -50,5 +51,26 @@ export class ZkWasmUtil {
         let hash = md5.end();
         if(!hash) return "";
         return hash.toString();
+    }
+
+     //this is form data 
+    static createAddImageSignMessage(params: AddImageParams): string {
+        //sign all the fields except the image itself and signature
+        let message = "";
+        message += params.name;
+        message += params.image_md5;
+        message += params.user_address;
+        message += params.description_url;
+        message += params.avator_url;
+        message += params.circuit_size;
+        return message;
+    }
+
+    static createProvingSignMessage(params: ProvingParams): string {
+        return JSON.stringify(params);
+    }
+
+    static createDeploySignMessage(params: DeployParams): string {
+        return JSON.stringify(params);
     }
 }

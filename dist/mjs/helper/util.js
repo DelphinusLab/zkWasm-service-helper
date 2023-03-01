@@ -51,4 +51,22 @@ export class ZkWasmUtil {
             return "";
         return hash.toString();
     }
+    //this is form data 
+    static createAddImageSignMessage(params) {
+        //sign all the fields except the image itself and signature
+        let message = "";
+        message += params.name;
+        message += params.image_md5;
+        message += params.user_address;
+        message += params.description_url;
+        message += params.avator_url;
+        message += params.circuit_size;
+        return message;
+    }
+    static createProvingSignMessage(params) {
+        return JSON.stringify(params);
+    }
+    static createDeploySignMessage(params) {
+        return JSON.stringify(params);
+    }
 }

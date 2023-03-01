@@ -1,6 +1,6 @@
 import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
-import { QueryParams, ProvingTask, DeployTask, Statistics, AddWasmImageTask } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js"
 
 export class ZkWasmServiceTaskHelper {
@@ -44,14 +44,16 @@ export class ZkWasmServiceTaskHelper {
     }
 
 
-    async addNewWasmImage(task: AddWasmImageTask) {
+    async addNewWasmImage(task: WithSignature<AddImageParams>) {
         let formdata = new FormData();
         formdata.append("name", task.name);
+        formdata.append("md5", task.image_md5);
         formdata.append("image", task.image);
         formdata.append("user_address", task.user_address);
         formdata.append("description_url", task.description_url);
         formdata.append("avator_url", task.avator_url);
         formdata.append("circuit_size", task.circuit_size);
+        formdata.append("signature", task.signature);
 
         console.log("wait response", formdata);
         let headers = { 'Content-Type': 'multipart/form-data' };
@@ -67,7 +69,7 @@ export class ZkWasmServiceTaskHelper {
         return response;
     }
 
-    async addProvingTask(task: ProvingTask) {
+    async addProvingTask(task: WithSignature<ProvingParams>) {
         const response = await this.endpoint.invokeRequest(
             "POST",
             "/prove",
@@ -98,7 +100,7 @@ export class ZkWasmServiceTaskHelper {
 
 
     async addDeployTask(
-        task: DeployTask
+        task: WithSignature<DeployParams>
     ) {
 
         const response = await this.endpoint.invokeRequest(
