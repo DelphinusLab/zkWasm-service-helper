@@ -83,3 +83,17 @@ export interface Image {
     avator_url: string;
     circuit_size: number;
 }
+
+export interface PaymentParams {
+    transaction_hash: string;
+}
+
+export interface UserQueryParams {
+    user_address: string;
+}
+
+export interface User {
+    user_address: string;
+    balance: BN;
+    //TODO: add more info for a user such as images, tasks, transactions
+}
