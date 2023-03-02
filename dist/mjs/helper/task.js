@@ -1,10 +1,17 @@
 import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
-export class ZkWasmServiceTaskHelper {
+export class ZkWasmServiceHelper {
     endpoint;
     constructor(endpoint, username, useraddress) {
         this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress);
+    }
+    async queryImage(md5) {
+        let req = JSON.parse("{}");
+        req["md5"] = md5;
+        const images = await this.endpoint.invokeRequest("GET", "/image", req);
+        console.log("get queryImage response.");
+        return images[0];
     }
     async loadStatistics() {
         let headers = { "Content-Type": "application/json" };

@@ -3,11 +3,24 @@ import { ZkWasmUtil } from "./util.js";
 import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js"
 
-export class ZkWasmServiceTaskHelper {
+export class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
 
     constructor(endpoint: string, username: string, useraddress: string) {
         this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress);
+    }
+
+    async queryImage(md5: string) {
+        let req = JSON.parse("{}");
+        req["md5"] = md5;
+
+        const images = await this.endpoint.invokeRequest(
+            "GET",
+            "/image",
+            req
+        );
+        console.log("get queryImage response.");
+        return images[0]!;
     }
 
     async loadStatistics(): Promise<Statistics> {

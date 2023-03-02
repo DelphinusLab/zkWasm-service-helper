@@ -12,13 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZkWasmServiceTaskHelper = void 0;
+exports.ZkWasmServiceHelper = void 0;
 const form_data_1 = __importDefault(require("form-data"));
 const util_js_1 = require("./util.js");
 const endpoint_js_1 = require("./endpoint.js");
-class ZkWasmServiceTaskHelper {
+class ZkWasmServiceHelper {
     constructor(endpoint, username, useraddress) {
         this.endpoint = new endpoint_js_1.ZkWasmServiceEndpoint(endpoint, username, useraddress);
+    }
+    queryImage(md5) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let req = JSON.parse("{}");
+            req["md5"] = md5;
+            const images = yield this.endpoint.invokeRequest("GET", "/image", req);
+            console.log("get queryImage response.");
+            return images[0];
+        });
     }
     loadStatistics() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -102,4 +111,4 @@ class ZkWasmServiceTaskHelper {
         });
     }
 }
-exports.ZkWasmServiceTaskHelper = ZkWasmServiceTaskHelper;
+exports.ZkWasmServiceHelper = ZkWasmServiceHelper;
