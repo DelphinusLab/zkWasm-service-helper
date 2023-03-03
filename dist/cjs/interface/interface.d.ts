@@ -83,5 +83,5 @@ export interface UserQueryParams {
 }
 export interface User {
     user_address: string;
-    balance: BN;
+    balance: Uint8Array;
 }

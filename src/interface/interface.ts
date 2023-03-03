@@ -94,6 +94,6 @@ export interface UserQueryParams {
 
 export interface User {
     user_address: string;
-    balance: BN;
+    balance: Uint8Array;
     //TODO: add more info for a user such as images, tasks, transactions
 }
