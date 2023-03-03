@@ -13,6 +13,13 @@ export class ZkWasmServiceHelper {
         console.log("get queryImage response.");
         return images[0];
     }
+    async queryUser(user_query) {
+        let req = JSON.parse("{}");
+        req["user_address"] = user_query.user_address;
+        const user = await this.endpoint.invokeRequest("GET", "/user", req);
+        console.log("get queryUser response.");
+        return user;
+    }
     async loadStatistics() {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
@@ -39,6 +46,11 @@ export class ZkWasmServiceHelper {
         let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
         console.log("loading task board!");
         return tasks;
+    }
+    async addPayment(payRequest) {
+        const response = await this.endpoint.invokeRequest("POST", "/pay", JSON.parse(JSON.stringify(payRequest)));
+        console.log("get addPayment response:", response.toString());
+        return response;
     }
     async addNewWasmImage(task) {
         let formdata = new FormData();

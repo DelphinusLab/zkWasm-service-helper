@@ -29,6 +29,15 @@ class ZkWasmServiceHelper {
             return images[0];
         });
     }
+    queryUser(user_query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let req = JSON.parse("{}");
+            req["user_address"] = user_query.user_address;
+            const user = yield this.endpoint.invokeRequest("GET", "/user", req);
+            console.log("get queryUser response.");
+            return user;
+        });
+    }
     loadStatistics() {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
@@ -58,6 +67,13 @@ class ZkWasmServiceHelper {
             let tasks = yield this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
             console.log("loading task board!");
             return tasks;
+        });
+    }
+    addPayment(payRequest) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.endpoint.invokeRequest("POST", "/pay", JSON.parse(JSON.stringify(payRequest)));
+            console.log("get addPayment response:", response.toString());
+            return response;
         });
     }
     addNewWasmImage(task) {
