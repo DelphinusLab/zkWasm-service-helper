@@ -20,6 +20,13 @@ export class ZkWasmServiceHelper {
         console.log("get queryUser response.");
         return user;
     }
+    async queryTxHistory(history_query) {
+        let req = JSON.parse("{}");
+        req["user_address"] = history_query.user_address;
+        const user = await this.endpoint.invokeRequest("GET", "/transactions", req);
+        console.log("get queryTxHistory response.");
+        return user;
+    }
     async loadStatistics() {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");

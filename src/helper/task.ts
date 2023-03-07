@@ -1,6 +1,6 @@
 import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js"
 
 export class ZkWasmServiceHelper {
@@ -33,6 +33,19 @@ export class ZkWasmServiceHelper {
             req
         );
         console.log("get queryUser response.");
+        return user;
+    }
+
+    async queryTxHistory(history_query: TxHistoryQueryParams) {
+        let req = JSON.parse("{}");
+        req["user_address"] = history_query.user_address;
+
+        const user = await this.endpoint.invokeRequest(
+            "GET",
+            "/transactions",
+            req
+        );
+        console.log("get queryTxHistory response.");
         return user;
     }
 
