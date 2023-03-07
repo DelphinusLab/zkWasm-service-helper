@@ -81,7 +81,21 @@ export interface PaymentParams {
 export interface UserQueryParams {
     user_address: string;
 }
+export interface TxHistoryQueryParams {
+    user_address: string;
+    start?: number;
+    total?: number;
+}
 export interface User {
     user_address: string;
     balance: Uint8Array;
+}
+export interface TransactionInfo {
+    txhash: string;
+    value: Uint8Array;
+    user_address: string;
+}
+export interface TxHistory {
+    tx_history: Array<TransactionInfo>;
+    total: number;
 }
