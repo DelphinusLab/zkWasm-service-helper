@@ -62,6 +62,7 @@ export interface StatusState {
     tasks: Array<Task>;
     statistics: Statistics;
     loaded: boolean;
+    config: AppConfig;
 }
 export interface AppConfig {
     receiver_address: string;
