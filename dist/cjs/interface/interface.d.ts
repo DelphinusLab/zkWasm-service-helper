@@ -68,7 +68,9 @@ export interface AppConfig {
     receiver_address: string;
     deployer_address: string;
     task_fee_list: {
-        [key: string]: string;
+        setup_fee: string;
+        prove_fee: string;
+        deploy_fee: string;
     };
 }
 export interface DeploymentInfo {
