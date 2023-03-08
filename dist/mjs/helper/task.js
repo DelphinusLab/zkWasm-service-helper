@@ -27,6 +27,11 @@ export class ZkWasmServiceHelper {
         console.log("get queryTxHistory response.");
         return user;
     }
+    async queryConfig() {
+        const config = await this.endpoint.invokeRequest("GET", "/config", JSON.parse("{}"));
+        console.log("get queryConfig response.");
+        return config;
+    }
     async loadStatistics() {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");

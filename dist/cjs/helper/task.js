@@ -47,6 +47,13 @@ class ZkWasmServiceHelper {
             return user;
         });
     }
+    queryConfig() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const config = yield this.endpoint.invokeRequest("GET", "/config", JSON.parse("{}"));
+            console.log("get queryConfig response.");
+            return config;
+        });
+    }
     loadStatistics() {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };

@@ -49,6 +49,16 @@ export class ZkWasmServiceHelper {
         return user;
     }
 
+    async queryConfig() {
+        const config = await this.endpoint.invokeRequest(
+            "GET",
+            "/config",
+            JSON.parse("{}")
+        );
+        console.log("get queryConfig response.");
+        return config;
+    }
+
     async loadStatistics(): Promise<Statistics> {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");

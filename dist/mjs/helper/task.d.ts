@@ -6,6 +6,7 @@ export declare class ZkWasmServiceHelper {
     queryImage(md5: string): Promise<any>;
     queryUser(user_query: UserQueryParams): Promise<any>;
     queryTxHistory(history_query: TxHistoryQueryParams): Promise<any>;
+    queryConfig(): Promise<any>;
     loadStatistics(): Promise<Statistics>;
     loadTasks(query: QueryParams): Promise<any>;
     addPayment(payRequest: PaymentParams): Promise<any>;

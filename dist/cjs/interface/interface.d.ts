@@ -63,6 +63,13 @@ export interface StatusState {
     statistics: Statistics;
     loaded: boolean;
 }
+export interface AppConfig {
+    receiver_address: string;
+    deployer_address: string;
+    task_fee_list: {
+        [key: string]: string;
+    };
+}
 export interface DeploymentInfo {
     chain_id: number;
     address: string;
