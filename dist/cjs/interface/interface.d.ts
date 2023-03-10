@@ -104,6 +104,7 @@ export interface TransactionInfo {
     txhash: string;
     value: Uint8Array;
     user_address: string;
+    receiver_address: string;
 }
 export interface TxHistory {
     tx_history: Array<TransactionInfo>;
