@@ -97,7 +97,7 @@ export interface Image {
 }
 
 export interface PaymentParams {
-    transaction_hash: string;
+    txhash: string;
 }
 
 export interface UserQueryParams {

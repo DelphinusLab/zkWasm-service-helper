@@ -86,7 +86,7 @@ export interface Image {
     circuit_size: number;
 }
 export interface PaymentParams {
-    transaction_hash: string;
+    txhash: string;
 }
 export interface UserQueryParams {
     user_address: string;
