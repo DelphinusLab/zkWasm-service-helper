@@ -1,6 +1,6 @@
 import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js"
 
 export class ZkWasmServiceHelper {
@@ -21,6 +21,42 @@ export class ZkWasmServiceHelper {
         );
         console.log("get queryImage response.");
         return images[0]!;
+    }
+
+    async queryUser(user_query: UserQueryParams) {
+        let req = JSON.parse("{}");
+        req["user_address"] = user_query.user_address;
+
+        const user = await this.endpoint.invokeRequest(
+            "GET",
+            "/user",
+            req
+        );
+        console.log("get queryUser response.");
+        return user;
+    }
+
+    async queryTxHistory(history_query: TxHistoryQueryParams) {
+        let req = JSON.parse("{}");
+        req["user_address"] = history_query.user_address;
+
+        const user = await this.endpoint.invokeRequest(
+            "GET",
+            "/transactions",
+            req
+        );
+        console.log("get queryTxHistory response.");
+        return user;
+    }
+
+    async queryConfig() {
+        const config = await this.endpoint.invokeRequest(
+            "GET",
+            "/config",
+            JSON.parse("{}")
+        );
+        console.log("get queryConfig response.");
+        return config;
     }
 
     async loadStatistics(): Promise<Statistics> {
@@ -54,6 +90,16 @@ export class ZkWasmServiceHelper {
         let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
         console.log("loading task board!");
         return tasks;
+    }
+
+    async addPayment(payRequest: PaymentParams){
+        const response = await this.endpoint.invokeRequest(
+            "POST",
+            "/pay",
+            JSON.parse(JSON.stringify(payRequest))
+        );
+        console.log("get addPayment response:", response.toString());
+        return response;
     }
 
 
