@@ -21,6 +21,7 @@ export interface Task {
     submit_time: string;
     process_started?: string;
     process_finished?: string;
+    task_fee?: Uint8Array;
 }
 
 export interface AddImageParams {
