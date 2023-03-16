@@ -19,6 +19,7 @@ export interface Task {
     submit_time: string;
     process_started?: string;
     process_finished?: string;
+    task_fee?: Uint8Array;
 }
 export interface AddImageParams {
     name: string;
@@ -62,6 +63,16 @@ export interface StatusState {
     tasks: Array<Task>;
     statistics: Statistics;
     loaded: boolean;
+    config: AppConfig;
+}
+export interface AppConfig {
+    receiver_address: string;
+    deployer_address: string;
+    task_fee_list: {
+        setup_fee: string;
+        prove_fee: string;
+        deploy_fee: string;
+    };
 }
 export interface DeploymentInfo {
     chain_id: number;
@@ -74,4 +85,29 @@ export interface Image {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+}
+export interface PaymentParams {
+    txhash: string;
+}
+export interface UserQueryParams {
+    user_address: string;
+}
+export interface TxHistoryQueryParams {
+    user_address: string;
+    start?: number;
+    total?: number;
+}
+export interface User {
+    user_address: string;
+    balance: Uint8Array;
+}
+export interface TransactionInfo {
+    txhash: string;
+    value: Uint8Array;
+    user_address: string;
+    receiver_address: string;
+}
+export interface TxHistory {
+    tx_history: Array<TransactionInfo>;
+    total: number;
 }
