@@ -19,7 +19,7 @@ export interface Task {
     submit_time: string;
     process_started?: string;
     process_finished?: string;
-    task_fee?: Uint8Array;
+    task_fee?: string;
 }
 export interface AddImageParams {
     name: string;
@@ -73,6 +73,12 @@ export interface AppConfig {
         prove_fee: string;
         deploy_fee: string;
     };
+    chain_configs: Array<ChainInfo>;
+}
+export interface ChainInfo {
+    chain_id: number;
+    chain_name: string;
+    block_explorer_url: string;
 }
 export interface DeploymentInfo {
     chain_id: number;
@@ -85,6 +91,7 @@ export interface Image {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    status: string;
 }
 export interface PaymentParams {
     txhash: string;
