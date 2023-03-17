@@ -73,7 +73,7 @@ export interface AppConfig {
         prove_fee: string;
         deploy_fee: string;
     };
-    chain_configs: Array<ChainInfo>;
+    chain_info_list: Array<ChainInfo>;
 }
 export interface ChainInfo {
     chain_id: number;

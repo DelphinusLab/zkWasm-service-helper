@@ -21,7 +21,7 @@ export interface Task {
     submit_time: string;
     process_started?: string;
     process_finished?: string;
-    task_fee?: string;
+    task_fee?: Uint8Array;
 }
 
 export interface AddImageParams {
@@ -81,7 +81,7 @@ export interface AppConfig {
         prove_fee: string;
         deploy_fee: string;
     },
-    chain_configs: Array<ChainInfo>;
+    chain_info_list: Array<ChainInfo>;
 }
 
 export interface ChainInfo {
