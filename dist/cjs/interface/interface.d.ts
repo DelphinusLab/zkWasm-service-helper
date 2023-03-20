@@ -71,7 +71,6 @@ export interface AppConfig {
     task_fee_list: {
         setup_fee: string;
         prove_fee: string;
-        deploy_fee: string;
     };
     chain_info_list: Array<ChainInfo>;
 }
@@ -79,6 +78,7 @@ export interface ChainInfo {
     chain_id: number;
     chain_name: string;
     block_explorer_url: string;
+    deploy_fee: string;
 }
 export interface DeploymentInfo {
     chain_id: number;
