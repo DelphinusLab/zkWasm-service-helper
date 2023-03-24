@@ -21,6 +21,10 @@ export interface Task {
     process_finished?: string;
     task_fee?: Uint8Array;
 }
+export interface PaginationResult<T> {
+    data: T;
+    total: number;
+}
 export interface AddImageParams {
     name: string;
     image: any;

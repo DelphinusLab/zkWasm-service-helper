@@ -24,6 +24,11 @@ export interface Task {
     task_fee?: Uint8Array;
 }
 
+export interface PaginationResult<T> {
+    data: T
+    total: number;
+}
+
 export interface AddImageParams {
     name: string;
     image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
