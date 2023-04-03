@@ -135,8 +135,3 @@ export interface TransactionInfo {
     user_address: string;
     receiver_address: string;
 }
-
-export interface TxHistory {
-    tx_history: Array<TransactionInfo>;
-    total: number;
-}
