@@ -21,6 +21,10 @@ export interface Task {
     process_finished?: string;
     task_fee?: Uint8Array;
 }
+export interface PaginationResult<T> {
+    data: T;
+    total: number;
+}
 export interface AddImageParams {
     name: string;
     image: any;
@@ -113,8 +117,4 @@ export interface TransactionInfo {
     value: Uint8Array;
     user_address: string;
     receiver_address: string;
-}
-export interface TxHistory {
-    tx_history: Array<TransactionInfo>;
-    total: number;
 }
