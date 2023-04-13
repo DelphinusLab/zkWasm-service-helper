@@ -20,6 +20,7 @@ export interface Task {
     process_started?: string;
     process_finished?: string;
     task_fee?: Uint8Array;
+    status_message?: string;
 }
 export interface PaginationResult<T> {
     data: T;
