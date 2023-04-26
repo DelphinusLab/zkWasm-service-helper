@@ -23,6 +23,7 @@ export interface Task {
   process_finished?: string;
   task_fee?: Uint8Array;
   status_message?: string;
+  internal_message?: string;
 }
 
 export interface PaginationResult<T> {
