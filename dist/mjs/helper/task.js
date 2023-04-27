@@ -59,6 +59,11 @@ export class ZkWasmServiceHelper {
         console.log("loading task board!");
         return tasks;
     }
+    async queryLogs(query) {
+        let logs = await this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)));
+        console.log("loading logs!");
+        return logs;
+    }
     async addPayment(payRequest) {
         const response = await this.endpoint.invokeRequest("POST", "/pay", JSON.parse(JSON.stringify(payRequest)));
         console.log("get addPayment response:", response.toString());
@@ -75,7 +80,7 @@ export class ZkWasmServiceHelper {
         formdata.append("circuit_size", task.circuit_size);
         formdata.append("signature", task.signature);
         console.log("wait response", formdata);
-        let headers = { 'Content-Type': 'multipart/form-data' };
+        let headers = { "Content-Type": "multipart/form-data" };
         console.log("wait response", headers);
         const response = await this.endpoint.invokeRequest("POST", "/setup", formdata, headers);
         console.log("get addNewWasmImage response:", response.toString());

@@ -9,6 +9,7 @@ export declare class ZkWasmServiceHelper {
     queryConfig(): Promise<any>;
     loadStatistics(): Promise<Statistics>;
     loadTasks(query: QueryParams): Promise<any>;
+    queryLogs(query: WithSignature<QueryParams>): Promise<any>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
     addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
