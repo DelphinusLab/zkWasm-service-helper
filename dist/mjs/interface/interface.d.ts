@@ -65,6 +65,10 @@ export interface QueryParams {
     start?: number;
     total?: number;
 }
+export interface LogQuery {
+    id: string;
+    user_address: string;
+}
 export interface StatusState {
     tasks: Array<Task>;
     statistics: Statistics;
