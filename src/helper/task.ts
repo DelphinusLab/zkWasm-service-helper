@@ -10,6 +10,7 @@ import {
   UserQueryParams,
   PaymentParams,
   TxHistoryQueryParams,
+  LogQuery,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 
@@ -90,7 +91,7 @@ export class ZkWasmServiceHelper {
     return tasks;
   }
 
-  async queryLogs(query: WithSignature<QueryParams>) {
+  async queryLogs(query: WithSignature<LogQuery>) {
     let logs = await this.endpoint.invokeRequest(
       "GET",
       `/logs`,
