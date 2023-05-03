@@ -23,6 +23,7 @@ export interface Task {
   process_finished?: string;
   task_fee?: Uint8Array;
   status_message?: string;
+  internal_message?: string;
 }
 
 export interface PaginationResult<T> {
@@ -70,6 +71,11 @@ export interface QueryParams {
   taskstatus: string;
   start?: number;
   total?: number;
+}
+
+export interface LogQuery {
+  id: string;
+  user_address: string;
 }
 
 export interface StatusState {

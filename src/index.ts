@@ -17,6 +17,7 @@ import {
   TransactionInfo,
   AppConfig,
   PaginationResult,
+  LogQuery,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -45,4 +46,5 @@ export {
   TransactionInfo,
   AppConfig,
   PaginationResult,
+  LogQuery,
 };

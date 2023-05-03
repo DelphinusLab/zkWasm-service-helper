@@ -85,6 +85,13 @@ class ZkWasmServiceHelper {
             return tasks;
         });
     }
+    queryLogs(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let logs = yield this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)));
+            console.log("loading logs!");
+            return logs;
+        });
+    }
     addPayment(payRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.endpoint.invokeRequest("POST", "/pay", JSON.parse(JSON.stringify(payRequest)));
@@ -104,7 +111,7 @@ class ZkWasmServiceHelper {
             formdata.append("circuit_size", task.circuit_size);
             formdata.append("signature", task.signature);
             console.log("wait response", formdata);
-            let headers = { 'Content-Type': 'multipart/form-data' };
+            let headers = { "Content-Type": "multipart/form-data" };
             console.log("wait response", headers);
             const response = yield this.endpoint.invokeRequest("POST", "/setup", formdata, headers);
             console.log("get addNewWasmImage response:", response.toString());
