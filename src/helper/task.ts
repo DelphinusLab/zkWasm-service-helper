@@ -11,6 +11,7 @@ import {
   PaymentParams,
   TxHistoryQueryParams,
   LogQuery,
+  ResetImageParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 
@@ -171,6 +172,16 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(task))
     );
     console.log("get addDeployTask response:", response.toString());
+    return response;
+  }
+
+  async addResetTask(task: WithSignature<ResetImageParams>) {
+    const response = await this.endpoint.invokeRequest(
+      "POST",
+      "/reset",
+      JSON.parse(JSON.stringify(task))
+    );
+    console.log("get addResetTask response:", response.toString());
     return response;
   }
 }

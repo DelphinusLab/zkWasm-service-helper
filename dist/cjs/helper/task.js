@@ -149,5 +149,12 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
+    addResetTask(task) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)));
+            console.log("get addResetTask response:", response.toString());
+            return response;
+        });
+    }
 }
 exports.ZkWasmServiceHelper = ZkWasmServiceHelper;

@@ -9,7 +9,7 @@ export interface Task {
     user_address: string;
     md5: string;
     task_type: string;
-    status: string;
+    status: TaskStatus;
     proof: Uint8Array;
     aux: Uint8Array;
     instances: Uint8Array;
@@ -23,6 +23,7 @@ export interface Task {
     status_message?: string;
     internal_message?: string;
 }
+export type TaskStatus = "pending" | "processing" | "done" | "fail" | "stale";
 export interface PaginationResult<T> {
     data: T;
     total: number;
@@ -46,6 +47,11 @@ export interface DeployParams {
     user_address: string;
     md5: string;
     chain_id: number;
+}
+export interface ResetImageParams {
+    md5: string;
+    circuit_size: number;
+    user_address: string;
 }
 export type WithSignature<T> = T & {
     signature: string;

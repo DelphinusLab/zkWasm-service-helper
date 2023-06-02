@@ -113,4 +113,9 @@ export class ZkWasmServiceHelper {
         console.log("get addDeployTask response:", response.toString());
         return response;
     }
+    async addResetTask(task) {
+        const response = await this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)));
+        console.log("get addResetTask response:", response.toString());
+        return response;
+    }
 }

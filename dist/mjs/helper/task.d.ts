@@ -1,4 +1,4 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -15,4 +15,5 @@ export declare class ZkWasmServiceHelper {
     addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
     parseProvingTaskInput(rawInputs: string): Array<string>;
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
+    addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
 }
