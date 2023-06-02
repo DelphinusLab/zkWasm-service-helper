@@ -25,7 +25,7 @@ export interface Task {
   internal_message?: string;
 }
 
-export type TaskStatus = "pending" | "processing" | "done" | "fail" | "stale";
+export type TaskStatus = "Pending" | "Processing" | "Done" | "Fail" | "Stale";
 
 export interface PaginationResult<T> {
   data: T;
