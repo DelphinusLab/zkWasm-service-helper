@@ -17,6 +17,7 @@ import {
   TransactionInfo,
   AppConfig,
   PaginationResult,
+  ResetImageParams,
   LogQuery,
 } from "./interface/interface.js";
 
@@ -44,6 +45,7 @@ export {
   PaymentParams,
   TxHistoryQueryParams,
   TransactionInfo,
+  ResetImageParams,
   AppConfig,
   PaginationResult,
   LogQuery,
