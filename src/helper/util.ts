@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
-import { AddImageParams, ProvingParams, DeployParams } from "interface/interface";
+import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams } from "interface/interface";
 
 export class ZkWasmUtil {
     static hexToBNs(hexString: string): Array<BN> {
@@ -71,6 +71,14 @@ export class ZkWasmUtil {
     }
 
     static createDeploySignMessage(params: DeployParams): string {
+        return JSON.stringify(params);
+    }
+
+    static createResetImageMessage(params: ResetImageParams): string {
+        return JSON.stringify(params);
+    }
+
+    static createModifyImageMessage(params: ModifyImageParams): string {
         return JSON.stringify(params);
     }
 }

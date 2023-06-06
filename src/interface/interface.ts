@@ -61,6 +61,13 @@ export interface ResetImageParams {
   user_address: string;
 }
 
+export interface ModifyImageParams {
+  md5: string;
+  user_address: string;
+  description_url: string;
+  avator_url: string;
+}
+
 export type WithSignature<T> = T & { signature: string };
 
 export interface VerifyData {

@@ -69,4 +69,10 @@ export class ZkWasmUtil {
     static createDeploySignMessage(params) {
         return JSON.stringify(params);
     }
+    static createResetImageMessage(params) {
+        return JSON.stringify(params);
+    }
+    static createModifyImageMessage(params) {
+        return JSON.stringify(params);
+    }
 }

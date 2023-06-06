@@ -19,6 +19,7 @@ import {
   PaginationResult,
   ResetImageParams,
   LogQuery,
+  ModifyImageParams,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -49,4 +50,5 @@ export {
   AppConfig,
   PaginationResult,
   LogQuery,
+  ModifyImageParams,
 };
