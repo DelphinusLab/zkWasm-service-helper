@@ -44,6 +44,9 @@ export class ZkWasmUtil {
             return null;
         }
     }
+    static parseArgs(public_inputs: string[]) : (BN | null)[] {
+        return public_inputs.map(input => ZkWasmUtil.parseArg(input.trim())).flat();
+    }
 
     static convertToMd5(value: Uint8Array): string {
         let md5 = new Md5();
