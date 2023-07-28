@@ -13,6 +13,7 @@ export interface Task {
   status: TaskStatus;
   proof: Uint8Array;
   aux: Uint8Array;
+  batch_instances: Uint8Array;
   instances: Uint8Array;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
