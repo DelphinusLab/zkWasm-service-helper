@@ -8,9 +8,9 @@ const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
 class ZkWasmUtil {
     static hexToBNs(hexString) {
-        let bytes = new Array(hexString.length / 2);
-        for (var i = 0; i < hexString.length; i += 2) {
-            bytes[i] = new bn_js_1.default(hexString.slice(i, i + 2), 16);
+        let bytes = new Array(Math.ceil(hexString.length / 16));
+        for (var i = 0; i < hexString.length; i += 16) {
+            bytes[i] = new bn_js_1.default(hexString.slice(i, Math.min(i + 16, hexString.length)), 16);
         }
         return bytes;
     }
