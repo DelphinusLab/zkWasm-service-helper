@@ -2,9 +2,9 @@ import BN from "bn.js";
 import { Md5 } from "ts-md5";
 export class ZkWasmUtil {
     static hexToBNs(hexString) {
-        let bytes = new Array(hexString.length / 2);
-        for (var i = 0; i < hexString.length; i += 2) {
-            bytes[i] = new BN(hexString.slice(i, i + 2), 16);
+        let bytes = new Array(Math.ceil(hexString.length / 16));
+        for (var i = 0; i < hexString.length; i += 16) {
+            bytes[i] = new BN(hexString.slice(i, Math.min(i + 16, hexString.length)), 16);
         }
         return bytes;
     }
