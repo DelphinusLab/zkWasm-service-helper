@@ -2,8 +2,58 @@ import BN from "bn.js";
 import { Md5 } from "ts-md5";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams } from "interface/interface";
 import { Contract } from "web3-eth-contract";
+import Web3 from 'web3';
+import { AbiItem } from 'web3-utils'
+
+
 
 export class ZkWasmUtil {
+    static contract_abi = {
+        "contractName": "AggregatorVerifier",
+        "abi": [
+          {
+            "inputs": [
+              {
+                "internalType": "contract AggregatorVerifierCoreStep[]",
+                "name": "_steps",
+                "type": "address[]"
+              }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+          },
+          {
+            "inputs": [
+              {
+                "internalType": "uint256[]",
+                "name": "proof",
+                "type": "uint256[]"
+              },
+              {
+                "internalType": "uint256[]",
+                "name": "verify_instance",
+                "type": "uint256[]"
+              },
+              {
+                "internalType": "uint256[]",
+                "name": "aux",
+                "type": "uint256[]"
+              },
+              {
+                "internalType": "uint256[][]",
+                "name": "target_instance",
+                "type": "uint256[][]"
+              }
+            ],
+            "name": "verify",
+            "outputs": [],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+          }
+        ],
+      }  
+
     static hexToBNs(hexString: string): Array<BN> {
         let bytes = new Array(Math.ceil(hexString.length / 16));
         for (var i = 0; i < hexString.length; i += 16) {
@@ -109,6 +159,17 @@ export class ZkWasmUtil {
             // do whatever
         }
         return bns;
+    }
+    static composeVerifyContract(web3: Web3, verifier_addr: string, from_addr: string) {
+        let verify_contract = new web3.eth.Contract(
+            ZkWasmUtil.contract_abi.abi as AbiItem[],
+            verifier_addr,
+            {
+              from: from_addr,
+            }
+          );
+          
+          return verify_contract;
     }
 
     static async verifyProof(verify_contract: Contract, params: VerifyProofParams) {

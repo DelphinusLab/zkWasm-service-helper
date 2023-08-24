@@ -117,12 +117,22 @@ class ZkWasmUtil {
         }
         return bns;
     }
+    static composeVerifyContract(web3, verifier_addr, from_addr) {
+        let verify_contract = new web3.eth.Contract(ZkWasmUtil.contract_abi.abi, verifier_addr, {
+            from: from_addr,
+        });
+        return verify_contract;
+    }
     static verifyProof(verify_contract, params) {
         return __awaiter(this, void 0, void 0, function* () {
             let aggregate_proof = ZkWasmUtil.bytesToBN(params.aggregate_proof);
             let batchInstances = ZkWasmUtil.bytesToBN(params.batch_instances);
             let aux = ZkWasmUtil.bytesToBN(params.aux);
             let args = ZkWasmUtil.parseArgs(params.public_inputs).map((x) => x.toString(10));
+            console.log("args are:", args);
+            if (args.length == 0) {
+                args = ["0x0"];
+            }
             let result = yield verify_contract.methods
                 .verify(aggregate_proof, batchInstances, aux, [args])
                 .send();
@@ -131,3 +141,48 @@ class ZkWasmUtil {
     }
 }
 exports.ZkWasmUtil = ZkWasmUtil;
+ZkWasmUtil.contract_abi = {
+    "contractName": "AggregatorVerifier",
+    "abi": [
+        {
+            "inputs": [
+                {
+                    "internalType": "contract AggregatorVerifierCoreStep[]",
+                    "name": "_steps",
+                    "type": "address[]"
+                }
+            ],
+            "stateMutability": "nonpayable",
+            "type": "constructor"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256[]",
+                    "name": "proof",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "verify_instance",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[]",
+                    "name": "aux",
+                    "type": "uint256[]"
+                },
+                {
+                    "internalType": "uint256[][]",
+                    "name": "target_instance",
+                    "type": "uint256[][]"
+                }
+            ],
+            "name": "verify",
+            "outputs": [],
+            "stateMutability": "view",
+            "type": "function",
+            "constant": true
+        }
+    ],
+};
