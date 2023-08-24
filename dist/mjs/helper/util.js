@@ -43,6 +43,22 @@ export class ZkWasmUtil {
             return null;
         }
     }
+    static parseArgs(raw) {
+        let parsedInputs = new Array();
+        for (var input of raw) {
+            input = input.trim();
+            if (input !== "") {
+                let args = ZkWasmUtil.parseArg(input);
+                if (args != null) {
+                    parsedInputs.push(args);
+                }
+                else {
+                    throw Error(`invalid args in ${input}`);
+                }
+            }
+        }
+        return parsedInputs.flat();
+    }
     static convertToMd5(value) {
         let md5 = new Md5();
         md5.appendByteArray(value);
@@ -74,5 +90,26 @@ export class ZkWasmUtil {
     }
     static createModifyImageMessage(params) {
         return JSON.stringify(params);
+    }
+    static bytesToBN(data) {
+        let chunksize = 64;
+        let bns = [];
+        for (let i = 0; i < data.length; i += 32) {
+            const chunk = data.slice(i, i + 32);
+            let a = new BN(chunk, 'le');
+            bns.push(a);
+            // do whatever
+        }
+        return bns;
+    }
+    static async verifyProof(verify_contract, params) {
+        let aggregate_proof = ZkWasmUtil.bytesToBN(params.aggregate_proof);
+        let batchInstances = ZkWasmUtil.bytesToBN(params.batch_instances);
+        let aux = ZkWasmUtil.bytesToBN(params.aux);
+        let args = ZkWasmUtil.parseArgs(params.public_inputs).map((x) => x.toString(10));
+        let result = await verify_contract.methods
+            .verify(aggregate_proof, batchInstances, aux, [args])
+            .send();
+        return result;
     }
 }

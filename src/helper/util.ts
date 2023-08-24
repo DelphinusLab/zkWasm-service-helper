@@ -1,6 +1,7 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
-import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams } from "interface/interface";
+import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams } from "interface/interface";
+import { Contract } from "web3-eth-contract";
 
 export class ZkWasmUtil {
     static hexToBNs(hexString: string): Array<BN> {
@@ -45,15 +46,31 @@ export class ZkWasmUtil {
         }
     }
 
+    static parseArgs(raw: Array<string>): Array<BN> {
+        let parsedInputs = new Array();
+        for (var input of raw) {
+          input = input.trim();
+          if (input!=="") {
+            let args = ZkWasmUtil.parseArg(input);
+            if (args!=null) {
+              parsedInputs.push(args);
+            } else {
+              throw Error(`invalid args in ${input}`);
+            }
+          }
+        }
+        return parsedInputs.flat();
+    }
+
     static convertToMd5(value: Uint8Array): string {
         let md5 = new Md5();
         md5.appendByteArray(value);
         let hash = md5.end();
-        if(!hash) return "";
+        if (!hash) return "";
         return hash.toString();
     }
 
-     //this is form data 
+    //this is form data 
     static createAddImageSignMessage(params: AddImageParams): string {
         //sign all the fields except the image itself and signature
         let message = "";
@@ -80,5 +97,29 @@ export class ZkWasmUtil {
 
     static createModifyImageMessage(params: ModifyImageParams): string {
         return JSON.stringify(params);
+    }
+
+    static bytesToBN(data: Uint8Array) {
+        let chunksize = 64;
+        let bns = [];
+        for (let i = 0; i < data.length; i += 32) {
+            const chunk = data.slice(i, i + 32);
+            let a = new BN(chunk, 'le');
+            bns.push(a);
+            // do whatever
+        }
+        return bns;
+    }
+
+    static async verifyProof(verify_contract: Contract, params: VerifyProofParams) {
+        let aggregate_proof = ZkWasmUtil.bytesToBN(params.aggregate_proof);
+        let batchInstances = ZkWasmUtil.bytesToBN(params.batch_instances);
+        let aux = ZkWasmUtil.bytesToBN(params.aux);
+        let args = ZkWasmUtil.parseArgs(params.public_inputs).map((x) => x.toString(10));
+
+        let result = await verify_contract.methods
+            .verify(aggregate_proof, batchInstances, aux, [args])
+            .send();
+        return result;
     }
 }
