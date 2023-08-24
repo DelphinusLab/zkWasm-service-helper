@@ -49,15 +49,15 @@ export class ZkWasmUtil {
     static parseArgs(raw: Array<string>): Array<BN> {
         let parsedInputs = new Array();
         for (var input of raw) {
-          input = input.trim();
-          if (input!=="") {
-            let args = ZkWasmUtil.parseArg(input);
-            if (args!=null) {
-              parsedInputs.push(args);
-            } else {
-              throw Error(`invalid args in ${input}`);
+            input = input.trim();
+            if (input !== "") {
+                let args = ZkWasmUtil.parseArg(input);
+                if (args != null) {
+                    parsedInputs.push(args);
+                } else {
+                    throw Error(`invalid args in ${input}`);
+                }
             }
-          }
         }
         return parsedInputs.flat();
     }
@@ -116,6 +116,10 @@ export class ZkWasmUtil {
         let batchInstances = ZkWasmUtil.bytesToBN(params.batch_instances);
         let aux = ZkWasmUtil.bytesToBN(params.aux);
         let args = ZkWasmUtil.parseArgs(params.public_inputs).map((x) => x.toString(10));
+        console.log("args are:", args);
+        if (args.length == 0) {
+            args = ["0x0"];
+        }
 
         let result = await verify_contract.methods
             .verify(aggregate_proof, batchInstances, aux, [args])
