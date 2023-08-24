@@ -78,6 +78,12 @@ export interface QueryParams {
     start?: number;
     total?: number;
 }
+export interface VerifyProofParams {
+    aggregate_proof: Uint8Array;
+    batch_instances: Uint8Array;
+    aux: Uint8Array;
+    public_inputs: Array<string>;
+}
 export interface LogQuery {
     id: string;
     user_address: string;
