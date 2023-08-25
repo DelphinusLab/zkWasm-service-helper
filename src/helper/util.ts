@@ -149,7 +149,7 @@ export class ZkWasmUtil {
         return JSON.stringify(params);
     }
 
-    static bytesToBN(data: Uint8Array) {
+    static bytesToBN(data: Uint8Array): BN[] {
         let chunksize = 64;
         let bns = [];
         for (let i = 0; i < data.length; i += 32) {
@@ -160,7 +160,7 @@ export class ZkWasmUtil {
         }
         return bns;
     }
-    static composeVerifyContract(web3: Web3, verifier_addr: string, from_addr: string) {
+    static composeVerifyContract(web3: Web3, verifier_addr: string, from_addr: string): Contract {
         let verify_contract = new web3.eth.Contract(
             ZkWasmUtil.contract_abi.abi as AbiItem[],
             verifier_addr,

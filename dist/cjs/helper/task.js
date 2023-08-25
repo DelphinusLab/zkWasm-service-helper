@@ -42,9 +42,9 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let req = JSON.parse("{}");
             req["user_address"] = history_query.user_address;
-            const user = yield this.endpoint.invokeRequest("GET", "/transactions", req);
+            const txs = yield this.endpoint.invokeRequest("GET", "/transactions", req);
             console.log("get queryTxHistory response.");
-            return user;
+            return txs;
         });
     }
     queryConfig() {
