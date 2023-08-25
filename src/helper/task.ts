@@ -12,6 +12,12 @@ import {
   TxHistoryQueryParams,
   LogQuery,
   ResetImageParams,
+  PaginationResult,
+  Task,
+  Image,
+  User,
+  TransactionInfo,
+  AppConfig,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 
@@ -22,7 +28,7 @@ export class ZkWasmServiceHelper {
     this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress);
   }
 
-  async queryImage(md5: string) {
+  async queryImage(md5: string): Promise<Image> {
     let req = JSON.parse("{}");
     req["md5"] = md5;
 
@@ -31,7 +37,7 @@ export class ZkWasmServiceHelper {
     return images[0]!;
   }
 
-  async queryUser(user_query: UserQueryParams) {
+  async queryUser(user_query: UserQueryParams): Promise<User> {
     let req = JSON.parse("{}");
     req["user_address"] = user_query.user_address;
 
@@ -40,16 +46,16 @@ export class ZkWasmServiceHelper {
     return user;
   }
 
-  async queryTxHistory(history_query: TxHistoryQueryParams) {
+  async queryTxHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<TransactionInfo[]>> {
     let req = JSON.parse("{}");
     req["user_address"] = history_query.user_address;
 
-    const user = await this.endpoint.invokeRequest("GET", "/transactions", req);
+    const txs = await this.endpoint.invokeRequest("GET", "/transactions", req);
     console.log("get queryTxHistory response.");
-    return user;
+    return txs;
   }
 
-  async queryConfig() {
+  async queryConfig(): Promise<AppConfig> {
     const config = await this.endpoint.invokeRequest(
       "GET",
       "/config",
@@ -74,7 +80,7 @@ export class ZkWasmServiceHelper {
     };
   }
 
-  async loadTasks(query: QueryParams) {
+  async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
@@ -89,10 +95,10 @@ export class ZkWasmServiceHelper {
 
     let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
     console.log("loading task board!");
-    return tasks;
+    return tasks
   }
 
-  async queryLogs(query: WithSignature<LogQuery>) {
+  async queryLogs(query: WithSignature<LogQuery>): Promise<string> {
     let logs = await this.endpoint.invokeRequest(
       "GET",
       `/logs`,
