@@ -8,6 +8,7 @@ export interface Statistics {
 }
 export interface Task {
   user_address: string;
+  node_address?: string;
   md5: string;
   task_type: string;
   status: TaskStatus;
