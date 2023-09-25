@@ -87,7 +87,11 @@ class ZkWasmServiceHelper {
     }
     queryLogs(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let logs = yield this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)));
+            let headers = {
+                "x-eth-address": query.user_address,
+                "x-eth-signature": query.signature,
+            };
+            let logs = yield this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)), headers);
             console.log("loading logs!");
             return logs;
         });
@@ -109,9 +113,12 @@ class ZkWasmServiceHelper {
             formdata.append("description_url", task.description_url);
             formdata.append("avator_url", task.avator_url);
             formdata.append("circuit_size", task.circuit_size);
-            formdata.append("signature", task.signature);
             console.log("wait response", formdata);
-            let headers = { "Content-Type": "multipart/form-data" };
+            let headers = {
+                "Content-Type": "multipart/form-data",
+                "x-eth-address": task.user_address,
+                "x-eth-signature": task.signature,
+            };
             console.log("wait response", headers);
             const response = yield this.endpoint.invokeRequest("POST", "/setup", formdata, headers);
             console.log("get addNewWasmImage response:", response.toString());
@@ -120,7 +127,11 @@ class ZkWasmServiceHelper {
     }
     addProvingTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/prove", JSON.parse(JSON.stringify(task)));
+            let headers = {
+                "x-eth-address": task.user_address,
+                "x-eth-signature": task.signature,
+            };
+            const response = yield this.endpoint.invokeRequest("POST", "/prove", JSON.parse(JSON.stringify(task)), headers);
             console.log("get addProvingTask response:", response.toString());
             return response;
         });
@@ -144,14 +155,22 @@ class ZkWasmServiceHelper {
     }
     addDeployTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/deploy", JSON.parse(JSON.stringify(task)));
+            let headers = {
+                "x-eth-address": task.user_address,
+                "x-eth-signature": task.signature,
+            };
+            const response = yield this.endpoint.invokeRequest("POST", "/deploy", JSON.parse(JSON.stringify(task)), headers);
             console.log("get addDeployTask response:", response.toString());
             return response;
         });
     }
     addResetTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)));
+            let headers = {
+                "x-eth-address": task.user_address,
+                "x-eth-signature": task.signature,
+            };
+            const response = yield this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)), headers);
             console.log("get addResetTask response:", response.toString());
             return response;
         });

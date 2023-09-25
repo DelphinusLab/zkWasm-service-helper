@@ -60,7 +60,11 @@ export class ZkWasmServiceHelper {
         return tasks;
     }
     async queryLogs(query) {
-        let logs = await this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)));
+        let headers = {
+            "x-eth-address": query.user_address,
+            "x-eth-signature": query.signature,
+        };
+        let logs = await this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)), headers);
         console.log("loading logs!");
         return logs;
     }
@@ -78,16 +82,23 @@ export class ZkWasmServiceHelper {
         formdata.append("description_url", task.description_url);
         formdata.append("avator_url", task.avator_url);
         formdata.append("circuit_size", task.circuit_size);
-        formdata.append("signature", task.signature);
         console.log("wait response", formdata);
-        let headers = { "Content-Type": "multipart/form-data" };
+        let headers = {
+            "Content-Type": "multipart/form-data",
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
         console.log("wait response", headers);
         const response = await this.endpoint.invokeRequest("POST", "/setup", formdata, headers);
         console.log("get addNewWasmImage response:", response.toString());
         return response;
     }
     async addProvingTask(task) {
-        const response = await this.endpoint.invokeRequest("POST", "/prove", JSON.parse(JSON.stringify(task)));
+        let headers = {
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
+        const response = await this.endpoint.invokeRequest("POST", "/prove", JSON.parse(JSON.stringify(task)), headers);
         console.log("get addProvingTask response:", response.toString());
         return response;
     }
@@ -109,12 +120,20 @@ export class ZkWasmServiceHelper {
         return parsedInputs;
     }
     async addDeployTask(task) {
-        const response = await this.endpoint.invokeRequest("POST", "/deploy", JSON.parse(JSON.stringify(task)));
+        let headers = {
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
+        const response = await this.endpoint.invokeRequest("POST", "/deploy", JSON.parse(JSON.stringify(task)), headers);
         console.log("get addDeployTask response:", response.toString());
         return response;
     }
     async addResetTask(task) {
-        const response = await this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)));
+        let headers = {
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
+        const response = await this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)), headers);
         console.log("get addResetTask response:", response.toString());
         return response;
     }

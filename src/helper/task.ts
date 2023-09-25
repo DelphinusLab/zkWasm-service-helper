@@ -46,7 +46,9 @@ export class ZkWasmServiceHelper {
     return user;
   }
 
-  async queryTxHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<TransactionInfo[]>> {
+  async queryTxHistory(
+    history_query: TxHistoryQueryParams
+  ): Promise<PaginationResult<TransactionInfo[]>> {
     let req = JSON.parse("{}");
     req["user_address"] = history_query.user_address;
 
@@ -95,14 +97,19 @@ export class ZkWasmServiceHelper {
 
     let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
     console.log("loading task board!");
-    return tasks
+    return tasks;
   }
 
   async queryLogs(query: WithSignature<LogQuery>): Promise<string> {
+    let headers = {
+      "x-eth-address": query.user_address,
+      "x-eth-signature": query.signature,
+    };
     let logs = await this.endpoint.invokeRequest(
       "GET",
       `/logs`,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query)),
+      headers
     );
     console.log("loading logs!");
     return logs;
@@ -127,10 +134,13 @@ export class ZkWasmServiceHelper {
     formdata.append("description_url", task.description_url);
     formdata.append("avator_url", task.avator_url);
     formdata.append("circuit_size", task.circuit_size);
-    formdata.append("signature", task.signature);
 
     console.log("wait response", formdata);
-    let headers = { "Content-Type": "multipart/form-data" };
+    let headers = {
+      "Content-Type": "multipart/form-data",
+      "x-eth-address": task.user_address,
+      "x-eth-signature": task.signature,
+    };
     console.log("wait response", headers);
 
     const response = await this.endpoint.invokeRequest(
@@ -144,10 +154,15 @@ export class ZkWasmServiceHelper {
   }
 
   async addProvingTask(task: WithSignature<ProvingParams>) {
+    let headers = {
+      "x-eth-address": task.user_address,
+      "x-eth-signature": task.signature,
+    };
     const response = await this.endpoint.invokeRequest(
       "POST",
       "/prove",
-      JSON.parse(JSON.stringify(task))
+      JSON.parse(JSON.stringify(task)),
+      headers
     );
     console.log("get addProvingTask response:", response.toString());
     return response;
@@ -172,20 +187,30 @@ export class ZkWasmServiceHelper {
   }
 
   async addDeployTask(task: WithSignature<DeployParams>) {
+    let headers = {
+      "x-eth-address": task.user_address,
+      "x-eth-signature": task.signature,
+    };
     const response = await this.endpoint.invokeRequest(
       "POST",
       "/deploy",
-      JSON.parse(JSON.stringify(task))
+      JSON.parse(JSON.stringify(task)),
+      headers
     );
     console.log("get addDeployTask response:", response.toString());
     return response;
   }
 
   async addResetTask(task: WithSignature<ResetImageParams>) {
+    let headers = {
+      "x-eth-address": task.user_address,
+      "x-eth-signature": task.signature,
+    };
     const response = await this.endpoint.invokeRequest(
       "POST",
       "/reset",
-      JSON.parse(JSON.stringify(task))
+      JSON.parse(JSON.stringify(task)),
+      headers
     );
     console.log("get addResetTask response:", response.toString());
     return response;
