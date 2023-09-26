@@ -196,7 +196,8 @@ export class ZkWasmServiceHelper {
     path: TaskEndpoint,
     task: WithSignature<T>,
     isFormData = false
-  ): Promise<string> {
+  ): Promise<any> {
+    // TODO: create return types for tasks using this method
     let headers = this.createHeaders(task);
     let task_details: OmitSignature<T> = {
       ...task,
