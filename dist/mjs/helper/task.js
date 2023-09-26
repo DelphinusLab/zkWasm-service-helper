@@ -115,7 +115,8 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async sendRequestWithSignature(method, path, task, isFormData = false) {
-        let headers = createHeaders(task);
+        // TODO: create return types for tasks using this method
+        let headers = this.createHeaders(task);
         let task_details = {
             ...task,
         };
@@ -129,16 +130,15 @@ export class ZkWasmServiceHelper {
         else {
             payload = JSON.parse(JSON.stringify(task_details));
         }
-        console.log("task_details", task_details);
-        return this.endpoint.invokeRequest(method, path, JSON.parse(JSON.stringify(task_details)), headers);
+        return this.endpoint.invokeRequest(method, path, payload, headers);
     }
-}
-function createHeaders(task) {
-    let headers = {
-        "x-eth-address": task.user_address,
-        "x-eth-signature": task.signature,
-    };
-    return headers;
+    createHeaders(task) {
+        let headers = {
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
+        return headers;
+    }
 }
 export var TaskEndpoint;
 (function (TaskEndpoint) {

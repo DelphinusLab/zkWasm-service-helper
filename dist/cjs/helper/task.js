@@ -154,7 +154,8 @@ class ZkWasmServiceHelper {
     }
     sendRequestWithSignature(method, path, task, isFormData = false) {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = createHeaders(task);
+            // TODO: create return types for tasks using this method
+            let headers = this.createHeaders(task);
             let task_details = Object.assign({}, task);
             let payload;
             if (isFormData) {
@@ -166,19 +167,18 @@ class ZkWasmServiceHelper {
             else {
                 payload = JSON.parse(JSON.stringify(task_details));
             }
-            console.log("task_details", task_details);
-            return this.endpoint.invokeRequest(method, path, JSON.parse(JSON.stringify(task_details)), headers);
+            return this.endpoint.invokeRequest(method, path, payload, headers);
         });
+    }
+    createHeaders(task) {
+        let headers = {
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
+        return headers;
     }
 }
 exports.ZkWasmServiceHelper = ZkWasmServiceHelper;
-function createHeaders(task) {
-    let headers = {
-        "x-eth-address": task.user_address,
-        "x-eth-signature": task.signature,
-    };
-    return headers;
-}
 var TaskEndpoint;
 (function (TaskEndpoint) {
     TaskEndpoint["TASK"] = "/tasks";

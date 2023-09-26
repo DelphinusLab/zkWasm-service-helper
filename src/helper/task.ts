@@ -202,7 +202,7 @@ export class ZkWasmServiceHelper {
     let task_details: OmitSignature<T> = {
       ...task,
     };
-    let payload: FormData | JSON | undefined;
+    let payload: FormData | JSON | null;
     if (isFormData) {
       payload = new FormData();
       for (const key in task_details) {
@@ -211,13 +211,8 @@ export class ZkWasmServiceHelper {
     } else {
       payload = JSON.parse(JSON.stringify(task_details));
     }
-    console.log("task_details", task_details);
-    return this.endpoint.invokeRequest(
-      method,
-      path,
-      JSON.parse(JSON.stringify(task_details)),
-      headers
-    );
+
+    return this.endpoint.invokeRequest(method, path, payload, headers);
   }
 
   createHeaders<T>(task: WithSignature<T>): Record<string, string> {
