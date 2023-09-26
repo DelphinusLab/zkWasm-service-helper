@@ -11,9 +11,19 @@ export declare class ZkWasmServiceHelper {
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
-    addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
-    addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
+    addNewWasmImage(task: WithSignature<AddImageParams>): Promise<string>;
+    addProvingTask(task: WithSignature<ProvingParams>): Promise<string>;
     parseProvingTaskInput(rawInputs: string): Array<string>;
-    addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
-    addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
+    addDeployTask(task: WithSignature<DeployParams>): Promise<string>;
+    addResetTask(task: WithSignature<ResetImageParams>): Promise<string>;
+    sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<string>;
+}
+export declare enum TaskEndpoint {
+    TASK = "/tasks",
+    SETUP = "/setup",
+    PROVE = "/prove",
+    DEPLOY = "/deploy",
+    RESET = "/reset",
+    PAY = "/pay",
+    LOGS = "/logs"
 }

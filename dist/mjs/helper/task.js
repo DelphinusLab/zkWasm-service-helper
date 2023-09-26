@@ -60,16 +60,12 @@ export class ZkWasmServiceHelper {
         return tasks;
     }
     async queryLogs(query) {
-        let headers = {
-            "x-eth-address": query.user_address,
-            "x-eth-signature": query.signature,
-        };
-        let logs = await this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)), headers);
+        let logs = await this.sendRequestWithSignature("GET", TaskEndpoint.LOGS, query);
         console.log("loading logs!");
         return logs;
     }
     async addPayment(payRequest) {
-        const response = await this.endpoint.invokeRequest("POST", "/pay", JSON.parse(JSON.stringify(payRequest)));
+        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
         console.log("get addPayment response:", response.toString());
         return response;
     }
@@ -82,23 +78,12 @@ export class ZkWasmServiceHelper {
         formdata.append("description_url", task.description_url);
         formdata.append("avator_url", task.avator_url);
         formdata.append("circuit_size", task.circuit_size);
-        console.log("wait response", formdata);
-        let headers = {
-            "Content-Type": "multipart/form-data",
-            "x-eth-address": task.user_address,
-            "x-eth-signature": task.signature,
-        };
-        console.log("wait response", headers);
-        const response = await this.endpoint.invokeRequest("POST", "/setup", formdata, headers);
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
         console.log("get addNewWasmImage response:", response.toString());
         return response;
     }
     async addProvingTask(task) {
-        let headers = {
-            "x-eth-address": task.user_address,
-            "x-eth-signature": task.signature,
-        };
-        const response = await this.endpoint.invokeRequest("POST", "/prove", JSON.parse(JSON.stringify(task)), headers);
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task);
         console.log("get addProvingTask response:", response.toString());
         return response;
     }
@@ -120,21 +105,48 @@ export class ZkWasmServiceHelper {
         return parsedInputs;
     }
     async addDeployTask(task) {
-        let headers = {
-            "x-eth-address": task.user_address,
-            "x-eth-signature": task.signature,
-        };
-        const response = await this.endpoint.invokeRequest("POST", "/deploy", JSON.parse(JSON.stringify(task)), headers);
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
         console.log("get addDeployTask response:", response.toString());
         return response;
     }
     async addResetTask(task) {
-        let headers = {
-            "x-eth-address": task.user_address,
-            "x-eth-signature": task.signature,
-        };
-        const response = await this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)), headers);
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task);
         console.log("get addResetTask response:", response.toString());
         return response;
     }
+    async sendRequestWithSignature(method, path, task, isFormData = false) {
+        let headers = createHeaders(task);
+        let task_details = {
+            ...task,
+        };
+        let payload;
+        if (isFormData) {
+            payload = new FormData();
+            for (const key in task_details) {
+                payload.append(key, task_details[key]);
+            }
+        }
+        else {
+            payload = JSON.parse(JSON.stringify(task_details));
+        }
+        console.log("task_details", task_details);
+        return this.endpoint.invokeRequest(method, path, JSON.parse(JSON.stringify(task_details)), headers);
+    }
 }
+function createHeaders(task) {
+    let headers = {
+        "x-eth-address": task.user_address,
+        "x-eth-signature": task.signature,
+    };
+    return headers;
+}
+export var TaskEndpoint;
+(function (TaskEndpoint) {
+    TaskEndpoint["TASK"] = "/tasks";
+    TaskEndpoint["SETUP"] = "/setup";
+    TaskEndpoint["PROVE"] = "/prove";
+    TaskEndpoint["DEPLOY"] = "/deploy";
+    TaskEndpoint["RESET"] = "/reset";
+    TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["LOGS"] = "/logs";
+})(TaskEndpoint || (TaskEndpoint = {}));

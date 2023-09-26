@@ -63,7 +63,9 @@ export interface ModifyImageParams {
 }
 export type WithSignature<T> = T & {
     signature: string;
+    user_address: string;
 };
+export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
     proof: Array<BN>;
     target_instances: Array<BN>;

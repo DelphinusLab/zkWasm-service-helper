@@ -27,7 +27,13 @@ export interface Task {
   internal_message?: string;
 }
 
-export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
+export type TaskStatus =
+  | "Pending"
+  | "Processing"
+  | "DryRunFailed"
+  | "Done"
+  | "Fail"
+  | "Stale";
 
 export interface PaginationResult<T> {
   data: T;
@@ -70,8 +76,8 @@ export interface ModifyImageParams {
   avator_url: string;
 }
 
-export type WithSignature<T> = T & { signature: string };
-
+export type WithSignature<T> = T & { signature: string; user_address: string };
+export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
   proof: Array<BN>;
   target_instances: Array<BN>;
