@@ -8,11 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZkWasmServiceHelper = void 0;
+exports.TaskEndpoint = exports.ZkWasmServiceHelper = void 0;
 const form_data_1 = __importDefault(require("form-data"));
 const util_js_1 = require("./util.js");
 const endpoint_js_1 = require("./endpoint.js");
@@ -87,40 +98,28 @@ class ZkWasmServiceHelper {
     }
     queryLogs(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let logs = yield this.endpoint.invokeRequest("GET", `/logs`, JSON.parse(JSON.stringify(query)));
+            let logs = yield this.sendRequestWithSignature("GET", TaskEndpoint.LOGS, query);
             console.log("loading logs!");
             return logs;
         });
     }
     addPayment(payRequest) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/pay", JSON.parse(JSON.stringify(payRequest)));
+            const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
             console.log("get addPayment response:", response.toString());
             return response;
         });
     }
     addNewWasmImage(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let formdata = new form_data_1.default();
-            formdata.append("name", task.name);
-            formdata.append("md5", task.image_md5);
-            formdata.append("image", task.image);
-            formdata.append("user_address", task.user_address);
-            formdata.append("description_url", task.description_url);
-            formdata.append("avator_url", task.avator_url);
-            formdata.append("circuit_size", task.circuit_size);
-            formdata.append("signature", task.signature);
-            console.log("wait response", formdata);
-            let headers = { "Content-Type": "multipart/form-data" };
-            console.log("wait response", headers);
-            const response = yield this.endpoint.invokeRequest("POST", "/setup", formdata, headers);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
             console.log("get addNewWasmImage response:", response.toString());
             return response;
         });
     }
     addProvingTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/prove", JSON.parse(JSON.stringify(task)));
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task);
             console.log("get addProvingTask response:", response.toString());
             return response;
         });
@@ -144,17 +143,56 @@ class ZkWasmServiceHelper {
     }
     addDeployTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/deploy", JSON.parse(JSON.stringify(task)));
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
             console.log("get addDeployTask response:", response.toString());
             return response;
         });
     }
     addResetTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", "/reset", JSON.parse(JSON.stringify(task)));
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task);
             console.log("get addResetTask response:", response.toString());
             return response;
         });
     }
+    sendRequestWithSignature(method, path, task, isFormData = false) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // TODO: create return types for tasks using this method
+            let headers = this.createHeaders(task);
+            let task_params = this.omitSignature(task);
+            let payload;
+            if (isFormData) {
+                payload = new form_data_1.default();
+                for (const key in task_params) {
+                    payload.append(key, task_params[key]);
+                }
+            }
+            else {
+                payload = JSON.parse(JSON.stringify(task_params));
+            }
+            return this.endpoint.invokeRequest(method, path, payload, headers);
+        });
+    }
+    createHeaders(task) {
+        let headers = {
+            "x-eth-address": task.user_address,
+            "x-eth-signature": task.signature,
+        };
+        return headers;
+    }
+    omitSignature(task) {
+        const { signature } = task, task_details = __rest(task, ["signature"]);
+        return task_details;
+    }
 }
 exports.ZkWasmServiceHelper = ZkWasmServiceHelper;
+var TaskEndpoint;
+(function (TaskEndpoint) {
+    TaskEndpoint["TASK"] = "/tasks";
+    TaskEndpoint["SETUP"] = "/setup";
+    TaskEndpoint["PROVE"] = "/prove";
+    TaskEndpoint["DEPLOY"] = "/deploy";
+    TaskEndpoint["RESET"] = "/reset";
+    TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["LOGS"] = "/logs";
+})(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));
