@@ -70,14 +70,6 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async addNewWasmImage(task) {
-        let formdata = new FormData();
-        formdata.append("name", task.name);
-        formdata.append("md5", task.image_md5);
-        formdata.append("image", task.image);
-        formdata.append("user_address", task.user_address);
-        formdata.append("description_url", task.description_url);
-        formdata.append("avator_url", task.avator_url);
-        formdata.append("circuit_size", task.circuit_size);
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
         console.log("get addNewWasmImage response:", response.toString());
         return response;
@@ -117,18 +109,16 @@ export class ZkWasmServiceHelper {
     async sendRequestWithSignature(method, path, task, isFormData = false) {
         // TODO: create return types for tasks using this method
         let headers = this.createHeaders(task);
-        let task_details = {
-            ...task,
-        };
+        let task_params = this.omitSignature(task);
         let payload;
         if (isFormData) {
             payload = new FormData();
-            for (const key in task_details) {
-                payload.append(key, task_details[key]);
+            for (const key in task_params) {
+                payload.append(key, task_params[key]);
             }
         }
         else {
-            payload = JSON.parse(JSON.stringify(task_details));
+            payload = JSON.parse(JSON.stringify(task_params));
         }
         return this.endpoint.invokeRequest(method, path, payload, headers);
     }
@@ -138,6 +128,10 @@ export class ZkWasmServiceHelper {
             "x-eth-signature": task.signature,
         };
         return headers;
+    }
+    omitSignature(task) {
+        const { signature, ...task_details } = task;
+        return task_details;
     }
 }
 export var TaskEndpoint;

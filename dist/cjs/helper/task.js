@@ -8,6 +8,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -101,14 +112,6 @@ class ZkWasmServiceHelper {
     }
     addNewWasmImage(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let formdata = new form_data_1.default();
-            formdata.append("name", task.name);
-            formdata.append("md5", task.image_md5);
-            formdata.append("image", task.image);
-            formdata.append("user_address", task.user_address);
-            formdata.append("description_url", task.description_url);
-            formdata.append("avator_url", task.avator_url);
-            formdata.append("circuit_size", task.circuit_size);
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
             console.log("get addNewWasmImage response:", response.toString());
             return response;
@@ -156,16 +159,16 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             // TODO: create return types for tasks using this method
             let headers = this.createHeaders(task);
-            let task_details = Object.assign({}, task);
+            let task_params = this.omitSignature(task);
             let payload;
             if (isFormData) {
                 payload = new form_data_1.default();
-                for (const key in task_details) {
-                    payload.append(key, task_details[key]);
+                for (const key in task_params) {
+                    payload.append(key, task_params[key]);
                 }
             }
             else {
-                payload = JSON.parse(JSON.stringify(task_details));
+                payload = JSON.parse(JSON.stringify(task_params));
             }
             return this.endpoint.invokeRequest(method, path, payload, headers);
         });
@@ -176,6 +179,10 @@ class ZkWasmServiceHelper {
             "x-eth-signature": task.signature,
         };
         return headers;
+    }
+    omitSignature(task) {
+        const { signature } = task, task_details = __rest(task, ["signature"]);
+        return task_details;
     }
 }
 exports.ZkWasmServiceHelper = ZkWasmServiceHelper;
