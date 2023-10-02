@@ -112,6 +112,9 @@ export class ZkWasmUtil {
             return "";
         return hash.toString();
     }
+    static createLogsMesssage(params) {
+        return JSON.stringify(params);
+    }
     //this is form data 
     static createAddImageSignMessage(params) {
         //sign all the fields except the image itself and signature
