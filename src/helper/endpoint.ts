@@ -20,7 +20,8 @@ export class ZkWasmServiceEndpoint {
             try {
                 let response = await axios.get(
                     this.endpoint + url,
-                    body ? { params: body! } : {}
+                    body ? { params: body!, headers: { ...headers } } : {},
+                    
                 );
                 return response.data;
             } catch (e: any) {
