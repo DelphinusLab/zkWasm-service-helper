@@ -12,7 +12,7 @@ export class ZkWasmServiceEndpoint {
         if (method === "GET") {
             console.log(this.endpoint + url);
             try {
-                let response = await axios.get(this.endpoint + url, body ? { params: body } : {});
+                let response = await axios.get(this.endpoint + url, body ? { params: body, headers: { ...headers } } : {});
                 return response.data;
             }
             catch (e) {

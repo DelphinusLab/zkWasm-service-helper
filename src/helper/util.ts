@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
-import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams } from "interface/interface";
+import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "interface/interface";
 import { Contract } from "web3-eth-contract";
 import Web3 from 'web3';
 import { AbiItem } from 'web3-utils'
@@ -118,6 +118,10 @@ export class ZkWasmUtil {
         let hash = md5.end();
         if (!hash) return "";
         return hash.toString();
+    }
+
+    static createLogsMesssage(params: LogQuery): string {
+        return JSON.stringify(params);
     }
 
     //this is form data 
