@@ -105,6 +105,15 @@ export interface AppConfig {
         prove_fee: string;
     };
     chain_info_list: Array<ChainInfo>;
+    deployments: ContractDeployments[];
+}
+export interface ContractDeployments {
+    chain_id: number;
+    circuit_size: number;
+    aggregator_lib_address: string;
+    aggregator_config_address: string;
+    aggregator_verifier_steps: string[];
+    aggregator_verifier: string;
 }
 export interface ChainInfo {
     chain_id: number;
