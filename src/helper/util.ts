@@ -95,6 +95,9 @@ export class ZkWasmUtil {
             return null;
         }
     }
+    static parseArgs(public_inputs: string[]) : (BN | null)[] {
+        return public_inputs.map(input => ZkWasmUtil.parseArg(input.trim())).flat();
+    }
 
     static parseArgs(raw: Array<string>): Array<BN> {
         let parsedInputs = new Array();
