@@ -154,6 +154,12 @@ export interface Image {
   avator_url: string;
   circuit_size: number;
   status: string;
+  checksum: ImageChecksum | null;
+}
+
+export interface ImageChecksum {
+  x: Uint8Array;
+  y: Uint8Array;
 }
 
 export interface PaymentParams {
