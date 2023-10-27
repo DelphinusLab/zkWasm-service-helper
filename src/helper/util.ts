@@ -3,9 +3,6 @@ import { Md5 } from "ts-md5";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "interface/interface";
 import { Contract } from "web3-eth-contract";
 import Web3 from 'web3';
-import { AbiItem } from 'web3-utils'
-
-
 
 export class ZkWasmUtil {
     static contract_abi = {
@@ -52,7 +49,7 @@ export class ZkWasmUtil {
             "constant": true
           }
         ],
-      }  
+      } as const;
 
     static hexToBNs(hexString: string): Array<BN> {
         let bytes = new Array(Math.ceil(hexString.length / 16));
@@ -164,9 +161,9 @@ export class ZkWasmUtil {
         }
         return bns;
     }
-    static composeVerifyContract(web3: Web3, verifier_addr: string, from_addr: string): Contract {
+    static composeVerifyContract(web3: Web3, verifier_addr: string, from_addr: string) {
         let verify_contract = new web3.eth.Contract(
-            ZkWasmUtil.contract_abi.abi as AbiItem[],
+            ZkWasmUtil.contract_abi.abi,
             verifier_addr,
             {
               from: from_addr,
@@ -176,7 +173,7 @@ export class ZkWasmUtil {
           return verify_contract;
     }
 
-    static async verifyProof(verify_contract: Contract, params: VerifyProofParams) {
+    static async verifyProof(verify_contract: any, params: VerifyProofParams) {
         let aggregate_proof = ZkWasmUtil.bytesToBN(params.aggregate_proof);
         let batchInstances = ZkWasmUtil.bytesToBN(params.batch_instances);
         let aux = ZkWasmUtil.bytesToBN(params.aux);
