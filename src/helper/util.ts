@@ -3,8 +3,6 @@ import { Md5 } from "ts-md5";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "interface/interface";
 import { Contract } from "web3-eth-contract";
 import Web3 from 'web3';
-import { ContractAbi } from 'web3-types'
-
 
 export class ZkWasmUtil {
     static contract_abi = {
