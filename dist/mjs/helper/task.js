@@ -106,6 +106,11 @@ export class ZkWasmServiceHelper {
         console.log("get addResetTask response:", response.toString());
         return response;
     }
+    async modifyImage(data) {
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
+        console.log("get modifyImage response:", response.toString());
+        return response;
+    }
     async sendRequestWithSignature(method, path, task, isFormData = false) {
         // TODO: create return types for tasks using this method
         let headers = this.createHeaders(task);
@@ -141,6 +146,7 @@ export var TaskEndpoint;
     TaskEndpoint["PROVE"] = "/prove";
     TaskEndpoint["DEPLOY"] = "/deploy";
     TaskEndpoint["RESET"] = "/reset";
+    TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
     TaskEndpoint["LOGS"] = "/logs";
 })(TaskEndpoint || (TaskEndpoint = {}));
