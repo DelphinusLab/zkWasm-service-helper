@@ -19,6 +19,7 @@ import {
   TransactionInfo,
   AppConfig,
   OmitSignature,
+  ModifyImageParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 
@@ -182,6 +183,17 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
+  async modifyImage(data: WithSignature<ModifyImageParams>) {
+    let response = await this.sendRequestWithSignature<ModifyImageParams>(
+      "POST",
+      TaskEndpoint.MODIFY,
+      data
+    );
+
+    console.log("get modifyImage response:", response.toString());
+    return response;
+  }
+
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
@@ -225,6 +237,7 @@ export enum TaskEndpoint {
   PROVE = "/prove",
   DEPLOY = "/deploy",
   RESET = "/reset",
+  MODIFY = "/modify",
   PAY = "/pay",
   LOGS = "/logs",
 }

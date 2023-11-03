@@ -155,6 +155,13 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
+    modifyImage(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
+            console.log("get modifyImage response:", response.toString());
+            return response;
+        });
+    }
     sendRequestWithSignature(method, path, task, isFormData = false) {
         return __awaiter(this, void 0, void 0, function* () {
             // TODO: create return types for tasks using this method
@@ -193,6 +200,7 @@ var TaskEndpoint;
     TaskEndpoint["PROVE"] = "/prove";
     TaskEndpoint["DEPLOY"] = "/deploy";
     TaskEndpoint["RESET"] = "/reset";
+    TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
     TaskEndpoint["LOGS"] = "/logs";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));
