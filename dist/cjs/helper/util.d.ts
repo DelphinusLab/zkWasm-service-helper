@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "interface/interface";
+import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "../interface/interface.js";
 import { Contract } from "ethers";
 import { DelphinusBrowserProvider, DelphinusWalletProvider } from "./provider.js";
 export declare class ZkWasmUtil {

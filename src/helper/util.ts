@@ -8,7 +8,7 @@ import {
   ModifyImageParams,
   VerifyProofParams,
   LogQuery,
-} from "interface/interface";
+} from "../interface/interface.js";
 import { Contract } from "ethers";
 import {
   DelphinusBrowserProvider,
