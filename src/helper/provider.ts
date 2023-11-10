@@ -149,9 +149,6 @@ export class DelphinusBrowserProvider extends DelphinusProvider<BrowserProvider>
         }
       }
     }
-    id = await this.getNetworkId();
-    console.log("switched", id, chainHexId);
-    return;
   }
 
   // Wrapper for personal_sign method

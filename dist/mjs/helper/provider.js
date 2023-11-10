@@ -107,9 +107,6 @@ export class DelphinusBrowserProvider extends DelphinusProvider {
                 }
             }
         }
-        id = await this.getNetworkId();
-        console.log("switched", id, chainHexId);
-        return;
     }
     // Wrapper for personal_sign method
     async sign(message) {

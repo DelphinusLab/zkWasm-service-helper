@@ -136,9 +136,6 @@ class DelphinusBrowserProvider extends DelphinusProvider {
                     }
                 }
             }
-            id = yield this.getNetworkId();
-            console.log("switched", id, chainHexId);
-            return;
         });
     }
     // Wrapper for personal_sign method
