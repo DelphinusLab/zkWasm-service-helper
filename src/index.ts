@@ -21,16 +21,48 @@ import {
   ResetImageParams,
   LogQuery,
   ModifyImageParams,
+  ChainDetails,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
 import { ZkWasmServiceHelper } from "./helper/task.js";
-export * from "./helper/provider.js";
-export * from "./helper/client.js";
-export * from "./helper/chains.js";
+import {
+  DelphinusBaseProvider,
+  DelphinusBrowserProvider,
+  DelphinusProvider,
+  DelphinusReadOnlyProvider,
+  DelphinusSigner,
+  DelphinusWalletProvider,
+  GetBaseProvider,
+} from "./helper/provider.js";
+import {
+  withBrowserProvider,
+  withDelphinusWalletProvider,
+  withReadOnlyProvider,
+  DelphinusContract,
+} from "./helper/client.js";
+import {
+  GoerliChainInfo,
+  SepoliaChainInfo,
+  BSCTestnetChainInfo,
+} from "./helper/chains.js";
 
 export {
+  DelphinusBaseProvider,
+  DelphinusBrowserProvider,
+  DelphinusProvider,
+  DelphinusReadOnlyProvider,
+  DelphinusSigner,
+  DelphinusWalletProvider,
+  GetBaseProvider,
+  withBrowserProvider,
+  withDelphinusWalletProvider,
+  withReadOnlyProvider,
+  DelphinusContract,
+  GoerliChainInfo,
+  SepoliaChainInfo,
+  BSCTestnetChainInfo,
   Task,
   ProvingParams,
   DeployParams,
@@ -56,4 +88,5 @@ export {
   PaginationResult,
   LogQuery,
   ModifyImageParams,
+  ChainDetails,
 };
