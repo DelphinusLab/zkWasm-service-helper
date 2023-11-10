@@ -9,7 +9,7 @@ import {
   VerifyProofParams,
   LogQuery,
 } from "interface/interface";
-import { Contract, Signer } from "ethers";
+import { Contract } from "ethers";
 import { DelphinusBrowserProvider, DelphinusWalletProvider } from "./provider";
 
 export class ZkWasmUtil {

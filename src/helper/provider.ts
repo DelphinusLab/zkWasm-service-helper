@@ -11,7 +11,7 @@ import {
   TransactionRequest,
 } from "ethers";
 import { DelphinusContract } from "./client";
-import { ChainDetails, ChainInfo } from "interface/interface";
+import { ChainDetails } from "interface/interface";
 
 export abstract class DelphinusProvider<T extends AbstractProvider> {
   readonly provider: T;

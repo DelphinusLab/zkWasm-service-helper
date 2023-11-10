@@ -1,5 +1,3 @@
-import BN from "bn.js";
-
 export interface Statistics {
   totalImages: number;
   totalProofs: number;
@@ -79,10 +77,10 @@ export interface ModifyImageParams {
 export type WithSignature<T> = T & { signature: string; user_address: string };
 export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
-  proof: Array<BN>;
-  target_instances: Array<BN>;
-  aggregator_instances: Array<BN>;
-  aux_instances: Array<BN>;
+  proof: Array<BigInt>;
+  target_instances: Array<BigInt>;
+  aggregator_instances: Array<BigInt>;
+  aux_instances: Array<BigInt>;
 }
 
 export interface QueryParams {
