@@ -49,20 +49,23 @@ import {
 } from "./helper/chains.js";
 
 export {
-  DelphinusBaseProvider,
-  DelphinusBrowserProvider,
-  DelphinusProvider,
-  DelphinusReadOnlyProvider,
-  DelphinusSigner,
-  DelphinusWalletProvider,
+  type DelphinusBaseProvider,
+  type DelphinusBrowserProvider,
+  type DelphinusProvider,
+  type DelphinusReadOnlyProvider,
+  type DelphinusSigner,
+  type DelphinusWalletProvider,
   GetBaseProvider,
   withBrowserProvider,
   withDelphinusWalletProvider,
   withReadOnlyProvider,
-  DelphinusContract,
+  type DelphinusContract,
   GoerliChainInfo,
   SepoliaChainInfo,
   BSCTestnetChainInfo,
+};
+
+export type {
   Task,
   ProvingParams,
   DeployParams,
