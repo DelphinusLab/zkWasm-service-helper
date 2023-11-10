@@ -121,6 +121,17 @@ export interface ChainInfo {
     block_explorer_url: string;
     deploy_fee: string;
 }
+export interface ChainDetails {
+    chainHexId: string;
+    chainName: string;
+    nativeCurrency: {
+        name: string;
+        symbol: string;
+        decimals: number;
+    };
+    rpcUrls: string[];
+    blockExplorerUrls: string[];
+}
 export interface DeploymentInfo {
     chain_id: number;
     address: string;

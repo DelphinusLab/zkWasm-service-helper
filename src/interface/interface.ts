@@ -133,12 +133,24 @@ export interface ContractDeployments {
   aggregator_verifier_steps: string[];
   aggregator_verifier: string;
 }
-
+// returned from zkwasm service server
 export interface ChainInfo {
   chain_id: number;
   chain_name: string;
   block_explorer_url: string;
   deploy_fee: string;
+}
+// Generic interface for fields required to connect to a chain
+export interface ChainDetails {
+  chainHexId: string;
+  chainName: string;
+  nativeCurrency: {
+    name: string;
+    symbol: string;
+    decimals: number;
+  };
+  rpcUrls: string[];
+  blockExplorerUrls: string[];
 }
 
 export interface DeploymentInfo {
