@@ -50,19 +50,22 @@ import {
 
 export {
   type DelphinusBaseProvider,
-  type DelphinusBrowserProvider,
-  type DelphinusProvider,
-  type DelphinusReadOnlyProvider,
-  type DelphinusSigner,
-  type DelphinusWalletProvider,
+  DelphinusBrowserProvider,
+  DelphinusProvider,
+  DelphinusReadOnlyProvider,
+  DelphinusSigner,
+  DelphinusWalletProvider,
   GetBaseProvider,
   withBrowserProvider,
   withDelphinusWalletProvider,
   withReadOnlyProvider,
-  type DelphinusContract,
+  DelphinusContract,
   GoerliChainInfo,
   SepoliaChainInfo,
   BSCTestnetChainInfo,
+  ZkWasmServiceEndpoint,
+  ZkWasmServiceHelper,
+  ZkWasmUtil,
 };
 
 export type {
@@ -78,9 +81,6 @@ export type {
   Statistics,
   AddImageParams,
   WithSignature,
-  ZkWasmServiceEndpoint,
-  ZkWasmServiceHelper,
-  ZkWasmUtil,
   User,
   UserQueryParams,
   PaymentParams,
