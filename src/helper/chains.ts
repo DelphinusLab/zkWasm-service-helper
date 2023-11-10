@@ -1,4 +1,4 @@
-import { ChainDetails } from "interface/interface";
+import { ChainDetails } from "interface/interface.js";
 
 // List of supported chains in zkwasm service
 // TODO: Might need to add these server-side and directly send to client, or clients can implement their own chain details
