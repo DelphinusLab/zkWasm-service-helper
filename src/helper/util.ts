@@ -10,7 +10,10 @@ import {
   LogQuery,
 } from "interface/interface";
 import { Contract } from "ethers";
-import { DelphinusBrowserProvider, DelphinusWalletProvider } from "./provider";
+import {
+  DelphinusBrowserProvider,
+  DelphinusWalletProvider,
+} from "./provider.js";
 
 export class ZkWasmUtil {
   static contract_abi = {

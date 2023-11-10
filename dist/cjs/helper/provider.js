@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DelphinusWalletProvider = exports.DelphinusReadOnlyProvider = exports.DelphinusBrowserProvider = exports.GetBaseProvider = exports.DelphinusSigner = exports.DelphinusProvider = void 0;
 const ethers_1 = require("ethers");
-const client_1 = require("./client");
+const client_js_1 = require("./client.js");
 class DelphinusProvider {
     constructor(provider) {
         this.provider = provider;
@@ -24,7 +24,7 @@ class DelphinusProvider {
     }
     // Read only version of contract
     getContractWithoutSigner(contractAddress, abi) {
-        return new client_1.DelphinusContract(contractAddress, abi, this.provider);
+        return new client_js_1.DelphinusContract(contractAddress, abi, this.provider);
     }
 }
 exports.DelphinusProvider = DelphinusProvider;
@@ -46,7 +46,7 @@ class DelphinusSigner {
     }
     // Contract instance with signer attached
     getContractWithSigner(contractAddress, abi) {
-        return new client_1.DelphinusContract(contractAddress, abi, this.signer);
+        return new client_js_1.DelphinusContract(contractAddress, abi, this.signer);
     }
 }
 exports.DelphinusSigner = DelphinusSigner;
@@ -96,7 +96,7 @@ class DelphinusBrowserProvider extends DelphinusProvider {
     }
     getContractWithSigner(contractAddress, abi) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new client_1.DelphinusContract(contractAddress, abi, yield this.getJsonRpcSigner());
+            return new client_js_1.DelphinusContract(contractAddress, abi, yield this.getJsonRpcSigner());
         });
     }
     switchNet(chainInfo) {

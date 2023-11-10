@@ -1,5 +1,5 @@
 import { WebSocketProvider, JsonRpcProvider, BrowserProvider, Wallet, } from "ethers";
-import { DelphinusContract } from "./client";
+import { DelphinusContract } from "./client.js";
 export class DelphinusProvider {
     provider;
     constructor(provider) {

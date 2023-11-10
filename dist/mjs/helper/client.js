@@ -1,5 +1,5 @@
 import { Contract } from "ethers";
-import { DelphinusBrowserProvider, DelphinusReadOnlyProvider, DelphinusWalletProvider, } from "./provider";
+import { DelphinusBrowserProvider, DelphinusReadOnlyProvider, DelphinusWalletProvider, } from "./provider.js";
 export class DelphinusContract {
     contract;
     jsonInterface;

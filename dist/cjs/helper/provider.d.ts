@@ -1,5 +1,5 @@
 import { InterfaceAbi, AbstractProvider, WebSocketProvider, JsonRpcProvider, AbstractSigner, Eip1193Provider, BrowserProvider, JsonRpcSigner, Wallet, TransactionRequest } from "ethers";
-import { DelphinusContract } from "./client";
+import { DelphinusContract } from "./client.js";
 import { ChainDetails } from "interface/interface";
 export declare abstract class DelphinusProvider<T extends AbstractProvider> {
     readonly provider: T;

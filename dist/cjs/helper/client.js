@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.withDelphinusWalletProvider = exports.withReadOnlyProvider = exports.withBrowserProvider = exports.DelphinusContract = void 0;
 const ethers_1 = require("ethers");
-const provider_1 = require("./provider");
+const provider_js_1 = require("./provider.js");
 class DelphinusContract {
     /**
      *
@@ -81,7 +81,7 @@ class DelphinusContract {
 exports.DelphinusContract = DelphinusContract;
 function withBrowserProvider(cb) {
     return __awaiter(this, void 0, void 0, function* () {
-        let provider = new provider_1.DelphinusBrowserProvider();
+        let provider = new provider_js_1.DelphinusBrowserProvider();
         yield provider.connect();
         try {
             return yield cb(provider);
@@ -95,7 +95,7 @@ exports.withBrowserProvider = withBrowserProvider;
 // For read-only purposes without private key, we can use a provider to read the blockchain state
 function withReadOnlyProvider(cb, providerUrl) {
     return __awaiter(this, void 0, void 0, function* () {
-        let provider = new provider_1.DelphinusReadOnlyProvider(providerUrl);
+        let provider = new provider_js_1.DelphinusReadOnlyProvider(providerUrl);
         try {
             return yield cb(provider);
         }
@@ -110,7 +110,7 @@ exports.withReadOnlyProvider = withReadOnlyProvider;
 // Wrap ethers wallet implementation to provide a unified interface and necessary methods
 function withDelphinusWalletProvider(cb, provider, privateKey) {
     return __awaiter(this, void 0, void 0, function* () {
-        let wallet = new provider_1.DelphinusWalletProvider(privateKey, provider);
+        let wallet = new provider_js_1.DelphinusWalletProvider(privateKey, provider);
         try {
             return yield cb(wallet);
         }
