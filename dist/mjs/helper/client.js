@@ -64,7 +64,6 @@ export class DelphinusContract {
 }
 export async function withBrowserProvider(cb) {
     let provider = new DelphinusBrowserProvider();
-    await provider.connect();
     try {
         return await cb(provider);
     }

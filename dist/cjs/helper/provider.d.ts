@@ -1,6 +1,5 @@
 import { InterfaceAbi, AbstractProvider, WebSocketProvider, JsonRpcProvider, AbstractSigner, Eip1193Provider, BrowserProvider, JsonRpcSigner, Wallet, TransactionRequest } from "ethers";
 import { DelphinusContract } from "./client.js";
-import { ChainDetails } from "../interface/interface.js";
 export declare abstract class DelphinusProvider<T extends AbstractProvider> {
     readonly provider: T;
     constructor(provider: T);
@@ -29,7 +28,7 @@ export declare class DelphinusBrowserProvider extends DelphinusProvider<BrowserP
     getNetworkId(): Promise<bigint>;
     getJsonRpcSigner(): Promise<JsonRpcSigner>;
     getContractWithSigner(contractAddress: string, abi: InterfaceAbi): Promise<DelphinusContract>;
-    switchNet(chainInfo: ChainDetails): Promise<void>;
+    switchNet(chainHexId: string): Promise<void>;
     sign(message: string): Promise<string>;
 }
 export declare class DelphinusReadOnlyProvider extends DelphinusProvider<DelphinusBaseProvider> {

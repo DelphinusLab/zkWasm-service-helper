@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = exports.BSCTestnetChainInfo = exports.SepoliaChainInfo = exports.GoerliChainInfo = exports.DelphinusContract = exports.withReadOnlyProvider = exports.withDelphinusWalletProvider = exports.withBrowserProvider = exports.GetBaseProvider = exports.DelphinusWalletProvider = exports.DelphinusSigner = exports.DelphinusReadOnlyProvider = exports.DelphinusProvider = exports.DelphinusBrowserProvider = void 0;
+exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = exports.DelphinusContract = exports.withReadOnlyProvider = exports.withDelphinusWalletProvider = exports.withBrowserProvider = exports.GetBaseProvider = exports.DelphinusWalletProvider = exports.DelphinusSigner = exports.DelphinusReadOnlyProvider = exports.DelphinusProvider = exports.DelphinusBrowserProvider = void 0;
 const util_js_1 = require("./helper/util.js");
 Object.defineProperty(exports, "ZkWasmUtil", { enumerable: true, get: function () { return util_js_1.ZkWasmUtil; } });
 const endpoint_js_1 = require("./helper/endpoint.js");
@@ -19,7 +19,3 @@ Object.defineProperty(exports, "withBrowserProvider", { enumerable: true, get: f
 Object.defineProperty(exports, "withDelphinusWalletProvider", { enumerable: true, get: function () { return client_js_1.withDelphinusWalletProvider; } });
 Object.defineProperty(exports, "withReadOnlyProvider", { enumerable: true, get: function () { return client_js_1.withReadOnlyProvider; } });
 Object.defineProperty(exports, "DelphinusContract", { enumerable: true, get: function () { return client_js_1.DelphinusContract; } });
-const chains_js_1 = require("./helper/chains.js");
-Object.defineProperty(exports, "GoerliChainInfo", { enumerable: true, get: function () { return chains_js_1.GoerliChainInfo; } });
-Object.defineProperty(exports, "SepoliaChainInfo", { enumerable: true, get: function () { return chains_js_1.SepoliaChainInfo; } });
-Object.defineProperty(exports, "BSCTestnetChainInfo", { enumerable: true, get: function () { return chains_js_1.BSCTestnetChainInfo; } });

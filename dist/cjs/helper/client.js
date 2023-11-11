@@ -82,7 +82,6 @@ exports.DelphinusContract = DelphinusContract;
 function withBrowserProvider(cb) {
     return __awaiter(this, void 0, void 0, function* () {
         let provider = new provider_js_1.DelphinusBrowserProvider();
-        yield provider.connect();
         try {
             return yield cb(provider);
         }

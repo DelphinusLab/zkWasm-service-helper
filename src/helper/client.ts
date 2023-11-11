@@ -93,7 +93,6 @@ export async function withBrowserProvider<T>(
 ) {
   let provider = new DelphinusBrowserProvider();
 
-  await provider.connect();
   try {
     return await cb(provider);
   } catch (e) {

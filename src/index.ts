@@ -42,11 +42,6 @@ import {
   withReadOnlyProvider,
   DelphinusContract,
 } from "./helper/client.js";
-import {
-  GoerliChainInfo,
-  SepoliaChainInfo,
-  BSCTestnetChainInfo,
-} from "./helper/chains.js";
 
 export {
   type DelphinusBaseProvider,
@@ -60,9 +55,6 @@ export {
   withDelphinusWalletProvider,
   withReadOnlyProvider,
   DelphinusContract,
-  GoerliChainInfo,
-  SepoliaChainInfo,
-  BSCTestnetChainInfo,
   ZkWasmServiceEndpoint,
   ZkWasmServiceHelper,
   ZkWasmUtil,

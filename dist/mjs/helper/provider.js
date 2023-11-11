@@ -71,8 +71,7 @@ export class DelphinusBrowserProvider extends DelphinusProvider {
     async getContractWithSigner(contractAddress, abi) {
         return new DelphinusContract(contractAddress, abi, await this.getJsonRpcSigner());
     }
-    async switchNet(chainInfo) {
-        let { chainHexId, chainName, rpcUrls, nativeCurrency, blockExplorerUrls } = chainInfo;
+    async switchNet(chainHexId) {
         let id = await this.getNetworkId();
         let idHex = "0x" + id.toString(16);
         console.log("switch chain", idHex, chainHexId);
@@ -83,28 +82,8 @@ export class DelphinusBrowserProvider extends DelphinusProvider {
                 ]);
             }
             catch (e) {
-                if (e.code == 4902) {
-                    try {
-                        await this.provider.send("wallet_addEthereumChain", [
-                            {
-                                chainId: chainHexId,
-                                chainName: chainName,
-                                rpcUrls: rpcUrls,
-                                nativeCurrency: nativeCurrency,
-                                blockExplorerUrls: blockExplorerUrls.length > 0 ? blockExplorerUrls : null,
-                            },
-                        ]);
-                        await this.provider.send("wallet_switchEthereumChain", [
-                            { chainId: chainHexId },
-                        ]);
-                    }
-                    catch (e) {
-                        throw new Error("Add Network Rejected by User.");
-                    }
-                }
-                else {
-                    throw new Error("Can not switch to chain " + chainHexId);
-                }
+                // throw switch chain error to the caller
+                throw e;
             }
         }
     }
