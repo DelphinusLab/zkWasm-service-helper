@@ -1,4 +1,3 @@
-import BN from "bn.js";
 export interface Statistics {
     totalImages: number;
     totalProofs: number;
@@ -67,10 +66,10 @@ export type WithSignature<T> = T & {
 };
 export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
-    proof: Array<BN>;
-    target_instances: Array<BN>;
-    aggregator_instances: Array<BN>;
-    aux_instances: Array<BN>;
+    proof: Array<BigInt>;
+    target_instances: Array<BigInt>;
+    aggregator_instances: Array<BigInt>;
+    aux_instances: Array<BigInt>;
 }
 export interface QueryParams {
     user_address: string;
@@ -120,6 +119,17 @@ export interface ChainInfo {
     chain_name: string;
     block_explorer_url: string;
     deploy_fee: string;
+}
+export interface ChainDetails {
+    chainHexId: string;
+    chainName: string;
+    nativeCurrency: {
+        name: string;
+        symbol: string;
+        decimals: number;
+    };
+    rpcUrls: string[];
+    blockExplorerUrls: string[];
 }
 export interface DeploymentInfo {
     chain_id: number;
