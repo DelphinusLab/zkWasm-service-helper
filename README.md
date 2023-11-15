@@ -52,3 +52,5 @@ let task: WithSignature<AddImageParams> = {
 let response = await helper.addNewWasmImage(task);
 
 ```
+### Notes:
+md5 is case insensitive to communicate with our zkwasm service
