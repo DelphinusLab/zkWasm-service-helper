@@ -53,4 +53,4 @@ let response = await helper.addNewWasmImage(task);
 
 ```
 ### Notes:
-md5 is case insensitive to communicate with our zkwasm service
+md5 is case insensitive when communicate with our zkwasm service
