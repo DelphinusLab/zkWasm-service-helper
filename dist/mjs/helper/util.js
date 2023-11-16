@@ -53,6 +53,11 @@ export class ZkWasmUtil {
         }
         return bytes;
     }
+    /**
+     * TODO: \
+     * This function may have some problem parsing bytes-packed, need to be fixed.
+     * Do not rely on this function to parse bytes-packed and verify proof information
+     */
     static parseArg(input) {
         let inputArray = input.split(":");
         let value = inputArray[0];
@@ -88,6 +93,11 @@ export class ZkWasmUtil {
             return null;
         }
     }
+    /**
+     * TODO: \
+     * This function may have some problem parsing bytes-packed, need to be fixed.
+     * Do not rely on this function to parse bytes-packed and verify proof information
+     */
     static parseArgs(raw) {
         let parsedInputs = new Array();
         for (var input of raw) {
