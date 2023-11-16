@@ -97,7 +97,7 @@ export interface VerifyProofParams {
   aggregate_proof: Uint8Array;
   batch_instances: Uint8Array;
   aux: Uint8Array;
-  public_inputs: Array<string>;
+  instances: Uint8Array;
 }
 
 export interface LogQuery {

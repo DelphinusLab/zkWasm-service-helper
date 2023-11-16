@@ -175,14 +175,17 @@ export class ZkWasmUtil {
         let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
         let batchInstances = this.bytesToBigIntArray(params.batch_instances);
         let aux = this.bytesToBigIntArray(params.aux);
-        let args = ZkWasmUtil.parseArgs(params.public_inputs).map((x) => x.toString(10));
-        console.log("args are:", args);
-        if (args.length == 0) {
-            args = ["0x0"];
-        }
-        // convert to BigInt array
-        let bigIntArgs = args.map((x) => BigInt(x));
-        let result = await verify_contract.verify.send(aggregate_proof, batchInstances, aux, [bigIntArgs]);
+        let instances = this.bytesToBigIntArray(params.instances);
+        // let args = ZkWasmUtil.parseArgs(params.instances).map((x) =>
+        //   x.toString(10)
+        // );
+        // console.log("args are:", args);
+        // if (args.length == 0) {
+        //   args = ["0x0"];
+        // }
+        // // convert to BigInt array
+        // let bigIntArgs = args.map((x) => BigInt(x));
+        let result = await verify_contract.verify.send(aggregate_proof, batchInstances, aux, [instances]);
         return result;
     }
 }
