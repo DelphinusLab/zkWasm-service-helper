@@ -72,6 +72,11 @@ export class ZkWasmUtil {
     }
     return bytes;
   }
+  /**
+   * TODO: \
+   * This function may have some problem parsing bytes-packed, need to be fixed.
+   * Do not rely on this function to parse bytes-packed and verify proof information
+   */
   static parseArg(input: string): Array<BN> | null {
     let inputArray = input.split(":");
     let value = inputArray[0];
@@ -107,6 +112,11 @@ export class ZkWasmUtil {
     }
   }
 
+  /**
+   * TODO: \
+   * This function may have some problem parsing bytes-packed, need to be fixed.
+   * Do not rely on this function to parse bytes-packed and verify proof information
+   */
   static parseArgs(raw: Array<string>): Array<BN> {
     let parsedInputs = new Array();
     for (var input of raw) {
@@ -211,21 +221,22 @@ export class ZkWasmUtil {
     let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
     let batchInstances = this.bytesToBigIntArray(params.batch_instances);
     let aux = this.bytesToBigIntArray(params.aux);
-    let args = ZkWasmUtil.parseArgs(params.public_inputs).map((x) =>
-      x.toString(10)
-    );
-    console.log("args are:", args);
-    if (args.length == 0) {
-      args = ["0x0"];
-    }
-    // convert to BigInt array
-    let bigIntArgs = args.map((x) => BigInt(x));
+    let instances = this.bytesToBigIntArray(params.instances);
+    // let args = ZkWasmUtil.parseArgs(params.instances).map((x) =>
+    //   x.toString(10)
+    // );
+    // console.log("args are:", args);
+    // if (args.length == 0) {
+    //   args = ["0x0"];
+    // }
+    // // convert to BigInt array
+    // let bigIntArgs = args.map((x) => BigInt(x));
 
     let result = await verify_contract.verify.send(
       aggregate_proof,
       batchInstances,
       aux,
-      [bigIntArgs]
+      [instances]
     );
     return result;
   }
