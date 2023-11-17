@@ -72,65 +72,55 @@ export class ZkWasmUtil {
     }
     return bytes;
   }
-  /**
-   * TODO: \
-   * This function may have some problem parsing bytes-packed, need to be fixed.
-   * Do not rely on this function to parse bytes-packed and verify proof information
-   */
-  static parseArg(input: string): Array<BN> | null {
-    let inputArray = input.split(":");
-    let value = inputArray[0];
-    let type = inputArray[1];
+
+  static validateInput(input: string) {
+    let inputSplit = input.split(":");
+    // Check that there are two parts
+    if (inputSplit.length != 2) {
+      throw new Error("Invalid input: " + input);
+    }
+
+    let value = inputSplit[0];
+    let type = inputSplit[1];
     let re1 = new RegExp(/^[0-9A-Fa-f]+$/); // hexdecimal
     let re2 = new RegExp(/^\d+$/); // decimal
 
-    // Check if value is a number
-    if (!(re1.test(value.slice(2)) || re2.test(value))) {
-      console.log("Error: input value is not an interger number");
-      return null;
-    }
-
-    // Convert value byte array
     if (type == "i64") {
-      let v: BN;
+      // If 0x is present, check that it is a hexdecimal
       if (value.slice(0, 2) == "0x") {
-        v = new BN(value.slice(2), 16);
-      } else {
-        v = new BN(value);
+        if (!re1.test(value.slice(2))) {
+          throw new Error("Invalid input value: " + input);
+        }
       }
-      return [v];
+      // If 0x is not present, check that it is a decimal
+      else {
+        if (!re2.test(value)) {
+          throw new Error("Invalid input value: " + input);
+        }
+      }
     } else if (type == "bytes" || type == "bytes-packed") {
+      // Check value starts with 0x
       if (value.slice(0, 2) != "0x") {
-        console.log("Error: bytes input need start with 0x");
-        return null;
+        throw new Error("Value should start with 0x. Input given: " + input);
       }
-      let bytes = ZkWasmUtil.hexToBNs(value.slice(2));
-      return bytes;
+      // Check if value is a hexdecimal
+      if (!re1.test(value.slice(2))) {
+        throw new Error("Invalid input value: " + input);
+      }
     } else {
-      console.log("Unsupported input data type: %s", type);
-      return null;
+      throw new Error("Invalid input type: " + type);
     }
   }
 
-  /**
-   * TODO: \
-   * This function may have some problem parsing bytes-packed, need to be fixed.
-   * Do not rely on this function to parse bytes-packed and verify proof information
-   */
-  static parseArgs(raw: Array<string>): Array<BN> {
-    let parsedInputs = new Array();
-    for (var input of raw) {
-      input = input.trim();
-      if (input !== "") {
-        let args = ZkWasmUtil.parseArg(input);
-        if (args != null) {
-          parsedInputs.push(args);
-        } else {
-          throw Error(`invalid args in ${input}`);
-        }
-      }
-    }
-    return parsedInputs.flat();
+  // Inputs are strings that should be of the form 32:i64, 0x1234:bytes or 0x1234:bytes-packed and split by spaces
+  static validateInputs(inputs: string) {
+    // Split the inputs by spaces
+    let inputArray = inputs.split(" ");
+    // Iterate over the inputs
+    inputArray.forEach((input) => {
+      // Split the input by the colon
+      this.validateInput(input);
+    });
   }
 
   static convertToMd5(value: Uint8Array): string {

@@ -1,5 +1,4 @@
 import FormData from "form-data";
-import { ZkWasmUtil } from "./util.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export class ZkWasmServiceHelper {
     endpoint;
@@ -78,23 +77,6 @@ export class ZkWasmServiceHelper {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task);
         console.log("get addProvingTask response:", response.toString());
         return response;
-    }
-    parseProvingTaskInput(rawInputs) {
-        let inputs = rawInputs.split(" ");
-        let parsedInputs = [];
-        for (var input of inputs) {
-            input = input.trim();
-            if (input !== "") {
-                if (ZkWasmUtil.parseArg(input) != null) {
-                    parsedInputs.push(input);
-                }
-                else {
-                    console.log("Failed to parse proving task input: ", input);
-                    throw new Error("Failed to parse proving task input: " + input);
-                }
-            }
-        }
-        return parsedInputs;
     }
     async addDeployTask(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);

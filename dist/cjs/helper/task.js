@@ -25,7 +25,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEndpoint = exports.ZkWasmServiceHelper = void 0;
 const form_data_1 = __importDefault(require("form-data"));
-const util_js_1 = require("./util.js");
 const endpoint_js_1 = require("./endpoint.js");
 class ZkWasmServiceHelper {
     constructor(endpoint, username, useraddress) {
@@ -123,23 +122,6 @@ class ZkWasmServiceHelper {
             console.log("get addProvingTask response:", response.toString());
             return response;
         });
-    }
-    parseProvingTaskInput(rawInputs) {
-        let inputs = rawInputs.split(" ");
-        let parsedInputs = [];
-        for (var input of inputs) {
-            input = input.trim();
-            if (input !== "") {
-                if (util_js_1.ZkWasmUtil.parseArg(input) != null) {
-                    parsedInputs.push(input);
-                }
-                else {
-                    console.log("Failed to parse proving task input: ", input);
-                    throw new Error("Failed to parse proving task input: " + input);
-                }
-            }
-        }
-        return parsedInputs;
     }
     addDeployTask(task) {
         return __awaiter(this, void 0, void 0, function* () {

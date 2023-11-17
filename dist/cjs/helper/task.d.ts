@@ -13,7 +13,6 @@ export declare class ZkWasmServiceHelper {
     addPayment(payRequest: PaymentParams): Promise<any>;
     addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
     addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
-    parseProvingTaskInput(rawInputs: string): Array<string>;
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
     addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
     modifyImage(data: WithSignature<ModifyImageParams>): Promise<any>;

@@ -144,24 +144,6 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  parseProvingTaskInput(rawInputs: string): Array<string> {
-    let inputs = rawInputs.split(" ");
-    let parsedInputs: Array<string> = [];
-    for (var input of inputs) {
-      input = input.trim();
-      if (input !== "") {
-        if (ZkWasmUtil.parseArg(input) != null) {
-          parsedInputs.push(input);
-        } else {
-          console.log("Failed to parse proving task input: ", input);
-          throw new Error("Failed to parse proving task input: " + input);
-        }
-      }
-    }
-
-    return parsedInputs;
-  }
-
   async addDeployTask(task: WithSignature<DeployParams>) {
     let response = await this.sendRequestWithSignature<DeployParams>(
       "POST",
