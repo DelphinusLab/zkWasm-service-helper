@@ -23,6 +23,21 @@ class ZkWasmUtil {
         }
         return bytes;
     }
+    static validateHex(value) {
+        let re = new RegExp(/^[0-9A-Fa-f]+$/);
+        if (value.slice(0, 2) != "0x") {
+            throw new Error("Value should start with 0x. Input given: " + value);
+        }
+        // Check if value is a hexdecimal
+        if (!re.test(value.slice(2))) {
+            throw new Error("Invalid hex value: " + value);
+        }
+        // Check the length of the hexdecimal is even
+        if (value.length % 2 != 0) {
+            throw new Error("Odd Hex length provided: " + value);
+        }
+        return true;
+    }
     static validateInput(input) {
         let inputSplit = input.split(":");
         // Check that there are two parts
@@ -31,31 +46,21 @@ class ZkWasmUtil {
         }
         let value = inputSplit[0];
         let type = inputSplit[1];
-        let re1 = new RegExp(/^[0-9A-Fa-f]+$/); // hexdecimal
-        let re2 = new RegExp(/^\d+$/); // decimal
+        let decimlaRegex = new RegExp(/^\d+$/); // decimal
         if (type == "i64") {
             // If 0x is present, check that it is a hexdecimal
             if (value.slice(0, 2) == "0x") {
-                if (!re1.test(value.slice(2))) {
-                    throw new Error("Invalid input value: " + input);
-                }
+                this.validateHex(value);
             }
             // If 0x is not present, check that it is a decimal
             else {
-                if (!re2.test(value)) {
+                if (!decimlaRegex.test(value)) {
                     throw new Error("Invalid input value: " + input);
                 }
             }
         }
         else if (type == "bytes" || type == "bytes-packed") {
-            // Check value starts with 0x
-            if (value.slice(0, 2) != "0x") {
-                throw new Error("Value should start with 0x. Input given: " + input);
-            }
-            // Check if value is a hexdecimal
-            if (!re1.test(value.slice(2))) {
-                throw new Error("Invalid input value: " + input);
-            }
+            this.validateHex(value);
         }
         else {
             throw new Error("Invalid input type: " + type);

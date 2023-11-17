@@ -30,6 +30,7 @@ export declare class ZkWasmUtil {
         })[];
     };
     static hexToBNs(hexString: string): Array<BN>;
+    private static validateHex;
     static validateInput(input: string): void;
     static validateInputs(inputs: string): Array<string>;
     static convertToMd5(value: Uint8Array): string;
