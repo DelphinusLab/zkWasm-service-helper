@@ -113,7 +113,7 @@ export class ZkWasmUtil {
   }
 
   // Inputs are strings that should be of the form 32:i64, 0x1234:bytes or 0x1234:bytes-packed and split by spaces
-  static validateInputs(inputs: string) {
+  static validateInputs(inputs: string): Array<string> {
     // Split the inputs by spaces
     let inputArray = inputs.split(" ");
     // Iterate over the inputs
@@ -121,6 +121,8 @@ export class ZkWasmUtil {
       // Split the input by the colon
       this.validateInput(input);
     });
+    // Return split inputs as an array
+    return inputArray;
   }
 
   static convertToMd5(value: Uint8Array): string {

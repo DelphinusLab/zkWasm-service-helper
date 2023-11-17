@@ -70,6 +70,8 @@ class ZkWasmUtil {
             // Split the input by the colon
             this.validateInput(input);
         });
+        // Return split inputs as an array
+        return inputArray;
     }
     static convertToMd5(value) {
         let md5 = new ts_md5_1.Md5();

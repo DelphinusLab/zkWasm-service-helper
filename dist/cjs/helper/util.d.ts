@@ -31,7 +31,7 @@ export declare class ZkWasmUtil {
     };
     static hexToBNs(hexString: string): Array<BN>;
     static validateInput(input: string): void;
-    static validateInputs(inputs: string): void;
+    static validateInputs(inputs: string): Array<string>;
     static convertToMd5(value: Uint8Array): string;
     static createLogsMesssage(params: LogQuery): string;
     static createAddImageSignMessage(params: AddImageParams): string;
