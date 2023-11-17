@@ -63,6 +63,9 @@ class ZkWasmUtil {
     }
     // Inputs are strings that should be of the form 32:i64, 0x1234:bytes or 0x1234:bytes-packed and split by spaces
     static validateInputs(inputs) {
+        if (inputs === "") {
+            return [];
+        }
         // Split the inputs by spaces
         let inputArray = inputs.split(" ");
         // Iterate over the inputs
