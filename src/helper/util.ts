@@ -73,65 +73,68 @@ export class ZkWasmUtil {
     }
     return bytes;
   }
-  /**
-   * TODO: \
-   * This function may have some problem parsing bytes-packed, need to be fixed.
-   * Do not rely on this function to parse bytes-packed and verify proof information
-   */
-  static parseArg(input: string): Array<BN> | null {
-    let inputArray = input.split(":");
-    let value = inputArray[0];
-    let type = inputArray[1];
-    let re1 = new RegExp(/^[0-9A-Fa-f]+$/); // hexdecimal
-    let re2 = new RegExp(/^\d+$/); // decimal
 
-    // Check if value is a number
-    if (!(re1.test(value.slice(2)) || re2.test(value))) {
-      console.log("Error: input value is not an interger number");
-      return null;
+  static validateHex(value: string) {
+    let re = new RegExp(/^[0-9A-Fa-f]+$/);
+    if (value.slice(0, 2) != "0x") {
+      throw new Error("Value should start with 0x. Input given: " + value);
+    }
+    // Check if value is a hexdecimal
+    if (!re.test(value.slice(2))) {
+      throw new Error("Invalid hex value: " + value);
+    }
+    // Check the length of the hexdecimal is even
+    if (value.length % 2 != 0) {
+      throw new Error("Odd Hex length provided: " + value);
+    }
+    return true;
+  }
+
+  static validateInput(input: string) {
+    let inputSplit = input.split(":");
+    // Check that there are two parts
+    if (inputSplit.length != 2) {
+      throw new Error("Invalid input: " + input);
     }
 
-    // Convert value byte array
+    let value = inputSplit[0];
+    let type = inputSplit[1];
+
+    let decimlaRegex = new RegExp(/^\d+$/); // decimal
+
     if (type == "i64") {
-      let v: BN;
+      // If 0x is present, check that it is a hexdecimal
       if (value.slice(0, 2) == "0x") {
-        v = new BN(value.slice(2), 16);
-      } else {
-        v = new BN(value);
+        this.validateHex(value);
       }
-      return [v];
+      // If 0x is not present, check that it is a decimal
+      else {
+        if (!decimlaRegex.test(value)) {
+          throw new Error("Invalid input value: " + input);
+        }
+      }
     } else if (type == "bytes" || type == "bytes-packed") {
-      if (value.slice(0, 2) != "0x") {
-        console.log("Error: bytes input need start with 0x");
-        return null;
-      }
-      let bytes = ZkWasmUtil.hexToBNs(value.slice(2));
-      return bytes;
+      this.validateHex(value);
     } else {
-      console.log("Unsupported input data type: %s", type);
-      return null;
+      throw new Error("Invalid input type: " + type);
     }
   }
 
-  /**
-   * TODO: \
-   * This function may have some problem parsing bytes-packed, need to be fixed.
-   * Do not rely on this function to parse bytes-packed and verify proof information
-   */
-  static parseArgs(raw: Array<string>): Array<BN> {
-    let parsedInputs = new Array();
-    for (var input of raw) {
-      input = input.trim();
-      if (input !== "") {
-        let args = ZkWasmUtil.parseArg(input);
-        if (args != null) {
-          parsedInputs.push(args);
-        } else {
-          throw Error(`invalid args in ${input}`);
-        }
-      }
+  // Inputs are strings that should be of the form 32:i64, 0x1234:bytes or 0x1234:bytes-packed and split by spaces
+  static validateInputs(inputs: string): Array<string> {
+    let trimmed = inputs.trim();
+    if (trimmed === "") {
+      return [];
     }
-    return parsedInputs.flat();
+    // Split the inputs by whitespaces
+    let inputArray = trimmed.split(/\s+/);
+    // Iterate over the inputs
+    inputArray.forEach((input) => {
+      // Split the input by the colon
+      this.validateInput(input);
+    });
+    // Return split inputs as an array
+    return inputArray;
   }
 
   static convertToMd5(value: Uint8Array): string {

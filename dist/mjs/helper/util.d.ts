@@ -30,18 +30,9 @@ export declare class ZkWasmUtil {
         })[];
     };
     static hexToBNs(hexString: string): Array<BN>;
-    /**
-     * TODO: \
-     * This function may have some problem parsing bytes-packed, need to be fixed.
-     * Do not rely on this function to parse bytes-packed and verify proof information
-     */
-    static parseArg(input: string): Array<BN> | null;
-    /**
-     * TODO: \
-     * This function may have some problem parsing bytes-packed, need to be fixed.
-     * Do not rely on this function to parse bytes-packed and verify proof information
-     */
-    static parseArgs(raw: Array<string>): Array<BN>;
+    static validateHex(value: string): boolean;
+    static validateInput(input: string): void;
+    static validateInputs(inputs: string): Array<string>;
     static convertToMd5(value: Uint8Array): string;
     static hasPersonalMessage(message: string): string;
     static signMessage(message: string, priv: string): string;
