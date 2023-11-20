@@ -22,7 +22,7 @@ import {
   zkWasmServiceHelper
 } from "zkwasm-service-helper";
 
-const endpoint = "http://127.0.0.1:8080";
+const endpoint = ""https://rpc.zkwasmhub.com:8090";
 let helper = new ZkWasmServiceHelper(endpoint, "", "");
 let imagePath = "/home/user/a.wasm";
 let fileSelected: Buffer = fs.readFileSync(imagePath);
@@ -61,7 +61,7 @@ import {
   zkWasmServiceHelper
 } from "zkwasm-service-helper";
 
-const endpoint = "http://127.0.0.1:8080";
+const endpoint = ""https://rpc.zkwasmhub.com:8090";
 const image_md5 = "xxxx";
 const public_inputs = "0x22:i64 0x21:i64";
 const private_inputs = "";
@@ -107,7 +107,7 @@ import {
 } from "zkwasm-service-helper";
 import BN from "bn.js";
 
-const endpoint = "http://127.0.0.1:8080";
+const endpoint = ""https://rpc.zkwasmhub.com:8090";
 const taskid = "xxxx"
 
 let helper = new ZkWasmServiceHelper(endpoint, "", "");
