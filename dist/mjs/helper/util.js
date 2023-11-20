@@ -1,4 +1,5 @@
 import BN from "bn.js";
+import EthCrypto from "eth-crypto";
 import { Md5 } from "ts-md5";
 export class ZkWasmUtil {
     static contract_abi = {
@@ -121,6 +122,15 @@ export class ZkWasmUtil {
         if (!hash)
             return "";
         return hash.toString();
+    }
+    static hasPersonalMessage(message) {
+        const msg_len = message.length;
+        const ETH_PREFIX = "\x19Ethereum Signed Message:\n" + msg_len;
+        return EthCrypto.hash.keccak256(ETH_PREFIX + message);
+    }
+    static signMessage(message, priv) {
+        const messageHash = ZkWasmUtil.hasPersonalMessage(message);
+        return EthCrypto.sign(priv, messageHash);
     }
     static createLogsMesssage(params) {
         return JSON.stringify(params);
