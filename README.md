@@ -35,8 +35,8 @@ let info: AddImageParams = {
         image_md5: md5,
         image: fileSelected,
         user_address: account!.address.toLowerCase(),
-        description_url: description_url,
-        avator_url: iconURL,
+        description_url: "",
+        avator_url: "",
         circuit_size: circuitSize,
       };
 
