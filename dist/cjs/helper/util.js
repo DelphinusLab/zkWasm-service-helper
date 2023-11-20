@@ -72,8 +72,8 @@ class ZkWasmUtil {
         if (trimmed === "") {
             return [];
         }
-        // Split the inputs by spaces
-        let inputArray = trimmed.split(" ");
+        // Split the inputs by whitespaces
+        let inputArray = trimmed.split(/\s+/);
         // Iterate over the inputs
         inputArray.forEach((input) => {
             // Split the input by the colon
