@@ -73,7 +73,7 @@ export class ZkWasmUtil {
     return bytes;
   }
 
-  private static validateHex(value: string) {
+  static validateHex(value: string) {
     let re = new RegExp(/^[0-9A-Fa-f]+$/);
     if (value.slice(0, 2) != "0x") {
       throw new Error("Value should start with 0x. Input given: " + value);
@@ -121,11 +121,12 @@ export class ZkWasmUtil {
 
   // Inputs are strings that should be of the form 32:i64, 0x1234:bytes or 0x1234:bytes-packed and split by spaces
   static validateInputs(inputs: string): Array<string> {
-    if (inputs === "") {
+    let trimmed = inputs.trim();
+    if (trimmed === "") {
       return [];
     }
     // Split the inputs by spaces
-    let inputArray = inputs.split(" ");
+    let inputArray = trimmed.split(" ");
     // Iterate over the inputs
     inputArray.forEach((input) => {
       // Split the input by the colon

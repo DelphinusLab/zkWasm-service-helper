@@ -98,11 +98,12 @@ export class ZkWasmUtil {
     }
     // Inputs are strings that should be of the form 32:i64, 0x1234:bytes or 0x1234:bytes-packed and split by spaces
     static validateInputs(inputs) {
-        if (inputs === "") {
+        let trimmed = inputs.trim();
+        if (trimmed === "") {
             return [];
         }
         // Split the inputs by spaces
-        let inputArray = inputs.split(" ");
+        let inputArray = trimmed.split(" ");
         // Iterate over the inputs
         inputArray.forEach((input) => {
             // Split the input by the colon
