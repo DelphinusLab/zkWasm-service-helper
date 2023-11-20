@@ -1,6 +1,7 @@
 import BN from "bn.js";
 import EthCrypto from "eth-crypto";
 import { Md5 } from "ts-md5";
+import { formatUnits } from "ethers";
 export class ZkWasmUtil {
     static contract_abi = {
         contractName: "AggregatorVerifier",
@@ -131,6 +132,10 @@ export class ZkWasmUtil {
     static signMessage(message, priv) {
         const messageHash = ZkWasmUtil.hasPersonalMessage(message);
         return EthCrypto.sign(priv, messageHash);
+    }
+    static convertAmount(balance) {
+        let amt = new BN(balance, 10, "le").toString();
+        return formatUnits(amt, "ether");
     }
     static createLogsMesssage(params) {
         return JSON.stringify(params);

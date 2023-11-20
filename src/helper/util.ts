@@ -10,7 +10,7 @@ import {
   VerifyProofParams,
   LogQuery,
 } from "../interface/interface.js";
-import { Contract } from "ethers";
+import { Contract, formatUnits } from "ethers";
 import {
   DelphinusBrowserProvider,
   DelphinusWalletProvider,
@@ -151,6 +151,11 @@ export class ZkWasmUtil {
   static signMessage(message: string, priv: string): string {
     const messageHash = ZkWasmUtil.hasPersonalMessage(message);
     return EthCrypto.sign(priv, messageHash);
+  }
+
+ static convertAmount(balance: Uint8Array): string {
+    let amt = new BN(balance, 10, "le").toString();
+    return formatUnits(amt, "ether");
   }
 
   static createLogsMesssage(params: LogQuery): string {
