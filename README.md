@@ -11,11 +11,9 @@ like:
 * async loadTasks(query: QueryParams);
 * async addNewWasmImage(task: WithSignature<AddImageParams>);
 * async addProvingTask(task: WithSignature<ProvingParams>);
-* async addDeployTask(task: WithSignature<DeployParams>);
 
 ### A example to add new wasm image
 This example typescript code will add the wasm image to the zkwasm service.
-(Note the signMessage() function need to be implemented by yourself to sign the input string.)
 ```
 import {
   AddImageParams,
@@ -43,7 +41,7 @@ let info: AddImageParams = {
       };
 
 let msg = ZkWasmUtil.createAddImageSignMessage(info);
-let signature: string = await signMessage(msg); //Need user private key to sign the msg
+let signature: string = await ZkWasmUtil.signMessage(msgString, priv); //Need user private key to sign the msg
 let task: WithSignature<AddImageParams> = {
         ...info,
         signature,
@@ -52,5 +50,108 @@ let task: WithSignature<AddImageParams> = {
 let response = await helper.addNewWasmImage(task);
 
 ```
+
+### A example to add proving tasks
+This example typescript code will add proving tasks to the zkwasm service.
+```
+import {
+  ProvingParams,
+  WithSignature,
+  ZkWasmUtil,
+  zkWasmServiceHelper
+} from "zkwasm-service-helper";
+
+const endpoint = "http://127.0.0.1:8080";
+const image_md5 = "xxxx";
+const public_inputs = "0x22:i64 0x21:i64";
+const private_inputs = "";
+const user_addr = "0xaaaaaa";
+
+let helper = new ZkWasmServiceHelper(endpoint, "", "");
+let pb_inputs: Array<string> = helper.parseProvingTaskInput(public_inputs);
+let priv_inputs: Array<string> = helper.parseProvingTaskInput(private_inputs);
+
+let info: ProvingParams = {
+  user_address: user_addr.toLowerCase(),
+  md5: image_md5,
+  public_inputs: pb_inputs,
+  private_inputs: priv_inputs,
+};
+let msgString = ZkWasmUtil.createProvingSignMessage(info);
+
+let signature: string;
+try {
+  signature = await ZkWasmUtil.signMessage(msgString, priv);
+} catch (e: unknown) {
+  console.log("error signing message", e);
+  return;
+}
+
+let task: WithSignature<ProvingParams> = {
+  ...info,
+  signature: signature,
+};
+
+let response = await helper.addProvingTask(task);
+```
+
+### A example to query task details
+This example typescript code will query task details:
+```
+import {
+    ZkWasmServiceHelper,
+    ZkWasmUtil,
+    QueryParams,
+    PaginationResult,
+    Task,
+} from "zkwasm-service-helper";
+import BN from "bn.js";
+
+const endpoint = "http://127.0.0.1:8080";
+const taskid = "xxxx"
+
+let helper = new ZkWasmServiceHelper(endpoint, "", "");
+    let args: QueryParams = {
+        id: taskid!,
+        user_address: "",
+        md5: "",
+        tasktype: "",
+        taskstatus: "",
+    };
+    helper.loadTasks(args).then((res) => {
+        const tasks = res as PaginationResult<Task[]>;
+        const task: Task = tasks.data[0];
+        let aggregate_proof = ZkWasmUtil.bytesToBN(task.proof);
+        let instances = ZkWasmUtil.bytesToBN(task.instances);
+        let batchInstances = ZkWasmUtil.bytesToBN(task.batch_instances);
+        let aux = ZkWasmUtil.bytesToBN(task.aux);
+        let fee = task.task_fee && ZkWasmUtil.convertAmount(task.task_fee); 
+
+        console.log("Task details: ");
+        console.log("    ", task);
+        console.log("    proof:");
+        aggregate_proof.map((proof: BN, index) => {
+            console.log("   0x", proof.toString("hex"));
+        });
+        console.log("    batch_instacne:");
+        batchInstances.map((ins: BN, index) => {
+            console.log("   0x", ins.toString("hex"));
+        });
+        console.log("    instacne:");
+        instances.map((ins: BN, index) => {
+            console.log("   0x", ins.toString("hex"));
+        });
+        console.log("    aux:");
+        aux.map((aux: BN, index) => {
+            console.log("   0x", aux.toString("hex"));
+        });
+        console.log("   fee:", fee);
+    }).catch((err) => {
+        console.log("queryTask Error", err);
+    }).finally(() =>
+        console.log("Finish queryTask.")
+    );
+```
+
 ### Notes:
 md5 is case insensitive when communicate with our zkwasm service
