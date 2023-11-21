@@ -1,5 +1,4 @@
 import BN from "bn.js";
-import EthCrypto from "eth-crypto";
 import { Md5 } from "ts-md5";
 import {
   AddImageParams,
@@ -143,17 +142,6 @@ export class ZkWasmUtil {
     let hash = md5.end();
     if (!hash) return "";
     return hash.toString();
-  }
-
-  static hasPersonalMessage(message: string): string {
-    const msg_len = message.length;
-    const ETH_PREFIX = "\x19Ethereum Signed Message:\n" + msg_len;
-    return EthCrypto.hash.keccak256(ETH_PREFIX + message);
-  }
-
-  static signMessage(message: string, priv: string): string {
-    const messageHash = ZkWasmUtil.hasPersonalMessage(message);
-    return EthCrypto.sign(priv, messageHash);
   }
 
  static convertAmount(balance: Uint8Array): string {

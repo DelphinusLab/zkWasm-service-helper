@@ -34,8 +34,6 @@ export declare class ZkWasmUtil {
     static validateInput(input: string): void;
     static validateInputs(inputs: string): Array<string>;
     static convertToMd5(value: Uint8Array): string;
-    static hasPersonalMessage(message: string): string;
-    static signMessage(message: string, priv: string): string;
     static convertAmount(balance: Uint8Array): string;
     static createLogsMesssage(params: LogQuery): string;
     static createAddImageSignMessage(params: AddImageParams): string;

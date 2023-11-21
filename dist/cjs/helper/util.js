@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZkWasmUtil = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
-const eth_crypto_1 = __importDefault(require("eth-crypto"));
 const ts_md5_1 = require("ts-md5");
 const ethers_1 = require("ethers");
 class ZkWasmUtil {
@@ -91,15 +90,6 @@ class ZkWasmUtil {
         if (!hash)
             return "";
         return hash.toString();
-    }
-    static hasPersonalMessage(message) {
-        const msg_len = message.length;
-        const ETH_PREFIX = "\x19Ethereum Signed Message:\n" + msg_len;
-        return eth_crypto_1.default.hash.keccak256(ETH_PREFIX + message);
-    }
-    static signMessage(message, priv) {
-        const messageHash = ZkWasmUtil.hasPersonalMessage(message);
-        return eth_crypto_1.default.sign(priv, messageHash);
     }
     static convertAmount(balance) {
         let amt = new bn_js_1.default(balance, 10, "le").toString();
