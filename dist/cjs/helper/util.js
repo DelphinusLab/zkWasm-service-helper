@@ -173,6 +173,13 @@ class ZkWasmUtil {
             return result;
         });
     }
+    static signMessage(priv_key, message) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let wallet = new ethers_1.Wallet(priv_key, null);
+            let signature = yield wallet.signMessage(message);
+            return signature;
+        });
+    }
 }
 exports.ZkWasmUtil = ZkWasmUtil;
 ZkWasmUtil.contract_abi = {

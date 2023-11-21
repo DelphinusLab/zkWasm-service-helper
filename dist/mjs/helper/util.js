@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
-import { formatUnits } from "ethers";
+import { formatUnits, Wallet } from "ethers";
 export class ZkWasmUtil {
     static contract_abi = {
         contractName: "AggregatorVerifier",
@@ -200,5 +200,10 @@ export class ZkWasmUtil {
         // let bigIntArgs = args.map((x) => BigInt(x));
         let result = await verify_contract.verify.send(aggregate_proof, batchInstances, aux, [instances]);
         return result;
+    }
+    static async signMessage(priv_key, message) {
+        let wallet = new Wallet(priv_key, null);
+        let signature = await wallet.signMessage(message);
+        return signature;
     }
 }

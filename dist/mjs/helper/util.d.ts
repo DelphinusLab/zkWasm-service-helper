@@ -45,4 +45,5 @@ export declare class ZkWasmUtil {
     static bytesToBigIntArray(data: Uint8Array): BigInt[];
     static composeVerifyContract(signer: DelphinusBrowserProvider | DelphinusWalletProvider, verifier_addr: string): import("./client.js").DelphinusContract | Promise<import("./client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
+    static signMessage(priv_key: string, message: string): Promise<string>;
 }
