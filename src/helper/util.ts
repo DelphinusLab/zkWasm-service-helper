@@ -249,7 +249,7 @@ export class ZkWasmUtil {
     return result;
   }
 
-  static async signMessage(message: string, priv_key: string, ) {
+  static async signMessage(message: string, priv_key: string) {
     let wallet = new Wallet(priv_key, null);
     let signature = await wallet.signMessage(message);
     return signature;
