@@ -173,7 +173,7 @@ class ZkWasmUtil {
             return result;
         });
     }
-    static signMessage(priv_key, message) {
+    static signMessage(message, priv_key) {
         return __awaiter(this, void 0, void 0, function* () {
             let wallet = new ethers_1.Wallet(priv_key, null);
             let signature = yield wallet.signMessage(message);

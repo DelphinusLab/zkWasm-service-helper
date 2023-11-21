@@ -201,7 +201,7 @@ export class ZkWasmUtil {
         let result = await verify_contract.verify.send(aggregate_proof, batchInstances, aux, [instances]);
         return result;
     }
-    static async signMessage(priv_key, message) {
+    static async signMessage(message, priv_key) {
         let wallet = new Wallet(priv_key, null);
         let signature = await wallet.signMessage(message);
         return signature;
