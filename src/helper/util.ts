@@ -9,7 +9,7 @@ import {
   VerifyProofParams,
   LogQuery,
 } from "../interface/interface.js";
-import { Contract, formatUnits } from "ethers";
+import { Contract, formatUnits, Wallet } from "ethers";
 import {
   DelphinusBrowserProvider,
   DelphinusWalletProvider,
@@ -144,7 +144,7 @@ export class ZkWasmUtil {
     return hash.toString();
   }
 
- static convertAmount(balance: Uint8Array): string {
+  static convertAmount(balance: Uint8Array): string {
     let amt = new BN(balance, 10, "le").toString();
     return formatUnits(amt, "ether");
   }
@@ -247,5 +247,11 @@ export class ZkWasmUtil {
       [instances]
     );
     return result;
+  }
+
+  static async signMessage(message: string, priv_key: string, ) {
+    let wallet = new Wallet(priv_key, null);
+    let signature = await wallet.signMessage(message);
+    return signature;
   }
 }
