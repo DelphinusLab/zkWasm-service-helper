@@ -10,6 +10,7 @@ export interface Task {
   md5: string;
   task_type: string;
   status: TaskStatus;
+  single_proof: Uint8Array;
   proof: Uint8Array;
   aux: Uint8Array;
   batch_instances: Uint8Array;
