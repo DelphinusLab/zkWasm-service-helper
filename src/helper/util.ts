@@ -11,9 +11,9 @@ import {
 } from "../interface/interface.js";
 import { Contract, formatUnits, Wallet } from "ethers";
 import {
-  DelphinusBrowserProvider,
-  DelphinusWalletProvider,
-} from "./provider.js";
+  DelphinusWalletConnector,
+  DelphinusBrowserConnector,
+} from "web3subscriber/src/provider.js";
 
 export class ZkWasmUtil {
   static contract_abi = {
@@ -216,7 +216,7 @@ export class ZkWasmUtil {
 
   // Requires some signer
   static composeVerifyContract(
-    signer: DelphinusBrowserProvider | DelphinusWalletProvider,
+    signer: DelphinusBrowserConnector | DelphinusWalletConnector,
     verifier_addr: string
   ) {
     return signer.getContractWithSigner(verifier_addr, this.contract_abi.abi);

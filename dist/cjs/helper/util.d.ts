@@ -1,7 +1,7 @@
 import BN from "bn.js";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "../interface/interface.js";
 import { Contract } from "ethers";
-import { DelphinusBrowserProvider, DelphinusWalletProvider } from "./provider.js";
+import { DelphinusWalletConnector, DelphinusBrowserConnector } from "web3subscriber/src/provider.js";
 export declare class ZkWasmUtil {
     static contract_abi: {
         contractName: string;
@@ -43,7 +43,7 @@ export declare class ZkWasmUtil {
     static createModifyImageMessage(params: ModifyImageParams): string;
     static bytesToBN(data: Uint8Array): BN[];
     static bytesToBigIntArray(data: Uint8Array): BigInt[];
-    static composeVerifyContract(signer: DelphinusBrowserProvider | DelphinusWalletProvider, verifier_addr: string): import("./client.js").DelphinusContract | Promise<import("./client.js").DelphinusContract>;
+    static composeVerifyContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;
 }
