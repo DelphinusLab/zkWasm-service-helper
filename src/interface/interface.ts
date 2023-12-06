@@ -136,6 +136,7 @@ export interface ContractDeployments {
   aggregator_config_address: string;
   aggregator_verifier_steps: string[];
   aggregator_verifier: string;
+  static_file_checksum: Uint8Array;
 }
 // returned from zkwasm service server
 export interface ChainInfo {
