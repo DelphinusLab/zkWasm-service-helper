@@ -24,6 +24,11 @@ export interface Task {
   task_fee?: Uint8Array;
   status_message?: string;
   internal_message?: string;
+  metadata: TaskMetadata;
+}
+
+export interface TaskMetadata {
+  static_file_checksum: Uint8Array;
 }
 
 export type TaskStatus =
