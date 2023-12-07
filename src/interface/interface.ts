@@ -24,11 +24,18 @@ export interface Task {
   task_fee?: Uint8Array;
   status_message?: string;
   internal_message?: string;
-  metadata: TaskMetadata;
+  metadata: TaskVerificationData;
 }
 
-export interface TaskMetadata {
+export interface TaskVerificationData {
   static_file_checksum: Uint8Array;
+  verifier_contracts: Array<VerifierContracts>;
+}
+
+export interface VerifierContracts {
+  chain_id: number;
+  aggregator_verifier: string;
+  circuit_size: number;
 }
 
 export type TaskStatus =
