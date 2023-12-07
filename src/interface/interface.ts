@@ -24,7 +24,7 @@ export interface Task {
   task_fee?: Uint8Array;
   status_message?: string;
   internal_message?: string;
-  metadata: TaskVerificationData;
+  task_verification_data: TaskVerificationData;
 }
 
 export interface TaskVerificationData {
