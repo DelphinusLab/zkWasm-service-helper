@@ -115,6 +115,7 @@ export interface AppConfig {
         prove_fee: string;
     };
     chain_info_list: Array<ChainInfo>;
+    latest_server_checksum: Uint8Array;
     deployments: ContractDeployments[];
 }
 export interface ContractDeployments {
