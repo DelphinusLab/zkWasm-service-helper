@@ -24,6 +24,18 @@ export interface Task {
   task_fee?: Uint8Array;
   status_message?: string;
   internal_message?: string;
+  task_verification_data: TaskVerificationData;
+}
+
+export interface TaskVerificationData {
+  static_file_checksum: Uint8Array;
+  verifier_contracts: Array<VerifierContracts>;
+}
+
+export interface VerifierContracts {
+  chain_id: number;
+  aggregator_verifier: string;
+  circuit_size: number;
 }
 
 export type TaskStatus =
@@ -121,6 +133,7 @@ export interface AppConfig {
     prove_fee: string;
   };
   chain_info_list: Array<ChainInfo>;
+  latest_server_checksum: Uint8Array;
   deployments: ContractDeployments[];
 }
 
@@ -131,6 +144,7 @@ export interface ContractDeployments {
   aggregator_config_address: string;
   aggregator_verifier_steps: string[];
   aggregator_verifier: string;
+  static_file_checksum: Uint8Array;
 }
 // returned from zkwasm service server
 export interface ChainInfo {
