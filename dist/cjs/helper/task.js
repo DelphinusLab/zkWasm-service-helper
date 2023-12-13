@@ -164,7 +164,6 @@ class ZkWasmServiceHelper {
     }
     createHeaders(task) {
         let headers = {
-            "x-eth-address": task.user_address,
             "x-eth-signature": task.signature,
         };
         return headers;
