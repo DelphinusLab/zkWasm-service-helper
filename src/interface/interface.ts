@@ -25,6 +25,7 @@ export interface Task {
   status_message?: string;
   internal_message?: string;
   task_verification_data: TaskVerificationData;
+  debug_logs?: string;
 }
 
 export interface TaskVerificationData {
