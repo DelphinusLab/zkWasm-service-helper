@@ -4,6 +4,7 @@ export interface Statistics {
     totalTasks: number;
     totalDeployed: number;
 }
+export type InputContextType = "Custom" | "ImageInitial" | "ImageCurrent";
 export interface Task {
     user_address: string;
     node_address?: string;
@@ -17,6 +18,9 @@ export interface Task {
     instances: Uint8Array;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    task_context: Uint8Array;
+    input_context_type?: InputContextType;
+    task_output_context: Uint8Array;
     _id: any;
     submit_time: string;
     process_started?: string;
