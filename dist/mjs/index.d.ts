@@ -2,5 +2,5 @@ import { Task, ProvingParams, DeployParams, QueryParams, VerifyProofParams, Veri
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
 import { ZkWasmServiceHelper } from "./helper/task.js";
-export { ZkWasmServiceEndpoint, ZkWasmServiceHelper, ZkWasmUtil };
-export type { Task, ProvingParams, DeployParams, QueryParams, VerifyProofParams, VerifyData, StatusState, DeploymentInfo, Image, Statistics, AddImageParams, WithSignature, User, UserQueryParams, PaymentParams, TxHistoryQueryParams, TransactionInfo, ResetImageParams, AppConfig, PaginationResult, LogQuery, ModifyImageParams, ChainDetails, InputContextType, };
+export { ZkWasmServiceEndpoint, ZkWasmServiceHelper, ZkWasmUtil, InputContextType, };
+export type { Task, ProvingParams, DeployParams, QueryParams, VerifyProofParams, VerifyData, StatusState, DeploymentInfo, Image, Statistics, AddImageParams, WithSignature, User, UserQueryParams, PaymentParams, TxHistoryQueryParams, TransactionInfo, ResetImageParams, AppConfig, PaginationResult, LogQuery, ModifyImageParams, ChainDetails, };
