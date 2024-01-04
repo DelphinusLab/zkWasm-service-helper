@@ -5,7 +5,12 @@ export interface Statistics {
   totalDeployed: number;
 }
 
-export type InputContextType = "Custom" | "ImageInitial" | "ImageCurrent";
+export enum InputContextType {
+  Custom = "Custom",
+  ImageInitial = "ImageInitial",
+  ImageCurrent = "ImageCurrent",
+}
+
 export interface Task {
   user_address: string;
   node_address?: string;
