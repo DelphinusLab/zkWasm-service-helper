@@ -22,6 +22,7 @@ import {
   LogQuery,
   ModifyImageParams,
   ChainDetails,
+  InputContextType,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -54,4 +55,5 @@ export type {
   LogQuery,
   ModifyImageParams,
   ChainDetails,
+  InputContextType,
 };
