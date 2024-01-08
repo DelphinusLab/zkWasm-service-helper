@@ -166,6 +166,7 @@ export interface Image {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    context?: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
 }
