@@ -63,7 +63,7 @@ export interface ProvingParams {
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
-    input_context?: Uint8Array;
+    input_context: Uint8Array | null;
     input_context_type: InputContextType;
 }
 export interface DeployParams {
