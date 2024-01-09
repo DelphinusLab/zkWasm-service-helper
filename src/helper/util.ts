@@ -183,11 +183,10 @@ export class ZkWasmUtil {
     return JSON.stringify(params);
   }
 
-  static bytesToBN(data: Uint8Array): BN[] {
-    let chunksize = 64;
+  static bytesToBN(data: Uint8Array, chunksize: number = 32): BN[] {
     let bns = [];
-    for (let i = 0; i < data.length; i += 32) {
-      const chunk = data.slice(i, i + 32);
+    for (let i = 0; i < data.length; i += chunksize) {
+      const chunk = data.slice(i, i + chunksize);
       let a = new BN(chunk, "le");
       bns.push(a);
       // do whatever
@@ -195,13 +194,15 @@ export class ZkWasmUtil {
     return bns;
   }
 
-  static bytesToBigIntArray(data: Uint8Array): BigInt[] {
+  static bytesToBigIntArray(
+    data: Uint8Array,
+    chunksize: number = 32
+  ): BigInt[] {
     const bigints = [];
-    const chunkSize = 32; // Define the size of each chunk
 
-    for (let i = 0; i < data.length; i += chunkSize) {
+    for (let i = 0; i < data.length; i += chunksize) {
       // Slice the Uint8Array to get a 32-byte chunk
-      const chunk = data.slice(i, i + chunkSize);
+      const chunk = data.slice(i, i + chunksize);
       // Reverse the chunk for little-endian interpretation
       const reversedChunk = chunk.reverse();
       // Convert the reversed 32-byte chunk to a hex string

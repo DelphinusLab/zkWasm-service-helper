@@ -41,8 +41,8 @@ export declare class ZkWasmUtil {
     static createDeploySignMessage(params: DeployParams): string;
     static createResetImageMessage(params: ResetImageParams): string;
     static createModifyImageMessage(params: ModifyImageParams): string;
-    static bytesToBN(data: Uint8Array): BN[];
-    static bytesToBigIntArray(data: Uint8Array): BigInt[];
+    static bytesToBN(data: Uint8Array, chunksize?: number): BN[];
+    static bytesToBigIntArray(data: Uint8Array, chunksize?: number): BigInt[];
     static composeVerifyContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;

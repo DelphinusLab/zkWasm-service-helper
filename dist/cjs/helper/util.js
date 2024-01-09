@@ -123,23 +123,21 @@ class ZkWasmUtil {
     static createModifyImageMessage(params) {
         return JSON.stringify(params);
     }
-    static bytesToBN(data) {
-        let chunksize = 64;
+    static bytesToBN(data, chunksize = 32) {
         let bns = [];
-        for (let i = 0; i < data.length; i += 32) {
-            const chunk = data.slice(i, i + 32);
+        for (let i = 0; i < data.length; i += chunksize) {
+            const chunk = data.slice(i, i + chunksize);
             let a = new bn_js_1.default(chunk, "le");
             bns.push(a);
             // do whatever
         }
         return bns;
     }
-    static bytesToBigIntArray(data) {
+    static bytesToBigIntArray(data, chunksize = 32) {
         const bigints = [];
-        const chunkSize = 32; // Define the size of each chunk
-        for (let i = 0; i < data.length; i += chunkSize) {
+        for (let i = 0; i < data.length; i += chunksize) {
             // Slice the Uint8Array to get a 32-byte chunk
-            const chunk = data.slice(i, i + chunkSize);
+            const chunk = data.slice(i, i + chunksize);
             // Reverse the chunk for little-endian interpretation
             const reversedChunk = chunk.reverse();
             // Convert the reversed 32-byte chunk to a hex string
