@@ -134,6 +134,7 @@ export class ZkWasmUtil {
         let message = "";
         message += params.name;
         message += params.image_md5;
+        message += params.initial_context;
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;

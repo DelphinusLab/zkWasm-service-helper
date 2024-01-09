@@ -52,6 +52,7 @@ export interface PaginationResult<T> {
 export interface AddImageParams {
     name: string;
     image: any;
+    initial_context: string;
     image_md5: string;
     user_address: string;
     description_url: string;
