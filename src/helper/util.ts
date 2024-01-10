@@ -260,10 +260,11 @@ export class ZkWasmUtil {
   }
 
   // For nodejs/server environments only
-  private async loadFileFromPath(filePath: string): Promise<string> {
+  static async loadFileFromPath(filePath: string): Promise<string> {
     if (typeof window === "undefined") {
       // We are in Node.js
-      const fs = await import("fs").then((module) => module.promises);
+      const fs = require("fs");
+      //const fs = await import("fs").then((module) => module.promises);
       return fs.readFile(filePath, "utf8");
     } else {
       // Browser environment
@@ -274,13 +275,13 @@ export class ZkWasmUtil {
   }
 
   // For nodejs/server environments only
-  public async loadFileAsBytes(filePath: string): Promise<Uint8Array> {
+  static async loadFileAsBytes(filePath: string): Promise<Uint8Array> {
     const fileContents = await this.loadFileFromPath(filePath);
     return new TextEncoder().encode(fileContents);
   }
 
   // Load file for browser environments
-  public async uploadFileAsBytes(file: File): Promise<Uint8Array> {
+  static async uploadFileAsBytes(file: File): Promise<Uint8Array> {
     if (typeof window === "undefined") {
       // We are in Node.js
       throw new Error(

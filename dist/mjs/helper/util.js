@@ -207,10 +207,11 @@ export class ZkWasmUtil {
         return signature;
     }
     // For nodejs/server environments only
-    async loadFileFromPath(filePath) {
+    static async loadFileFromPath(filePath) {
         if (typeof window === "undefined") {
             // We are in Node.js
-            const fs = await import("fs").then((module) => module.promises);
+            const fs = require("fs");
+            //const fs = await import("fs").then((module) => module.promises);
             return fs.readFile(filePath, "utf8");
         }
         else {
@@ -219,12 +220,12 @@ export class ZkWasmUtil {
         }
     }
     // For nodejs/server environments only
-    async loadFileAsBytes(filePath) {
+    static async loadFileAsBytes(filePath) {
         const fileContents = await this.loadFileFromPath(filePath);
         return new TextEncoder().encode(fileContents);
     }
     // Load file for browser environments
-    async uploadFileAsBytes(file) {
+    static async uploadFileAsBytes(file) {
         if (typeof window === "undefined") {
             // We are in Node.js
             throw new Error("File loading in Node.js is not supported by this function.");
