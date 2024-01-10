@@ -23,9 +23,9 @@ export interface Task {
     instances: Uint8Array;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
-    task_input_context: Uint8Array;
+    input_context: Uint8Array;
     input_context_type?: InputContextType;
-    task_output_context: Uint8Array;
+    output_context: Uint8Array;
     _id: any;
     submit_time: string;
     process_started?: string;
