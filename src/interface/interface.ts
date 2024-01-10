@@ -94,6 +94,7 @@ export interface ResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
+  reset_context: ContextHexString;
 }
 
 export interface ModifyImageParams {
