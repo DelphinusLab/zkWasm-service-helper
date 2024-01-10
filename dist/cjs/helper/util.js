@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -16,6 +39,7 @@ exports.ZkWasmUtil = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
 const ethers_1 = require("ethers");
+const ethers_2 = require("ethers");
 class ZkWasmUtil {
     static hexToBNs(hexString) {
         let bytes = new Array(Math.ceil(hexString.length / 16));
@@ -93,7 +117,7 @@ class ZkWasmUtil {
     }
     static convertAmount(balance) {
         let amt = new bn_js_1.default(balance, 10, "le").toString();
-        return (0, ethers_1.formatUnits)(amt, "ether");
+        return (0, ethers_2.formatUnits)(amt, "ether");
     }
     static createLogsMesssage(params) {
         return JSON.stringify(params);
@@ -174,10 +198,64 @@ class ZkWasmUtil {
     }
     static signMessage(message, priv_key) {
         return __awaiter(this, void 0, void 0, function* () {
-            let wallet = new ethers_1.Wallet(priv_key, null);
+            let wallet = new ethers_2.Wallet(priv_key, null);
             let signature = yield wallet.signMessage(message);
             return signature;
         });
+    }
+    // For nodejs/server environments only
+    loadFileFromPath(filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof window === "undefined") {
+                // We are in Node.js
+                const fs = yield Promise.resolve().then(() => __importStar(require("fs"))).then((module) => module.promises);
+                return fs.readFile(filePath, "utf8");
+            }
+            else {
+                // Browser environment
+                throw new Error("File loading in the browser is not supported by this function.");
+            }
+        });
+    }
+    // For nodejs/server environments only
+    loadFileAsBytes(filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const fileContents = yield this.loadFileFromPath(filePath);
+            return new TextEncoder().encode(fileContents);
+        });
+    }
+    // Load file for browser environments
+    uploadFileAsBytes(file) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof window === "undefined") {
+                // We are in Node.js
+                throw new Error("File loading in Node.js is not supported by this function.");
+            }
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    // Validate that the file size is a multiple of 8 bytes (64 bits)
+                    if (reader.result &&
+                        ZkWasmUtil.validateContextBytes(new Uint8Array(reader.result))) {
+                        resolve(new Uint8Array(reader.result));
+                    }
+                    else {
+                        reject("File size must be a multiple of 8 bytes (64 bits)");
+                    }
+                };
+                reader.onerror = function (error) {
+                    reject(error);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        });
+    }
+    // Validate bytes are a multiple of 8 bytes (64 bits)
+    static validateContextBytes(data) {
+        return data.length % 8 === 0;
+    }
+    static stringifyContextBytes(data) {
+        return (0, ethers_1.hexlify)(data);
     }
 }
 exports.ZkWasmUtil = ZkWasmUtil;

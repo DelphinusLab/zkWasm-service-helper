@@ -1,5 +1,6 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
+import { BytesLike, hexlify } from "ethers";
 import {
   AddImageParams,
   ProvingParams,
@@ -8,6 +9,7 @@ import {
   ModifyImageParams,
   VerifyProofParams,
   LogQuery,
+  ContextHexString,
 } from "../interface/interface.js";
 import { Contract, formatUnits, Wallet } from "ethers";
 import {
@@ -255,5 +257,67 @@ export class ZkWasmUtil {
     let wallet = new Wallet(priv_key, null);
     let signature = await wallet.signMessage(message);
     return signature;
+  }
+
+  // For nodejs/server environments only
+  private async loadFileFromPath(filePath: string): Promise<string> {
+    if (typeof window === "undefined") {
+      // We are in Node.js
+      const fs = await import("fs").then((module) => module.promises);
+      return fs.readFile(filePath, "utf8");
+    } else {
+      // Browser environment
+      throw new Error(
+        "File loading in the browser is not supported by this function."
+      );
+    }
+  }
+
+  // For nodejs/server environments only
+  public async loadFileAsBytes(filePath: string): Promise<Uint8Array> {
+    const fileContents = await this.loadFileFromPath(filePath);
+    return new TextEncoder().encode(fileContents);
+  }
+
+  // Load file for browser environments
+  public async uploadFileAsBytes(file: File): Promise<Uint8Array> {
+    if (typeof window === "undefined") {
+      // We are in Node.js
+      throw new Error(
+        "File loading in Node.js is not supported by this function."
+      );
+    }
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onload = function () {
+        // Validate that the file size is a multiple of 8 bytes (64 bits)
+        if (
+          reader.result &&
+          ZkWasmUtil.validateContextBytes(
+            new Uint8Array(reader.result as ArrayBuffer)
+          )
+        ) {
+          resolve(new Uint8Array(reader.result as ArrayBuffer));
+        } else {
+          reject("File size must be a multiple of 8 bytes (64 bits)");
+        }
+      };
+
+      reader.onerror = function (error) {
+        reject(error);
+      };
+
+      reader.readAsArrayBuffer(file);
+    });
+  }
+
+  // Validate bytes are a multiple of 8 bytes (64 bits)
+  static validateContextBytes(data: Uint8Array): boolean {
+    return data.length % 8 === 0;
+  }
+
+  static stringifyContextBytes(data: Uint8Array): ContextHexString {
+    return hexlify(data);
   }
 }
