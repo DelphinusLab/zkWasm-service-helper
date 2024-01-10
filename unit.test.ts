@@ -1,1 +1,0 @@
-import { ZkWasmUtil } from "./src";
