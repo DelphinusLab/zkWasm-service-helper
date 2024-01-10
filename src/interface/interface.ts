@@ -11,6 +11,8 @@ export enum InputContextType {
   ImageCurrent = "ImageCurrent",
 }
 
+export type ContextHexString = string; // Hex string of the input context bytes
+
 export interface Task {
   user_address: string;
   node_address?: string;
@@ -24,7 +26,7 @@ export interface Task {
   instances: Uint8Array;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
-  task_context: Uint8Array;
+  task_input_context: Uint8Array;
   input_context_type?: InputContextType; // The type of context for the task
   task_output_context: Uint8Array; // The context output from the task which should go to the image
   _id: any;
@@ -65,7 +67,7 @@ export interface PaginationResult<T> {
 export interface AddImageParams {
   name: string;
   image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
-  initial_context: string;
+  initial_context: ContextHexString;
   image_md5: string;
   user_address: string;
   description_url: string;
@@ -78,7 +80,7 @@ export interface ProvingParams {
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
-  input_context: string; // Hex string of the input context bytes
+  input_context: ContextHexString;
   input_context_type: InputContextType;
 }
 

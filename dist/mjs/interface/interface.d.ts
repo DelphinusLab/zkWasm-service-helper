@@ -9,6 +9,7 @@ export declare enum InputContextType {
     ImageInitial = "ImageInitial",
     ImageCurrent = "ImageCurrent"
 }
+export type ContextHexString = string;
 export interface Task {
     user_address: string;
     node_address?: string;
@@ -22,7 +23,7 @@ export interface Task {
     instances: Uint8Array;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
-    task_context: Uint8Array;
+    task_input_context: Uint8Array;
     input_context_type?: InputContextType;
     task_output_context: Uint8Array;
     _id: any;
@@ -52,7 +53,7 @@ export interface PaginationResult<T> {
 export interface AddImageParams {
     name: string;
     image: any;
-    initial_context: string;
+    initial_context: ContextHexString;
     image_md5: string;
     user_address: string;
     description_url: string;
@@ -64,7 +65,7 @@ export interface ProvingParams {
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
-    input_context: string;
+    input_context: ContextHexString;
     input_context_type: InputContextType;
 }
 export interface DeployParams {
