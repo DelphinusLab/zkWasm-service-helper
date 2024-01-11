@@ -243,7 +243,7 @@ export class ZkWasmUtil {
         }
     }
     // For nodejs/server environments only
-    static async loadFileAsBytes(filePath) {
+    static async loadContexFileAsBytes(filePath) {
         const fileContents = await this.loadContextFileFromPath(filePath);
         return new TextEncoder().encode(fileContents);
     }

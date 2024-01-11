@@ -47,7 +47,7 @@ export declare class ZkWasmUtil {
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;
     static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
-    static loadFileAsBytes(filePath: string): Promise<Uint8Array>;
+    static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
     static browserLoadFileAsBytes(file: File): Promise<Uint8Array>;
     static validateContextBytes(data: Uint8Array): boolean;
 }
