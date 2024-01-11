@@ -118,7 +118,7 @@ class ZkWasmServiceHelper {
     }
     addProvingTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
             console.log("get addProvingTask response:", response.toString());
             return response;
         });
@@ -132,7 +132,7 @@ class ZkWasmServiceHelper {
     }
     addResetTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
             console.log("get addResetTask response:", response.toString());
             return response;
         });

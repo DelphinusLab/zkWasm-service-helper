@@ -138,7 +138,8 @@ export class ZkWasmServiceHelper {
     let response = await this.sendRequestWithSignature<ProvingParams>(
       "POST",
       TaskEndpoint.PROVE,
-      task
+      task,
+      true
     );
     console.log("get addProvingTask response:", response.toString());
     return response;
@@ -158,7 +159,8 @@ export class ZkWasmServiceHelper {
     let response = await this.sendRequestWithSignature<ResetImageParams>(
       "POST",
       TaskEndpoint.RESET,
-      task
+      task,
+      true
     );
 
     console.log("get addResetTask response:", response.toString());

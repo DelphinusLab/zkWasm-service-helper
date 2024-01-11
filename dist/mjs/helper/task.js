@@ -74,7 +74,7 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async addProvingTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task);
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
         console.log("get addProvingTask response:", response.toString());
         return response;
     }
@@ -84,7 +84,7 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async addResetTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task);
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
         console.log("get addResetTask response:", response.toString());
         return response;
     }
