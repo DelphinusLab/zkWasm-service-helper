@@ -192,9 +192,12 @@ export class ZkWasmServiceHelper {
     if (isFormData) {
       payload = new FormData();
       for (const key in task_params) {
-        // append if the data is not null
-        if (task_params[key as keyof typeof task_params]) {
-          // if the data is an array, append each element with the same key
+        // append if the data is not null | undefined
+        if (
+          task_params[key as keyof typeof task_params] != null &&
+          task_params[key as keyof typeof task_params] != undefined
+        ) {
+          // if the data is an array, append each element with the same key (multipart form data array usage)
           if (Array.isArray(task_params[key as keyof typeof task_params])) {
             for (const element of task_params[
               key as keyof typeof task_params
