@@ -146,6 +146,7 @@ export class ZkWasmUtil {
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";
+        message += params.user_address;
         message += params.md5;
         message += params.public_inputs;
         message += params.private_inputs;
@@ -153,7 +154,6 @@ export class ZkWasmUtil {
             message += params.input_context_md5;
         }
         message += params.input_context_type;
-        message += params.user_address;
         return message;
     }
     static createDeploySignMessage(params) {
@@ -163,10 +163,10 @@ export class ZkWasmUtil {
         let message = "";
         message += params.md5;
         message += params.circuit_size;
+        message += params.user_address;
         if (params.reset_context) {
             message += params.reset_context_md5;
         }
-        message += params.user_address;
         return message;
     }
     static createModifyImageMessage(params) {
