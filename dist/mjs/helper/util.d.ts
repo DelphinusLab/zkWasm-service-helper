@@ -46,9 +46,8 @@ export declare class ZkWasmUtil {
     static composeVerifyContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;
-    static loadFileFromPath(filePath: string): Promise<string>;
+    static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
     static loadFileAsBytes(filePath: string): Promise<Uint8Array>;
-    static uploadFileAsBytes(file: File): Promise<Uint8Array>;
+    static browserLoadFileAsBytes(file: File): Promise<Uint8Array>;
     static validateContextBytes(data: Uint8Array): boolean;
-    static stringifyContextBytes(data: Uint8Array): ContextHexString;
 }

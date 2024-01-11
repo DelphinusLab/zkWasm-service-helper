@@ -67,8 +67,9 @@ export interface PaginationResult<T> {
 export interface AddImageParams {
   name: string;
   image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
-  initial_context: ContextHexString;
+  initial_context: unknown | null;
   image_md5: string;
+  initial_context_md5: string | null;
   user_address: string;
   description_url: string;
   avator_url: string;
@@ -80,7 +81,8 @@ export interface ProvingParams {
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
-  input_context: ContextHexString;
+  input_context: unknown | null;
+  input_context_md5: string | null;
   input_context_type: InputContextType;
 }
 
@@ -94,7 +96,8 @@ export interface ResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
-  reset_context: ContextHexString | null;
+  reset_context: unknown | null;
+  reset_context_md5: string | null;
 }
 
 export interface ModifyImageParams {
@@ -196,6 +199,7 @@ export interface Image {
   avator_url: string;
   circuit_size: number;
   context?: Uint8Array;
+  initial_context: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
 }

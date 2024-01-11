@@ -16,7 +16,6 @@ exports.ZkWasmUtil = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
 const ethers_1 = require("ethers");
-const ethers_2 = require("ethers");
 class ZkWasmUtil {
     static hexToBNs(hexString) {
         let bytes = new Array(Math.ceil(hexString.length / 16));
@@ -94,7 +93,7 @@ class ZkWasmUtil {
     }
     static convertAmount(balance) {
         let amt = new bn_js_1.default(balance, 10, "le").toString();
-        return (0, ethers_2.formatUnits)(amt, "ether");
+        return (0, ethers_1.formatUnits)(amt, "ether");
     }
     static createLogsMesssage(params) {
         return JSON.stringify(params);
@@ -105,7 +104,7 @@ class ZkWasmUtil {
         let message = "";
         message += params.name;
         message += params.image_md5;
-        message += params.initial_context;
+        message += params.initial_context_md5;
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;
@@ -113,13 +112,26 @@ class ZkWasmUtil {
         return message;
     }
     static createProvingSignMessage(params) {
-        return JSON.stringify(params);
+        // No need to sign the file itself, just the md5
+        let message = "";
+        message += params.md5;
+        message += params.public_inputs;
+        message += params.private_inputs;
+        message += params.input_context_md5;
+        message += params.input_context_type;
+        message += params.user_address;
+        return message;
     }
     static createDeploySignMessage(params) {
         return JSON.stringify(params);
     }
     static createResetImageMessage(params) {
-        return JSON.stringify(params);
+        let message = "";
+        message += params.md5;
+        message += params.circuit_size;
+        message += params.reset_context_md5;
+        message += params.user_address;
+        return message;
     }
     static createModifyImageMessage(params) {
         return JSON.stringify(params);
@@ -175,13 +187,13 @@ class ZkWasmUtil {
     }
     static signMessage(message, priv_key) {
         return __awaiter(this, void 0, void 0, function* () {
-            let wallet = new ethers_2.Wallet(priv_key, null);
+            let wallet = new ethers_1.Wallet(priv_key, null);
             let signature = yield wallet.signMessage(message);
             return signature;
         });
     }
     // For nodejs/server environments only
-    static loadFileFromPath(filePath) {
+    static loadContextFileFromPath(filePath) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof window === "undefined") {
                 // We are in Node.js
@@ -198,12 +210,12 @@ class ZkWasmUtil {
     // For nodejs/server environments only
     static loadFileAsBytes(filePath) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fileContents = yield this.loadFileFromPath(filePath);
+            const fileContents = yield this.loadContextFileFromPath(filePath);
             return new TextEncoder().encode(fileContents);
         });
     }
     // Load file for browser environments
-    static uploadFileAsBytes(file) {
+    static browserLoadFileAsBytes(file) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof window === "undefined") {
                 // We are in Node.js
@@ -231,9 +243,6 @@ class ZkWasmUtil {
     // Validate bytes are a multiple of 8 bytes (64 bits)
     static validateContextBytes(data) {
         return data.length % 8 === 0;
-    }
-    static stringifyContextBytes(data) {
-        return (0, ethers_1.hexlify)(data);
     }
 }
 exports.ZkWasmUtil = ZkWasmUtil;

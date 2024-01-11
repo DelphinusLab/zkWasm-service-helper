@@ -161,7 +161,7 @@ export class ZkWasmUtil {
     let message = "";
     message += params.name;
     message += params.image_md5;
-    message += params.initial_context;
+    message += params.initial_context_md5;
     message += params.user_address;
     message += params.description_url;
     message += params.avator_url;
@@ -170,7 +170,15 @@ export class ZkWasmUtil {
   }
 
   static createProvingSignMessage(params: ProvingParams): string {
-    return JSON.stringify(params);
+    // No need to sign the file itself, just the md5
+    let message = "";
+    message += params.md5;
+    message += params.public_inputs;
+    message += params.private_inputs;
+    message += params.input_context_md5;
+    message += params.input_context_type;
+    message += params.user_address;
+    return message;
   }
 
   static createDeploySignMessage(params: DeployParams): string {
@@ -178,7 +186,12 @@ export class ZkWasmUtil {
   }
 
   static createResetImageMessage(params: ResetImageParams): string {
-    return JSON.stringify(params);
+    let message = "";
+    message += params.md5;
+    message += params.circuit_size;
+    message += params.reset_context_md5;
+    message += params.user_address;
+    return message;
   }
 
   static createModifyImageMessage(params: ModifyImageParams): string {
@@ -260,7 +273,9 @@ export class ZkWasmUtil {
   }
 
   // For nodejs/server environments only
-  static async loadFileFromPath(filePath: string): Promise<string> {
+  static async loadContextFileFromPath(
+    filePath: string
+  ): Promise<ContextHexString> {
     if (typeof window === "undefined") {
       // We are in Node.js
       const fs = require("fs");
@@ -276,12 +291,12 @@ export class ZkWasmUtil {
 
   // For nodejs/server environments only
   static async loadFileAsBytes(filePath: string): Promise<Uint8Array> {
-    const fileContents = await this.loadFileFromPath(filePath);
+    const fileContents = await this.loadContextFileFromPath(filePath);
     return new TextEncoder().encode(fileContents);
   }
 
   // Load file for browser environments
-  static async uploadFileAsBytes(file: File): Promise<Uint8Array> {
+  static async browserLoadFileAsBytes(file: File): Promise<Uint8Array> {
     if (typeof window === "undefined") {
       // We are in Node.js
       throw new Error(
@@ -316,9 +331,5 @@ export class ZkWasmUtil {
   // Validate bytes are a multiple of 8 bytes (64 bits)
   static validateContextBytes(data: Uint8Array): boolean {
     return data.length % 8 === 0;
-  }
-
-  static stringifyContextBytes(data: Uint8Array): ContextHexString {
-    return hexlify(data);
   }
 }
