@@ -194,10 +194,19 @@ export class ZkWasmServiceHelper {
       for (const key in task_params) {
         // append if the data is not null
         if (task_params[key as keyof typeof task_params]) {
-          payload.append(
-            key,
-            task_params[key as keyof typeof task_params] as string
-          );
+          // if the data is an array, append each element with the same key
+          if (Array.isArray(task_params[key as keyof typeof task_params])) {
+            for (const element of task_params[
+              key as keyof typeof task_params
+            ] as Array<unknown>) {
+              payload.append(key, element as string);
+            }
+          } else {
+            payload.append(
+              key,
+              task_params[key as keyof typeof task_params] as string
+            );
+          }
         }
       }
     } else {

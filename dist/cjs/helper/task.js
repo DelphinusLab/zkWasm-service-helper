@@ -155,7 +155,15 @@ class ZkWasmServiceHelper {
                 for (const key in task_params) {
                     // append if the data is not null
                     if (task_params[key]) {
-                        payload.append(key, task_params[key]);
+                        // if the data is an array, append each element with the same key
+                        if (Array.isArray(task_params[key])) {
+                            for (const element of task_params[key]) {
+                                payload.append(key, element);
+                            }
+                        }
+                        else {
+                            payload.append(key, task_params[key]);
+                        }
                     }
                 }
             }

@@ -176,8 +176,16 @@ export class ZkWasmUtil {
     let message = "";
     message += params.user_address;
     message += params.md5;
-    message += params.public_inputs;
-    message += params.private_inputs;
+
+    // for array elements, append one by one
+    for (const input of params.public_inputs) {
+      message += input;
+    }
+
+    for (const input of params.private_inputs) {
+      message += input;
+    }
+
     if (params.input_context) {
       message += params.input_context_md5;
     }
