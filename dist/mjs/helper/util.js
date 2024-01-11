@@ -134,7 +134,9 @@ export class ZkWasmUtil {
         let message = "";
         message += params.name;
         message += params.image_md5;
-        message += params.initial_context_md5;
+        if (params.initial_context) {
+            message += params.initial_context_md5;
+        }
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;
@@ -147,7 +149,9 @@ export class ZkWasmUtil {
         message += params.md5;
         message += params.public_inputs;
         message += params.private_inputs;
-        message += params.input_context_md5;
+        if (params.input_context) {
+            message += params.input_context_md5;
+        }
         message += params.input_context_type;
         message += params.user_address;
         return message;
@@ -159,7 +163,9 @@ export class ZkWasmUtil {
         let message = "";
         message += params.md5;
         message += params.circuit_size;
-        message += params.reset_context_md5;
+        if (params.reset_context) {
+            message += params.reset_context_md5;
+        }
         message += params.user_address;
         return message;
     }

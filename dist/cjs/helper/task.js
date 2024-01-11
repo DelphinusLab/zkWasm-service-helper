@@ -153,7 +153,10 @@ class ZkWasmServiceHelper {
             if (isFormData) {
                 payload = new form_data_1.default();
                 for (const key in task_params) {
-                    payload.append(key, task_params[key]);
+                    // append if the data is not null
+                    if (task_params[key]) {
+                        payload.append(key, task_params[key]);
+                    }
                 }
             }
             else {

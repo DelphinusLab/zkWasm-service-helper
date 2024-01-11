@@ -190,7 +190,13 @@ export class ZkWasmServiceHelper {
     if (isFormData) {
       payload = new FormData();
       for (const key in task_params) {
-        payload.append(key, task_params[key as keyof typeof task_params]);
+        // append if the data is not null
+        if (task_params[key as keyof typeof task_params]) {
+          payload.append(
+            key,
+            task_params[key as keyof typeof task_params] as string
+          );
+        }
       }
     } else {
       payload = JSON.parse(JSON.stringify(task_params));
