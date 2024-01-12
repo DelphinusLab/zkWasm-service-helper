@@ -317,7 +317,7 @@ export class ZkWasmUtil {
   }
 
   // Load file for browser environments
-  static async browserLoadFileAsBytes(file: File): Promise<Uint8Array> {
+  static async browserLoadContextFileAsBytes(file: File): Promise<Uint8Array> {
     if (typeof window === "undefined") {
       // We are in Node.js
       throw new Error(

@@ -255,7 +255,7 @@ export class ZkWasmUtil {
         }
     }
     // Load file for browser environments
-    static async browserLoadFileAsBytes(file) {
+    static async browserLoadContextFileAsBytes(file) {
         if (typeof window === "undefined") {
             // We are in Node.js
             throw new Error("File loading in Node.js is not supported by this function.");

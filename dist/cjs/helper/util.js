@@ -233,7 +233,7 @@ class ZkWasmUtil {
         });
     }
     // Load file for browser environments
-    static browserLoadFileAsBytes(file) {
+    static browserLoadContextFileAsBytes(file) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof window === "undefined") {
                 // We are in Node.js

@@ -48,6 +48,6 @@ export declare class ZkWasmUtil {
     static signMessage(message: string, priv_key: string): Promise<string>;
     static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
     static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
-    static browserLoadFileAsBytes(file: File): Promise<Uint8Array>;
+    static browserLoadContextFileAsBytes(file: File): Promise<Uint8Array>;
     static validateContextBytes(data: Uint8Array): boolean;
 }
