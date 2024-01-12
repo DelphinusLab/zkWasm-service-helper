@@ -306,8 +306,14 @@ export class ZkWasmUtil {
 
   // For nodejs/server environments only
   static async loadContexFileAsBytes(filePath: string): Promise<Uint8Array> {
-    const fileContents = await this.loadContextFileFromPath(filePath);
-    return new TextEncoder().encode(fileContents);
+    try {
+      const fileContents = await this.loadContextFileFromPath(filePath);
+      let bytes = new TextEncoder().encode(fileContents);
+      this.validateContextBytes(bytes);
+      return bytes;
+    } catch (err) {
+      throw err;
+    }
   }
 
   // Load file for browser environments
@@ -322,16 +328,15 @@ export class ZkWasmUtil {
       const reader = new FileReader();
 
       reader.onload = function () {
-        // Validate that the file size is a multiple of 8 bytes (64 bits)
-        if (
-          reader.result &&
-          ZkWasmUtil.validateContextBytes(
-            new Uint8Array(reader.result as ArrayBuffer)
-          )
-        ) {
-          resolve(new Uint8Array(reader.result as ArrayBuffer));
-        } else {
-          reject("File size must be a multiple of 8 bytes (64 bits)");
+        if (reader.result) {
+          try {
+            ZkWasmUtil.validateContextBytes(
+              new Uint8Array(reader.result as ArrayBuffer)
+            );
+            resolve(new Uint8Array(reader.result as ArrayBuffer));
+          } catch (err) {
+            reject(err);
+          }
         }
       };
 
@@ -343,8 +348,14 @@ export class ZkWasmUtil {
     });
   }
 
-  // Validate bytes are a multiple of 8 bytes (64 bits)
+  // Validate bytes are a multiple of 8 bytes (64 bits) and length less than 4KB
   static validateContextBytes(data: Uint8Array): boolean {
-    return data.length % 8 === 0;
+    if (data.length > 4096) {
+      throw new Error("File size must be less than 4KB");
+    }
+    if (data.length % 8 != 0) {
+      throw new Error("File size must be a multiple of 8 bytes (64 bits)");
+    }
+    return true;
   }
 }
