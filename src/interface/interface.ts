@@ -4,6 +4,15 @@ export interface Statistics {
   totalTasks: number;
   totalDeployed: number;
 }
+
+export enum InputContextType {
+  Custom = "Custom",
+  ImageInitial = "ImageInitial",
+  ImageCurrent = "ImageCurrent",
+}
+
+export type ContextHexString = string; // Hex string of the input context bytes
+
 export interface Task {
   user_address: string;
   node_address?: string;
@@ -17,6 +26,9 @@ export interface Task {
   instances: Uint8Array;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
+  input_context: Uint8Array;
+  input_context_type?: InputContextType; // The type of context for the task
+  output_context: Uint8Array; // The context output from the task which should go to the image
   _id: any;
   submit_time: string;
   process_started?: string;
@@ -55,7 +67,9 @@ export interface PaginationResult<T> {
 export interface AddImageParams {
   name: string;
   image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
+  initial_context: unknown | null;
   image_md5: string;
+  initial_context_md5: string | null;
   user_address: string;
   description_url: string;
   avator_url: string;
@@ -67,6 +81,9 @@ export interface ProvingParams {
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
+  input_context: unknown | null;
+  input_context_md5: string | null;
+  input_context_type: InputContextType;
 }
 
 export interface DeployParams {
@@ -79,6 +96,8 @@ export interface ResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
+  reset_context: unknown | null;
+  reset_context_md5: string | null;
 }
 
 export interface ModifyImageParams {
@@ -179,6 +198,8 @@ export interface Image {
   description_url: string;
   avator_url: string;
   circuit_size: number;
+  context?: Uint8Array;
+  initial_context: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
 }

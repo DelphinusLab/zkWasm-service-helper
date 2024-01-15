@@ -104,6 +104,9 @@ class ZkWasmUtil {
         let message = "";
         message += params.name;
         message += params.image_md5;
+        if (params.initial_context) {
+            message += params.initial_context_md5;
+        }
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;
@@ -111,34 +114,54 @@ class ZkWasmUtil {
         return message;
     }
     static createProvingSignMessage(params) {
-        return JSON.stringify(params);
+        // No need to sign the file itself, just the md5
+        let message = "";
+        message += params.user_address;
+        message += params.md5;
+        // for array elements, append one by one
+        for (const input of params.public_inputs) {
+            message += input;
+        }
+        for (const input of params.private_inputs) {
+            message += input;
+        }
+        if (params.input_context) {
+            message += params.input_context_md5;
+        }
+        message += params.input_context_type;
+        return message;
     }
     static createDeploySignMessage(params) {
         return JSON.stringify(params);
     }
     static createResetImageMessage(params) {
-        return JSON.stringify(params);
+        let message = "";
+        message += params.md5;
+        message += params.circuit_size;
+        message += params.user_address;
+        if (params.reset_context) {
+            message += params.reset_context_md5;
+        }
+        return message;
     }
     static createModifyImageMessage(params) {
         return JSON.stringify(params);
     }
-    static bytesToBN(data) {
-        let chunksize = 64;
+    static bytesToBN(data, chunksize = 32) {
         let bns = [];
-        for (let i = 0; i < data.length; i += 32) {
-            const chunk = data.slice(i, i + 32);
+        for (let i = 0; i < data.length; i += chunksize) {
+            const chunk = data.slice(i, i + chunksize);
             let a = new bn_js_1.default(chunk, "le");
             bns.push(a);
             // do whatever
         }
         return bns;
     }
-    static bytesToBigIntArray(data) {
+    static bytesToBigIntArray(data, chunksize = 32) {
         const bigints = [];
-        const chunkSize = 32; // Define the size of each chunk
-        for (let i = 0; i < data.length; i += chunkSize) {
+        for (let i = 0; i < data.length; i += chunksize) {
             // Slice the Uint8Array to get a 32-byte chunk
-            const chunk = data.slice(i, i + chunkSize);
+            const chunk = data.slice(i, i + chunksize);
             // Reverse the chunk for little-endian interpretation
             const reversedChunk = chunk.reverse();
             // Convert the reversed 32-byte chunk to a hex string
@@ -179,6 +202,72 @@ class ZkWasmUtil {
             let signature = yield wallet.signMessage(message);
             return signature;
         });
+    }
+    // For nodejs/server environments only
+    static loadContextFileFromPath(filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof window === "undefined") {
+                // We are in Node.js
+                const fs = require("fs");
+                //const fs = await import("fs").then((module) => module.promises);
+                return fs.readFile(filePath, "utf8");
+            }
+            else {
+                // Browser environment
+                throw new Error("File loading in the browser is not supported by this function.");
+            }
+        });
+    }
+    // For nodejs/server environments only
+    static loadContexFileAsBytes(filePath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                const fileContents = yield this.loadContextFileFromPath(filePath);
+                let bytes = new TextEncoder().encode(fileContents);
+                this.validateContextBytes(bytes);
+                return bytes;
+            }
+            catch (err) {
+                throw err;
+            }
+        });
+    }
+    // Load file for browser environments
+    static browserLoadContextFileAsBytes(file) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (typeof window === "undefined") {
+                // We are in Node.js
+                throw new Error("File loading in Node.js is not supported by this function.");
+            }
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    if (reader.result) {
+                        try {
+                            ZkWasmUtil.validateContextBytes(new Uint8Array(reader.result));
+                            resolve(new Uint8Array(reader.result));
+                        }
+                        catch (err) {
+                            reject(err);
+                        }
+                    }
+                };
+                reader.onerror = function (error) {
+                    reject(error);
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        });
+    }
+    // Validate bytes are a multiple of 8 bytes (64 bits) and length less than 4KB
+    static validateContextBytes(data) {
+        if (data.length > this.MAX_CONTEXT_SIZE) {
+            throw new Error("File size must be less than 4KB");
+        }
+        if (data.length % 8 != 0) {
+            throw new Error("File size must be a multiple of 8 bytes (64 bits)");
+        }
+        return true;
     }
 }
 exports.ZkWasmUtil = ZkWasmUtil;
@@ -227,3 +316,4 @@ ZkWasmUtil.contract_abi = {
         },
     ],
 };
+ZkWasmUtil.MAX_CONTEXT_SIZE = 4096;

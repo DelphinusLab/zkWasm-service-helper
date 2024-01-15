@@ -4,6 +4,12 @@ export interface Statistics {
     totalTasks: number;
     totalDeployed: number;
 }
+export declare enum InputContextType {
+    Custom = "Custom",
+    ImageInitial = "ImageInitial",
+    ImageCurrent = "ImageCurrent"
+}
+export type ContextHexString = string;
 export interface Task {
     user_address: string;
     node_address?: string;
@@ -17,6 +23,9 @@ export interface Task {
     instances: Uint8Array;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    input_context: Uint8Array;
+    input_context_type?: InputContextType;
+    output_context: Uint8Array;
     _id: any;
     submit_time: string;
     process_started?: string;
@@ -44,7 +53,9 @@ export interface PaginationResult<T> {
 export interface AddImageParams {
     name: string;
     image: any;
+    initial_context: unknown | null;
     image_md5: string;
+    initial_context_md5: string | null;
     user_address: string;
     description_url: string;
     avator_url: string;
@@ -55,6 +66,9 @@ export interface ProvingParams {
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    input_context: unknown | null;
+    input_context_md5: string | null;
+    input_context_type: InputContextType;
 }
 export interface DeployParams {
     user_address: string;
@@ -65,6 +79,8 @@ export interface ResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
+    reset_context: unknown | null;
+    reset_context_md5: string | null;
 }
 export interface ModifyImageParams {
     md5: string;
@@ -156,6 +172,8 @@ export interface Image {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    context?: Uint8Array;
+    initial_context: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
 }
