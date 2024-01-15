@@ -49,5 +49,6 @@ export declare class ZkWasmUtil {
     static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
     static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
     static browserLoadContextFileAsBytes(file: File): Promise<Uint8Array>;
+    static MAX_CONTEXT_SIZE: number;
     static validateContextBytes(data: Uint8Array): boolean;
 }
