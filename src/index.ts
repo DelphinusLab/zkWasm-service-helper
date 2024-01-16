@@ -24,6 +24,13 @@ import {
   ChainDetails,
   InputContextType,
   ContextHexString,
+  WithCustomInputContextType,
+  WithInitialContext,
+  WithNonCustomInputContextType,
+  WithResetContext,
+  WithoutInitialContext,
+  WithoutInputContextType,
+  WithoutResetContext,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -62,4 +69,11 @@ export type {
   ModifyImageParams,
   ChainDetails,
   ContextHexString,
+  WithCustomInputContextType,
+  WithInitialContext,
+  WithNonCustomInputContextType,
+  WithResetContext,
+  WithoutInitialContext,
+  WithoutInputContextType,
+  WithoutResetContext,
 };

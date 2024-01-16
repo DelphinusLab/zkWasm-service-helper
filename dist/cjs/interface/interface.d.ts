@@ -74,17 +74,17 @@ export interface BaseProvingParams {
     public_inputs: Array<string>;
     private_inputs: Array<string>;
 }
-interface WithCustomInputContextType {
+export interface WithCustomInputContextType {
     input_context_type: InputContextType.Custom;
     input_context: unknown;
     input_context_md5: string;
 }
-interface WithNonCustomInputContextType {
+export interface WithNonCustomInputContextType {
     input_context_type: Exclude<InputContextType, InputContextType.Custom>;
     input_context?: never;
     input_context_md5?: never;
 }
-interface WithoutInputContextType {
+export interface WithoutInputContextType {
     input_context_type?: never;
     input_context?: never;
     input_context_md5?: never;
@@ -229,4 +229,3 @@ export interface TransactionInfo {
     user_address: string;
     receiver_address: string;
 }
-export {};
