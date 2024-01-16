@@ -94,20 +94,30 @@ export interface BaseProvingParams {
   private_inputs: Array<string>;
 }
 
-export interface WithInputContextType {
-  input_context_type: InputContextType;
+interface WithCustomInputContextType {
+  input_context_type: InputContextType.Custom;
   input_context: unknown;
   input_context_md5: string;
 }
 
-export interface WithoutInputContextType {
+interface WithNonCustomInputContextType {
+  input_context_type: Exclude<InputContextType, InputContextType.Custom>;
+  input_context?: never;
+  input_context_md5?: never;
+}
+
+interface WithoutInputContextType {
   input_context_type?: never;
   input_context?: never;
   input_context_md5?: never;
 }
 
 export type ProvingParams = BaseProvingParams &
-  (WithInputContextType | WithoutInputContextType);
+  (
+    | WithCustomInputContextType
+    | WithoutInputContextType
+    | WithNonCustomInputContextType
+  );
 
 export interface DeployParams {
   user_address: string;
