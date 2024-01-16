@@ -64,27 +64,50 @@ export interface PaginationResult<T> {
   total: number;
 }
 
-export interface AddImageParams {
+export interface BaseAddImageParams {
   name: string;
   image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
-  initial_context: unknown | null;
   image_md5: string;
-  initial_context_md5: string | null;
   user_address: string;
   description_url: string;
   avator_url: string;
   circuit_size: number;
 }
 
-export interface ProvingParams {
+export interface WithInitialContext {
+  initial_context: unknown;
+  initial_context_md5: string;
+}
+
+export interface WithoutInitialContext {
+  initial_context?: never;
+  initial_context_md5?: never;
+}
+
+export type AddImageParams = BaseAddImageParams &
+  (WithInitialContext | WithoutInitialContext);
+
+export interface BaseProvingParams {
   user_address: string;
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
-  input_context: unknown | null;
-  input_context_md5: string | null;
-  input_context_type: InputContextType;
 }
+
+export interface WithInputContextType {
+  input_context_type: InputContextType;
+  input_context: unknown;
+  input_context_md5: string;
+}
+
+export interface WithoutInputContextType {
+  input_context_type?: never;
+  input_context?: never;
+  input_context_md5?: never;
+}
+
+export type ProvingParams = BaseProvingParams &
+  (WithInputContextType | WithoutInputContextType);
 
 export interface DeployParams {
   user_address: string;
@@ -92,13 +115,24 @@ export interface DeployParams {
   chain_id: number;
 }
 
-export interface ResetImageParams {
+export interface BaseResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
-  reset_context: unknown | null;
-  reset_context_md5: string | null;
 }
+
+export interface WithResetContext {
+  reset_context: unknown;
+  reset_context_md5: string;
+}
+
+export interface WithoutResetContext {
+  reset_context?: never;
+  reset_context_md5?: never;
+}
+
+export type ResetImageParams = BaseResetImageParams &
+  (WithResetContext | WithoutResetContext);
 
 export interface ModifyImageParams {
   md5: string;
@@ -199,7 +233,7 @@ export interface Image {
   avator_url: string;
   circuit_size: number;
   context?: Uint8Array;
-  initial_context: Uint8Array;
+  initial_context?: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
 }

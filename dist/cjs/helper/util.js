@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZkWasmUtil = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
+const interface_js_1 = require("../interface/interface.js");
 const ethers_1 = require("ethers");
 class ZkWasmUtil {
     static hexToBNs(hexString) {
@@ -125,10 +126,14 @@ class ZkWasmUtil {
         for (const input of params.private_inputs) {
             message += input;
         }
-        if (params.input_context) {
+        // Only handle input_context if selected input_context_type.Custom
+        if (params.input_context_type === interface_js_1.InputContextType.Custom &&
+            params.input_context) {
             message += params.input_context_md5;
         }
-        message += params.input_context_type;
+        if (params.input_context_type) {
+            message += params.input_context_type;
+        }
         return message;
     }
     static createDeploySignMessage(params) {
