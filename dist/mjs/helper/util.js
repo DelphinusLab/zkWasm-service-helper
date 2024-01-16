@@ -135,13 +135,14 @@ export class ZkWasmUtil {
         let message = "";
         message += params.name;
         message += params.image_md5;
-        if (params.initial_context) {
-            message += params.initial_context_md5;
-        }
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;
         message += params.circuit_size;
+        // Additional params afterwards
+        if (params.initial_context) {
+            message += params.initial_context_md5;
+        }
         return message;
     }
     static createProvingSignMessage(params) {
