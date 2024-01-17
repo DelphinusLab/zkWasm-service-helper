@@ -1,5 +1,6 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
+import { InputContextType, } from "../interface/interface.js";
 import { formatUnits, Wallet } from "ethers";
 export class ZkWasmUtil {
     static contract_abi = {
@@ -134,13 +135,14 @@ export class ZkWasmUtil {
         let message = "";
         message += params.name;
         message += params.image_md5;
-        if (params.initial_context) {
-            message += params.initial_context_md5;
-        }
         message += params.user_address;
         message += params.description_url;
         message += params.avator_url;
         message += params.circuit_size;
+        // Additional params afterwards
+        if (params.initial_context) {
+            message += params.initial_context_md5;
+        }
         return message;
     }
     static createProvingSignMessage(params) {
@@ -155,10 +157,14 @@ export class ZkWasmUtil {
         for (const input of params.private_inputs) {
             message += input;
         }
-        if (params.input_context) {
+        // Only handle input_context if selected input_context_type.Custom
+        if (params.input_context_type === InputContextType.Custom &&
+            params.input_context) {
             message += params.input_context_md5;
         }
-        message += params.input_context_type;
+        if (params.input_context_type) {
+            message += params.input_context_type;
+        }
         return message;
     }
     static createDeploySignMessage(params) {

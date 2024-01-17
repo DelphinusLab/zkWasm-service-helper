@@ -1,6 +1,5 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
-import { BytesLike, hexlify } from "ethers";
 import {
   AddImageParams,
   ProvingParams,
@@ -10,6 +9,7 @@ import {
   VerifyProofParams,
   LogQuery,
   ContextHexString,
+  InputContextType,
 } from "../interface/interface.js";
 import { Contract, formatUnits, Wallet } from "ethers";
 import {
@@ -161,13 +161,14 @@ export class ZkWasmUtil {
     let message = "";
     message += params.name;
     message += params.image_md5;
-    if (params.initial_context) {
-      message += params.initial_context_md5;
-    }
     message += params.user_address;
     message += params.description_url;
     message += params.avator_url;
     message += params.circuit_size;
+    // Additional params afterwards
+    if (params.initial_context) {
+      message += params.initial_context_md5;
+    }
     return message;
   }
 
@@ -186,10 +187,16 @@ export class ZkWasmUtil {
       message += input;
     }
 
-    if (params.input_context) {
+    // Only handle input_context if selected input_context_type.Custom
+    if (
+      params.input_context_type === InputContextType.Custom &&
+      params.input_context
+    ) {
       message += params.input_context_md5;
     }
-    message += params.input_context_type;
+    if (params.input_context_type) {
+      message += params.input_context_type;
+    }
 
     return message;
   }

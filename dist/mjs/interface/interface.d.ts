@@ -50,38 +50,65 @@ export interface PaginationResult<T> {
     data: T;
     total: number;
 }
-export interface AddImageParams {
+export interface BaseAddImageParams {
     name: string;
     image: any;
-    initial_context: unknown | null;
     image_md5: string;
-    initial_context_md5: string | null;
     user_address: string;
     description_url: string;
     avator_url: string;
     circuit_size: number;
 }
-export interface ProvingParams {
+export interface WithInitialContext {
+    initial_context: unknown;
+    initial_context_md5: string;
+}
+export interface WithoutInitialContext {
+    initial_context?: never;
+    initial_context_md5?: never;
+}
+export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
+export interface BaseProvingParams {
     user_address: string;
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
-    input_context: unknown | null;
-    input_context_md5: string | null;
-    input_context_type: InputContextType;
 }
+export interface WithCustomInputContextType {
+    input_context_type: InputContextType.Custom;
+    input_context: unknown;
+    input_context_md5: string;
+}
+export interface WithNonCustomInputContextType {
+    input_context_type: Exclude<InputContextType, InputContextType.Custom>;
+    input_context?: never;
+    input_context_md5?: never;
+}
+export interface WithoutInputContextType {
+    input_context_type?: never;
+    input_context?: never;
+    input_context_md5?: never;
+}
+export type ProvingParams = BaseProvingParams & (WithCustomInputContextType | WithoutInputContextType | WithNonCustomInputContextType);
 export interface DeployParams {
     user_address: string;
     md5: string;
     chain_id: number;
 }
-export interface ResetImageParams {
+export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
-    reset_context: unknown | null;
-    reset_context_md5: string | null;
 }
+export interface WithResetContext {
+    reset_context: unknown;
+    reset_context_md5: string;
+}
+export interface WithoutResetContext {
+    reset_context?: never;
+    reset_context_md5?: never;
+}
+export type ResetImageParams = BaseResetImageParams & (WithResetContext | WithoutResetContext);
 export interface ModifyImageParams {
     md5: string;
     user_address: string;
@@ -173,7 +200,7 @@ export interface Image {
     avator_url: string;
     circuit_size: number;
     context?: Uint8Array;
-    initial_context: Uint8Array;
+    initial_context?: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
 }
