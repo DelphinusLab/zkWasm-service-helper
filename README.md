@@ -1,19 +1,25 @@
 # zkWasm-service-helper
+
 ## Introduction
+
 This lib is to help communicate with zkwasm service
 
 ## How to use it
+
 This lib main provide a ZkWasmServiceHelper class to help user to communicate to zkwasm service backend.
 It mainly provide API to add tasks and get informations to zkwasm service backend.
 
 like:
-* async queryImage(md5: string);
-* async loadTasks(query: QueryParams);
-* async addNewWasmImage(task: WithSignature<AddImageParams>);
-* async addProvingTask(task: WithSignature<ProvingParams>);
+
+- async queryImage(md5: string);
+- async loadTasks(query: QueryParams);
+- async addNewWasmImage(task: WithSignature<AddImageParams>);
+- async addProvingTask(task: WithSignature<ProvingParams>);
 
 ### A example to add new wasm image
+
 This example typescript code will add the wasm image to the zkwasm service.
+
 ```
 import {
   AddImageParams,
@@ -29,7 +35,7 @@ let fileSelected: Buffer = fs.readFileSync(imagePath);
 let md5 = ZkWasmUtil.convertToMd5(
         fileSelected as Uint8Array
       );
-  
+
 let info: AddImageParams = {
         name: fileSelected.name,
         image_md5: md5,
@@ -40,19 +46,34 @@ let info: AddImageParams = {
         circuit_size: circuitSize,
       };
 
+// Optional Initial Context information
+
+// Upload a binary file first
+let contextFile = await ZkWasmUtil.loadContexFileAsBytes("<YourFilePath>");
+
+if (contextFile) {
+  let context_info: WithInitialContext = {
+    initial_context: contextFile,
+    initial_context_md5: ZkWasmUtil.convertToMd5(contextFile),
+  };
+  info = { ...info, ...context_info };
+}
+
 let msg = ZkWasmUtil.createAddImageSignMessage(info);
 let signature: string = await ZkWasmUtil.signMessage(msgString, priv); //Need user private key to sign the msg
 let task: WithSignature<AddImageParams> = {
         ...info,
         signature,
       };
-      
+
 let response = await helper.addNewWasmImage(task);
 
 ```
 
 ### A example to add proving tasks
+
 This example typescript code will add proving tasks to the zkwasm service.
+
 ```
 import {
   ProvingParams,
@@ -77,6 +98,24 @@ let info: ProvingParams = {
   public_inputs: pb_inputs,
   private_inputs: priv_inputs,
 };
+
+// Context type for proof task. If none provided, will default to InputContextType.ImageCurrent in the server and use the image's current context
+let selectedInputContextType = InputContextType.ImageCurrent;
+
+// For Custom Context, upload a binary file first containing the context.
+if (selectedInputContextType === InputContextType.Custom) {
+
+  let contextFile = await ZkWasmUtil.loadContexFileAsBytes("<YourFilePath>");
+
+  let context_info: WithCustomInputContextType = {
+    input_context: contextFile,
+    input_context_md5: ZkWasmUtil.convertToMd5(contextFile),
+    input_context_type: selectedInputContextType,
+  };
+  info = { ...info, ...context_info };
+} else {
+  info = { ...info, input_context_type: selectedInputContextType };
+}
 let msgString = ZkWasmUtil.createProvingSignMessage(info);
 
 let signature: string;
@@ -96,7 +135,9 @@ let response = await helper.addProvingTask(task);
 ```
 
 ### A example to query task details
+
 This example typescript code will query task details:
+
 ```
 import {
     ZkWasmServiceHelper,
@@ -125,7 +166,7 @@ let helper = new ZkWasmServiceHelper(endpoint, "", "");
         let instances = ZkWasmUtil.bytesToBN(task.instances);
         let batchInstances = ZkWasmUtil.bytesToBN(task.batch_instances);
         let aux = ZkWasmUtil.bytesToBN(task.aux);
-        let fee = task.task_fee && ZkWasmUtil.convertAmount(task.task_fee); 
+        let fee = task.task_fee && ZkWasmUtil.convertAmount(task.task_fee);
 
         console.log("Task details: ");
         console.log("    ", task);
@@ -154,4 +195,5 @@ let helper = new ZkWasmServiceHelper(endpoint, "", "");
 ```
 
 ### Notes:
+
 md5 is case insensitive when communicate with our zkwasm service
