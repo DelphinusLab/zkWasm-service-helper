@@ -118,7 +118,7 @@ class ZkWasmServiceHelper {
     }
     addProvingTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
             console.log("get addProvingTask response:", response.toString());
             return response;
         });
@@ -132,7 +132,7 @@ class ZkWasmServiceHelper {
     }
     addResetTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
             console.log("get addResetTask response:", response.toString());
             return response;
         });
@@ -153,7 +153,19 @@ class ZkWasmServiceHelper {
             if (isFormData) {
                 payload = new form_data_1.default();
                 for (const key in task_params) {
-                    payload.append(key, task_params[key]);
+                    // append if the data is not null | undefined
+                    if (task_params[key] != null &&
+                        task_params[key] != undefined) {
+                        // if the data is an array, append each element with the same key (multipart form data array usage)
+                        if (Array.isArray(task_params[key])) {
+                            for (const element of task_params[key]) {
+                                payload.append(key, element);
+                            }
+                        }
+                        else {
+                            payload.append(key, task_params[key]);
+                        }
+                    }
                 }
             }
             else {

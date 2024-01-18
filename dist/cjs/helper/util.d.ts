@@ -1,5 +1,5 @@
 import BN from "bn.js";
-import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery } from "../interface/interface.js";
+import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery, ContextHexString } from "../interface/interface.js";
 import { Contract } from "ethers";
 import { DelphinusWalletConnector, DelphinusBrowserConnector } from "web3subscriber/src/provider.js";
 export declare class ZkWasmUtil {
@@ -41,9 +41,14 @@ export declare class ZkWasmUtil {
     static createDeploySignMessage(params: DeployParams): string;
     static createResetImageMessage(params: ResetImageParams): string;
     static createModifyImageMessage(params: ModifyImageParams): string;
-    static bytesToBN(data: Uint8Array): BN[];
-    static bytesToBigIntArray(data: Uint8Array): BigInt[];
+    static bytesToBN(data: Uint8Array, chunksize?: number): BN[];
+    static bytesToBigIntArray(data: Uint8Array, chunksize?: number): BigInt[];
     static composeVerifyContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;
+    static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
+    static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
+    static browserLoadContextFileAsBytes(file: File): Promise<Uint8Array>;
+    static MAX_CONTEXT_SIZE: number;
+    static validateContextBytes(data: Uint8Array): boolean;
 }

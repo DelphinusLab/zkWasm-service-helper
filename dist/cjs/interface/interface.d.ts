@@ -4,6 +4,12 @@ export interface Statistics {
     totalTasks: number;
     totalDeployed: number;
 }
+export declare enum InputContextType {
+    Custom = "Custom",
+    ImageInitial = "ImageInitial",
+    ImageCurrent = "ImageCurrent"
+}
+export type ContextHexString = string;
 export interface Task {
     user_address: string;
     node_address?: string;
@@ -17,6 +23,9 @@ export interface Task {
     instances: Uint8Array;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    input_context: Uint8Array;
+    input_context_type?: InputContextType;
+    output_context: Uint8Array;
     _id: any;
     submit_time: string;
     process_started?: string;
@@ -24,13 +33,24 @@ export interface Task {
     task_fee?: Uint8Array;
     status_message?: string;
     internal_message?: string;
+    task_verification_data: TaskVerificationData;
+    debug_logs?: string;
+}
+export interface TaskVerificationData {
+    static_file_checksum: Uint8Array;
+    verifier_contracts: Array<VerifierContracts>;
+}
+export interface VerifierContracts {
+    chain_id: number;
+    aggregator_verifier: string;
+    circuit_size: number;
 }
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
 export interface PaginationResult<T> {
     data: T;
     total: number;
 }
-export interface AddImageParams {
+export interface BaseAddImageParams {
     name: string;
     image: any;
     image_md5: string;
@@ -39,22 +59,56 @@ export interface AddImageParams {
     avator_url: string;
     circuit_size: number;
 }
-export interface ProvingParams {
+export interface WithInitialContext {
+    initial_context: unknown;
+    initial_context_md5: string;
+}
+export interface WithoutInitialContext {
+    initial_context?: never;
+    initial_context_md5?: never;
+}
+export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
+export interface BaseProvingParams {
     user_address: string;
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
 }
+export interface WithCustomInputContextType {
+    input_context_type: InputContextType.Custom;
+    input_context: unknown;
+    input_context_md5: string;
+}
+export interface WithNonCustomInputContextType {
+    input_context_type: Exclude<InputContextType, InputContextType.Custom>;
+    input_context?: never;
+    input_context_md5?: never;
+}
+export interface WithoutInputContextType {
+    input_context_type?: never;
+    input_context?: never;
+    input_context_md5?: never;
+}
+export type ProvingParams = BaseProvingParams & (WithCustomInputContextType | WithoutInputContextType | WithNonCustomInputContextType);
 export interface DeployParams {
     user_address: string;
     md5: string;
     chain_id: number;
 }
-export interface ResetImageParams {
+export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
 }
+export interface WithResetContext {
+    reset_context: unknown;
+    reset_context_md5: string;
+}
+export interface WithoutResetContext {
+    reset_context?: never;
+    reset_context_md5?: never;
+}
+export type ResetImageParams = BaseResetImageParams & (WithResetContext | WithoutResetContext);
 export interface ModifyImageParams {
     md5: string;
     user_address: string;
@@ -105,6 +159,7 @@ export interface AppConfig {
         prove_fee: string;
     };
     chain_info_list: Array<ChainInfo>;
+    latest_server_checksum: Uint8Array;
     deployments: ContractDeployments[];
 }
 export interface ContractDeployments {
@@ -114,6 +169,7 @@ export interface ContractDeployments {
     aggregator_config_address: string;
     aggregator_verifier_steps: string[];
     aggregator_verifier: string;
+    static_file_checksum: Uint8Array;
 }
 export interface ChainInfo {
     chain_id: number;
@@ -143,6 +199,8 @@ export interface Image {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    context?: Uint8Array;
+    initial_context?: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
 }

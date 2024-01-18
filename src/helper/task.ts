@@ -138,7 +138,8 @@ export class ZkWasmServiceHelper {
     let response = await this.sendRequestWithSignature<ProvingParams>(
       "POST",
       TaskEndpoint.PROVE,
-      task
+      task,
+      true
     );
     console.log("get addProvingTask response:", response.toString());
     return response;
@@ -158,7 +159,8 @@ export class ZkWasmServiceHelper {
     let response = await this.sendRequestWithSignature<ResetImageParams>(
       "POST",
       TaskEndpoint.RESET,
-      task
+      task,
+      true
     );
 
     console.log("get addResetTask response:", response.toString());
@@ -190,7 +192,25 @@ export class ZkWasmServiceHelper {
     if (isFormData) {
       payload = new FormData();
       for (const key in task_params) {
-        payload.append(key, task_params[key as keyof typeof task_params]);
+        // append if the data is not null | undefined
+        if (
+          task_params[key as keyof typeof task_params] != null &&
+          task_params[key as keyof typeof task_params] != undefined
+        ) {
+          // if the data is an array, append each element with the same key (multipart form data array usage)
+          if (Array.isArray(task_params[key as keyof typeof task_params])) {
+            for (const element of task_params[
+              key as keyof typeof task_params
+            ] as Array<unknown>) {
+              payload.append(key, element as string);
+            }
+          } else {
+            payload.append(
+              key,
+              task_params[key as keyof typeof task_params] as string
+            );
+          }
+        }
       }
     } else {
       payload = JSON.parse(JSON.stringify(task_params));
