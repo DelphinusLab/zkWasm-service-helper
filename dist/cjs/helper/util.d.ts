@@ -33,6 +33,7 @@ export declare class ZkWasmUtil {
     static validateHex(value: string): boolean;
     static validateInput(input: string): void;
     static validateInputs(inputs: string): Array<string>;
+    static isHexString(value: string): boolean;
     static convertToMd5(value: Uint8Array): string;
     static convertAmount(balance: Uint8Array): string;
     static createLogsMesssage(params: LogQuery): string;

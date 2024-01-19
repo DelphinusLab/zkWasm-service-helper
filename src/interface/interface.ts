@@ -161,13 +161,13 @@ export interface VerifyData {
 }
 
 export interface QueryParams {
-  user_address: string;
-  md5: string;
-  id: string;
-  tasktype: string;
-  taskstatus: string;
-  start?: number;
-  total?: number;
+  user_address: string | null;
+  md5: string | null;
+  id: string | null;
+  tasktype: string | null;
+  taskstatus: TaskStatus | null;
+  start?: number | null;
+  total?: number | null;
 }
 
 export interface VerifyProofParams {
