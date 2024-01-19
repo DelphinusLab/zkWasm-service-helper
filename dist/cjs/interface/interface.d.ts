@@ -45,6 +45,7 @@ export interface VerifierContracts {
     aggregator_verifier: string;
     circuit_size: number;
 }
+export type TaskType = "Setup" | "Prove" | "Reset";
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
 export interface PaginationResult<T> {
     data: T;
@@ -130,7 +131,7 @@ export interface QueryParams {
     user_address: string | null;
     md5: string | null;
     id: string | null;
-    tasktype: string | null;
+    tasktype: TaskType | null;
     taskstatus: TaskStatus | null;
     start?: number | null;
     total?: number | null;
