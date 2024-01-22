@@ -25,15 +25,19 @@ class ZkWasmUtil {
         }
         return bytes;
     }
-    static validateI64HexInput(value) {
-        let re = new RegExp(/^[0-9A-Fa-f]+$/);
-        // Check if value is a hexdecimal
-        if (!re.test(value.slice(2))) {
-            throw new Error("Invalid hex value: " + value);
+    static validateBytesInput(value) {
+        this.validateHex(value);
+        // Check the length of the hexdecimal is even
+        if (value.length % 2 != 0) {
+            throw new Error("Odd Hex length provided: " + value);
         }
         return true;
     }
-    static validateBytesInput(value) {
+    static validateI64HexInput(value) {
+        this.validateHex(value);
+        return true;
+    }
+    static validateHex(value) {
         let re = new RegExp(/^[0-9A-Fa-f]+$/);
         if (value.slice(0, 2) != "0x") {
             throw new Error("Value should start with 0x. Input given: " + value);
@@ -41,10 +45,6 @@ class ZkWasmUtil {
         // Check if value is a hexdecimal
         if (!re.test(value.slice(2))) {
             throw new Error("Invalid hex value: " + value);
-        }
-        // Check the length of the hexdecimal is even
-        if (value.length % 2 != 0) {
-            throw new Error("Odd Hex length provided: " + value);
         }
         return true;
     }
