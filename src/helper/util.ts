@@ -138,6 +138,15 @@ export class ZkWasmUtil {
     return inputArray;
   }
 
+  static isHexString(value: string) {
+    let re = new RegExp(/^[0-9A-Fa-f]+$/);
+    // Check if value is a hexdecimal
+    if (!re.test(value)) {
+      return false;
+    }
+    return true;
+  }
+
   static convertToMd5(value: Uint8Array): string {
     let md5 = new Md5();
     md5.appendByteArray(value);

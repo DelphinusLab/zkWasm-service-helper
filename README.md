@@ -154,10 +154,9 @@ const taskid = "xxxx"
 let helper = new ZkWasmServiceHelper(endpoint, "", "");
     let args: QueryParams = {
         id: taskid!,
-        user_address: "",
-        md5: "",
-        tasktype: "",
-        taskstatus: "",
+        user_address: null, // null can also be empty string "" to ignore fields in the query filter
+        tasktype: null,
+        taskstatus: null,
     };
     helper.loadTasks(args).then((res) => {
         const tasks = res as PaginationResult<Task[]>;
