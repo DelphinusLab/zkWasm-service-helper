@@ -25,6 +25,18 @@ class ZkWasmUtil {
         }
         return bytes;
     }
+    static validateBytesInput(value) {
+        this.validateHex(value);
+        // Check the length of the hexdecimal is even
+        if (value.length % 2 != 0) {
+            throw new Error("Odd Hex length provided: " + value);
+        }
+        return true;
+    }
+    static validateI64HexInput(value) {
+        this.validateHex(value);
+        return true;
+    }
     static validateHex(value) {
         let re = new RegExp(/^[0-9A-Fa-f]+$/);
         if (value.slice(0, 2) != "0x") {
@@ -33,10 +45,6 @@ class ZkWasmUtil {
         // Check if value is a hexdecimal
         if (!re.test(value.slice(2))) {
             throw new Error("Invalid hex value: " + value);
-        }
-        // Check the length of the hexdecimal is even
-        if (value.length % 2 != 0) {
-            throw new Error("Odd Hex length provided: " + value);
         }
         return true;
     }
@@ -52,7 +60,7 @@ class ZkWasmUtil {
         if (type == "i64") {
             // If 0x is present, check that it is a hexdecimal
             if (value.slice(0, 2) == "0x") {
-                this.validateHex(value);
+                this.validateI64HexInput(value);
             }
             // If 0x is not present, check that it is a decimal
             else {
@@ -62,7 +70,7 @@ class ZkWasmUtil {
             }
         }
         else if (type == "bytes" || type == "bytes-packed") {
-            this.validateHex(value);
+            this.validateBytesInput(value);
         }
         else {
             throw new Error("Invalid input type: " + type);
