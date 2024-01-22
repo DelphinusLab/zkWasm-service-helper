@@ -154,8 +154,7 @@ const taskid = "xxxx"
 let helper = new ZkWasmServiceHelper(endpoint, "", "");
     let args: QueryParams = {
         id: taskid!,
-        user_address: null, // null can be
-        md5: null,
+        user_address: null, // can be null or empty string ""
         tasktype: null,
         taskstatus: null,
     };

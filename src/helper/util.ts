@@ -144,10 +144,6 @@ export class ZkWasmUtil {
     if (!re.test(value)) {
       return false;
     }
-    // Check the length of the hexdecimal is even
-    if (value.length % 2 != 0) {
-      return false;
-    }
     return true;
   }
 

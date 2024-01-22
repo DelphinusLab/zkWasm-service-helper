@@ -166,8 +166,8 @@ export interface QueryParams {
   user_address: string | null;
   md5: string | null;
   id: string | null;
-  tasktype: TaskType | null;
-  taskstatus: TaskStatus | null;
+  tasktype: string | null;
+  taskstatus: string | null;
   start?: number | null;
   total?: number | null;
 }
