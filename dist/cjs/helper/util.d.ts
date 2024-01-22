@@ -30,7 +30,8 @@ export declare class ZkWasmUtil {
         })[];
     };
     static hexToBNs(hexString: string): Array<BN>;
-    static validateHex(value: string): boolean;
+    static validateI64HexInput(value: string): boolean;
+    static validateBytesInput(value: string): boolean;
     static validateInput(input: string): void;
     static validateInputs(inputs: string): Array<string>;
     static isHexString(value: string): boolean;

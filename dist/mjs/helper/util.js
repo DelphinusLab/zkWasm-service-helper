@@ -55,7 +55,15 @@ export class ZkWasmUtil {
         }
         return bytes;
     }
-    static validateHex(value) {
+    static validateI64HexInput(value) {
+        let re = new RegExp(/^[0-9A-Fa-f]+$/);
+        // Check if value is a hexdecimal
+        if (!re.test(value.slice(2))) {
+            throw new Error("Invalid hex value: " + value);
+        }
+        return true;
+    }
+    static validateBytesInput(value) {
         let re = new RegExp(/^[0-9A-Fa-f]+$/);
         if (value.slice(0, 2) != "0x") {
             throw new Error("Value should start with 0x. Input given: " + value);
@@ -82,7 +90,7 @@ export class ZkWasmUtil {
         if (type == "i64") {
             // If 0x is present, check that it is a hexdecimal
             if (value.slice(0, 2) == "0x") {
-                this.validateHex(value);
+                this.validateI64HexInput(value);
             }
             // If 0x is not present, check that it is a decimal
             else {
@@ -92,7 +100,7 @@ export class ZkWasmUtil {
             }
         }
         else if (type == "bytes" || type == "bytes-packed") {
-            this.validateHex(value);
+            this.validateBytesInput(value);
         }
         else {
             throw new Error("Invalid input type: " + type);
