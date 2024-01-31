@@ -252,8 +252,8 @@ export class ZkWasmUtil {
         let signature = await wallet.signMessage(message);
         return signature;
     }
-    static ERC20Contract(contractAddress) {
-        return new Contract(contractAddress, ERC20);
+    static ERC20Contract(contractAddress, signer) {
+        return new Contract(contractAddress, ERC20, signer);
     }
     // For nodejs/server environments only
     static async loadContextFileFromPath(filePath) {

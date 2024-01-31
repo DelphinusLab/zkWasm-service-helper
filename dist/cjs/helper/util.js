@@ -226,8 +226,8 @@ class ZkWasmUtil {
             return signature;
         });
     }
-    static ERC20Contract(contractAddress) {
-        return new ethers_1.Contract(contractAddress, ERC20_json_1.default);
+    static ERC20Contract(contractAddress, signer) {
+        return new ethers_1.Contract(contractAddress, ERC20_json_1.default, signer);
     }
     // For nodejs/server environments only
     static loadContextFileFromPath(filePath) {
