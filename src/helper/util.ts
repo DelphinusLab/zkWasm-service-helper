@@ -11,7 +11,7 @@ import {
   ContextHexString,
   InputContextType,
 } from "../interface/interface.js";
-import { Contract, formatUnits, Wallet } from "ethers";
+import { Contract, formatUnits, Signer, Wallet } from "ethers";
 import {
   DelphinusWalletConnector,
   DelphinusBrowserConnector,
@@ -359,8 +359,8 @@ export class ZkWasmUtil {
     return signature;
   }
 
-  static ERC20Contract(contractAddress: string) {
-    return new Contract(contractAddress, ERC20);
+  static ERC20Contract(contractAddress: string, signer: Signer) {
+    return new Contract(contractAddress, ERC20, signer);
   }
 
   // For nodejs/server environments only

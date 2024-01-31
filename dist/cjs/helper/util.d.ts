@@ -1,6 +1,6 @@
 import BN from "bn.js";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery, ContextHexString } from "../interface/interface.js";
-import { Contract } from "ethers";
+import { Contract, Signer } from "ethers";
 import { DelphinusWalletConnector, DelphinusBrowserConnector } from "web3subscriber/src/provider.js";
 export declare class ZkWasmUtil {
     static contract_abi: {
@@ -54,7 +54,7 @@ export declare class ZkWasmUtil {
     static composeVerifyContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;
-    static ERC20Contract(contractAddress: string): Contract;
+    static ERC20Contract(contractAddress: string, signer: Signer): Contract;
     static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
     static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
     static browserLoadContextFileAsBytes(file: File): Promise<Uint8Array>;
