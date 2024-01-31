@@ -95,6 +95,11 @@ export class ZkWasmServiceHelper {
         console.log("get addPayment response:", response.toString());
         return response;
     }
+    async addSubscription(subscription) {
+        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
+        console.log("get addSubscription response:", response.toString());
+        return response;
+    }
     async addNewWasmImage(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
         console.log("get addNewWasmImage response:", response.toString());
@@ -168,5 +173,6 @@ export var TaskEndpoint;
     TaskEndpoint["RESET"] = "/reset";
     TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
 })(TaskEndpoint || (TaskEndpoint = {}));

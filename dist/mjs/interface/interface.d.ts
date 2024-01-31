@@ -213,6 +213,18 @@ export interface ImageChecksum {
 export interface PaymentParams {
     txhash: string;
 }
+export type SubscriptionType = "Basic" | "Premium" | "Enterprise";
+export type BaseSubscriptionDuration = "Month" | "Year";
+type SubscriptionDuration = {
+    base_duration: BaseSubscriptionDuration;
+    multiplier: number;
+};
+export interface SubscriptionParams {
+    subscriber_address: string;
+    subscription_type: SubscriptionType;
+    duration: SubscriptionDuration;
+    payment_hash: string;
+}
 export interface UserQueryParams {
     user_address: string;
 }
@@ -231,3 +243,4 @@ export interface TransactionInfo {
     user_address: string;
     receiver_address: string;
 }
+export {};

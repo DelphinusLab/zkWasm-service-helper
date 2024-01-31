@@ -20,6 +20,7 @@ import {
   AppConfig,
   OmitSignature,
   ModifyImageParams,
+  SubscriptionParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -152,6 +153,16 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
+  async addSubscription(subscription: SubscriptionParams) {
+    const response = await this.endpoint.invokeRequest(
+      "POST",
+      TaskEndpoint.SUBSCRIBE,
+      JSON.parse(JSON.stringify(subscription))
+    );
+    console.log("get addSubscription response:", response.toString());
+    return response;
+  }
+
   async addNewWasmImage(task: WithSignature<AddImageParams>) {
     let response = await this.sendRequestWithSignature<AddImageParams>(
       "POST",
@@ -270,5 +281,6 @@ export enum TaskEndpoint {
   RESET = "/reset",
   MODIFY = "/modify",
   PAY = "/pay",
+  SUBSCRIBE = "/subscribe",
   LOGS = "/logs",
 }
