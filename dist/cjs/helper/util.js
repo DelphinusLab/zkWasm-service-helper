@@ -17,6 +17,7 @@ const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
 const interface_js_1 = require("../interface/interface.js");
 const ethers_1 = require("ethers");
+const ERC20_json_1 = __importDefault(require("../abi/ERC20.json"));
 class ZkWasmUtil {
     static hexToBNs(hexString) {
         let bytes = new Array(Math.ceil(hexString.length / 16));
@@ -260,6 +261,9 @@ class ZkWasmUtil {
     static bytesToJSONString(data) {
         const bufferView = new Uint8Array(data);
         return new TextDecoder().decode(bufferView);
+    }
+    static ERC20Contract(contractAddress) {
+        return new ethers_1.Contract(contractAddress, ERC20_json_1.default);
     }
     // For nodejs/server environments only
     static loadContextFileFromPath(filePath) {
