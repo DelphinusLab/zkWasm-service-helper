@@ -16,6 +16,7 @@ import {
   DelphinusWalletConnector,
   DelphinusBrowserConnector,
 } from "web3subscriber/src/provider.js";
+import ERC20 from "../abi/ERC20.json";
 
 export class ZkWasmUtil {
   static contract_abi = {
@@ -312,6 +313,10 @@ export class ZkWasmUtil {
     let wallet = new Wallet(priv_key, null);
     let signature = await wallet.signMessage(message);
     return signature;
+  }
+
+  static ERC20Contract(contractAddress: string) {
+    return new Contract(contractAddress, ERC20);
   }
 
   // For nodejs/server environments only
