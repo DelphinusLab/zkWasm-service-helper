@@ -1,4 +1,4 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, User, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, User, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -11,6 +11,7 @@ export declare class ZkWasmServiceHelper {
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
+    addSubscription(subscription: SubscriptionParams): Promise<any>;
     addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
     addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
@@ -28,5 +29,6 @@ export declare enum TaskEndpoint {
     RESET = "/reset",
     MODIFY = "/modify",
     PAY = "/pay",
+    SUBSCRIBE = "/subscribe",
     LOGS = "/logs"
 }
