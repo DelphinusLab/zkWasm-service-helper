@@ -284,12 +284,17 @@ export class ZkWasmUtil {
         let signature = await wallet.signMessage(message);
         return signature;
     }
+<<<<<<< HEAD
     static bytesToJSONString(data) {
         const bufferView = new Uint8Array(data);
         return new TextDecoder().decode(bufferView);
     }
     static ERC20Contract(contractAddress) {
         return new Contract(contractAddress, ERC20);
+=======
+    static ERC20Contract(contractAddress, signer) {
+        return new Contract(contractAddress, ERC20, signer);
+>>>>>>> try with create
     }
     // For nodejs/server environments only
     static async loadContextFileFromPath(filePath) {
