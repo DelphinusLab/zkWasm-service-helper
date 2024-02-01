@@ -273,6 +273,25 @@ export interface SubscriptionParams {
   payment_hash: string;
 }
 
+export type SubscriptionStatus = "Active" | "Expired";
+
+export interface ERC20DepositInfo {
+  user_address: string;
+  receiver_address: string;
+  txhash: string;
+  amount: string;
+  token_address: string;
+}
+
+export interface Subscription {
+  subscriber_address: string;
+  start_date: number; // Unix timestamp
+  end_date: number; // Unix timestamp
+  params: SubscriptionParams;
+  status: SubscriptionStatus;
+  payment_details: ERC20DepositInfo; // Could also just store the txhash and get the details from the db collection
+}
+
 export interface UserQueryParams {
   user_address: string;
 }
@@ -287,6 +306,11 @@ export interface User {
   user_address: string;
   balance: Uint8Array;
 }
+
+export type UserInfo = {
+  user: User;
+  susbcription: Subscription | null;
+};
 
 export interface TransactionInfo {
   txhash: string;
