@@ -225,6 +225,22 @@ export interface SubscriptionParams {
     duration: SubscriptionDuration;
     payment_hash: string;
 }
+export type SubscriptionStatus = "Active" | "Expired";
+export interface ERC20DepositInfo {
+    user_address: string;
+    receiver_address: string;
+    txhash: string;
+    amount: string;
+    token_address: string;
+}
+export interface Subscription {
+    subscriber_address: string;
+    start_date: number;
+    end_date: number;
+    params: SubscriptionParams;
+    status: SubscriptionStatus;
+    payment_details: ERC20DepositInfo;
+}
 export interface UserQueryParams {
     user_address: string;
 }
@@ -237,6 +253,10 @@ export interface User {
     user_address: string;
     balance: Uint8Array;
 }
+export type UserInfo = {
+    user: User;
+    susbcription: Subscription | null;
+};
 export interface TransactionInfo {
     txhash: string;
     value: Uint8Array;

@@ -16,6 +16,7 @@ import {
   Task,
   Image,
   User,
+  UserInfo,
   TransactionInfo,
   AppConfig,
   OmitSignature,
@@ -41,7 +42,7 @@ export class ZkWasmServiceHelper {
     return images[0]!;
   }
 
-  async queryUser(user_query: UserQueryParams): Promise<User> {
+  async queryUser(user_query: UserQueryParams): Promise<UserInfo> {
     let req = JSON.parse("{}");
     req["user_address"] = user_query.user_address;
 
