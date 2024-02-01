@@ -272,6 +272,8 @@ export interface SubscriptionParams {
   subscription_type: SubscriptionType;
   duration: SubscriptionDuration;
   payment_hash: string;
+  price_per_base_duration: string;
+  enabled: boolean;
 }
 
 export type SubscriptionStatus = "Active" | "Expired";
