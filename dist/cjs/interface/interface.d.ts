@@ -226,6 +226,12 @@ export interface SubscriptionParams {
     price_per_base_duration: string;
     enabled: boolean;
 }
+export interface SubscriptionRequest {
+    subscriber_address: string;
+    subscription_type: SubscriptionType;
+    duration: SubscriptionDuration;
+    payment_hash: string;
+}
 export type SubscriptionStatus = "Active" | "Expired";
 export interface ERC20DepositInfo {
     user_address: string;

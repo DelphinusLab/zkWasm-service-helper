@@ -15,13 +15,12 @@ import {
   PaginationResult,
   Task,
   Image,
-  User,
   UserInfo,
   TransactionInfo,
   AppConfig,
   OmitSignature,
   ModifyImageParams,
-  SubscriptionParams,
+  SubscriptionRequest,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -154,7 +153,7 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async addSubscription(subscription: SubscriptionParams) {
+  async addSubscription(subscription: SubscriptionRequest) {
     const response = await this.endpoint.invokeRequest(
       "POST",
       TaskEndpoint.SUBSCRIBE,
