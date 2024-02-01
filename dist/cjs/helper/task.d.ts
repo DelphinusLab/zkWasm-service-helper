@@ -1,10 +1,10 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, User, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, UserInfo, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
     constructor(endpoint: string, username: string, useraddress: string);
     queryImage(md5: string): Promise<Image>;
-    queryUser(user_query: UserQueryParams): Promise<User>;
+    queryUser(user_query: UserQueryParams): Promise<UserInfo>;
     queryTxHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<TransactionInfo[]>>;
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
