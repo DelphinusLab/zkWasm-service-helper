@@ -254,7 +254,7 @@ export interface User {
 }
 export type UserInfo = {
     user: User;
-    susbcription: Subscription | null;
+    subscription: Subscription | null;
 };
 export interface TransactionInfo {
     txhash: string;
