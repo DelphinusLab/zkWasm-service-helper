@@ -202,6 +202,7 @@ export interface AppConfig {
   chain_info_list: Array<ChainInfo>;
   latest_server_checksum: Uint8Array;
   deployments: ContractDeployments[];
+  subscription_plans: SubscriptionParams[];
 }
 
 export interface ContractDeployments {
@@ -268,12 +269,20 @@ type SubscriptionDuration = {
 };
 
 export interface SubscriptionParams {
-  subscriber_address: string;
   subscription_type: SubscriptionType;
   duration: SubscriptionDuration;
-  payment_hash: string;
+  token_params: TokenParams;
+  token_data: TokenData;
   price_per_base_duration: string;
   enabled: boolean;
+}
+export interface TokenParams {
+  token_address: string;
+  network: string;
+}
+export interface TokenData {
+  decimals: number;
+  symbol: string;
 }
 
 export interface SubscriptionRequest {
