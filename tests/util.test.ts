@@ -36,7 +36,7 @@ describe("ZkWasmUtil", () => {
       const bn = MAXU64_BN;
       const expected = "0x" + MAXU64_BN.toString("hex");
 
-      const result = ZkWasmUtil.BNToHexString(bn);
+      const result = ZkWasmUtil.bnToHexString(bn);
 
       expect(result).toEqual(expected);
     });
@@ -48,9 +48,18 @@ describe("ZkWasmUtil", () => {
       const chunkSize = 8;
       const expected = new Uint8Array([255, 255, 255, 255, 255, 255, 255, 255]);
 
-      const result = ZkWasmUtil.BNToBytes(bn, chunkSize);
+      const result = ZkWasmUtil.bnToBytes(bn, chunkSize);
 
       expect(result).toEqual(expected);
+    });
+
+    it("should throw an error if BN is larger than chunksize", () => {
+      const bn = MAXU256_BN;
+      const chunkSize = 4;
+
+      expect(() => {
+        ZkWasmUtil.bnToBytes(bn, chunkSize);
+      }).toThrow();
     });
   });
 
@@ -58,12 +67,12 @@ describe("ZkWasmUtil", () => {
     it("should convert a single u64 into an array length of 1 with 1 hex string", () => {
       const chunkSize = 8;
 
-      const maxU64bytes = ZkWasmUtil.BNToBytes(MAXU64_BN, chunkSize);
+      const maxU64bytes = ZkWasmUtil.bnToBytes(MAXU64_BN, chunkSize);
 
       // hex string as little endian
-      const expected = [ZkWasmUtil.BNToHexString(MAXU64_BN)];
+      const expected = [ZkWasmUtil.bnToHexString(MAXU64_BN)];
 
-      const result = ZkWasmUtil.BytesToHexStrings(maxU64bytes, chunkSize);
+      const result = ZkWasmUtil.bytesToHexStrings(maxU64bytes, chunkSize);
 
       expect(result).toEqual(expected);
     });
@@ -72,7 +81,7 @@ describe("ZkWasmUtil", () => {
       // 10 U256s as hex strings
       const expected: string[] = [];
       for (let i = 0; i < 10; i++) {
-        expected.push(ZkWasmUtil.BNToHexString(MAXU256_BN));
+        expected.push(ZkWasmUtil.bnToHexString(MAXU256_BN));
       }
 
       // 32 bytes per U256
@@ -87,11 +96,11 @@ describe("ZkWasmUtil", () => {
       // flatten the array of U256s into a single Uint8Array
       const data = new Uint8Array(10 * chunkSize);
       for (let i = 0; i < 10; i++) {
-        const U256Bytes = ZkWasmUtil.BNToBytes(U256_Array[i], chunkSize);
+        const U256Bytes = ZkWasmUtil.bnToBytes(U256_Array[i], chunkSize);
         data.set(U256Bytes, i * chunkSize);
       }
 
-      const output: string[] = ZkWasmUtil.BytesToHexStrings(data, chunkSize);
+      const output: string[] = ZkWasmUtil.bytesToHexStrings(data, chunkSize);
 
       expect(output).toEqual(expected);
     });
@@ -103,7 +112,7 @@ describe("ZkWasmUtil", () => {
       const chunksize = 8;
       const expected = new BN("0123456789abcdef", "hex");
 
-      const result = ZkWasmUtil.HexStringToBN(hexString, chunksize);
+      const result = ZkWasmUtil.hexStringToBN(hexString, chunksize);
 
       expect(result).toEqual(expected);
     });
@@ -113,16 +122,7 @@ describe("ZkWasmUtil", () => {
       const chunksize = 8;
 
       expect(() => {
-        ZkWasmUtil.HexStringToBN(hexString, chunksize);
-      }).toThrow();
-    });
-
-    it("should throw an error for hex value larger than chunksize", () => {
-      const hexString = "0x0123456789abcdef";
-      const chunksize = 4;
-
-      expect(() => {
-        ZkWasmUtil.HexStringToBN(hexString, chunksize);
+        ZkWasmUtil.hexStringToBN(hexString, chunksize);
       }).toThrow();
     });
   });
@@ -136,7 +136,7 @@ describe("ZkWasmUtil", () => {
         0x67, 0x45, 0x23, 0x01,
       ]);
 
-      const result = ZkWasmUtil.HexStringsToBytes(hexStrings, chunksize);
+      const result = ZkWasmUtil.hexStringsToBytes(hexStrings, chunksize);
 
       expect(result).toEqual(expected);
     });
@@ -155,7 +155,7 @@ describe("ZkWasmUtil", () => {
       const chunksize = 8;
 
       expect(() => {
-        ZkWasmUtil.HexStringsToBytes(hexStrings, chunksize);
+        ZkWasmUtil.hexStringsToBytes(hexStrings, chunksize);
       }).toThrow();
     });
 
@@ -164,7 +164,7 @@ describe("ZkWasmUtil", () => {
       const chunksize = 4;
 
       expect(() => {
-        ZkWasmUtil.HexStringsToBytes(hexStrings, chunksize);
+        ZkWasmUtil.hexStringsToBytes(hexStrings, chunksize);
       }).toThrow();
     });
   });

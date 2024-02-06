@@ -179,35 +179,34 @@ class ZkWasmUtil {
         }
         return bns;
     }
-    static BNToHexString(bn) {
+    static bnToHexString(bn) {
         return "0x" + bn.toString("hex");
     }
-    static BytesToHexStrings(data, chunksize = 32) {
+    static bytesToHexStrings(data, chunksize = 32) {
         let hexStrings = [];
         let bns = this.bytesToBN(data, chunksize);
         for (let i = 0; i < bns.length; i++) {
-            hexStrings.push(this.BNToHexString(bns[i]));
+            hexStrings.push(this.bnToHexString(bns[i]));
         }
         return hexStrings;
     }
-    static BNToBytes(bn, chunksize = 32) {
-        return new Uint8Array(bn.toArray("le", chunksize));
-    }
-    static HexStringToBN(hexString, chunksize) {
-        // Should begin with 0x
-        this.validateHex(hexString);
-        let bn = new bn_js_1.default(hexString.slice(2), 16);
+    static bnToBytes(bn, chunksize = 32) {
         // Check if the BN is more than expected chunksize bytes
         if (bn.byteLength() > chunksize) {
-            throw new Error("Hex value is too large for the specified chunksize: " + hexString);
+            throw new Error("BN is too large for the specified chunksize: " + bn.toString(10));
         }
-        return bn;
+        return new Uint8Array(bn.toArray("le", chunksize));
     }
-    static HexStringsToBytes(hexStrings, chunksize) {
+    static hexStringToBN(hexString, chunksize) {
+        // Should begin with 0x
+        this.validateHex(hexString);
+        return new bn_js_1.default(hexString.slice(2), 16);
+    }
+    static hexStringsToBytes(hexStrings, chunksize) {
         let bytes = new Uint8Array(chunksize * hexStrings.length);
         for (let i = 0; i < hexStrings.length; i++) {
-            let bn = this.HexStringToBN(hexStrings[i], chunksize);
-            let byte = this.BNToBytes(bn, chunksize);
+            let bn = this.hexStringToBN(hexStrings[i], chunksize);
+            let byte = this.bnToBytes(bn, chunksize);
             bytes.set(byte, i * chunksize);
         }
         return bytes;
