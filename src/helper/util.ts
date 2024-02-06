@@ -275,7 +275,7 @@ export class ZkWasmUtil {
     return new Uint8Array(bn.toArray("le", chunksize));
   }
 
-  static hexStringToBN(hexString: string, chunksize: number): BN {
+  static hexStringToBN(hexString: string): BN {
     // Should begin with 0x
     this.validateHex(hexString);
 
@@ -288,7 +288,7 @@ export class ZkWasmUtil {
   ): Uint8Array {
     let bytes = new Uint8Array(chunksize * hexStrings.length);
     for (let i = 0; i < hexStrings.length; i++) {
-      let bn = this.hexStringToBN(hexStrings[i], chunksize);
+      let bn = this.hexStringToBN(hexStrings[i]);
       let byte = this.bnToBytes(bn, chunksize);
       bytes.set(byte, i * chunksize);
     }

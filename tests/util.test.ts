@@ -112,7 +112,7 @@ describe("ZkWasmUtil", () => {
       const chunksize = 8;
       const expected = new BN("0123456789abcdef", "hex");
 
-      const result = ZkWasmUtil.hexStringToBN(hexString, chunksize);
+      const result = ZkWasmUtil.hexStringToBN(hexString);
 
       expect(result).toEqual(expected);
     });
@@ -122,7 +122,7 @@ describe("ZkWasmUtil", () => {
       const chunksize = 8;
 
       expect(() => {
-        ZkWasmUtil.hexStringToBN(hexString, chunksize);
+        ZkWasmUtil.hexStringToBN(hexString);
       }).toThrow();
     });
   });
