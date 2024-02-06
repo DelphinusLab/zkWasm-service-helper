@@ -209,6 +209,38 @@ export class ZkWasmUtil {
         }
         return bns;
     }
+    static bnToHexString(bn) {
+        return "0x" + bn.toString("hex");
+    }
+    static bytesToHexStrings(data, chunksize = 32) {
+        let hexStrings = [];
+        let bns = this.bytesToBN(data, chunksize);
+        for (let i = 0; i < bns.length; i++) {
+            hexStrings.push(this.bnToHexString(bns[i]));
+        }
+        return hexStrings;
+    }
+    static bnToBytes(bn, chunksize = 32) {
+        // Check if the BN is more than expected chunksize bytes
+        if (bn.byteLength() > chunksize) {
+            throw new Error("BN is too large for the specified chunksize: " + bn.toString(10));
+        }
+        return new Uint8Array(bn.toArray("le", chunksize));
+    }
+    static hexStringToBN(hexString) {
+        // Should begin with 0x
+        this.validateHex(hexString);
+        return new BN(hexString.slice(2), 16);
+    }
+    static hexStringsToBytes(hexStrings, chunksize) {
+        let bytes = new Uint8Array(chunksize * hexStrings.length);
+        for (let i = 0; i < hexStrings.length; i++) {
+            let bn = this.hexStringToBN(hexStrings[i]);
+            let byte = this.bnToBytes(bn, chunksize);
+            bytes.set(byte, i * chunksize);
+        }
+        return bytes;
+    }
     static bytesToBigIntArray(data, chunksize = 32) {
         const bigints = [];
         for (let i = 0; i < data.length; i += chunksize) {

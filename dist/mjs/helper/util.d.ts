@@ -45,6 +45,11 @@ export declare class ZkWasmUtil {
     static createResetImageMessage(params: ResetImageParams): string;
     static createModifyImageMessage(params: ModifyImageParams): string;
     static bytesToBN(data: Uint8Array, chunksize?: number): BN[];
+    static bnToHexString(bn: BN): string;
+    static bytesToHexStrings(data: Uint8Array, chunksize?: number): string[];
+    static bnToBytes(bn: BN, chunksize?: number): Uint8Array;
+    static hexStringToBN(hexString: string): BN;
+    static hexStringsToBytes(hexStrings: string[], chunksize: number): Uint8Array;
     static bytesToBigIntArray(data: Uint8Array, chunksize?: number): BigInt[];
     static composeVerifyContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
