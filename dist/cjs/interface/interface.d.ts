@@ -162,6 +162,7 @@ export interface AppConfig {
     chain_info_list: Array<ChainInfo>;
     latest_server_checksum: Uint8Array;
     deployments: ContractDeployments[];
+    subscription_plans: SubscriptionParams[];
 }
 export interface ContractDeployments {
     chain_id: number;
@@ -212,6 +213,50 @@ export interface ImageChecksum {
 export interface PaymentParams {
     txhash: string;
 }
+export type SubscriptionType = "Basic" | "Premium" | "Enterprise";
+export type BaseSubscriptionDuration = "Month" | "Year";
+type SubscriptionDuration = {
+    base_duration: BaseSubscriptionDuration;
+    multiplier: number;
+};
+export interface SubscriptionParams {
+    subscription_type: SubscriptionType;
+    duration: SubscriptionDuration;
+    token_params: TokenParams;
+    token_data: TokenData;
+    price_per_base_duration: string;
+    enabled: boolean;
+}
+export interface TokenParams {
+    token_address: string;
+    network: string;
+}
+export interface TokenData {
+    decimals: number;
+    symbol: string;
+}
+export interface SubscriptionRequest {
+    subscriber_address: string;
+    subscription_type: SubscriptionType;
+    duration: SubscriptionDuration;
+    payment_hash: string;
+}
+export type SubscriptionStatus = "Active" | "Expired";
+export interface ERC20DepositInfo {
+    user_address: string;
+    receiver_address: string;
+    txhash: string;
+    amount: string;
+    token_address: string;
+}
+export interface Subscription {
+    subscriber_address: string;
+    start_date: number;
+    end_date: number;
+    params: SubscriptionParams;
+    status: SubscriptionStatus;
+    payment_details: ERC20DepositInfo;
+}
 export interface UserQueryParams {
     user_address: string;
 }
@@ -224,9 +269,14 @@ export interface User {
     user_address: string;
     balance: Uint8Array;
 }
+export type UserInfo = {
+    user: User;
+    subscription: Subscription | null;
+};
 export interface TransactionInfo {
     txhash: string;
     value: Uint8Array;
     user_address: string;
     receiver_address: string;
 }
+export {};

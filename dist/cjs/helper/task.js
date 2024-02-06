@@ -136,6 +136,13 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
+    addSubscription(subscription) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
+            console.log("get addSubscription response:", response.toString());
+            return response;
+        });
+    }
     addNewWasmImage(task) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
@@ -222,5 +229,6 @@ var TaskEndpoint;
     TaskEndpoint["RESET"] = "/reset";
     TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

@@ -15,11 +15,12 @@ import {
   PaginationResult,
   Task,
   Image,
-  User,
+  UserInfo,
   TransactionInfo,
   AppConfig,
   OmitSignature,
   ModifyImageParams,
+  SubscriptionRequest,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -40,7 +41,7 @@ export class ZkWasmServiceHelper {
     return images[0]!;
   }
 
-  async queryUser(user_query: UserQueryParams): Promise<User> {
+  async queryUser(user_query: UserQueryParams): Promise<UserInfo> {
     let req = JSON.parse("{}");
     req["user_address"] = user_query.user_address;
 
@@ -149,6 +150,16 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(payRequest))
     );
     console.log("get addPayment response:", response.toString());
+    return response;
+  }
+
+  async addSubscription(subscription: SubscriptionRequest) {
+    const response = await this.endpoint.invokeRequest(
+      "POST",
+      TaskEndpoint.SUBSCRIBE,
+      JSON.parse(JSON.stringify(subscription))
+    );
+    console.log("get addSubscription response:", response.toString());
     return response;
   }
 
@@ -270,5 +281,6 @@ export enum TaskEndpoint {
   RESET = "/reset",
   MODIFY = "/modify",
   PAY = "/pay",
+  SUBSCRIBE = "/subscribe",
   LOGS = "/logs",
 }
