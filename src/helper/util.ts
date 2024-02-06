@@ -265,7 +265,7 @@ export class ZkWasmUtil {
   }
 
   static BNToBytes(bn: BN, chunksize: number = 32): Uint8Array {
-    return new Uint8Array(bn.toArray(undefined, chunksize));
+    return new Uint8Array(bn.toArray("le", chunksize));
   }
 
   static HexStringToBN(hexString: string, chunksize: number): BN {
@@ -275,7 +275,6 @@ export class ZkWasmUtil {
     let bn = new BN(hexString.slice(2), 16);
 
     // Check if the BN is more than expected chunksize bytes
-
     if (bn.byteLength() > chunksize) {
       throw new Error(
         "Hex value is too large for the specified chunksize: " + hexString

@@ -221,7 +221,7 @@ export class ZkWasmUtil {
         return hexStrings;
     }
     static BNToBytes(bn, chunksize = 32) {
-        return new Uint8Array(bn.toArray(undefined, chunksize));
+        return new Uint8Array(bn.toArray("le", chunksize));
     }
     static HexStringToBN(hexString, chunksize) {
         // Should begin with 0x
