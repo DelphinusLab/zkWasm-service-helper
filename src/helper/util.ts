@@ -251,6 +251,53 @@ export class ZkWasmUtil {
     return bns;
   }
 
+  static BNToHexString(bn: BN): string {
+    return "0x" + bn.toString("hex");
+  }
+
+  static BytesToHexStrings(data: Uint8Array, chunksize: number = 32): string[] {
+    let hexStrings = [];
+    let bns = this.bytesToBN(data, chunksize);
+    for (let i = 0; i < bns.length; i++) {
+      hexStrings.push(this.BNToHexString(bns[i]));
+    }
+    return hexStrings;
+  }
+
+  static BNToBytes(bn: BN, chunksize: number = 32): Uint8Array {
+    return new Uint8Array(bn.toArray(undefined, chunksize));
+  }
+
+  static HexStringToBN(hexString: string, chunksize: number): BN {
+    // Should begin with 0x
+    this.validateHex(hexString);
+
+    let bn = new BN(hexString.slice(2), 16);
+
+    // Check if the BN is more than expected chunksize bytes
+
+    if (bn.byteLength() > chunksize) {
+      throw new Error(
+        "Hex value is too large for the specified chunksize: " + hexString
+      );
+    }
+
+    return bn;
+  }
+
+  static HexStringsToBytes(
+    hexStrings: string[],
+    chunksize: number
+  ): Uint8Array {
+    let bytes = new Uint8Array(chunksize * hexStrings.length);
+    for (let i = 0; i < hexStrings.length; i++) {
+      let bn = this.HexStringToBN(hexStrings[i], chunksize);
+      let byte = this.BNToBytes(bn, chunksize);
+      bytes.set(byte, i * chunksize);
+    }
+    return bytes;
+  }
+
   static bytesToBigIntArray(
     data: Uint8Array,
     chunksize: number = 32
