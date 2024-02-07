@@ -168,4 +168,18 @@ describe("ZkWasmUtil", () => {
       }).toThrow();
     });
   });
+
+  describe("HexStringsToBytesToHexString", () => {
+    it("should convert an array of hex strings to a Uint8Array and convert back and string are same", () => {
+      const hexStrings = ["0x0123456789abcdef", "0x0123456789abcdef"];
+      const chunksize = 8;
+      //We accept additional 0 before but the return string will remove it.
+      const expected = ["0x123456789abcdef", "0x123456789abcdef"];
+
+      const bytes = ZkWasmUtil.hexStringsToBytes(hexStrings, chunksize);
+      const results = ZkWasmUtil.bytesToHexStrings(bytes, chunksize);
+
+      expect(results).toEqual(expected);
+    });
+  });
 });
