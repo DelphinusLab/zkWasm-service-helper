@@ -161,6 +161,7 @@ export interface AppConfig {
     };
     chain_info_list: Array<ChainInfo>;
     latest_server_checksum: Uint8Array;
+    topup_token_params: TokenParams;
     deployments: ContractDeployments[];
     subscription_plans: SubscriptionParams[];
 }
