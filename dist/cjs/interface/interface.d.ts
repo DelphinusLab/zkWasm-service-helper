@@ -249,7 +249,8 @@ export interface ERC20DepositInfo {
     receiver_address: string;
     txhash: string;
     amount: string;
-    token_address: string;
+    token_params: TokenParams;
+    token_data: TokenData;
 }
 export interface Subscription {
     subscriber_address: string;
