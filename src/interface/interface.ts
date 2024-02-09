@@ -279,7 +279,7 @@ export interface SubscriptionParams {
 }
 export interface TokenParams {
   token_address: string;
-  network: string;
+  network_id: number;
 }
 export interface TokenData {
   decimals: number;
