@@ -59,6 +59,15 @@ class ZkWasmServiceHelper {
             return txs;
         });
     }
+    queryDepositHistory(history_query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let req = JSON.parse("{}");
+            req["user_address"] = history_query.user_address;
+            const txs = yield this.endpoint.invokeRequest("GET", "/deposits", req);
+            console.log("get queryDepositHistory response.");
+            return txs;
+        });
+    }
     queryConfig() {
         return __awaiter(this, void 0, void 0, function* () {
             const config = yield this.endpoint.invokeRequest("GET", "/config", JSON.parse("{}"));
