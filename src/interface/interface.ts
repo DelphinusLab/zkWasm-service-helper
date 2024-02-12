@@ -201,6 +201,8 @@ export interface AppConfig {
   };
   chain_info_list: Array<ChainInfo>;
   latest_server_checksum: Uint8Array;
+  topup_token_params: TokenParams;
+  topup_token_data: TokenData;
   deployments: ContractDeployments[];
   subscription_plans: SubscriptionParams[];
 }
@@ -278,7 +280,7 @@ export interface SubscriptionParams {
 }
 export interface TokenParams {
   token_address: string;
-  network: string;
+  network_id: number;
 }
 export interface TokenData {
   decimals: number;
@@ -299,7 +301,8 @@ export interface ERC20DepositInfo {
   receiver_address: string;
   txhash: string;
   amount: string;
-  token_address: string;
+  token_params: TokenParams;
+  token_data: TokenData;
 }
 
 export interface Subscription {
