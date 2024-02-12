@@ -21,6 +21,7 @@ import {
   OmitSignature,
   ModifyImageParams,
   SubscriptionRequest,
+  ERC20DepositInfo,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -58,6 +59,17 @@ export class ZkWasmServiceHelper {
 
     const txs = await this.endpoint.invokeRequest("GET", "/transactions", req);
     console.log("get queryTxHistory response.");
+    return txs;
+  }
+
+  async queryDepositHistory(
+    history_query: TxHistoryQueryParams
+  ): Promise<PaginationResult<ERC20DepositInfo[]>> {
+    let req = JSON.parse("{}");
+    req["user_address"] = history_query.user_address;
+
+    const txs = await this.endpoint.invokeRequest("GET", "/deposits", req);
+    console.log("get queryDepositHistory response.");
     return txs;
   }
 

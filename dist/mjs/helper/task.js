@@ -28,6 +28,13 @@ export class ZkWasmServiceHelper {
         console.log("get queryTxHistory response.");
         return txs;
     }
+    async queryDepositHistory(history_query) {
+        let req = JSON.parse("{}");
+        req["user_address"] = history_query.user_address;
+        const txs = await this.endpoint.invokeRequest("GET", "/deposits", req);
+        console.log("get queryDepositHistory response.");
+        return txs;
+    }
     async queryConfig() {
         const config = await this.endpoint.invokeRequest("GET", "/config", JSON.parse("{}"));
         console.log("get queryConfig response.");
