@@ -271,6 +271,7 @@ export interface TxHistoryQueryParams {
 export interface User {
     user_address: string;
     balance: Uint8Array;
+    credits: string;
 }
 export type UserInfo = {
     user: User;
