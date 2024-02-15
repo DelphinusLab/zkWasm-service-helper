@@ -325,6 +325,10 @@ export interface TxHistoryQueryParams {
 
 export interface User {
   user_address: string;
+  /**
+   * @deprecated This field is deprecated and will be removed in a future version.
+   * Use `credits` as an alternative.
+   */
   balance: Uint8Array;
   credits: string;
 }
