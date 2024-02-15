@@ -329,11 +329,6 @@ export interface User {
   credits: string;
 }
 
-export type UserInfo = {
-  user: User;
-  subscription: Subscription | null;
-};
-
 export interface TransactionInfo {
   txhash: string;
   value: Uint8Array;
