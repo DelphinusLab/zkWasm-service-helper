@@ -262,9 +262,9 @@ export interface PaymentParams {
   txhash: string;
 }
 
-export type SubscriptionType = "Basic" | "Premium" | "Enterprise";
+export type SubscriptionType = "Basic" | "Developer" | "Enterprise";
 export type BaseSubscriptionDuration = "Month" | "Year";
-type SubscriptionDuration = {
+export type SubscriptionDuration = {
   base_duration: BaseSubscriptionDuration;
   multiplier: number;
 };
@@ -310,7 +310,7 @@ export interface Subscription {
   end_date: number; // Unix timestamp
   params: SubscriptionParams;
   status: SubscriptionStatus;
-  payment_details: ERC20DepositInfo; // Could also just store the txhash and get the details from the db collection
+  payment_details: ERC20DepositInfo[]; // Could also just store the txhash and get the details from the db collection
 }
 
 export interface UserQueryParams {

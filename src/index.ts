@@ -14,6 +14,7 @@ import {
   User,
   UserQueryParams,
   PaymentParams,
+  SubscriptionDuration,
   SubscriptionParams,
   Subscription,
   SubscriptionType,
