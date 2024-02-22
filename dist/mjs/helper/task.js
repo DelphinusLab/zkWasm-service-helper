@@ -21,6 +21,13 @@ export class ZkWasmServiceHelper {
         console.log("get queryUser response.");
         return user;
     }
+    async queryUserSubscription(user_query) {
+        let req = JSON.parse("{}");
+        req["user_address"] = user_query.user_address;
+        const user = await this.endpoint.invokeRequest("GET", "/user_subscription", req);
+        console.log("get queryUserSubscription response.");
+        return user;
+    }
     async queryTxHistory(history_query) {
         let req = JSON.parse("{}");
         req["user_address"] = history_query.user_address;

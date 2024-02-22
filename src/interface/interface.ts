@@ -263,9 +263,9 @@ export interface PaymentParams {
   txhash: string;
 }
 
-export type SubscriptionType = "Basic" | "Premium" | "Enterprise";
+export type SubscriptionType = "Basic" | "Developer" | "Enterprise";
 export type BaseSubscriptionDuration = "Month" | "Year";
-type SubscriptionDuration = {
+export type SubscriptionDuration = {
   base_duration: BaseSubscriptionDuration;
   multiplier: number;
 };
@@ -311,7 +311,7 @@ export interface Subscription {
   end_date: number; // Unix timestamp
   params: SubscriptionParams;
   status: SubscriptionStatus;
-  payment_details: ERC20DepositInfo; // Could also just store the txhash and get the details from the db collection
+  payment_details: ERC20DepositInfo[]; // Could also just store the txhash and get the details from the db collection
 }
 
 export interface UserQueryParams {
@@ -326,13 +326,13 @@ export interface TxHistoryQueryParams {
 
 export interface User {
   user_address: string;
+  /**
+   * @deprecated This field is deprecated and will be removed in a future version.
+   * Use `credits` as an alternative.
+   */
   balance: Uint8Array;
+  credits: string;
 }
-
-export type UserInfo = {
-  user: User;
-  subscription: Subscription | null;
-};
 
 export interface TransactionInfo {
   txhash: string;
