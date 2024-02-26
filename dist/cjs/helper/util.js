@@ -257,6 +257,9 @@ class ZkWasmUtil {
             return signature;
         });
     }
+    static bytesToJSONString(data) {
+        return JSON.stringify(Array.from(data));
+    }
     // For nodejs/server environments only
     static loadContextFileFromPath(filePath) {
         return __awaiter(this, void 0, void 0, function* () {

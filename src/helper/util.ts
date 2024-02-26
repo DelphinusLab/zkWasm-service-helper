@@ -358,6 +358,10 @@ export class ZkWasmUtil {
     return signature;
   }
 
+  static bytesToJSONString(data: Uint8Array): string {
+    return JSON.stringify(Array.from(data));
+  }
+
   // For nodejs/server environments only
   static async loadContextFileFromPath(
     filePath: string

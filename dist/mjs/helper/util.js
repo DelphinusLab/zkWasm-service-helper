@@ -283,6 +283,9 @@ export class ZkWasmUtil {
         let signature = await wallet.signMessage(message);
         return signature;
     }
+    static bytesToJSONString(data) {
+        return JSON.stringify(Array.from(data));
+    }
     // For nodejs/server environments only
     static async loadContextFileFromPath(filePath) {
         if (typeof window === "undefined") {
