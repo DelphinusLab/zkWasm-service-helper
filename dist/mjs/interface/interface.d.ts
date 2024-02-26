@@ -19,6 +19,7 @@ export interface Task {
     single_proof: Uint8Array;
     proof: Uint8Array;
     aux: Uint8Array;
+    external_host_table: Uint8Array;
     batch_instances: Uint8Array;
     instances: Uint8Array;
     public_inputs: Array<string>;
