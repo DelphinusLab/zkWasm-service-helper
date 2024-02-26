@@ -358,6 +358,11 @@ export class ZkWasmUtil {
     return signature;
   }
 
+  static bytesToJSONString(data: Uint8Array): string {
+    const bufferView = new Uint8Array(data);
+    return new TextDecoder().decode(bufferView);
+  }
+
   // For nodejs/server environments only
   static async loadContextFileFromPath(
     filePath: string

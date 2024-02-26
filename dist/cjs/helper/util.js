@@ -257,6 +257,10 @@ class ZkWasmUtil {
             return signature;
         });
     }
+    static bytesToJSONString(data) {
+        const bufferView = new Uint8Array(data);
+        return new TextDecoder().decode(bufferView);
+    }
     // For nodejs/server environments only
     static loadContextFileFromPath(filePath) {
         return __awaiter(this, void 0, void 0, function* () {
