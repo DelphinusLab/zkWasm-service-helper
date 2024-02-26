@@ -359,7 +359,8 @@ export class ZkWasmUtil {
   }
 
   static bytesToJSONString(data: Uint8Array): string {
-    return JSON.stringify(Array.from(data));
+    const bufferView = new Uint8Array(data);
+    return new TextDecoder().decode(bufferView);
   }
 
   // For nodejs/server environments only
