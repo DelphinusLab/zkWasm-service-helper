@@ -343,6 +343,14 @@ export class ZkWasmUtil {
     // // convert to BigInt array
     // let bigIntArgs = args.map((x) => BigInt(x));
 
+    let gas = await verify_contract.verify.estimateGas(
+      aggregate_proof,
+      batchInstances,
+      aux,
+      [instances]
+    );
+    console.log("gas is:", gas);
+
     let result = await verify_contract.verify.send(
       aggregate_proof,
       batchInstances,
