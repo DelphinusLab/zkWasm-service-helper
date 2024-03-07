@@ -258,17 +258,8 @@ class ZkWasmUtil {
             return signature;
         });
     }
-<<<<<<< HEAD
-    static bytesToJSONString(data) {
-        const bufferView = new Uint8Array(data);
-        return new TextDecoder().decode(bufferView);
-    }
-    static ERC20Contract(contractAddress) {
-        return new ethers_1.Contract(contractAddress, ERC20_json_1.default);
-=======
     static ERC20Contract(contractAddress, signer) {
         return new ethers_1.Contract(contractAddress, ERC20_json_1.default, signer);
->>>>>>> try with create
     }
     // For nodejs/server environments only
     static loadContextFileFromPath(filePath) {
