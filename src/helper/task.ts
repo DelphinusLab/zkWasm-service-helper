@@ -15,13 +15,14 @@ import {
   PaginationResult,
   Task,
   Image,
-  UserInfo,
   TransactionInfo,
   AppConfig,
   OmitSignature,
   ModifyImageParams,
   SubscriptionRequest,
   ERC20DepositInfo,
+  User,
+  Subscription,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -42,12 +43,27 @@ export class ZkWasmServiceHelper {
     return images[0]!;
   }
 
-  async queryUser(user_query: UserQueryParams): Promise<UserInfo> {
+  async queryUser(user_query: UserQueryParams): Promise<User> {
     let req = JSON.parse("{}");
     req["user_address"] = user_query.user_address;
 
     const user = await this.endpoint.invokeRequest("GET", "/user", req);
     console.log("get queryUser response.");
+    return user;
+  }
+
+  async queryUserSubscription(
+    user_query: UserQueryParams
+  ): Promise<Subscription | null> {
+    let req = JSON.parse("{}");
+    req["user_address"] = user_query.user_address;
+
+    const user = await this.endpoint.invokeRequest(
+      "GET",
+      "/user_subscription",
+      req
+    );
+    console.log("get queryUserSubscription response.");
     return user;
   }
 

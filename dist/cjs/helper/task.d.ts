@@ -1,10 +1,11 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, UserInfo, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
     constructor(endpoint: string, username: string, useraddress: string);
     queryImage(md5: string): Promise<Image>;
-    queryUser(user_query: UserQueryParams): Promise<UserInfo>;
+    queryUser(user_query: UserQueryParams): Promise<User>;
+    queryUserSubscription(user_query: UserQueryParams): Promise<Subscription | null>;
     queryTxHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<TransactionInfo[]>>;
     queryDepositHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<ERC20DepositInfo[]>>;
     queryConfig(): Promise<AppConfig>;

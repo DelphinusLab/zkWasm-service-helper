@@ -50,6 +50,15 @@ class ZkWasmServiceHelper {
             return user;
         });
     }
+    queryUserSubscription(user_query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let req = JSON.parse("{}");
+            req["user_address"] = user_query.user_address;
+            const user = yield this.endpoint.invokeRequest("GET", "/user_subscription", req);
+            console.log("get queryUserSubscription response.");
+            return user;
+        });
+    }
     queryTxHistory(history_query) {
         return __awaiter(this, void 0, void 0, function* () {
             let req = JSON.parse("{}");
