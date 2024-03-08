@@ -287,6 +287,10 @@ export class ZkWasmUtil {
     static ERC20Contract(contractAddress, signer) {
         return new Contract(contractAddress, ERC20, signer);
     }
+    static bytesToJSONString(data) {
+        const bufferView = new Uint8Array(data);
+        return new TextDecoder().decode(bufferView);
+    }
     // For nodejs/server environments only
     static async loadContextFileFromPath(filePath) {
         if (typeof window === "undefined") {

@@ -363,6 +363,11 @@ export class ZkWasmUtil {
     return new Contract(contractAddress, ERC20, signer);
   }
 
+  static bytesToJSONString(data: Uint8Array): string {
+    const bufferView = new Uint8Array(data);
+    return new TextDecoder().decode(bufferView);
+  }
+
   // For nodejs/server environments only
   static async loadContextFileFromPath(
     filePath: string
