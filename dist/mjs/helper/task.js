@@ -21,11 +21,25 @@ export class ZkWasmServiceHelper {
         console.log("get queryUser response.");
         return user;
     }
+    async queryUserSubscription(user_query) {
+        let req = JSON.parse("{}");
+        req["user_address"] = user_query.user_address;
+        const user = await this.endpoint.invokeRequest("GET", "/user_subscription", req);
+        console.log("get queryUserSubscription response.");
+        return user;
+    }
     async queryTxHistory(history_query) {
         let req = JSON.parse("{}");
         req["user_address"] = history_query.user_address;
         const txs = await this.endpoint.invokeRequest("GET", "/transactions", req);
         console.log("get queryTxHistory response.");
+        return txs;
+    }
+    async queryDepositHistory(history_query) {
+        let req = JSON.parse("{}");
+        req["user_address"] = history_query.user_address;
+        const txs = await this.endpoint.invokeRequest("GET", "/deposits", req);
+        console.log("get queryDepositHistory response.");
         return txs;
     }
     async queryConfig() {
@@ -93,6 +107,11 @@ export class ZkWasmServiceHelper {
     async addPayment(payRequest) {
         const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
         console.log("get addPayment response:", response.toString());
+        return response;
+    }
+    async addSubscription(subscription) {
+        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
+        console.log("get addSubscription response:", response.toString());
         return response;
     }
     async addNewWasmImage(task) {
@@ -168,5 +187,6 @@ export var TaskEndpoint;
     TaskEndpoint["RESET"] = "/reset";
     TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
 })(TaskEndpoint || (TaskEndpoint = {}));

@@ -1,16 +1,19 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, User, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
     constructor(endpoint: string, username: string, useraddress: string);
     queryImage(md5: string): Promise<Image>;
     queryUser(user_query: UserQueryParams): Promise<User>;
+    queryUserSubscription(user_query: UserQueryParams): Promise<Subscription | null>;
     queryTxHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<TransactionInfo[]>>;
+    queryDepositHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<ERC20DepositInfo[]>>;
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
+    addSubscription(subscription: SubscriptionRequest): Promise<any>;
     addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
     addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
@@ -28,5 +31,6 @@ export declare enum TaskEndpoint {
     RESET = "/reset",
     MODIFY = "/modify",
     PAY = "/pay",
+    SUBSCRIBE = "/subscribe",
     LOGS = "/logs"
 }

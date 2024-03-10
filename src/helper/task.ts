@@ -15,11 +15,14 @@ import {
   PaginationResult,
   Task,
   Image,
-  User,
   TransactionInfo,
   AppConfig,
   OmitSignature,
   ModifyImageParams,
+  SubscriptionRequest,
+  ERC20DepositInfo,
+  User,
+  Subscription,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -49,6 +52,21 @@ export class ZkWasmServiceHelper {
     return user;
   }
 
+  async queryUserSubscription(
+    user_query: UserQueryParams
+  ): Promise<Subscription | null> {
+    let req = JSON.parse("{}");
+    req["user_address"] = user_query.user_address;
+
+    const user = await this.endpoint.invokeRequest(
+      "GET",
+      "/user_subscription",
+      req
+    );
+    console.log("get queryUserSubscription response.");
+    return user;
+  }
+
   async queryTxHistory(
     history_query: TxHistoryQueryParams
   ): Promise<PaginationResult<TransactionInfo[]>> {
@@ -57,6 +75,17 @@ export class ZkWasmServiceHelper {
 
     const txs = await this.endpoint.invokeRequest("GET", "/transactions", req);
     console.log("get queryTxHistory response.");
+    return txs;
+  }
+
+  async queryDepositHistory(
+    history_query: TxHistoryQueryParams
+  ): Promise<PaginationResult<ERC20DepositInfo[]>> {
+    let req = JSON.parse("{}");
+    req["user_address"] = history_query.user_address;
+
+    const txs = await this.endpoint.invokeRequest("GET", "/deposits", req);
+    console.log("get queryDepositHistory response.");
     return txs;
   }
 
@@ -149,6 +178,16 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(payRequest))
     );
     console.log("get addPayment response:", response.toString());
+    return response;
+  }
+
+  async addSubscription(subscription: SubscriptionRequest) {
+    const response = await this.endpoint.invokeRequest(
+      "POST",
+      TaskEndpoint.SUBSCRIBE,
+      JSON.parse(JSON.stringify(subscription))
+    );
+    console.log("get addSubscription response:", response.toString());
     return response;
   }
 
@@ -270,5 +309,6 @@ export enum TaskEndpoint {
   RESET = "/reset",
   MODIFY = "/modify",
   PAY = "/pay",
+  SUBSCRIBE = "/subscribe",
   LOGS = "/logs",
 }

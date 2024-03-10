@@ -1,7 +1,8 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
 import { InputContextType, } from "../interface/interface.js";
-import { formatUnits, Wallet } from "ethers";
+import { Contract, formatUnits, Wallet } from "ethers";
+import ERC20 from "../abi/ERC20.json";
 export class ZkWasmUtil {
     static contract_abi = {
         contractName: "AggregatorVerifier",
@@ -282,6 +283,9 @@ export class ZkWasmUtil {
         let wallet = new Wallet(priv_key, null);
         let signature = await wallet.signMessage(message);
         return signature;
+    }
+    static ERC20Contract(contractAddress, signer) {
+        return new Contract(contractAddress, ERC20, signer);
     }
     static bytesToJSONString(data) {
         const bufferView = new Uint8Array(data);

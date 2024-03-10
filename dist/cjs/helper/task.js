@@ -50,12 +50,30 @@ class ZkWasmServiceHelper {
             return user;
         });
     }
+    queryUserSubscription(user_query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let req = JSON.parse("{}");
+            req["user_address"] = user_query.user_address;
+            const user = yield this.endpoint.invokeRequest("GET", "/user_subscription", req);
+            console.log("get queryUserSubscription response.");
+            return user;
+        });
+    }
     queryTxHistory(history_query) {
         return __awaiter(this, void 0, void 0, function* () {
             let req = JSON.parse("{}");
             req["user_address"] = history_query.user_address;
             const txs = yield this.endpoint.invokeRequest("GET", "/transactions", req);
             console.log("get queryTxHistory response.");
+            return txs;
+        });
+    }
+    queryDepositHistory(history_query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let req = JSON.parse("{}");
+            req["user_address"] = history_query.user_address;
+            const txs = yield this.endpoint.invokeRequest("GET", "/deposits", req);
+            console.log("get queryDepositHistory response.");
             return txs;
         });
     }
@@ -133,6 +151,13 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
             console.log("get addPayment response:", response.toString());
+            return response;
+        });
+    }
+    addSubscription(subscription) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
+            console.log("get addSubscription response:", response.toString());
             return response;
         });
     }
@@ -222,5 +247,6 @@ var TaskEndpoint;
     TaskEndpoint["RESET"] = "/reset";
     TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

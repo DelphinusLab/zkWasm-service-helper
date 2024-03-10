@@ -11,11 +11,12 @@ import {
   ContextHexString,
   InputContextType,
 } from "../interface/interface.js";
-import { Contract, formatUnits, Wallet } from "ethers";
+import { Contract, formatUnits, Signer, Wallet } from "ethers";
 import {
   DelphinusWalletConnector,
   DelphinusBrowserConnector,
 } from "web3subscriber/src/provider.js";
+import ERC20 from "../abi/ERC20.json";
 
 export class ZkWasmUtil {
   static contract_abi = {
@@ -356,6 +357,10 @@ export class ZkWasmUtil {
     let wallet = new Wallet(priv_key, null);
     let signature = await wallet.signMessage(message);
     return signature;
+  }
+
+  static ERC20Contract(contractAddress: string, signer: Signer) {
+    return new Contract(contractAddress, ERC20, signer);
   }
 
   static bytesToJSONString(data: Uint8Array): string {

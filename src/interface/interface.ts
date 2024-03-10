@@ -201,7 +201,10 @@ export interface AppConfig {
   };
   chain_info_list: Array<ChainInfo>;
   latest_server_checksum: Uint8Array;
+  topup_token_params: TokenParams;
+  topup_token_data: TokenData;
   deployments: ContractDeployments[];
+  subscription_plans: SubscriptionParams[];
 }
 
 export interface ContractDeployments {
@@ -260,6 +263,57 @@ export interface PaymentParams {
   txhash: string;
 }
 
+export type SubscriptionType = "Basic" | "Developer" | "Enterprise";
+export type BaseSubscriptionDuration = "Month" | "Year";
+export type SubscriptionDuration = {
+  base_duration: BaseSubscriptionDuration;
+  multiplier: number;
+};
+
+export interface SubscriptionParams {
+  subscription_type: SubscriptionType;
+  duration: SubscriptionDuration;
+  token_params: TokenParams;
+  token_data: TokenData;
+  price_per_base_duration: string;
+  enabled: boolean;
+}
+export interface TokenParams {
+  token_address: string;
+  network_id: number;
+}
+export interface TokenData {
+  decimals: number;
+  symbol: string;
+}
+
+export interface SubscriptionRequest {
+  subscriber_address: string;
+  subscription_type: SubscriptionType;
+  duration: SubscriptionDuration;
+  payment_hash: string;
+}
+
+export type SubscriptionStatus = "Active" | "Expired";
+
+export interface ERC20DepositInfo {
+  user_address: string;
+  receiver_address: string;
+  txhash: string;
+  amount: string;
+  token_params: TokenParams;
+  token_data: TokenData;
+}
+
+export interface Subscription {
+  subscriber_address: string;
+  start_date: number; // Unix timestamp
+  end_date: number; // Unix timestamp
+  params: SubscriptionParams;
+  status: SubscriptionStatus;
+  payment_details: ERC20DepositInfo[]; // Could also just store the txhash and get the details from the db collection
+}
+
 export interface UserQueryParams {
   user_address: string;
 }
@@ -272,7 +326,12 @@ export interface TxHistoryQueryParams {
 
 export interface User {
   user_address: string;
+  /**
+   * @deprecated This field is deprecated and will be removed in a future version.
+   * Use `credits` as an alternative.
+   */
   balance: Uint8Array;
+  credits: string;
 }
 
 export interface TransactionInfo {
