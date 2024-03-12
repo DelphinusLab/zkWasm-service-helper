@@ -281,6 +281,7 @@ export interface SubscriptionParams {
 export interface TokenParams {
   token_address: string;
   network_id: number;
+  topup_conversion_rate: number | null;
 }
 export interface TokenData {
   decimals: number;
