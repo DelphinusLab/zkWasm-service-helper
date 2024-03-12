@@ -276,11 +276,13 @@ export interface SubscriptionParams {
   token_params: TokenParams;
   token_data: TokenData;
   price_per_base_duration: string;
+  credited_amount: string;
   enabled: boolean;
 }
 export interface TokenParams {
   token_address: string;
   network_id: number;
+  topup_conversion_rate: number | null;
 }
 export interface TokenData {
   decimals: number;
