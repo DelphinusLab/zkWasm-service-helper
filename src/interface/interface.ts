@@ -276,6 +276,7 @@ export interface SubscriptionParams {
   token_params: TokenParams;
   token_data: TokenData;
   price_per_base_duration: string;
+  credited_amount: string;
   enabled: boolean;
 }
 export interface TokenParams {
