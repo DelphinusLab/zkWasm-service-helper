@@ -266,7 +266,11 @@ export class ZkWasmUtil {
         let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
         let batchInstances = this.bytesToBigIntArray(params.batch_instances);
         let aux = this.bytesToBigIntArray(params.aux);
-        let instances = this.bytesToBigIntArray(params.instances);
+        let instances = [];
+        params.instances.forEach(instance => {
+            instances.push(this.bytesToBigIntArray(instance));
+        });
+        // let instances = this.bytesToBigIntArray(params.instances);
         // let args = ZkWasmUtil.parseArgs(params.instances).map((x) =>
         //   x.toString(10)
         // );
@@ -276,7 +280,7 @@ export class ZkWasmUtil {
         // }
         // // convert to BigInt array
         // let bigIntArgs = args.map((x) => BigInt(x));
-        let result = await verify_contract.verify.send(aggregate_proof, batchInstances, aux, [instances]);
+        let result = await verify_contract.verify.send(aggregate_proof, batchInstances, aux, instances);
         return result;
     }
     static async signMessage(message, priv_key) {

@@ -141,7 +141,7 @@ export interface VerifyProofParams {
     aggregate_proof: Uint8Array;
     batch_instances: Uint8Array;
     aux: Uint8Array;
-    instances: Uint8Array;
+    instances: Array<Uint8Array>;
 }
 export interface LogQuery {
     id: string;
