@@ -20,6 +20,7 @@ export interface Task {
     proof: Uint8Array;
     aux: Uint8Array;
     external_host_table: Uint8Array;
+    shadow_instances: Uint8Array;
     batch_instances: Uint8Array;
     instances: Uint8Array;
     public_inputs: Array<string>;
@@ -139,7 +140,7 @@ export interface QueryParams {
 }
 export interface VerifyProofParams {
     aggregate_proof: Uint8Array;
-    batch_instances: Uint8Array;
+    shadow_instances: Uint8Array;
     aux: Uint8Array;
     instances: Array<Uint8Array>;
 }

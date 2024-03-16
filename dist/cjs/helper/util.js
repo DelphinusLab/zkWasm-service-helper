@@ -235,10 +235,10 @@ class ZkWasmUtil {
     static verifyProof(verify_contract, params) {
         return __awaiter(this, void 0, void 0, function* () {
             let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
-            let batchInstances = this.bytesToBigIntArray(params.batch_instances);
+            let shadow_instances = this.bytesToBigIntArray(params.shadow_instances);
             let aux = this.bytesToBigIntArray(params.aux);
             let instances = [];
-            params.instances.forEach(instance => {
+            params.instances.forEach((instance) => {
                 instances.push(this.bytesToBigIntArray(instance));
             });
             // let instances = this.bytesToBigIntArray(params.instances);
@@ -251,7 +251,7 @@ class ZkWasmUtil {
             // }
             // // convert to BigInt array
             // let bigIntArgs = args.map((x) => BigInt(x));
-            let result = yield verify_contract.verify.send(aggregate_proof, batchInstances, aux, instances);
+            let result = yield verify_contract.verify.send(aggregate_proof, shadow_instances, aux, instances);
             return result;
         });
     }
