@@ -55,6 +55,14 @@ export interface VerifierContracts {
 
 export type TaskType = "Setup" | "Prove" | "Reset";
 
+/**
+ * Image status:
+ *  Received: Server received setup task of the image but haven’t been done successfully.
+ *  Initialized: Server received setup task of the image and it is done successfully. No proof task had been done successfully for this image.
+ *  Verified: At least one of the proof task had been done successfully for the image.
+ **/
+export type ImageStatus = "Received" | "Initialized" | "Verified";
+
 export type TaskStatus =
   | "Pending"
   | "Processing"
