@@ -47,6 +47,7 @@ export interface VerifierContracts {
     circuit_size: number;
 }
 export type TaskType = "Setup" | "Prove" | "Reset";
+export type ImageStatus = "Received" | "Initialized" | "Verified";
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
 export interface PaginationResult<T> {
     data: T;
