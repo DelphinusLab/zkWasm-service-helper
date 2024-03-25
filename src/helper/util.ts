@@ -331,9 +331,13 @@ export class ZkWasmUtil {
     params: VerifyProofParams
   ) {
     let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
-    let batchInstances = this.bytesToBigIntArray(params.batch_instances);
+    let shadow_instances = this.bytesToBigIntArray(params.shadow_instances);
     let aux = this.bytesToBigIntArray(params.aux);
-    let instances = this.bytesToBigIntArray(params.instances);
+    let instances: Array<BigInt[]> = [];
+    params.instances.forEach((instance) => {
+      instances.push(this.bytesToBigIntArray(instance));
+    });
+    // let instances = this.bytesToBigIntArray(params.instances);
     // let args = ZkWasmUtil.parseArgs(params.instances).map((x) =>
     //   x.toString(10)
     // );
@@ -346,9 +350,9 @@ export class ZkWasmUtil {
 
     let result = await verify_contract.verify.send(
       aggregate_proof,
-      batchInstances,
+      shadow_instances,
       aux,
-      [instances]
+      instances
     );
     return result;
   }
