@@ -83,6 +83,7 @@ export interface BaseAddImageParams {
   description_url: string;
   avator_url: string;
   circuit_size: number;
+  creator_paid_proof: boolean;
 }
 
 export interface WithInitialContext {

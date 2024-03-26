@@ -186,6 +186,7 @@ export class ZkWasmUtil {
     message += params.description_url;
     message += params.avator_url;
     message += params.circuit_size;
+    message += params.creator_paid_proof;
     // Additional params afterwards
     if (params.initial_context) {
       message += params.initial_context_md5;
