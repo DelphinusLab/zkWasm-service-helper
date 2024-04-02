@@ -109,6 +109,7 @@ export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
+    image_type: string;
 }
 export interface WithResetContext {
     reset_context: unknown;

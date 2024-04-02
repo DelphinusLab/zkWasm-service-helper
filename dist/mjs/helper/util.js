@@ -193,6 +193,7 @@ export class ZkWasmUtil {
         message += params.md5;
         message += params.circuit_size;
         message += params.user_address;
+        message += params.image_type;
         if (params.reset_context) {
             message += params.reset_context_md5;
         }
