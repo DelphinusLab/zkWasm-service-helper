@@ -262,6 +262,7 @@ export interface Image {
   initial_context?: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
+  image_type : string;
 }
 
 export interface ImageChecksum {
