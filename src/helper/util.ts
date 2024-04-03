@@ -186,7 +186,8 @@ export class ZkWasmUtil {
     message += params.description_url;
     message += params.avator_url;
     message += params.circuit_size;
-    message += params.image_type;
+    message += params.metadata_keys;
+    message += params.metadata_vals;
     // Additional params afterwards
     if (params.initial_context) {
       message += params.initial_context_md5;
@@ -232,7 +233,8 @@ export class ZkWasmUtil {
     message += params.md5;
     message += params.circuit_size;
     message += params.user_address;
-    message += params.image_type;
+    message += params.metadata_keys;
+    message += params.metadata_vals;
     if (params.reset_context) {
       message += params.reset_context_md5;
     }
