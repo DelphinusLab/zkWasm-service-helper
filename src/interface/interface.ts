@@ -264,7 +264,9 @@ export interface Image {
   initial_context?: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
-  metadata : { [key: string]: string };
+  metadata : { 
+    values : { [key: string]: string }
+  };
 }
 
 export interface ImageChecksum {

@@ -220,7 +220,9 @@ export interface Image {
     status: string;
     checksum: ImageChecksum | null;
     metadata: {
-        [key: string]: string;
+        values: {
+            [key: string]: string;
+        };
     };
 }
 export interface ImageChecksum {
