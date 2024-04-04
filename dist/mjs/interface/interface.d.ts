@@ -47,6 +47,12 @@ export interface VerifierContracts {
     circuit_size: number;
 }
 export type TaskType = "Setup" | "Prove" | "Reset";
+/**
+ * Image status:
+ *  Received: Server received setup task of the image but haven’t been done successfully.
+ *  Initialized: Server received setup task of the image and it is done successfully. No proof task had been done successfully for this image.
+ *  Verified: At least one of the proof task had been done successfully for the image.
+ **/
 export type ImageStatus = "Received" | "Initialized" | "Verified";
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
 export interface PaginationResult<T> {
@@ -61,6 +67,8 @@ export interface BaseAddImageParams {
     description_url: string;
     avator_url: string;
     circuit_size: number;
+    metadata_keys: string[];
+    metadata_vals: string[];
 }
 export interface WithInitialContext {
     initial_context: unknown;
@@ -102,6 +110,8 @@ export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
+    metadata_keys: string[];
+    metadata_vals: string[];
 }
 export interface WithResetContext {
     reset_context: unknown;
@@ -209,6 +219,11 @@ export interface Image {
     initial_context?: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
+    metadata: {
+        values: {
+            [key: string]: string;
+        };
+    };
 }
 export interface ImageChecksum {
     x: Uint8Array;
