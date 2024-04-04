@@ -84,6 +84,8 @@ export interface BaseAddImageParams {
   description_url: string;
   avator_url: string;
   circuit_size: number;
+  metadata_keys: string[];
+  metadata_vals: string[];
 }
 
 export interface WithInitialContext {
@@ -141,6 +143,8 @@ export interface BaseResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
+  metadata_keys: string[];
+  metadata_vals: string[];
 }
 
 export interface WithResetContext {
@@ -262,6 +266,9 @@ export interface Image {
   initial_context?: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
+  metadata : { 
+    values : { [key: string]: string }
+  };
 }
 
 export interface ImageChecksum {
