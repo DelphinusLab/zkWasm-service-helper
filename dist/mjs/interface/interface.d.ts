@@ -59,10 +59,11 @@ export interface PaginationResult<T> {
     data: T;
     total: number;
 }
-export type MetadataKey = "ProvePaymentSrc";
-export declare const metadataKeys: {
-    provePaymentSrc: string;
-};
+export type MetadataKeyType = "ProvePaymentSrc";
+interface MetadataKeys {
+    provePaymentSrc: MetadataKeyType;
+}
+export declare const metadataKeys: MetadataKeys;
 export declare const metadataVals: {
     provePaymentSrc: {
         default: string;
@@ -77,7 +78,7 @@ export interface BaseAddImageParams {
     description_url: string;
     avator_url: string;
     circuit_size: number;
-    metadata_keys: MetadataKey[];
+    metadata_keys: MetadataKeyType[];
     metadata_vals: string[];
 }
 export interface WithInitialContext {
@@ -120,7 +121,7 @@ export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
-    metadata_keys: MetadataKey[];
+    metadata_keys: MetadataKeyType[];
     metadata_vals: string[];
 }
 export interface WithResetContext {
@@ -312,3 +313,4 @@ export interface TransactionInfo {
     user_address: string;
     receiver_address: string;
 }
+export {};

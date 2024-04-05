@@ -7,7 +7,6 @@ var InputContextType;
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType = exports.InputContextType || (exports.InputContextType = {}));
-// metadata vals are bound by their key
 exports.metadataKeys = {
     provePaymentSrc: "ProvePaymentSrc",
 };

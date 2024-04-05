@@ -4,7 +4,6 @@ export var InputContextType;
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType || (InputContextType = {}));
-// metadata vals are bound by their key
 export const metadataKeys = {
     provePaymentSrc: "ProvePaymentSrc",
 };
