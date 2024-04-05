@@ -79,11 +79,11 @@ export interface PaginationResult<T> {
 export type MetadataKey = "ProvePaymentSrc";
 
 // metadata vals are bound by their key
-export const MetadataKeys = {
+export const metadataKeys = {
     provePaymentSrc : "ProvePaymentSrc",
 }
 
-export const MetadataVals = {
+export const metadataVals = {
     provePaymentSrc : ["Default", "CreatorPay"],
 }
 

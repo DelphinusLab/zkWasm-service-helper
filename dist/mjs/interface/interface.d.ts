@@ -60,10 +60,10 @@ export interface PaginationResult<T> {
     total: number;
 }
 export type MetadataKey = "ProvePaymentSrc";
-export declare const MetadataKeys: {
+export declare const metadataKeys: {
     provePaymentSrc: string;
 };
-export declare const MetadataVals: {
+export declare const metadataVals: {
     provePaymentSrc: string[];
 };
 export interface BaseAddImageParams {
