@@ -51,6 +51,8 @@ export {
   ZkWasmServiceHelper,
   ZkWasmUtil,
   InputContextType,
+  ImageMetadataKeys,
+  ImageMetadataValsProvePaymentSrc,
 };
 
 export type {
@@ -91,6 +93,4 @@ export type {
   WithoutInitialContext,
   WithoutInputContextType,
   WithoutResetContext,
-  ImageMetadataKeys,
-  ImageMetadataValsProvePaymentSrc,
 };
