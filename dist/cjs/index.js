@@ -1,10 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.metadataVals = exports.metadataKeys = exports.InputContextType = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
+exports.InputContextType = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
 const interface_js_1 = require("./interface/interface.js");
 Object.defineProperty(exports, "InputContextType", { enumerable: true, get: function () { return interface_js_1.InputContextType; } });
-Object.defineProperty(exports, "metadataKeys", { enumerable: true, get: function () { return interface_js_1.metadataKeys; } });
-Object.defineProperty(exports, "metadataVals", { enumerable: true, get: function () { return interface_js_1.metadataVals; } });
 const util_js_1 = require("./helper/util.js");
 Object.defineProperty(exports, "ZkWasmUtil", { enumerable: true, get: function () { return util_js_1.ZkWasmUtil; } });
 const endpoint_js_1 = require("./helper/endpoint.js");

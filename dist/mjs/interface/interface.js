@@ -4,12 +4,12 @@ export var InputContextType;
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType || (InputContextType = {}));
-export const metadataKeys = {
-    provePaymentSrc: "ProvePaymentSrc",
-};
-export const metadataVals = {
-    provePaymentSrc: {
-        default: "Default",
-        creatorPay: "CreatorPay",
-    }
-};
+export var ImageMetadataKeys;
+(function (ImageMetadataKeys) {
+    ImageMetadataKeys["ProvePaymentSrc"] = "ProvePaymentSrc";
+})(ImageMetadataKeys || (ImageMetadataKeys = {}));
+export var ImageMetadataValsProvePaymentSrc;
+(function (ImageMetadataValsProvePaymentSrc) {
+    ImageMetadataValsProvePaymentSrc["Default"] = "Default";
+    ImageMetadataValsProvePaymentSrc["CreatorPay"] = "CreatorPay";
+})(ImageMetadataValsProvePaymentSrc || (ImageMetadataValsProvePaymentSrc = {}));

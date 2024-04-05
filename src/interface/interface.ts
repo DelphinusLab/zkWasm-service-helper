@@ -75,23 +75,13 @@ export interface PaginationResult<T> {
   total: number;
 }
 
-// metadata keys require explicit strings to be enforce
-export type MetadataKeyType = "ProvePaymentSrc";
-
-// metadata vals are bound by their key
-interface MetadataKeys {
-    provePaymentSrc : MetadataKeyType,
+export enum ImageMetadataKeys {
+    ProvePaymentSrc = "ProvePaymentSrc",
 }
 
-export const metadataKeys : MetadataKeys = {
-    provePaymentSrc : "ProvePaymentSrc",
-}
-
-export const metadataVals = {
-    provePaymentSrc : {
-        default : "Default",
-        creatorPay : "CreatorPay",
-    }
+export enum ImageMetadataValsProvePaymentSrc {
+    Default = "Default",
+    CreatorPay = "CreatorPay",
 }
 
 export interface BaseAddImageParams {
@@ -102,7 +92,7 @@ export interface BaseAddImageParams {
   description_url: string;
   avator_url: string;
   circuit_size: number;
-  metadata_keys: MetadataKeyType[];
+  metadata_keys: ImageMetadataKeys[];
   metadata_vals: string[];
 }
 
@@ -161,7 +151,7 @@ export interface BaseResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
-  metadata_keys: MetadataKeyType[];
+  metadata_keys: ImageMetadataKeys[];
   metadata_vals: string[];
 }
 
