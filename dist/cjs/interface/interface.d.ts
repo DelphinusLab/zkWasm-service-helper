@@ -64,7 +64,10 @@ export declare const metadataKeys: {
     provePaymentSrc: string;
 };
 export declare const metadataVals: {
-    provePaymentSrc: string[];
+    provePaymentSrc: {
+        default: string;
+        creatorPay: string;
+    };
 };
 export interface BaseAddImageParams {
     name: string;

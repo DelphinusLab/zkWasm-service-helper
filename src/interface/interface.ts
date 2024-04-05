@@ -84,7 +84,10 @@ export const metadataKeys = {
 }
 
 export const metadataVals = {
-    provePaymentSrc : ["Default", "CreatorPay"],
+    provePaymentSrc : {
+        default : "Default",
+        creatorPay : "CreatorPay",
+    }
 }
 
 export interface BaseAddImageParams {

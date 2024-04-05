@@ -12,5 +12,8 @@ exports.metadataKeys = {
     provePaymentSrc: "ProvePaymentSrc",
 };
 exports.metadataVals = {
-    provePaymentSrc: ["Default", "CreatorPay"],
+    provePaymentSrc: {
+        default: "Default",
+        creatorPay: "CreatorPay",
+    }
 };

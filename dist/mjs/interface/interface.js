@@ -9,5 +9,8 @@ export const metadataKeys = {
     provePaymentSrc: "ProvePaymentSrc",
 };
 export const metadataVals = {
-    provePaymentSrc: ["Default", "CreatorPay"],
+    provePaymentSrc: {
+        default: "Default",
+        creatorPay: "CreatorPay",
+    }
 };
