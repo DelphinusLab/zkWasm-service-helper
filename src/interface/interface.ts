@@ -75,6 +75,16 @@ export interface PaginationResult<T> {
   total: number;
 }
 
+// metadata keys require explicit strings to be enforce
+export type MetadataKey = "ProvePaymentSrc";
+
+export const provePaymentSrcMetadataKey : MetadataKey = "ProvePaymentSrc";
+
+// metadata vals are bound by the key they match to, at this layer there are no enforcements
+export type ValidMetadataVals = { 
+    provePaymentSrcMetadataKey : "Default" | "CreatorPay"
+};
+
 export interface BaseAddImageParams {
   name: string;
   image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
@@ -83,7 +93,7 @@ export interface BaseAddImageParams {
   description_url: string;
   avator_url: string;
   circuit_size: number;
-  metadata_keys: string[];
+  metadata_keys: MetadataKey[];
   metadata_vals: string[];
 }
 
@@ -142,7 +152,7 @@ export interface BaseResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
-  metadata_keys: string[];
+  metadata_keys: MetadataKey[];
   metadata_vals: string[];
 }
 
