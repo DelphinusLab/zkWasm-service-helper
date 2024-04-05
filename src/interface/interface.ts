@@ -77,10 +77,15 @@ export interface PaginationResult<T> {
 
 // metadata keys require explicit strings to be enforce
 export type MetadataKey = "ProvePaymentSrc";
-// metadata vals are bound by their key
-export const provePaymentSrcMetadataKey : MetadataKey = "ProvePaymentSrc";
-export const provePaymentSrcMetadataVals : string[] = ["Default", "CreatorPay"]; 
 
+// metadata vals are bound by their key
+export const MetadataKeys = {
+    provePaymentSrc : "ProvePaymentSrc",
+}
+
+export const MetadataVals = {
+    provePaymentSrc : ["Default", "CreatorPay"],
+}
 
 export interface BaseAddImageParams {
   name: string;

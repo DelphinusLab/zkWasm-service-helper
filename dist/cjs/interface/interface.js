@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.provePaymentSrcMetadataVals = exports.provePaymentSrcMetadataKey = exports.InputContextType = void 0;
+exports.MetadataVals = exports.MetadataKeys = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
@@ -8,5 +8,9 @@ var InputContextType;
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType = exports.InputContextType || (exports.InputContextType = {}));
 // metadata vals are bound by their key
-exports.provePaymentSrcMetadataKey = "ProvePaymentSrc";
-exports.provePaymentSrcMetadataVals = ["Default", "CreatorPay"];
+exports.MetadataKeys = {
+    provePaymentSrc: "ProvePaymentSrc",
+};
+exports.MetadataVals = {
+    provePaymentSrc: ["Default", "CreatorPay"],
+};
