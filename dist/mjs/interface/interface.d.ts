@@ -60,6 +60,13 @@ export interface PaginationResult<T> {
     data: T;
     total: number;
 }
+export declare enum ImageMetadataKeys {
+    ProvePaymentSrc = "ProvePaymentSrc"
+}
+export declare enum ImageMetadataValsProvePaymentSrc {
+    Default = "Default",
+    CreatorPay = "CreatorPay"
+}
 export interface BaseAddImageParams {
     name: string;
     image: any;
@@ -68,7 +75,7 @@ export interface BaseAddImageParams {
     description_url: string;
     avator_url: string;
     circuit_size: number;
-    metadata_keys: string[];
+    metadata_keys: ImageMetadataKeys[];
     metadata_vals: string[];
 }
 export interface WithInitialContext {
@@ -111,7 +118,7 @@ export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
-    metadata_keys: string[];
+    metadata_keys: ImageMetadataKeys[];
     metadata_vals: string[];
 }
 export interface WithResetContext {

@@ -76,6 +76,15 @@ export interface PaginationResult<T> {
   total: number;
 }
 
+export enum ImageMetadataKeys {
+    ProvePaymentSrc = "ProvePaymentSrc",
+}
+
+export enum ImageMetadataValsProvePaymentSrc {
+    Default = "Default",
+    CreatorPay = "CreatorPay",
+}
+
 export interface BaseAddImageParams {
   name: string;
   image: any; //This is because F/E use dom File but cli have to use Buffer. Our rust service just read it as bytes and get data before the first EOF.
@@ -84,7 +93,7 @@ export interface BaseAddImageParams {
   description_url: string;
   avator_url: string;
   circuit_size: number;
-  metadata_keys: string[];
+  metadata_keys: ImageMetadataKeys[];
   metadata_vals: string[];
 }
 
@@ -143,7 +152,7 @@ export interface BaseResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
-  metadata_keys: string[];
+  metadata_keys: ImageMetadataKeys[];
   metadata_vals: string[];
 }
 

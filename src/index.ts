@@ -38,6 +38,8 @@ import {
   WithoutInitialContext,
   WithoutInputContextType,
   WithoutResetContext,
+  ImageMetadataKeys,
+  ImageMetadataValsProvePaymentSrc,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -49,6 +51,8 @@ export {
   ZkWasmServiceHelper,
   ZkWasmUtil,
   InputContextType,
+  ImageMetadataKeys,
+  ImageMetadataValsProvePaymentSrc,
 };
 
 export type {
