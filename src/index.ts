@@ -40,6 +40,8 @@ import {
   WithoutResetContext,
   ImageMetadataKeys,
   ImageMetadataValsProvePaymentSrc,
+  TaskMetadataKeys,
+  TaskMetadataValsProofSubmitMode,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -53,6 +55,8 @@ export {
   InputContextType,
   ImageMetadataKeys,
   ImageMetadataValsProvePaymentSrc,
+  TaskMetadataKeys,
+  TaskMetadataValsProofSubmitMode,
 };
 
 export type {
