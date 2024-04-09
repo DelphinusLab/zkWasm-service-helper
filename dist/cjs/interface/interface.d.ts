@@ -56,6 +56,11 @@ export type TaskType = "Setup" | "Prove" | "Reset";
  **/
 export type ImageStatus = "Received" | "Initialized" | "Verified";
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
+export declare enum AutoSubmitStatus {
+    Queued = "Queued",
+    InProgress = "InProgress",
+    Done = "Done"
+}
 export interface PaginationResult<T> {
     data: T;
     total: number;
@@ -87,11 +92,20 @@ export interface WithoutInitialContext {
     initial_context_md5?: never;
 }
 export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
+export declare enum TaskMetadataKeys {
+    ProofSubmitMode = "ProofSubmitMode"
+}
+export declare enum TaskMetadataValsProofSubmitMode {
+    Manual = "Manual",
+    Auto = "Auto"
+}
 export interface BaseProvingParams {
     user_address: string;
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    metadata_keys: TaskMetadataKeys[];
+    metadata_vals: string[];
 }
 export interface WithCustomInputContextType {
     input_context_type: InputContextType.Custom;
