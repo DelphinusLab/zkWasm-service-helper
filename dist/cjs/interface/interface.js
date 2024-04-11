@@ -9,7 +9,6 @@ var InputContextType;
 })(InputContextType = exports.InputContextType || (exports.InputContextType = {}));
 var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
-    AutoSubmitStatus["Queued"] = "Queued";
     AutoSubmitStatus["InProgress"] = "InProgress";
     AutoSubmitStatus["Done"] = "Done";
 })(AutoSubmitStatus = exports.AutoSubmitStatus || (exports.AutoSubmitStatus = {}));

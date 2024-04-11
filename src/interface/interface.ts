@@ -72,7 +72,6 @@ export type TaskStatus =
   | "Stale";
 
 export enum AutoSubmitStatus {
-    Queued = "Queued",
     InProgress = "InProgress",
     Done = "Done",
 }

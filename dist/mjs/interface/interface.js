@@ -6,7 +6,6 @@ export var InputContextType;
 })(InputContextType || (InputContextType = {}));
 export var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
-    AutoSubmitStatus["Queued"] = "Queued";
     AutoSubmitStatus["InProgress"] = "InProgress";
     AutoSubmitStatus["Done"] = "Done";
 })(AutoSubmitStatus || (AutoSubmitStatus = {}));
