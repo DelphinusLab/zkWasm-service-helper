@@ -210,6 +210,9 @@ export class ZkWasmUtil {
       message += input;
     }
 
+    message += params.metadata_keys;
+    message += params.metadata_vals;
+
     // Only handle input_context if selected input_context_type.Custom
     if (
       params.input_context_type === InputContextType.Custom &&
