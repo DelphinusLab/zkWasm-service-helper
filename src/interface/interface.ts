@@ -71,6 +71,11 @@ export type TaskStatus =
   | "Fail"
   | "Stale";
 
+export enum AutoSubmitStatus {
+    InProgress = "InProgress",
+    Done = "Done",
+}
+
 export interface PaginationResult<T> {
   data: T;
   total: number;
@@ -110,11 +115,22 @@ export interface WithoutInitialContext {
 export type AddImageParams = BaseAddImageParams &
   (WithInitialContext | WithoutInitialContext);
 
+export enum TaskMetadataKeys {
+    ProofSubmitMode = "ProofSubmitMode",
+}
+
+export enum TaskMetadataValsProofSubmitMode {
+    Manual = "Manual",
+    Auto = "Auto",
+}
+
 export interface BaseProvingParams {
   user_address: string;
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
+  metadata_keys: TaskMetadataKeys[];
+  metadata_vals: string[];
 }
 
 export interface WithCustomInputContextType {
