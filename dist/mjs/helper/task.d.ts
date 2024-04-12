@@ -4,7 +4,7 @@ export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
     constructor(endpoint: string, username: string, useraddress: string);
     queryImage(md5: string): Promise<Image>;
-    queryImageFilename(md5: string): Promise<string>;
+    queryImageBinary(md5: string): Promise<number[]>;
     queryUser(user_query: UserQueryParams): Promise<User>;
     queryUserSubscription(user_query: UserQueryParams): Promise<Subscription | null>;
     queryTxHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<TransactionInfo[]>>;

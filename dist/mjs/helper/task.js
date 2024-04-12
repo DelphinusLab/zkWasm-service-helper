@@ -14,12 +14,12 @@ export class ZkWasmServiceHelper {
         console.log("get queryImage response.");
         return images[0];
     }
-    async queryImageFilename(md5) {
+    async queryImageBinary(md5) {
         let req = JSON.parse("{}");
         req["md5"] = md5;
-        const images = await this.endpoint.invokeRequest("GET", "/imagefilename", req);
-        console.log("get queryImageFilename response.");
-        return images[0];
+        const image = await this.endpoint.invokeRequest("GET", "/imagebinary", req);
+        console.log("get queryImageBinary response.");
+        return image;
     }
     async queryUser(user_query) {
         let req = JSON.parse("{}");

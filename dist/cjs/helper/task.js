@@ -41,13 +41,13 @@ class ZkWasmServiceHelper {
             return images[0];
         });
     }
-    queryImageFilename(md5) {
+    queryImageBinary(md5) {
         return __awaiter(this, void 0, void 0, function* () {
             let req = JSON.parse("{}");
             req["md5"] = md5;
-            const images = yield this.endpoint.invokeRequest("GET", "/imagefilename", req);
-            console.log("get queryImageFilename response.");
-            return images[0];
+            const image = yield this.endpoint.invokeRequest("GET", "/imagebinary", req);
+            console.log("get queryImageBinary response.");
+            return image;
         });
     }
     queryUser(user_query) {
