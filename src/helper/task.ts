@@ -43,6 +43,15 @@ export class ZkWasmServiceHelper {
     return images[0]!;
   }
 
+  async queryImageBinary(md5: string): Promise<number[]> {
+    let req = JSON.parse("{}");
+    req["md5"] = md5;
+
+    const image = await this.endpoint.invokeRequest("GET", "/imagebinary", req);
+    console.log("get queryImageBinary response.");
+    return image!;
+  }
+
   async queryUser(user_query: UserQueryParams): Promise<User> {
     let req = JSON.parse("{}");
     req["user_address"] = user_query.user_address;
