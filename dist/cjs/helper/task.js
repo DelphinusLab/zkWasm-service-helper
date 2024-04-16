@@ -107,7 +107,7 @@ class ZkWasmServiceHelper {
             };
         });
     }
-    loadTasks(query) {
+    loadTasks(query, enable_logs = true) {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
@@ -142,10 +142,14 @@ class ZkWasmServiceHelper {
                 if (query[key] != "" && query[key] != null)
                     queryJson[key] = query[key];
             });
-            console.log("params:", query);
-            console.log("json", queryJson);
+            if (enable_logs) {
+                console.log("params:", query);
+                console.log("json", queryJson);
+            }
             let tasks = yield this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
-            console.log("loading task board!");
+            if (enable_logs) {
+                console.log("loading task board!");
+            }
             return tasks;
         });
     }
