@@ -10,7 +10,7 @@ export class ZkWasmServiceEndpoint {
     }
     async prepareRequest(method, url, body, headers) {
         if (method === "GET") {
-            console.log(this.endpoint + url);
+            // console.log(this.endpoint + url);
             try {
                 let response = await axios.get(this.endpoint + url, body ? { params: body, headers: { ...headers } } : {});
                 return response.data;

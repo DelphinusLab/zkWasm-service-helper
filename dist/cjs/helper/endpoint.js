@@ -23,7 +23,7 @@ class ZkWasmServiceEndpoint {
     prepareRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
             if (method === "GET") {
-                console.log(this.endpoint + url);
+                // console.log(this.endpoint + url);
                 try {
                     let response = yield axios_1.default.get(this.endpoint + url, body ? { params: body, headers: Object.assign({}, headers) } : {});
                     return response.data;
