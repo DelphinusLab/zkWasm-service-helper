@@ -3,8 +3,8 @@ export declare class ZkWasmServiceEndpoint {
     endpoint: string;
     username: string;
     useraddress: string;
-    enable_log: boolean;
-    constructor(endpoint: string, username: string, useraddress: string, enable_log?: boolean);
+    enable_logs: boolean;
+    constructor(endpoint: string, username: string, useraddress: string, enable_logs?: boolean);
     prepareRequest(method: "GET" | "POST", url: string, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<any>;

@@ -15,16 +15,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZkWasmServiceEndpoint = void 0;
 const axios_1 = __importDefault(require("axios"));
 class ZkWasmServiceEndpoint {
-    constructor(endpoint, username, useraddress, enable_log = true) {
+    constructor(endpoint, username, useraddress, enable_logs = true) {
         this.endpoint = endpoint;
         this.username = username;
         this.useraddress = useraddress;
-        this.enable_log = enable_log;
+        this.enable_logs = enable_logs;
     }
     prepareRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
             if (method === "GET") {
-                if (this.enable_log) {
+                if (this.enable_logs) {
                     console.log(this.endpoint + url);
                 }
                 try {
@@ -32,7 +32,7 @@ class ZkWasmServiceEndpoint {
                     return response.data;
                 }
                 catch (e) {
-                    if (this.enable_log) {
+                    if (this.enable_logs) {
                         console.error(e);
                     }
                     return {
@@ -55,7 +55,7 @@ class ZkWasmServiceEndpoint {
                     return response.data;
                 }
                 catch (e) {
-                    if (this.enable_log) {
+                    if (this.enable_logs) {
                         console.log(e);
                     }
                     return {
@@ -75,7 +75,7 @@ class ZkWasmServiceEndpoint {
     getJSONResponse(json) {
         return __awaiter(this, void 0, void 0, function* () {
             if (json["success"] !== true) {
-                if (this.enable_log) {
+                if (this.enable_logs) {
                     console.error(json);
                 }
                 throw new Error(json["error"].message);

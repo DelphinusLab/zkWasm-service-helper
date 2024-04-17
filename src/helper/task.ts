@@ -123,7 +123,7 @@ export class ZkWasmServiceHelper {
     };
   }
 
-  async loadTasks(query: QueryParams, enable_logs : boolean = true): Promise<PaginationResult<Task[]>> {
+  async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
@@ -162,13 +162,13 @@ export class ZkWasmServiceHelper {
       if (query[key] != "" && query[key] != null) queryJson[key] = query[key];
     });
 
-    if (enable_logs) {
+    if (this.endpoint.enable_logs) {
       console.log("params:", query);
       console.log("json", queryJson);
     }
 
     let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
-    if (enable_logs) {
+    if (this.endpoint.enable_logs) {
       console.log("loading task board!");
     }
     return tasks;
@@ -223,7 +223,9 @@ export class ZkWasmServiceHelper {
       task,
       true
     );
-    console.log("get addProvingTask response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addProvingTask response:", response.toString());
+    }
     return response;
   }
 

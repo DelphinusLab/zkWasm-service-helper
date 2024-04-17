@@ -6,7 +6,7 @@ export class ZkWasmServiceEndpoint {
         public endpoint: string,
         public username: string,
         public useraddress: string,
-        public enable_log: boolean = true,
+        public enable_logs: boolean = true,
     ) { }
     async prepareRequest(
         method: "GET" | "POST",
@@ -17,7 +17,7 @@ export class ZkWasmServiceEndpoint {
         }
     ) {
         if (method === "GET") {
-            if (this.enable_log) {
+            if (this.enable_logs) {
               console.log(this.endpoint + url);
             }
             try {
@@ -28,7 +28,7 @@ export class ZkWasmServiceEndpoint {
                 );
                 return response.data;
             } catch (e: any) {
-                if (this.enable_log) {
+                if (this.enable_logs) {
                   console.error(e);
                 }
                 return {
@@ -55,7 +55,7 @@ export class ZkWasmServiceEndpoint {
                 );
                 return response.data;
             } catch (e: any) {
-                if (this.enable_log) {
+                if (this.enable_logs) {
                   console.log(e);
                 }
                 return {
@@ -75,7 +75,7 @@ export class ZkWasmServiceEndpoint {
 
     async getJSONResponse(json: any) {
         if (json["success"] !== true) {
-            if (this.enable_log) {
+            if (this.enable_logs) {
               console.error(json);
             }
             throw new Error(json["error"].message);
