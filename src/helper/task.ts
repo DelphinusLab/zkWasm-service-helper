@@ -30,8 +30,8 @@ import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
 
-  constructor(endpoint: string, username: string, useraddress: string) {
-    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress);
+  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean) {
+    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
   }
 
   async queryImage(md5: string): Promise<Image> {

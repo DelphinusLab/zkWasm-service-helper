@@ -29,8 +29,8 @@ const util_js_1 = require("./util.js");
 const endpoint_js_1 = require("./endpoint.js");
 const ethers_1 = require("ethers");
 class ZkWasmServiceHelper {
-    constructor(endpoint, username, useraddress) {
-        this.endpoint = new endpoint_js_1.ZkWasmServiceEndpoint(endpoint, username, useraddress);
+    constructor(endpoint, username, useraddress, enable_logs) {
+        this.endpoint = new endpoint_js_1.ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
     }
     queryImage(md5) {
         return __awaiter(this, void 0, void 0, function* () {

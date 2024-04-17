@@ -4,8 +4,8 @@ import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
     endpoint;
-    constructor(endpoint, username, useraddress) {
-        this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress);
+    constructor(endpoint, username, useraddress, enable_logs) {
+        this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
     }
     async queryImage(md5) {
         let req = JSON.parse("{}");

@@ -3,20 +3,26 @@ export class ZkWasmServiceEndpoint {
     endpoint;
     username;
     useraddress;
-    constructor(endpoint, username, useraddress) {
+    enable_log;
+    constructor(endpoint, username, useraddress, enable_log = true) {
         this.endpoint = endpoint;
         this.username = username;
         this.useraddress = useraddress;
+        this.enable_log = enable_log;
     }
     async prepareRequest(method, url, body, headers) {
         if (method === "GET") {
-            // console.log(this.endpoint + url);
+            if (this.enable_log) {
+                console.log(this.endpoint + url);
+            }
             try {
                 let response = await axios.get(this.endpoint + url, body ? { params: body, headers: { ...headers } } : {});
                 return response.data;
             }
             catch (e) {
-                console.error(e);
+                if (this.enable_log) {
+                    console.error(e);
+                }
                 return {
                     success: false,
                     error: e.response ? {
@@ -39,7 +45,9 @@ export class ZkWasmServiceEndpoint {
                 return response.data;
             }
             catch (e) {
-                console.log(e);
+                if (this.enable_log) {
+                    console.log(e);
+                }
                 return {
                     success: false,
                     error: e.response ? {
@@ -55,7 +63,9 @@ export class ZkWasmServiceEndpoint {
     }
     async getJSONResponse(json) {
         if (json["success"] !== true) {
-            console.error(json);
+            if (this.enable_log) {
+                console.error(json);
+            }
             throw new Error(json["error"].message);
         }
         return json["result"];
