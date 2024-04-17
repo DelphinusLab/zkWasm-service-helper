@@ -30,7 +30,7 @@ import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
 
-  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean) {
+  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean = true) {
     this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
   }
 
