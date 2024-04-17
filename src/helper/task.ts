@@ -167,7 +167,12 @@ export class ZkWasmServiceHelper {
       console.log("json", queryJson);
     }
 
-    let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+    let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson).catch((err) => {
+      console.log("Error GET /tasks");
+      if (enable_logs) {
+        console.log(err);
+      }
+    });
     if (enable_logs) {
       console.log("loading task board!");
     }
