@@ -11,54 +11,70 @@ export class ZkWasmServiceHelper {
         let req = JSON.parse("{}");
         req["md5"] = md5;
         const images = await this.endpoint.invokeRequest("GET", "/image", req);
-        console.log("get queryImage response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryImage response.");
+        }
         return images[0];
     }
     async queryImageBinary(md5) {
         let req = JSON.parse("{}");
         req["md5"] = md5;
         const image = await this.endpoint.invokeRequest("GET", "/imagebinary", req);
-        console.log("get queryImageBinary response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryImageBinary response.");
+        }
         return image;
     }
     async queryUser(user_query) {
         let req = JSON.parse("{}");
         req["user_address"] = user_query.user_address;
         const user = await this.endpoint.invokeRequest("GET", "/user", req);
-        console.log("get queryUser response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryUser response.");
+        }
         return user;
     }
     async queryUserSubscription(user_query) {
         let req = JSON.parse("{}");
         req["user_address"] = user_query.user_address;
         const user = await this.endpoint.invokeRequest("GET", "/user_subscription", req);
-        console.log("get queryUserSubscription response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryUserSubscription response.");
+        }
         return user;
     }
     async queryTxHistory(history_query) {
         let req = JSON.parse("{}");
         req["user_address"] = history_query.user_address;
         const txs = await this.endpoint.invokeRequest("GET", "/transactions", req);
-        console.log("get queryTxHistory response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryTxHistory response.");
+        }
         return txs;
     }
     async queryDepositHistory(history_query) {
         let req = JSON.parse("{}");
         req["user_address"] = history_query.user_address;
         const txs = await this.endpoint.invokeRequest("GET", "/deposits", req);
-        console.log("get queryDepositHistory response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryDepositHistory response.");
+        }
         return txs;
     }
     async queryConfig() {
         const config = await this.endpoint.invokeRequest("GET", "/config", JSON.parse("{}"));
-        console.log("get queryConfig response.");
+        if (this.endpoint.enable_logs) {
+            console.log("get queryConfig response.");
+        }
         return config;
     }
     async loadStatistics() {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
         let st = await this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
-        console.log("loading task board!");
+        if (this.endpoint.enable_logs) {
+            console.log("loading task board!");
+        }
         return {
             totalImages: st.total_images,
             totalProofs: st.total_proofs,
@@ -112,22 +128,30 @@ export class ZkWasmServiceHelper {
     }
     async queryLogs(query) {
         let logs = await this.sendRequestWithSignature("GET", TaskEndpoint.LOGS, query);
-        console.log("loading logs!");
+        if (this.endpoint.enable_logs) {
+            console.log("loading logs!");
+        }
         return logs;
     }
     async addPayment(payRequest) {
         const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
-        console.log("get addPayment response:", response.toString());
+        if (this.endpoint.enable_logs) {
+            console.log("get addPayment response:", response.toString());
+        }
         return response;
     }
     async addSubscription(subscription) {
         const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
-        console.log("get addSubscription response:", response.toString());
+        if (this.endpoint.enable_logs) {
+            console.log("get addSubscription response:", response.toString());
+        }
         return response;
     }
     async addNewWasmImage(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
-        console.log("get addNewWasmImage response:", response.toString());
+        if (this.endpoint.enable_logs) {
+            console.log("get addNewWasmImage response:", response.toString());
+        }
         return response;
     }
     async addProvingTask(task) {
@@ -139,17 +163,23 @@ export class ZkWasmServiceHelper {
     }
     async addDeployTask(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
-        console.log("get addDeployTask response:", response.toString());
+        if (this.endpoint.enable_logs) {
+            console.log("get addDeployTask response:", response.toString());
+        }
         return response;
     }
     async addResetTask(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
-        console.log("get addResetTask response:", response.toString());
+        if (this.endpoint.enable_logs) {
+            console.log("get addResetTask response:", response.toString());
+        }
         return response;
     }
     async modifyImage(data) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
-        console.log("get modifyImage response:", response.toString());
+        if (this.endpoint.enable_logs) {
+            console.log("get modifyImage response:", response.toString());
+        }
         return response;
     }
     async sendRequestWithSignature(method, path, task, isFormData = false) {

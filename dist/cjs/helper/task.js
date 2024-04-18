@@ -37,7 +37,9 @@ class ZkWasmServiceHelper {
             let req = JSON.parse("{}");
             req["md5"] = md5;
             const images = yield this.endpoint.invokeRequest("GET", "/image", req);
-            console.log("get queryImage response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryImage response.");
+            }
             return images[0];
         });
     }
@@ -46,7 +48,9 @@ class ZkWasmServiceHelper {
             let req = JSON.parse("{}");
             req["md5"] = md5;
             const image = yield this.endpoint.invokeRequest("GET", "/imagebinary", req);
-            console.log("get queryImageBinary response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryImageBinary response.");
+            }
             return image;
         });
     }
@@ -55,7 +59,9 @@ class ZkWasmServiceHelper {
             let req = JSON.parse("{}");
             req["user_address"] = user_query.user_address;
             const user = yield this.endpoint.invokeRequest("GET", "/user", req);
-            console.log("get queryUser response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryUser response.");
+            }
             return user;
         });
     }
@@ -64,7 +70,9 @@ class ZkWasmServiceHelper {
             let req = JSON.parse("{}");
             req["user_address"] = user_query.user_address;
             const user = yield this.endpoint.invokeRequest("GET", "/user_subscription", req);
-            console.log("get queryUserSubscription response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryUserSubscription response.");
+            }
             return user;
         });
     }
@@ -73,7 +81,9 @@ class ZkWasmServiceHelper {
             let req = JSON.parse("{}");
             req["user_address"] = history_query.user_address;
             const txs = yield this.endpoint.invokeRequest("GET", "/transactions", req);
-            console.log("get queryTxHistory response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryTxHistory response.");
+            }
             return txs;
         });
     }
@@ -82,14 +92,18 @@ class ZkWasmServiceHelper {
             let req = JSON.parse("{}");
             req["user_address"] = history_query.user_address;
             const txs = yield this.endpoint.invokeRequest("GET", "/deposits", req);
-            console.log("get queryDepositHistory response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryDepositHistory response.");
+            }
             return txs;
         });
     }
     queryConfig() {
         return __awaiter(this, void 0, void 0, function* () {
             const config = yield this.endpoint.invokeRequest("GET", "/config", JSON.parse("{}"));
-            console.log("get queryConfig response.");
+            if (this.endpoint.enable_logs) {
+                console.log("get queryConfig response.");
+            }
             return config;
         });
     }
@@ -98,7 +112,9 @@ class ZkWasmServiceHelper {
             let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
             let st = yield this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
-            console.log("loading task board!");
+            if (this.endpoint.enable_logs) {
+                console.log("loading task board!");
+            }
             return {
                 totalImages: st.total_images,
                 totalProofs: st.total_proofs,
@@ -156,28 +172,36 @@ class ZkWasmServiceHelper {
     queryLogs(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let logs = yield this.sendRequestWithSignature("GET", TaskEndpoint.LOGS, query);
-            console.log("loading logs!");
+            if (this.endpoint.enable_logs) {
+                console.log("loading logs!");
+            }
             return logs;
         });
     }
     addPayment(payRequest) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
-            console.log("get addPayment response:", response.toString());
+            if (this.endpoint.enable_logs) {
+                console.log("get addPayment response:", response.toString());
+            }
             return response;
         });
     }
     addSubscription(subscription) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
-            console.log("get addSubscription response:", response.toString());
+            if (this.endpoint.enable_logs) {
+                console.log("get addSubscription response:", response.toString());
+            }
             return response;
         });
     }
     addNewWasmImage(task) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
-            console.log("get addNewWasmImage response:", response.toString());
+            if (this.endpoint.enable_logs) {
+                console.log("get addNewWasmImage response:", response.toString());
+            }
             return response;
         });
     }
@@ -193,21 +217,27 @@ class ZkWasmServiceHelper {
     addDeployTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
-            console.log("get addDeployTask response:", response.toString());
+            if (this.endpoint.enable_logs) {
+                console.log("get addDeployTask response:", response.toString());
+            }
             return response;
         });
     }
     addResetTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
-            console.log("get addResetTask response:", response.toString());
+            if (this.endpoint.enable_logs) {
+                console.log("get addResetTask response:", response.toString());
+            }
             return response;
         });
     }
     modifyImage(data) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
-            console.log("get modifyImage response:", response.toString());
+            if (this.endpoint.enable_logs) {
+                console.log("get modifyImage response:", response.toString());
+            }
             return response;
         });
     }
