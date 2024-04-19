@@ -15,21 +15,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZkWasmServiceEndpoint = void 0;
 const axios_1 = __importDefault(require("axios"));
 class ZkWasmServiceEndpoint {
-    constructor(endpoint, username, useraddress) {
+    constructor(endpoint, username, useraddress, enable_logs = true) {
         this.endpoint = endpoint;
         this.username = username;
         this.useraddress = useraddress;
+        this.enable_logs = enable_logs;
     }
     prepareRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
             if (method === "GET") {
-                console.log(this.endpoint + url);
+                if (this.enable_logs) {
+                    console.log(this.endpoint + url);
+                }
                 try {
                     let response = yield axios_1.default.get(this.endpoint + url, body ? { params: body, headers: Object.assign({}, headers) } : {});
                     return response.data;
                 }
                 catch (e) {
-                    console.error(e);
+                    if (this.enable_logs) {
+                        console.error(e);
+                    }
                     return {
                         success: false,
                         error: e.response ? {
@@ -50,7 +55,9 @@ class ZkWasmServiceEndpoint {
                     return response.data;
                 }
                 catch (e) {
-                    console.log(e);
+                    if (this.enable_logs) {
+                        console.log(e);
+                    }
                     return {
                         success: false,
                         error: e.response ? {
@@ -68,7 +75,9 @@ class ZkWasmServiceEndpoint {
     getJSONResponse(json) {
         return __awaiter(this, void 0, void 0, function* () {
             if (json["success"] !== true) {
-                console.error(json);
+                if (this.enable_logs) {
+                    console.error(json);
+                }
                 throw new Error(json["error"].message);
             }
             return json["result"];

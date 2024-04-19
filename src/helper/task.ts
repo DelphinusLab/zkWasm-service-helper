@@ -30,8 +30,8 @@ import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
 
-  constructor(endpoint: string, username: string, useraddress: string) {
-    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress);
+  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean = true) {
+    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
   }
 
   async queryImage(md5: string): Promise<Image> {
@@ -39,7 +39,9 @@ export class ZkWasmServiceHelper {
     req["md5"] = md5;
 
     const images = await this.endpoint.invokeRequest("GET", "/image", req);
-    console.log("get queryImage response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryImage response.");
+    }
     return images[0]!;
   }
 
@@ -48,7 +50,9 @@ export class ZkWasmServiceHelper {
     req["md5"] = md5;
 
     const image = await this.endpoint.invokeRequest("GET", "/imagebinary", req);
-    console.log("get queryImageBinary response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryImageBinary response.");
+    }
     return image!;
   }
 
@@ -57,7 +61,9 @@ export class ZkWasmServiceHelper {
     req["user_address"] = user_query.user_address;
 
     const user = await this.endpoint.invokeRequest("GET", "/user", req);
-    console.log("get queryUser response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryUser response.");
+    }
     return user;
   }
 
@@ -72,7 +78,9 @@ export class ZkWasmServiceHelper {
       "/user_subscription",
       req
     );
-    console.log("get queryUserSubscription response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryUserSubscription response.");
+    }
     return user;
   }
 
@@ -83,7 +91,9 @@ export class ZkWasmServiceHelper {
     req["user_address"] = history_query.user_address;
 
     const txs = await this.endpoint.invokeRequest("GET", "/transactions", req);
-    console.log("get queryTxHistory response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryTxHistory response.");
+    }
     return txs;
   }
 
@@ -94,7 +104,9 @@ export class ZkWasmServiceHelper {
     req["user_address"] = history_query.user_address;
 
     const txs = await this.endpoint.invokeRequest("GET", "/deposits", req);
-    console.log("get queryDepositHistory response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryDepositHistory response.");
+    }
     return txs;
   }
 
@@ -104,7 +116,9 @@ export class ZkWasmServiceHelper {
       "/config",
       JSON.parse("{}")
     );
-    console.log("get queryConfig response.");
+    if (this.endpoint.enable_logs) {
+      console.log("get queryConfig response.");
+    }
     return config;
   }
 
@@ -113,7 +127,9 @@ export class ZkWasmServiceHelper {
     let queryJson = JSON.parse("{}");
 
     let st = await this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
-    console.log("loading task board!");
+    if (this.endpoint.enable_logs) {
+      console.log("loading task board!");
+    }
 
     return {
       totalImages: st.total_images,
@@ -162,11 +178,15 @@ export class ZkWasmServiceHelper {
       if (query[key] != "" && query[key] != null) queryJson[key] = query[key];
     });
 
-    console.log("params:", query);
-    console.log("json", queryJson);
+    if (this.endpoint.enable_logs) {
+      console.log("params:", query);
+      console.log("json", queryJson);
+    }
 
     let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
-    console.log("loading task board!");
+    if (this.endpoint.enable_logs) {
+      console.log("loading task board!");
+    }
     return tasks;
   }
 
@@ -176,7 +196,9 @@ export class ZkWasmServiceHelper {
       TaskEndpoint.LOGS,
       query
     );
-    console.log("loading logs!");
+    if (this.endpoint.enable_logs) {
+      console.log("loading logs!");
+    }
     return logs;
   }
 
@@ -186,7 +208,9 @@ export class ZkWasmServiceHelper {
       TaskEndpoint.PAY,
       JSON.parse(JSON.stringify(payRequest))
     );
-    console.log("get addPayment response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addPayment response:", response.toString());
+    }
     return response;
   }
 
@@ -196,7 +220,9 @@ export class ZkWasmServiceHelper {
       TaskEndpoint.SUBSCRIBE,
       JSON.parse(JSON.stringify(subscription))
     );
-    console.log("get addSubscription response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addSubscription response:", response.toString());
+    }
     return response;
   }
 
@@ -208,7 +234,9 @@ export class ZkWasmServiceHelper {
       true
     );
 
-    console.log("get addNewWasmImage response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addNewWasmImage response:", response.toString());
+    }
     return response;
   }
 
@@ -219,7 +247,9 @@ export class ZkWasmServiceHelper {
       task,
       true
     );
-    console.log("get addProvingTask response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addProvingTask response:", response.toString());
+    }
     return response;
   }
 
@@ -229,7 +259,9 @@ export class ZkWasmServiceHelper {
       TaskEndpoint.DEPLOY,
       task
     );
-    console.log("get addDeployTask response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addDeployTask response:", response.toString());
+    }
     return response;
   }
 
@@ -241,7 +273,9 @@ export class ZkWasmServiceHelper {
       true
     );
 
-    console.log("get addResetTask response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get addResetTask response:", response.toString());
+    }
     return response;
   }
 
@@ -252,7 +286,9 @@ export class ZkWasmServiceHelper {
       data
     );
 
-    console.log("get modifyImage response:", response.toString());
+    if (this.endpoint.enable_logs) {
+      console.log("get modifyImage response:", response.toString());
+    }
     return response;
   }
 
