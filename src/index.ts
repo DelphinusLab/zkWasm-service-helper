@@ -42,6 +42,11 @@ import {
   ImageMetadataValsProvePaymentSrc,
   TaskMetadataKeys,
   TaskMetadataValsProofSubmitMode,
+  Round1BatchProof,
+  Round2BatchProof,
+  FinalBatchProof,
+  Round1BatchProofStatus,
+  Round2BatchProofStatus,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -97,4 +102,9 @@ export type {
   WithoutInitialContext,
   WithoutInputContextType,
   WithoutResetContext,
+  Round1BatchProof,
+  Round2BatchProof,
+  FinalBatchProof,
+  Round1BatchProofStatus,
+  Round2BatchProofStatus,
 };

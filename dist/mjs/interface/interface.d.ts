@@ -38,6 +38,60 @@ export interface Task {
     task_verification_data: TaskVerificationData;
     debug_logs?: string;
 }
+export interface Round1BatchProof {
+    _id?: any;
+    task_id: string;
+    base_proof_circuit_size: number;
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batch_started?: string;
+    batch_finished?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    status: Round1BatchProofStatus;
+}
+export interface StaticFileVerificationData {
+    static_file_checksum: Uint8Array;
+}
+export declare enum Round1BatchProofStatus {
+    Pending = "Pending",
+    Batched = "Batched"
+}
+export interface Round2BatchProof {
+    _id?: any;
+    round_1_ids: string[];
+    task_ids: string[];
+    target_instances: number[][];
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batch_started?: string;
+    batch_finished?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    status: Round2BatchProofStatus;
+}
+export declare enum Round2BatchProofStatus {
+    Pending = "Pending",
+    Batched = "Batched"
+}
+export interface FinalBatchProof {
+    _id?: any;
+    round_2_ids: string[];
+    task_ids: string[];
+    target_instances: number[][];
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batched_time?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    verifier_contracts: VerifierContracts[];
+}
 export interface TaskVerificationData {
     static_file_checksum: Uint8Array;
     verifier_contracts: Array<VerifierContracts>;
