@@ -47,6 +47,11 @@ import {
   FinalBatchProof,
   Round1BatchProofStatus,
   Round2BatchProofStatus,
+  Round1BatchProofQuery,
+  Round2BatchProofQuery,
+  FinalBatchProofQuery,
+  PaginatedQuery,
+  PaginationQuery,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -107,4 +112,9 @@ export type {
   FinalBatchProof,
   Round1BatchProofStatus,
   Round2BatchProofStatus,
+  Round1BatchProofQuery,
+  Round2BatchProofQuery,
+  FinalBatchProofQuery,
+  PaginatedQuery,
+  PaginationQuery,
 };

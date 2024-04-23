@@ -169,6 +169,33 @@ class ZkWasmServiceHelper {
             return tasks;
         });
     }
+    queryRound1BatchProofs(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let proofData = yield this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading proof data!");
+            }
+            return proofData;
+        });
+    }
+    queryRound2BatchProofs(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let proofData = yield this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_2_BATCH, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading proof data!");
+            }
+            return proofData;
+        });
+    }
+    queryFinalBatchProofs(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let proofData = yield this.endpoint.invokeRequest("GET", TaskEndpoint.FINAL_BATCH, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading proof data!");
+            }
+            return proofData;
+        });
+    }
     queryLogs(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let logs = yield this.sendRequestWithSignature("GET", TaskEndpoint.LOGS, query);
@@ -294,4 +321,7 @@ var TaskEndpoint;
     TaskEndpoint["PAY"] = "/pay";
     TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
+    TaskEndpoint["ROUND_1_BATCH"] = "/round1_batch_proofs";
+    TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
+    TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

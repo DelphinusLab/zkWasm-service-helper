@@ -23,6 +23,13 @@ import {
   ERC20DepositInfo,
   User,
   Subscription,
+  PaginatedQuery,
+  Round1BatchProofQuery,
+  Round2BatchProofQuery,
+  Round2BatchProof,
+  Round1BatchProof,
+  FinalBatchProofQuery,
+  FinalBatchProof,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -30,8 +37,18 @@ import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
 
-  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean = true) {
-    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
+  constructor(
+    endpoint: string,
+    username: string,
+    useraddress: string,
+    enable_logs: boolean = true
+  ) {
+    this.endpoint = new ZkWasmServiceEndpoint(
+      endpoint,
+      username,
+      useraddress,
+      enable_logs
+    );
   }
 
   async queryImage(md5: string): Promise<Image> {
@@ -188,6 +205,48 @@ export class ZkWasmServiceHelper {
       console.log("loading task board!");
     }
     return tasks;
+  }
+
+  async queryRound1BatchProofs(
+    query: PaginatedQuery<Round1BatchProofQuery>
+  ): Promise<Round1BatchProof[]> {
+    let proofData = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.ROUND_1_BATCH,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading proof data!");
+    }
+    return proofData;
+  }
+
+  async queryRound2BatchProofs(
+    query: PaginatedQuery<Round2BatchProofQuery>
+  ): Promise<Round2BatchProof[]> {
+    let proofData = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.ROUND_2_BATCH,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading proof data!");
+    }
+    return proofData;
+  }
+
+  async queryFinalBatchProofs(
+    query: PaginatedQuery<FinalBatchProofQuery>
+  ): Promise<FinalBatchProof[]> {
+    let proofData = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.FINAL_BATCH,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading proof data!");
+    }
+    return proofData;
   }
 
   async queryLogs(query: WithSignature<LogQuery>): Promise<string> {
@@ -356,4 +415,7 @@ export enum TaskEndpoint {
   PAY = "/pay",
   SUBSCRIBE = "/subscribe",
   LOGS = "/logs",
+  ROUND_1_BATCH = "/round1_batch_proofs",
+  ROUND_2_BATCH = "/round2_batch_proofs",
+  FINAL_BATCH = "/final_batch_proofs",
 }

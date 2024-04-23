@@ -119,6 +119,33 @@ export interface FinalBatchProof {
   verifier_contracts: VerifierContracts[];
 }
 
+export type PaginatedQuery<T> = T & PaginationQuery;
+
+export interface Round1BatchProofQuery {
+  id?: string;
+  task_id?: string;
+  status?: Round1BatchProofStatus;
+  circuit_size?: number;
+}
+
+export interface Round2BatchProofQuery {
+  id?: string;
+  task_id?: string;
+  status?: Round2BatchProofStatus;
+  circuit_size?: number;
+}
+
+export interface FinalBatchProofQuery {
+  id?: string;
+  round_2_id?: string;
+  task_id?: string;
+}
+
+export interface PaginationQuery {
+  total?: number;
+  start?: number;
+}
+
 export interface TaskVerificationData {
   static_file_checksum: Uint8Array;
   verifier_contracts: Array<VerifierContracts>;
