@@ -209,7 +209,7 @@ export class ZkWasmServiceHelper {
 
   async queryRound1BatchProofs(
     query: PaginatedQuery<Round1BatchProofQuery>
-  ): Promise<Round1BatchProof[]> {
+  ): Promise<PaginationResult<Round1BatchProof[]>> {
     let proofData = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_1_BATCH,
@@ -223,7 +223,7 @@ export class ZkWasmServiceHelper {
 
   async queryRound2BatchProofs(
     query: PaginatedQuery<Round2BatchProofQuery>
-  ): Promise<Round2BatchProof[]> {
+  ): Promise<PaginationResult<Round2BatchProof[]>> {
     let proofData = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_2_BATCH,
@@ -237,7 +237,7 @@ export class ZkWasmServiceHelper {
 
   async queryFinalBatchProofs(
     query: PaginatedQuery<FinalBatchProofQuery>
-  ): Promise<FinalBatchProof[]> {
+  ): Promise<PaginationResult<FinalBatchProof[]>> {
     let proofData = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.FINAL_BATCH,

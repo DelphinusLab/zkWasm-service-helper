@@ -12,9 +12,9 @@ export declare class ZkWasmServiceHelper {
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
-    queryRound1BatchProofs(query: PaginatedQuery<Round1BatchProofQuery>): Promise<Round1BatchProof[]>;
-    queryRound2BatchProofs(query: PaginatedQuery<Round2BatchProofQuery>): Promise<Round2BatchProof[]>;
-    queryFinalBatchProofs(query: PaginatedQuery<FinalBatchProofQuery>): Promise<FinalBatchProof[]>;
+    queryRound1BatchProofs(query: PaginatedQuery<Round1BatchProofQuery>): Promise<PaginationResult<Round1BatchProof[]>>;
+    queryRound2BatchProofs(query: PaginatedQuery<Round2BatchProofQuery>): Promise<PaginationResult<Round2BatchProof[]>>;
+    queryFinalBatchProofs(query: PaginatedQuery<FinalBatchProofQuery>): Promise<PaginationResult<FinalBatchProof[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addSubscription(subscription: SubscriptionRequest): Promise<any>;
