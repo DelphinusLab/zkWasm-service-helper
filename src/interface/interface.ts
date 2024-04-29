@@ -187,7 +187,7 @@ export enum AutoSubmitStatus {
 }
 
 export type TaskMetadata = {
-  values: Record<string, unknown>;
+  values: Record<TaskMetadataKeys, unknown>;
 };
 
 export interface PaginationResult<T> {
