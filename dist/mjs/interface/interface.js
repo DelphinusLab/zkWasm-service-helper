@@ -8,16 +8,20 @@ export var Round1BatchProofStatus;
 (function (Round1BatchProofStatus) {
     Round1BatchProofStatus["Pending"] = "Pending";
     Round1BatchProofStatus["Batched"] = "Batched";
+    Round1BatchProofStatus["Failed"] = "Failed";
 })(Round1BatchProofStatus || (Round1BatchProofStatus = {}));
 export var Round2BatchProofStatus;
 (function (Round2BatchProofStatus) {
     Round2BatchProofStatus["Pending"] = "Pending";
     Round2BatchProofStatus["Batched"] = "Batched";
+    Round2BatchProofStatus["Failed"] = "Failed";
 })(Round2BatchProofStatus || (Round2BatchProofStatus = {}));
 export var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
-    AutoSubmitStatus["InProgress"] = "InProgress";
+    AutoSubmitStatus["Round1"] = "Round1";
+    AutoSubmitStatus["Round2"] = "Round2";
     AutoSubmitStatus["Done"] = "Done";
+    AutoSubmitStatus["Failed"] = "Failed";
 })(AutoSubmitStatus || (AutoSubmitStatus = {}));
 export var ImageMetadataKeys;
 (function (ImageMetadataKeys) {
@@ -31,6 +35,9 @@ export var ImageMetadataValsProvePaymentSrc;
 export var TaskMetadataKeys;
 (function (TaskMetadataKeys) {
     TaskMetadataKeys["ProofSubmitMode"] = "ProofSubmitMode";
+    TaskMetadataKeys["Round1BatchProofId"] = "Round1BatchProofTaskId";
+    TaskMetadataKeys["Round2BatchProofId"] = "Round2BatchProofTaskId";
+    TaskMetadataKeys["FinalBatchProofId"] = "FinalBatchProofId";
 })(TaskMetadataKeys || (TaskMetadataKeys = {}));
 export var TaskMetadataValsProofSubmitMode;
 (function (TaskMetadataValsProofSubmitMode) {

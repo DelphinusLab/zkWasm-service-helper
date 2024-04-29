@@ -40,6 +40,8 @@ export interface Task {
   internal_message?: string;
   task_verification_data: TaskVerificationData;
   debug_logs?: string;
+  metadata: TaskMetadata;
+  auto_submit_status?: AutoSubmitStatus;
 }
 
 export interface Round1BatchProof {
@@ -66,6 +68,7 @@ export interface StaticFileVerificationData {
 export enum Round1BatchProofStatus {
   Pending = "Pending",
   Batched = "Batched",
+  Failed = "Failed",
 }
 
 // Round2BatchProof is the task for the second round of aggregation
@@ -97,6 +100,7 @@ export interface Round2BatchProof {
 export enum Round2BatchProofStatus {
   Pending = "Pending",
   Batched = "Batched",
+  Failed = "Failed",
 }
 
 export interface FinalBatchProof {
@@ -176,9 +180,15 @@ export type TaskStatus =
   | "Stale";
 
 export enum AutoSubmitStatus {
-  InProgress = "InProgress",
+  Round1 = "Round1",
+  Round2 = "Round2",
   Done = "Done",
+  Failed = "Failed",
 }
+
+export type TaskMetadata = {
+  values: Record<string, unknown>;
+};
 
 export interface PaginationResult<T> {
   data: T;
@@ -221,6 +231,9 @@ export type AddImageParams = BaseAddImageParams &
 
 export enum TaskMetadataKeys {
   ProofSubmitMode = "ProofSubmitMode",
+  Round1BatchProofId = "Round1BatchProofTaskId",
+  Round2BatchProofId = "Round2BatchProofTaskId",
+  FinalBatchProofId = "FinalBatchProofId",
 }
 
 export enum TaskMetadataValsProofSubmitMode {
