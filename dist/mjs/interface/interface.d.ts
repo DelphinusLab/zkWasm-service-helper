@@ -143,7 +143,7 @@ export declare enum AutoSubmitStatus {
     Failed = "Failed"
 }
 export type TaskMetadata = {
-    values: Record<string, unknown>;
+    values: Record<TaskMetadataKeys, unknown>;
 };
 export interface PaginationResult<T> {
     data: T;
