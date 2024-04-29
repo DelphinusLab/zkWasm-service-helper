@@ -69,6 +69,7 @@ export {
   ImageMetadataValsProvePaymentSrc,
   TaskMetadataKeys,
   TaskMetadataValsProofSubmitMode,
+  AutoSubmitStatus,
 };
 
 export type {
@@ -119,6 +120,5 @@ export type {
   FinalBatchProofQuery,
   PaginatedQuery,
   PaginationQuery,
-  AutoSubmitStatus,
   TaskMetadata,
 };
