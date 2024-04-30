@@ -139,7 +139,7 @@ export class ZkWasmServiceHelper {
     };
   }
 
-  async loadTasks(query: QueryParams, custom_port : number = -1): Promise<PaginationResult<Task[]>> {
+  async loadTasks(query: QueryParams, customPort : number = -1): Promise<PaginationResult<Task[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
@@ -184,10 +184,10 @@ export class ZkWasmServiceHelper {
     }
 
     let tasks : any = {};
-    if (custom_port === -1) {
+    if (customPort === -1) {
       tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
     } else {
-      tasks = await this.endpoint.customHttp("GET", `/tasks`, custom_port, queryJson);
+      tasks = await this.endpoint.customHttp("GET", `/tasks`, customPort, queryJson);
     }
 
     if (this.endpoint.enable_logs) {
@@ -246,12 +246,13 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async addProvingTask(task: WithSignature<ProvingParams>) {
+  async addProvingTask(task: WithSignature<ProvingParams>, customPort : number = -1) {
     let response = await this.sendRequestWithSignature<ProvingParams>(
       "POST",
       TaskEndpoint.PROVE,
       task,
-      true
+      true,
+      customPort,
     );
     if (this.endpoint.enable_logs) {
       console.log("get addProvingTask response:", response.toString());
@@ -302,7 +303,8 @@ export class ZkWasmServiceHelper {
     method: "GET" | "POST",
     path: TaskEndpoint,
     task: WithSignature<T>,
-    isFormData = false
+    isFormData = false,
+    customPort : number = -1,
   ): Promise<any> {
     // TODO: create return types for tasks using this method
     let headers = this.createHeaders(task);
@@ -336,7 +338,11 @@ export class ZkWasmServiceHelper {
       payload = JSON.parse(JSON.stringify(task_params));
     }
 
-    return this.endpoint.invokeRequest(method, path, payload, headers);
+    if (customPort === -1) {
+      return this.endpoint.invokeRequest(method, path, payload, headers);
+    } else {
+      return this.endpoint.customHttp(method, path, customPort, payload, headers);
+    }
   }
 
   createHeaders<T>(task: WithSignature<T>): Record<string, string> {

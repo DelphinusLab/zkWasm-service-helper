@@ -123,7 +123,7 @@ class ZkWasmServiceHelper {
             };
         });
     }
-    loadTasks(query, custom_port = -1) {
+    loadTasks(query, customPort = -1) {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
@@ -163,11 +163,11 @@ class ZkWasmServiceHelper {
                 console.log("json", queryJson);
             }
             let tasks = {};
-            if (custom_port === -1) {
+            if (customPort === -1) {
                 tasks = yield this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
             }
             else {
-                tasks = yield this.endpoint.customHttp("GET", `/tasks`, custom_port, queryJson);
+                tasks = yield this.endpoint.customHttp("GET", `/tasks`, customPort, queryJson);
             }
             if (this.endpoint.enable_logs) {
                 console.log("loading task board!");
@@ -211,9 +211,9 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
-    addProvingTask(task) {
+    addProvingTask(task, customPort = -1) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true, customPort);
             if (this.endpoint.enable_logs) {
                 console.log("get addProvingTask response:", response.toString());
             }
@@ -247,7 +247,7 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
-    sendRequestWithSignature(method, path, task, isFormData = false) {
+    sendRequestWithSignature(method, path, task, isFormData = false, customPort = -1) {
         return __awaiter(this, void 0, void 0, function* () {
             // TODO: create return types for tasks using this method
             let headers = this.createHeaders(task);
@@ -274,7 +274,12 @@ class ZkWasmServiceHelper {
             else {
                 payload = JSON.parse(JSON.stringify(task_params));
             }
-            return this.endpoint.invokeRequest(method, path, payload, headers);
+            if (customPort === -1) {
+                return this.endpoint.invokeRequest(method, path, payload, headers);
+            }
+            else {
+                return this.endpoint.customHttp(method, path, customPort, payload, headers);
+            }
         });
     }
     createHeaders(task) {
