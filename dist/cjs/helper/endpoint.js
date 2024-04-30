@@ -117,7 +117,7 @@ class ZkWasmServiceEndpoint {
     customHttp(method, url, localPort, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
             const handleFormData = (data) => {
-                return data;
+                return Object.entries(data);
             };
             return new Promise((resolve, reject) => {
                 const fullUrl = new URL(this.endpoint + url);

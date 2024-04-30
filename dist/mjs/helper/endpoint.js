@@ -78,7 +78,7 @@ export class ZkWasmServiceEndpoint {
     }
     async customHttp(method, url, localPort, body, headers) {
         const handleFormData = (data) => {
-            return data;
+            return Object.entries(data);
         };
         return new Promise((resolve, reject) => {
             const fullUrl = new URL(this.endpoint + url);

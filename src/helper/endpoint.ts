@@ -108,9 +108,9 @@ export class ZkWasmServiceEndpoint {
         headers?: Headers,
     ) {
         const handleFormData = (data: FormData) => {
-          return data as unknown as Iterable<
+          return Object.entries(data as unknown as Iterable<
             [string, FormDataEntryValue]
-          >;
+          >);
         };
         return new Promise((resolve, reject) => {
           const fullUrl = new URL(this.endpoint + url);
