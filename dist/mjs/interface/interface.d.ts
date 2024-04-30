@@ -37,6 +37,86 @@ export interface Task {
     internal_message?: string;
     task_verification_data: TaskVerificationData;
     debug_logs?: string;
+    metadata: TaskMetadata;
+    auto_submit_status?: AutoSubmitStatus;
+}
+export interface Round1BatchProof {
+    _id?: any;
+    task_id: string;
+    base_proof_circuit_size: number;
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batch_started?: string;
+    batch_finished?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    status: Round1BatchProofStatus;
+}
+export interface StaticFileVerificationData {
+    static_file_checksum: Uint8Array;
+}
+export declare enum Round1BatchProofStatus {
+    Pending = "Pending",
+    Batched = "Batched",
+    Failed = "Failed"
+}
+export interface Round2BatchProof {
+    _id?: any;
+    round_1_ids: string[];
+    task_ids: string[];
+    target_instances: number[][];
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batch_started?: string;
+    batch_finished?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    status: Round2BatchProofStatus;
+}
+export declare enum Round2BatchProofStatus {
+    Pending = "Pending",
+    Batched = "Batched",
+    Failed = "Failed"
+}
+export interface FinalBatchProof {
+    _id?: any;
+    round_2_ids: string[];
+    task_ids: string[];
+    target_instances: number[][];
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batched_time?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    verifier_contracts: VerifierContracts[];
+}
+export type PaginatedQuery<T> = T & PaginationQuery;
+export interface Round1BatchProofQuery {
+    id?: string;
+    task_id?: string;
+    status?: Round1BatchProofStatus;
+    circuit_size?: number;
+}
+export interface Round2BatchProofQuery {
+    id?: string;
+    task_id?: string;
+    status?: Round2BatchProofStatus;
+    circuit_size?: number;
+}
+export interface FinalBatchProofQuery {
+    id?: string;
+    round_2_id?: string;
+    task_id?: string;
+}
+export interface PaginationQuery {
+    total?: number;
+    start?: number;
 }
 export interface TaskVerificationData {
     static_file_checksum: Uint8Array;
@@ -57,9 +137,14 @@ export type TaskType = "Setup" | "Prove" | "Reset";
 export type ImageStatus = "Received" | "Initialized" | "Verified";
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
 export declare enum AutoSubmitStatus {
-    InProgress = "InProgress",
-    Done = "Done"
+    Round1 = "Round1",
+    Round2 = "Round2",
+    Done = "Done",
+    Failed = "Failed"
 }
+export type TaskMetadata = {
+    values: Record<TaskMetadataKeys, unknown>;
+};
 export interface PaginationResult<T> {
     data: T;
     total: number;
@@ -92,7 +177,10 @@ export interface WithoutInitialContext {
 }
 export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
 export declare enum TaskMetadataKeys {
-    ProofSubmitMode = "ProofSubmitMode"
+    ProofSubmitMode = "ProofSubmitMode",
+    Round1BatchProofId = "Round1BatchProofTaskId",
+    Round2BatchProofId = "Round2BatchProofTaskId",
+    FinalBatchProofId = "FinalBatchProofId"
 }
 export declare enum TaskMetadataValsProofSubmitMode {
     Manual = "Manual",

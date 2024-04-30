@@ -40,6 +40,114 @@ export interface Task {
   internal_message?: string;
   task_verification_data: TaskVerificationData;
   debug_logs?: string;
+  metadata: TaskMetadata;
+  auto_submit_status?: AutoSubmitStatus;
+}
+
+export interface Round1BatchProof {
+  _id?: any;
+  // The task id of the original aggregate proof task
+  task_id: string;
+  base_proof_circuit_size: number;
+  // Proof data which was output from the original aggregate proof task
+  proof: number[];
+  batch_instances: number[];
+  shadow_instances?: number[];
+  aux: number[];
+  batch_started?: string;
+  batch_finished?: string;
+  internal_message?: string;
+  static_files_verification_data: StaticFileVerificationData;
+  status: Round1BatchProofStatus;
+}
+
+export interface StaticFileVerificationData {
+  static_file_checksum: Uint8Array;
+}
+
+export enum Round1BatchProofStatus {
+  Pending = "Pending",
+  Batched = "Batched",
+  Failed = "Failed",
+}
+
+// Round2BatchProof is the task for the second round of aggregation
+export interface Round2BatchProof {
+  _id?: any;
+  // _ids of round 1 batch proofs which will be/are aggregated in this round 2 batch proof
+  round_1_ids: string[];
+  // flattened array of all underlying original aggregate proof task ids which are being aggregated in this round 2 batch proof
+  task_ids: string[];
+
+  // target_instances is the original aggregate proofs output batch instances
+  // it equivalent to each Round1BatchProof.batch_instances
+  target_instances: number[][];
+
+  // output of the round 1 batch proof as input to the round 2 batch proof
+  // Assigned when the Round2BatchProof document is created
+  proof: number[];
+  batch_instances: number[];
+  shadow_instances?: number[];
+  aux: number[];
+  // Extra Info
+  batch_started?: string;
+  batch_finished?: string;
+  internal_message?: string;
+  static_files_verification_data: StaticFileVerificationData;
+  status: Round2BatchProofStatus;
+}
+
+export enum Round2BatchProofStatus {
+  Pending = "Pending",
+  Batched = "Batched",
+  Failed = "Failed",
+}
+
+export interface FinalBatchProof {
+  _id?: any;
+  // _ids of round 2 id which is aggregated in this final batch proof
+  round_2_ids: string[];
+  task_ids: string[];
+
+  // target_instances is the original aggregate proofs output batch instances
+  target_instances: number[][];
+  // output of the round 2 batch proofs
+  proof: number[];
+  batch_instances: number[];
+  shadow_instances?: number[];
+  // Used to generate solidity contract
+  aux: number[];
+  batched_time?: string;
+  internal_message?: string;
+  static_files_verification_data: StaticFileVerificationData;
+  verifier_contracts: VerifierContracts[];
+}
+
+export type PaginatedQuery<T> = T & PaginationQuery;
+
+export interface Round1BatchProofQuery {
+  id?: string;
+  task_id?: string;
+  status?: Round1BatchProofStatus;
+  circuit_size?: number;
+}
+
+export interface Round2BatchProofQuery {
+  id?: string;
+  task_id?: string;
+  status?: Round2BatchProofStatus;
+  circuit_size?: number;
+}
+
+export interface FinalBatchProofQuery {
+  id?: string;
+  round_2_id?: string;
+  task_id?: string;
+}
+
+export interface PaginationQuery {
+  total?: number;
+  start?: number;
 }
 
 export interface TaskVerificationData {
@@ -72,9 +180,15 @@ export type TaskStatus =
   | "Stale";
 
 export enum AutoSubmitStatus {
-    InProgress = "InProgress",
-    Done = "Done",
+  Round1 = "Round1",
+  Round2 = "Round2",
+  Done = "Done",
+  Failed = "Failed",
 }
+
+export type TaskMetadata = {
+  values: Record<TaskMetadataKeys, unknown>;
+};
 
 export interface PaginationResult<T> {
   data: T;
@@ -82,12 +196,12 @@ export interface PaginationResult<T> {
 }
 
 export enum ImageMetadataKeys {
-    ProvePaymentSrc = "ProvePaymentSrc",
+  ProvePaymentSrc = "ProvePaymentSrc",
 }
 
 export enum ImageMetadataValsProvePaymentSrc {
-    Default = "Default",
-    CreatorPay = "CreatorPay",
+  Default = "Default",
+  CreatorPay = "CreatorPay",
 }
 
 export interface BaseAddImageParams {
@@ -116,12 +230,15 @@ export type AddImageParams = BaseAddImageParams &
   (WithInitialContext | WithoutInitialContext);
 
 export enum TaskMetadataKeys {
-    ProofSubmitMode = "ProofSubmitMode",
+  ProofSubmitMode = "ProofSubmitMode",
+  Round1BatchProofId = "Round1BatchProofTaskId",
+  Round2BatchProofId = "Round2BatchProofTaskId",
+  FinalBatchProofId = "FinalBatchProofId",
 }
 
 export enum TaskMetadataValsProofSubmitMode {
-    Manual = "Manual",
-    Auto = "Auto",
+  Manual = "Manual",
+  Auto = "Auto",
 }
 
 export interface BaseProvingParams {
@@ -291,8 +408,8 @@ export interface Image {
   initial_context?: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
-  metadata : { 
-    values : { [key: string]: string }
+  metadata: {
+    values: { [key: string]: string };
   };
 }
 

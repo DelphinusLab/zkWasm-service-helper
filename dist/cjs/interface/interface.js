@@ -1,16 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.AutoSubmitStatus = exports.InputContextType = void 0;
+exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.AutoSubmitStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType = exports.InputContextType || (exports.InputContextType = {}));
+var Round1BatchProofStatus;
+(function (Round1BatchProofStatus) {
+    Round1BatchProofStatus["Pending"] = "Pending";
+    Round1BatchProofStatus["Batched"] = "Batched";
+    Round1BatchProofStatus["Failed"] = "Failed";
+})(Round1BatchProofStatus = exports.Round1BatchProofStatus || (exports.Round1BatchProofStatus = {}));
+var Round2BatchProofStatus;
+(function (Round2BatchProofStatus) {
+    Round2BatchProofStatus["Pending"] = "Pending";
+    Round2BatchProofStatus["Batched"] = "Batched";
+    Round2BatchProofStatus["Failed"] = "Failed";
+})(Round2BatchProofStatus = exports.Round2BatchProofStatus || (exports.Round2BatchProofStatus = {}));
 var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
-    AutoSubmitStatus["InProgress"] = "InProgress";
+    AutoSubmitStatus["Round1"] = "Round1";
+    AutoSubmitStatus["Round2"] = "Round2";
     AutoSubmitStatus["Done"] = "Done";
+    AutoSubmitStatus["Failed"] = "Failed";
 })(AutoSubmitStatus = exports.AutoSubmitStatus || (exports.AutoSubmitStatus = {}));
 var ImageMetadataKeys;
 (function (ImageMetadataKeys) {
@@ -24,6 +38,9 @@ var ImageMetadataValsProvePaymentSrc;
 var TaskMetadataKeys;
 (function (TaskMetadataKeys) {
     TaskMetadataKeys["ProofSubmitMode"] = "ProofSubmitMode";
+    TaskMetadataKeys["Round1BatchProofId"] = "Round1BatchProofTaskId";
+    TaskMetadataKeys["Round2BatchProofId"] = "Round2BatchProofTaskId";
+    TaskMetadataKeys["FinalBatchProofId"] = "FinalBatchProofId";
 })(TaskMetadataKeys = exports.TaskMetadataKeys || (exports.TaskMetadataKeys = {}));
 var TaskMetadataValsProofSubmitMode;
 (function (TaskMetadataValsProofSubmitMode) {
