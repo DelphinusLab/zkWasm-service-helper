@@ -1,4 +1,10 @@
 import FormData from "form-data";
+type JSON = {
+    [key: string]: any;
+};
+type Headers = {
+    [key: string]: string;
+};
 export declare class ZkWasmServiceEndpoint {
     endpoint: string;
     username: string;
@@ -12,4 +18,6 @@ export declare class ZkWasmServiceEndpoint {
     invokeRequest(method: "GET" | "POST", url: string, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<any>;
+    customHttp(method: 'GET' | 'POST', url: string, localPort: number, body: JSON | FormData | null, headers?: Headers): Promise<unknown>;
 }
+export {};

@@ -123,7 +123,7 @@ class ZkWasmServiceHelper {
             };
         });
     }
-    loadTasks(query) {
+    loadTasks(query, custom_port = -1) {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
@@ -162,7 +162,13 @@ class ZkWasmServiceHelper {
                 console.log("params:", query);
                 console.log("json", queryJson);
             }
-            let tasks = yield this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+            let tasks = {};
+            if (custom_port === -1) {
+                tasks = yield this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+            }
+            else {
+                tasks = yield this.endpoint.customHttp("GET", `/tasks`, custom_port, queryJson);
+            }
             if (this.endpoint.enable_logs) {
                 console.log("loading task board!");
             }

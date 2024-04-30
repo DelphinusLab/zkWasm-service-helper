@@ -11,7 +11,7 @@ export declare class ZkWasmServiceHelper {
     queryDepositHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<ERC20DepositInfo[]>>;
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
-    loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
+    loadTasks(query: QueryParams, custom_port?: number): Promise<PaginationResult<Task[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addSubscription(subscription: SubscriptionRequest): Promise<any>;

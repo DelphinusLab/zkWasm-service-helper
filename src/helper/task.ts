@@ -139,7 +139,7 @@ export class ZkWasmServiceHelper {
     };
   }
 
-  async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
+  async loadTasks(query: QueryParams, custom_port : number = -1): Promise<PaginationResult<Task[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
@@ -183,7 +183,13 @@ export class ZkWasmServiceHelper {
       console.log("json", queryJson);
     }
 
-    let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+    let tasks : any = {};
+    if (custom_port === -1) {
+      tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+    } else {
+      tasks = await this.endpoint.customHttp("GET", `/tasks`, custom_port, queryJson);
+    }
+
     if (this.endpoint.enable_logs) {
       console.log("loading task board!");
     }
