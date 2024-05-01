@@ -77,6 +77,9 @@ export class ZkWasmServiceEndpoint {
         return await this.getJSONResponse(response);
     }
     async customHttp(method, url, localPort, body, headers) {
+        if (method === 'GET') {
+            return this.customHttpGet(method, url, localPort, body, headers);
+        }
         return new Promise((resolve, reject) => {
             let data = '';
             if (body instanceof FormData) {
@@ -130,6 +133,39 @@ export class ZkWasmServiceEndpoint {
             else {
                 req.end();
             }
+        });
+    }
+    async customHttpGet(method, url, localPort, body, headers) {
+        return new Promise((resolve, reject) => {
+            if (method !== 'GET' || !body || body instanceof FormData) {
+                throw new Error("Invalid inputs");
+            }
+            const furl = new URL(this.endpoint + url);
+            furl.search = new URLSearchParams(body).toString();
+            const options = {
+                hostname: furl.hostname,
+                port: furl.port || 80,
+                path: furl.pathname + furl.search,
+                method: method,
+                headers: headers || {},
+                localPort: localPort
+            };
+            const req = http.request(options, res => {
+                let data = '';
+                res.on('data', chunk => data += chunk);
+                res.on('end', () => {
+                    try {
+                        resolve(JSON.parse(data));
+                    }
+                    catch (error) {
+                        resolve(data);
+                    }
+                });
+            });
+            req.on('error', error => {
+                reject(error);
+            });
+            req.end();
         });
     }
 }

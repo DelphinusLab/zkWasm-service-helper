@@ -15,4 +15,7 @@ export declare class ZkWasmServiceEndpoint {
     customHttp(method: 'GET' | 'POST', url: string, localPort: number, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<unknown>;
+    customHttpGet(method: 'GET', url: string, localPort: number, body: JSON | FormData | null, headers?: {
+        [key: string]: string;
+    }): Promise<unknown>;
 }
