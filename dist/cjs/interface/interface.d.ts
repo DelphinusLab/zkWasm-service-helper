@@ -125,6 +125,7 @@ export interface TaskVerificationData {
 export interface VerifierContracts {
     chain_id: number;
     aggregator_verifier: string;
+    batch_verifier: string;
     circuit_size: number;
 }
 export type TaskType = "Setup" | "Prove" | "Reset";
@@ -300,6 +301,7 @@ export interface ContractDeployments {
     aggregator_config_address: string;
     aggregator_verifier_steps: string[];
     aggregator_verifier: string;
+    batch_verifier: string;
     static_file_checksum: Uint8Array;
 }
 export interface ChainInfo {
