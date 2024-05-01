@@ -4,7 +4,8 @@ export declare class ZkWasmServiceEndpoint {
     username: string;
     useraddress: string;
     enable_logs: boolean;
-    constructor(endpoint: string, username: string, useraddress: string, enable_logs?: boolean);
+    custom_port: number;
+    constructor(endpoint: string, username: string, useraddress: string, enable_logs?: boolean, custom_port?: number);
     prepareRequest(method: "GET" | "POST", url: string, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<any>;
@@ -12,10 +13,10 @@ export declare class ZkWasmServiceEndpoint {
     invokeRequest(method: "GET" | "POST", url: string, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<any>;
-    customHttp(method: 'GET' | 'POST', url: string, localPort: number, body: JSON | FormData | null, headers?: {
+    customRequest(method: 'GET' | 'POST', url: string, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<unknown>;
-    customHttpGet(method: 'GET', url: string, localPort: number, body: JSON | FormData | null, headers?: {
+    customGetRequest(method: 'GET', url: string, body: JSON | FormData | null, headers?: {
         [key: string]: string;
     }): Promise<unknown>;
 }

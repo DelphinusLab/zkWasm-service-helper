@@ -2,7 +2,7 @@ import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, W
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
-    constructor(endpoint: string, username: string, useraddress: string, enable_logs?: boolean);
+    constructor(endpoint: string, username: string, useraddress: string, enable_logs?: boolean, custom_port?: number);
     queryImage(md5: string): Promise<Image>;
     queryImageBinary(md5: string): Promise<number[]>;
     queryUser(user_query: UserQueryParams): Promise<User>;
@@ -11,16 +11,16 @@ export declare class ZkWasmServiceHelper {
     queryDepositHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<ERC20DepositInfo[]>>;
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
-    loadTasks(query: QueryParams, customPort?: number): Promise<PaginationResult<Task[]>>;
+    loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addSubscription(subscription: SubscriptionRequest): Promise<any>;
     addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
-    addProvingTask(task: WithSignature<ProvingParams>, customPort?: number): Promise<any>;
+    addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
     addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
     modifyImage(data: WithSignature<ModifyImageParams>): Promise<any>;
-    sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean, customPort?: number): Promise<any>;
+    sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;
 }

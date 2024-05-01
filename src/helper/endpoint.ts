@@ -8,6 +8,7 @@ export class ZkWasmServiceEndpoint {
         public username: string,
         public useraddress: string,
         public enable_logs: boolean = true,
+        public custom_port: number = -1,
     ) { }
     async prepareRequest(
         method: "GET" | "POST",
@@ -90,23 +91,26 @@ export class ZkWasmServiceEndpoint {
         body: JSON | FormData | null,
         headers?: {
             [key: string]: string;
-        }
+        },
     ) {
-        let response = await this.prepareRequest(method, url, body, headers);
-        return await this.getJSONResponse(response);
+        if (this.custom_port === -1) {
+          let response = await this.prepareRequest(method, url, body, headers);
+          return await this.getJSONResponse(response);
+        } else {
+          return await this.customRequest(method, url, body, headers);
+        }
     }
 
-    async customHttp(
+    async customRequest(
       method: 'GET' | 'POST',
       url: string,
-      localPort: number,
       body: JSON | FormData | null,
       headers?: {
           [key: string]: string;
       }
     ) {
       if (method === 'GET') {
-        return this.customHttpGet(method, url, localPort, body, headers);
+        return this.customGetRequest(method, url, body, headers);
       }
       return new Promise((resolve, reject) => {
         let data = '';
@@ -130,7 +134,7 @@ export class ZkWasmServiceEndpoint {
           path: furl.pathname + furl.search,
           method: method,
           headers: headers!,
-          localPort: localPort
+          localPort: this.custom_port
         };
 
         const req = http.request(options, res => {
@@ -146,7 +150,7 @@ export class ZkWasmServiceEndpoint {
                 resolve(rbody);
               }
             } else {
-              reject(new Error(`Request failed with status code ${res.statusCode}`));
+              reject(new Error(`Request failed with status code ${res.statusCode} (${res.statusMessage})`));
             }
           });
         });
@@ -164,10 +168,9 @@ export class ZkWasmServiceEndpoint {
       });
     }
 
-    async customHttpGet(
+    async customGetRequest(
         method: 'GET',
         url: string, 
-        localPort: number,
         body: JSON | FormData | null,
         headers?: {
             [key: string]: string;
@@ -187,7 +190,7 @@ export class ZkWasmServiceEndpoint {
             path: furl.pathname + furl.search,
             method: method,
             headers: headers || {},
-            localPort: localPort
+            localPort: this.custom_port
           };
 
           const req = http.request(options, res => {

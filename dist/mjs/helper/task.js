@@ -4,8 +4,8 @@ import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
     endpoint;
-    constructor(endpoint, username, useraddress, enable_logs = true) {
-        this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
+    constructor(endpoint, username, useraddress, enable_logs = true, custom_port = -1) {
+        this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs, custom_port);
     }
     async queryImage(md5) {
         let req = JSON.parse("{}");
@@ -82,7 +82,7 @@ export class ZkWasmServiceHelper {
             totalDeployed: st.total_deployed,
         };
     }
-    async loadTasks(query, customPort = -1) {
+    async loadTasks(query) {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
         // Validate query params
@@ -121,12 +121,7 @@ export class ZkWasmServiceHelper {
             console.log("json", queryJson);
         }
         let tasks = {};
-        if (customPort === -1) {
-            tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
-        }
-        else {
-            tasks = await this.endpoint.customHttp("GET", `/tasks`, customPort, queryJson);
-        }
+        tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
         if (this.endpoint.enable_logs) {
             console.log("loading task board!");
         }
@@ -160,8 +155,8 @@ export class ZkWasmServiceHelper {
         }
         return response;
     }
-    async addProvingTask(task, customPort = -1) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true, customPort);
+    async addProvingTask(task) {
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
         if (this.endpoint.enable_logs) {
             console.log("get addProvingTask response:", response.toString());
         }
@@ -188,7 +183,7 @@ export class ZkWasmServiceHelper {
         }
         return response;
     }
-    async sendRequestWithSignature(method, path, task, isFormData = false, customPort = -1) {
+    async sendRequestWithSignature(method, path, task, isFormData = false) {
         // TODO: create return types for tasks using this method
         let headers = this.createHeaders(task);
         let task_params = this.omitSignature(task);
@@ -214,12 +209,7 @@ export class ZkWasmServiceHelper {
         else {
             payload = JSON.parse(JSON.stringify(task_params));
         }
-        if (customPort === -1) {
-            return this.endpoint.invokeRequest(method, path, payload, headers);
-        }
-        else {
-            return this.endpoint.customHttp(method, path, customPort, payload, headers);
-        }
+        return this.endpoint.invokeRequest(method, path, payload, headers);
     }
     createHeaders(task) {
         let headers = {

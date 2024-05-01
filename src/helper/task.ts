@@ -30,8 +30,8 @@ import { ethers } from "ethers";
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
 
-  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean = true) {
-    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs);
+  constructor(endpoint: string, username: string, useraddress: string, enable_logs : boolean = true, custom_port : number = -1) {
+    this.endpoint = new ZkWasmServiceEndpoint(endpoint, username, useraddress, enable_logs, custom_port);
   }
 
   async queryImage(md5: string): Promise<Image> {
@@ -139,7 +139,7 @@ export class ZkWasmServiceHelper {
     };
   }
 
-  async loadTasks(query: QueryParams, customPort : number = -1): Promise<PaginationResult<Task[]>> {
+  async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
@@ -184,11 +184,7 @@ export class ZkWasmServiceHelper {
     }
 
     let tasks : any = {};
-    if (customPort === -1) {
-      tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
-    } else {
-      tasks = await this.endpoint.customHttp("GET", `/tasks`, customPort, queryJson);
-    }
+    tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
 
     if (this.endpoint.enable_logs) {
       console.log("loading task board!");
@@ -246,13 +242,12 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async addProvingTask(task: WithSignature<ProvingParams>, customPort : number = -1) {
+  async addProvingTask(task: WithSignature<ProvingParams>) {
     let response = await this.sendRequestWithSignature<ProvingParams>(
       "POST",
       TaskEndpoint.PROVE,
       task,
       true,
-      customPort,
     );
     if (this.endpoint.enable_logs) {
       console.log("get addProvingTask response:", response.toString());
@@ -304,7 +299,6 @@ export class ZkWasmServiceHelper {
     path: TaskEndpoint,
     task: WithSignature<T>,
     isFormData = false,
-    customPort : number = -1,
   ): Promise<any> {
     // TODO: create return types for tasks using this method
     let headers = this.createHeaders(task);
@@ -338,11 +332,7 @@ export class ZkWasmServiceHelper {
       payload = JSON.parse(JSON.stringify(task_params));
     }
 
-    if (customPort === -1) {
-      return this.endpoint.invokeRequest(method, path, payload, headers);
-    } else {
-      return this.endpoint.customHttp(method, path, customPort, payload, headers);
-    }
+    return this.endpoint.invokeRequest(method, path, payload, headers);
   }
 
   createHeaders<T>(task: WithSignature<T>): Record<string, string> {

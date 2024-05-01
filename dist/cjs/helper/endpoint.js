@@ -40,11 +40,12 @@ const axios_1 = __importDefault(require("axios"));
 const form_data_1 = __importDefault(require("form-data"));
 const http = __importStar(require("http"));
 class ZkWasmServiceEndpoint {
-    constructor(endpoint, username, useraddress, enable_logs = true) {
+    constructor(endpoint, username, useraddress, enable_logs = true, custom_port = -1) {
         this.endpoint = endpoint;
         this.username = username;
         this.useraddress = useraddress;
         this.enable_logs = enable_logs;
+        this.custom_port = custom_port;
     }
     prepareRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -110,14 +111,19 @@ class ZkWasmServiceEndpoint {
     }
     invokeRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.prepareRequest(method, url, body, headers);
-            return yield this.getJSONResponse(response);
+            if (this.custom_port === -1) {
+                let response = yield this.prepareRequest(method, url, body, headers);
+                return yield this.getJSONResponse(response);
+            }
+            else {
+                return yield this.customRequest(method, url, body, headers);
+            }
         });
     }
-    customHttp(method, url, localPort, body, headers) {
+    customRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
             if (method === 'GET') {
-                return this.customHttpGet(method, url, localPort, body, headers);
+                return this.customGetRequest(method, url, body, headers);
             }
             return new Promise((resolve, reject) => {
                 let data = '';
@@ -141,7 +147,7 @@ class ZkWasmServiceEndpoint {
                     path: furl.pathname + furl.search,
                     method: method,
                     headers: headers,
-                    localPort: localPort
+                    localPort: this.custom_port
                 };
                 const req = http.request(options, res => {
                     let rbody = '';
@@ -158,7 +164,7 @@ class ZkWasmServiceEndpoint {
                             }
                         }
                         else {
-                            reject(new Error(`Request failed with status code ${res.statusCode}`));
+                            reject(new Error(`Request failed with status code ${res.statusCode} (${res.statusMessage})`));
                         }
                     });
                 });
@@ -175,7 +181,7 @@ class ZkWasmServiceEndpoint {
             });
         });
     }
-    customHttpGet(method, url, localPort, body, headers) {
+    customGetRequest(method, url, body, headers) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
                 if (method !== 'GET' || !body || body instanceof form_data_1.default) {
@@ -189,7 +195,7 @@ class ZkWasmServiceEndpoint {
                     path: furl.pathname + furl.search,
                     method: method,
                     headers: headers || {},
-                    localPort: localPort
+                    localPort: this.custom_port
                 };
                 const req = http.request(options, res => {
                     let data = '';

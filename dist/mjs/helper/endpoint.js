@@ -6,11 +6,13 @@ export class ZkWasmServiceEndpoint {
     username;
     useraddress;
     enable_logs;
-    constructor(endpoint, username, useraddress, enable_logs = true) {
+    custom_port;
+    constructor(endpoint, username, useraddress, enable_logs = true, custom_port = -1) {
         this.endpoint = endpoint;
         this.username = username;
         this.useraddress = useraddress;
         this.enable_logs = enable_logs;
+        this.custom_port = custom_port;
     }
     async prepareRequest(method, url, body, headers) {
         if (method === "GET") {
@@ -73,12 +75,17 @@ export class ZkWasmServiceEndpoint {
         return json["result"];
     }
     async invokeRequest(method, url, body, headers) {
-        let response = await this.prepareRequest(method, url, body, headers);
-        return await this.getJSONResponse(response);
+        if (this.custom_port === -1) {
+            let response = await this.prepareRequest(method, url, body, headers);
+            return await this.getJSONResponse(response);
+        }
+        else {
+            return await this.customRequest(method, url, body, headers);
+        }
     }
-    async customHttp(method, url, localPort, body, headers) {
+    async customRequest(method, url, body, headers) {
         if (method === 'GET') {
-            return this.customHttpGet(method, url, localPort, body, headers);
+            return this.customGetRequest(method, url, body, headers);
         }
         return new Promise((resolve, reject) => {
             let data = '';
@@ -102,7 +109,7 @@ export class ZkWasmServiceEndpoint {
                 path: furl.pathname + furl.search,
                 method: method,
                 headers: headers,
-                localPort: localPort
+                localPort: this.custom_port
             };
             const req = http.request(options, res => {
                 let rbody = '';
@@ -119,7 +126,7 @@ export class ZkWasmServiceEndpoint {
                         }
                     }
                     else {
-                        reject(new Error(`Request failed with status code ${res.statusCode}`));
+                        reject(new Error(`Request failed with status code ${res.statusCode} (${res.statusMessage})`));
                     }
                 });
             });
@@ -135,7 +142,7 @@ export class ZkWasmServiceEndpoint {
             }
         });
     }
-    async customHttpGet(method, url, localPort, body, headers) {
+    async customGetRequest(method, url, body, headers) {
         return new Promise((resolve, reject) => {
             if (method !== 'GET' || !body || body instanceof FormData) {
                 throw new Error("Invalid inputs");
@@ -148,7 +155,7 @@ export class ZkWasmServiceEndpoint {
                 path: furl.pathname + furl.search,
                 method: method,
                 headers: headers || {},
-                localPort: localPort
+                localPort: this.custom_port
             };
             const req = http.request(options, res => {
                 let data = '';
