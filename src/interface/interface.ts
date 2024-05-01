@@ -331,9 +331,19 @@ export interface QueryParams {
 export interface VerifyProofParams {
   aggregate_proof: Uint8Array;
   shadow_instances: Uint8Array;
-
   aux: Uint8Array;
   instances: Array<Uint8Array>;
+}
+
+export interface VerifyBatchProofParams {
+  membership_proof_index: Array<BigInt>;
+  // Shadow instance of the aggregate proof
+  verify_instance: Uint8Array;
+  // Array of length 13, where the first 12 indexes are the siblings (round 1 target instances)
+  // and 13 is the round 1 shadow instance
+  sibling_instances: Array<Uint8Array>;
+  // Single proof instance (base wasm image proof)
+  target_instances: Array<Uint8Array>;
 }
 
 export interface LogQuery {

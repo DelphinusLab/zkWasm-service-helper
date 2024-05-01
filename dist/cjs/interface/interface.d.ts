@@ -263,6 +263,12 @@ export interface VerifyProofParams {
     aux: Uint8Array;
     instances: Array<Uint8Array>;
 }
+export interface VerifyBatchProofParams {
+    membership_proof_index: Array<BigInt>;
+    verify_instance: Uint8Array;
+    sibling_instances: Array<Uint8Array>;
+    target_instances: Array<Uint8Array>;
+}
 export interface LogQuery {
     id: string;
     user_address: string;
