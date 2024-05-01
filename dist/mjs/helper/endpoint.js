@@ -86,6 +86,9 @@ export class ZkWasmServiceEndpoint {
             }
             else if (body) {
                 data = JSON.stringify(body);
+                if (!headers) {
+                    headers = {};
+                }
                 headers['Content-Type'] = 'application/json';
                 headers['Content-Length'] = Buffer.byteLength(data).toString();
             }

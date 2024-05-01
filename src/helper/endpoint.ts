@@ -2,9 +2,6 @@ import axios from "axios";
 import FormData from "form-data";
 import * as http from 'http';
 
-type JSON = { [key: string]: any };
-type Headers = { [key: string]: string };
-
 export class ZkWasmServiceEndpoint {
     constructor(
         public endpoint: string,
@@ -104,7 +101,9 @@ export class ZkWasmServiceEndpoint {
       url: string,
       localPort: number,
       body: JSON | FormData | null,
-      headers?: Headers,
+      headers?: {
+          [key: string]: string;
+      }
     ) {
       return new Promise((resolve, reject) => {
         let data = '';
@@ -114,6 +113,9 @@ export class ZkWasmServiceEndpoint {
           headers = { ...headers, ...body.getHeaders() };
         } else if (body) {
           data = JSON.stringify(body);
+          if (!headers) {
+            headers = {};
+          }
           headers!['Content-Type'] = 'application/json';
           headers!['Content-Length'] = Buffer.byteLength(data).toString();
         }
