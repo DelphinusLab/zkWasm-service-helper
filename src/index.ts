@@ -54,6 +54,7 @@ import {
   PaginationQuery,
   AutoSubmitStatus,
   TaskMetadata,
+  VerifyBatchProofParams,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -121,4 +122,5 @@ export type {
   PaginatedQuery,
   PaginationQuery,
   TaskMetadata,
+  VerifyBatchProofParams,
 };
