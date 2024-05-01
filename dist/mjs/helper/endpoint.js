@@ -77,72 +77,56 @@ export class ZkWasmServiceEndpoint {
         return await this.getJSONResponse(response);
     }
     async customHttp(method, url, localPort, body, headers) {
-        const handleFormData = (data) => {
-            return Object.entries(data);
-        };
         return new Promise((resolve, reject) => {
-            const fullUrl = new URL(this.endpoint + url);
-            let queryString = '';
-            let bodyData = null;
-            if (method === 'GET' && body) {
-                if (body instanceof FormData) {
-                    for (const [key, value] of handleFormData(body)) {
-                        queryString += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`;
-                    }
-                    queryString = queryString.slice(0, -1);
-                }
-                else {
-                    queryString = new URLSearchParams(body).toString();
-                }
-                fullUrl.search = queryString;
+            let data = '';
+            if (body instanceof FormData) {
+                // Handle FormData specifically for `form-data` library compatibility, pipe into request later.
+                body = body;
+                headers = { ...headers, ...body.getHeaders() };
             }
-            else if (method === 'POST' && body) {
-                if (body instanceof FormData) {
-                    // Prepare FormData for POST
-                    bodyData = '';
-                    for (const [key, value] of handleFormData(body)) {
-                        bodyData += `${encodeURIComponent(key)}=${encodeURIComponent(value)}&`;
-                    }
-                    bodyData = bodyData.slice(0, -1);
-                }
-                else {
-                    // Prepare JSON for POST
-                    bodyData = JSON.stringify(body);
-                    headers = {
-                        ...headers,
-                        'Content-Type': 'application/json'
-                    };
-                }
+            else if (body) {
+                data = JSON.stringify(body);
+                headers['Content-Type'] = 'application/json';
+                headers['Content-Length'] = Buffer.byteLength(data).toString();
             }
+            const furl = new URL(this.endpoint + url);
             const options = {
-                hostname: fullUrl.hostname,
-                port: fullUrl.port || 80,
-                path: fullUrl.pathname + fullUrl.search,
+                hostname: furl.hostname,
+                port: furl.port || 80,
+                path: furl.pathname + furl.search,
                 method: method,
-                headers: headers || {},
+                headers: headers,
                 localPort: localPort
             };
             const req = http.request(options, res => {
-                let data = '';
-                res.on('data', chunk => {
-                    data += chunk;
-                });
+                let rbody = '';
+                res.setEncoding('utf8');
+                res.on('data', chunk => rbody += chunk);
                 res.on('end', () => {
-                    try {
-                        resolve(JSON.parse(data));
+                    if (res.statusCode && res.statusCode >= 200 && res.statusCode < 300) {
+                        try {
+                            const parsed = JSON.parse(rbody);
+                            resolve(parsed);
+                        }
+                        catch (e) {
+                            resolve(rbody);
+                        }
                     }
-                    catch (error) {
-                        resolve(data);
+                    else {
+                        reject(new Error(`Request failed with status code ${res.statusCode}`));
                     }
                 });
             });
-            req.on('error', error => {
-                reject(error);
-            });
-            if (method === 'POST' && bodyData) {
-                req.write(bodyData);
+            req.on('error', error => reject(error));
+            if (method === 'POST' && data) {
+                req.write(data);
             }
-            req.end();
+            if (body instanceof FormData) {
+                body.pipe(req);
+            }
+            else {
+                req.end();
+            }
         });
     }
 }
