@@ -376,7 +376,7 @@ export class ZkWasmUtil {
         console.log("verify_instance: ", verify_instance);
         console.log("sibling_instances: ", [flattened_sibling_instances]);
         console.log("target_instances: ", target_instances);
-        let result = await batch_verifier_contract.check_verified_proof(membership_proof_index, verify_instance, [flattened_sibling_instances], target_instances);
+        let result = await batch_verifier_contract.check_verified_proof.send(membership_proof_index, verify_instance, [flattened_sibling_instances], target_instances);
         return result;
     }
     static async signMessage(message, priv_key) {
