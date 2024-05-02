@@ -369,6 +369,11 @@ export class ZkWasmUtil {
         params.target_instances.forEach((instance) => {
             target_instances.push(this.bytesToBigIntArray(instance));
         });
+        console.log("Verify Batch Proof Inputs");
+        console.log("membership_proof_index: ", membership_proof_index);
+        console.log("verify_instance: ", verify_instance);
+        console.log("sibling_instances: ", sibling_instances);
+        console.log("target_instances: ", target_instances);
         let result = await batch_verifier_contract.check_verified_proof(membership_proof_index, verify_instance, sibling_instances, target_instances);
         return result;
     }
