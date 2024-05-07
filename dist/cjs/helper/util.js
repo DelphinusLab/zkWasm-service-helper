@@ -260,20 +260,23 @@ class ZkWasmUtil {
             let verify_instance = this.bytesToBigIntArray(params.verify_instance);
             let sibling_instances = [];
             params.sibling_instances.forEach((instance) => {
-                sibling_instances.push(this.bytesToBigIntArray(instance));
+                //
+                sibling_instances.push(this.bytesToBigIntArray(instance)[0]);
             });
             let target_instances = [];
             params.target_instances.forEach((instance) => {
                 target_instances.push(this.bytesToBigIntArray(instance));
             });
-            // Flatten the sibling_instances
-            let flattened_sibling_instances = sibling_instances.flat();
+            let round_1_shadow_instance = this.bytesToBigIntArray(params.round_1_shadow_instance);
+            // Add the round 1 shadow instance to the flattened sibling instances as this is the expected input format
+            // for the contract. (12 round 1 target instances + 1 round 1 shadow instance)
+            sibling_instances.push(round_1_shadow_instance[0]);
             console.log("Verify Batch Proof Inputs");
             console.log("membership_proof_index: ", membership_proof_index);
             console.log("verify_instance: ", verify_instance);
-            console.log("sibling_instances: ", [flattened_sibling_instances]);
+            console.log("sibling_instances: ", [sibling_instances]);
             console.log("target_instances: ", target_instances);
-            let result = yield batch_verifier_contract.check_verified_proof.send(membership_proof_index, verify_instance, [flattened_sibling_instances], target_instances);
+            let result = yield batch_verifier_contract.check_verified_proof.send(membership_proof_index, verify_instance, [sibling_instances], target_instances);
             return result;
         });
     }

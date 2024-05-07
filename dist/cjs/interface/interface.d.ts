@@ -118,6 +118,7 @@ export interface FinalBatchProofQuery {
     id?: string;
     round_2_id?: string;
     task_id?: string;
+    status?: FinalProofStatus;
 }
 export interface PaginationQuery {
     total?: number;
@@ -185,8 +186,8 @@ export interface WithoutInitialContext {
 export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
 export declare enum TaskMetadataKeys {
     ProofSubmitMode = "ProofSubmitMode",
-    Round1BatchProofId = "Round1BatchProofTaskId",
-    Round2BatchProofId = "Round2BatchProofTaskId",
+    Round1BatchProofId = "Round1BatchProofId",
+    Round2BatchProofId = "Round2BatchProofId",
     FinalBatchProofId = "FinalBatchProofId"
 }
 export declare enum TaskMetadataValsProofSubmitMode {
@@ -274,6 +275,7 @@ export interface VerifyBatchProofParams {
     membership_proof_index: Array<BigInt>;
     verify_instance: Uint8Array;
     sibling_instances: Array<Uint8Array>;
+    round_1_shadow_instance: Uint8Array;
     target_instances: Array<Uint8Array>;
 }
 export interface LogQuery {

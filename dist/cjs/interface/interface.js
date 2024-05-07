@@ -44,8 +44,8 @@ var ImageMetadataValsProvePaymentSrc;
 var TaskMetadataKeys;
 (function (TaskMetadataKeys) {
     TaskMetadataKeys["ProofSubmitMode"] = "ProofSubmitMode";
-    TaskMetadataKeys["Round1BatchProofId"] = "Round1BatchProofTaskId";
-    TaskMetadataKeys["Round2BatchProofId"] = "Round2BatchProofTaskId";
+    TaskMetadataKeys["Round1BatchProofId"] = "Round1BatchProofId";
+    TaskMetadataKeys["Round2BatchProofId"] = "Round2BatchProofId";
     TaskMetadataKeys["FinalBatchProofId"] = "FinalBatchProofId";
 })(TaskMetadataKeys = exports.TaskMetadataKeys || (exports.TaskMetadataKeys = {}));
 var TaskMetadataValsProofSubmitMode;

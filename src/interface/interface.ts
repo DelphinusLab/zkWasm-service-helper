@@ -149,6 +149,7 @@ export interface FinalBatchProofQuery {
   id?: string;
   round_2_id?: string;
   task_id?: string;
+  status?: FinalProofStatus;
 }
 
 export interface PaginationQuery {
@@ -239,8 +240,8 @@ export type AddImageParams = BaseAddImageParams &
 
 export enum TaskMetadataKeys {
   ProofSubmitMode = "ProofSubmitMode",
-  Round1BatchProofId = "Round1BatchProofTaskId",
-  Round2BatchProofId = "Round2BatchProofTaskId",
+  Round1BatchProofId = "Round1BatchProofId",
+  Round2BatchProofId = "Round2BatchProofId",
   FinalBatchProofId = "FinalBatchProofId",
 }
 
@@ -344,12 +345,13 @@ export interface VerifyProofParams {
 }
 
 export interface VerifyBatchProofParams {
+  // Should be of length 1
   membership_proof_index: Array<BigInt>;
   // Shadow instance of the aggregate proof
   verify_instance: Uint8Array;
-  // Array of length 13, where the first 12 indexes are the siblings (round 1 target instances)
-  // and 13 is the round 1 shadow instance
+  // Array of length 12, where the entries are (round 1 target instances)
   sibling_instances: Array<Uint8Array>;
+  round_1_shadow_instance: Uint8Array;
   // Single proof instance (base wasm image proof)
   target_instances: Array<Uint8Array>;
 }
