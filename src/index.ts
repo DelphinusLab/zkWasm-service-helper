@@ -55,6 +55,7 @@ import {
   AutoSubmitStatus,
   TaskMetadata,
   VerifyBatchProofParams,
+  FinalProofStatus,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -71,6 +72,9 @@ export {
   TaskMetadataKeys,
   TaskMetadataValsProofSubmitMode,
   AutoSubmitStatus,
+  Round1BatchProofStatus,
+  Round2BatchProofStatus,
+  FinalProofStatus,
 };
 
 export type {
@@ -114,8 +118,6 @@ export type {
   Round1BatchProof,
   Round2BatchProof,
   FinalBatchProof,
-  Round1BatchProofStatus,
-  Round2BatchProofStatus,
   Round1BatchProofQuery,
   Round2BatchProofQuery,
   FinalBatchProofQuery,
