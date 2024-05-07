@@ -95,6 +95,11 @@ export interface FinalBatchProof {
     internal_message?: string;
     static_files_verification_data: StaticFileVerificationData;
     verifier_contracts: VerifierContracts[];
+    status: FinalProofStatus;
+}
+export declare enum FinalProofStatus {
+    ProofNotRegistered = "ProofNotRegistered",
+    ProofRegistered = "ProofRegistered"
 }
 export type PaginatedQuery<T> = T & PaginationQuery;
 export interface Round1BatchProofQuery {
@@ -140,7 +145,8 @@ export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "F
 export declare enum AutoSubmitStatus {
     Round1 = "Round1",
     Round2 = "Round2",
-    Done = "Done",
+    Batched = "Batched",
+    RegisteredProof = "RegisteredProof",
     Failed = "Failed"
 }
 export type TaskMetadata = {

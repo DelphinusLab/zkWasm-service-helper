@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.AutoSubmitStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.InputContextType = void 0;
+exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.AutoSubmitStatus = exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
@@ -19,11 +19,17 @@ var Round2BatchProofStatus;
     Round2BatchProofStatus["Batched"] = "Batched";
     Round2BatchProofStatus["Failed"] = "Failed";
 })(Round2BatchProofStatus = exports.Round2BatchProofStatus || (exports.Round2BatchProofStatus = {}));
+var FinalProofStatus;
+(function (FinalProofStatus) {
+    FinalProofStatus["ProofNotRegistered"] = "ProofNotRegistered";
+    FinalProofStatus["ProofRegistered"] = "ProofRegistered";
+})(FinalProofStatus = exports.FinalProofStatus || (exports.FinalProofStatus = {}));
 var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
     AutoSubmitStatus["Round1"] = "Round1";
     AutoSubmitStatus["Round2"] = "Round2";
-    AutoSubmitStatus["Done"] = "Done";
+    AutoSubmitStatus["Batched"] = "Batched";
+    AutoSubmitStatus["RegisteredProof"] = "RegisteredProof";
     AutoSubmitStatus["Failed"] = "Failed";
 })(AutoSubmitStatus = exports.AutoSubmitStatus || (exports.AutoSubmitStatus = {}));
 var ImageMetadataKeys;

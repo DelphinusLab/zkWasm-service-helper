@@ -16,11 +16,17 @@ export var Round2BatchProofStatus;
     Round2BatchProofStatus["Batched"] = "Batched";
     Round2BatchProofStatus["Failed"] = "Failed";
 })(Round2BatchProofStatus || (Round2BatchProofStatus = {}));
+export var FinalProofStatus;
+(function (FinalProofStatus) {
+    FinalProofStatus["ProofNotRegistered"] = "ProofNotRegistered";
+    FinalProofStatus["ProofRegistered"] = "ProofRegistered";
+})(FinalProofStatus || (FinalProofStatus = {}));
 export var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
     AutoSubmitStatus["Round1"] = "Round1";
     AutoSubmitStatus["Round2"] = "Round2";
-    AutoSubmitStatus["Done"] = "Done";
+    AutoSubmitStatus["Batched"] = "Batched";
+    AutoSubmitStatus["RegisteredProof"] = "RegisteredProof";
     AutoSubmitStatus["Failed"] = "Failed";
 })(AutoSubmitStatus || (AutoSubmitStatus = {}));
 export var ImageMetadataKeys;
