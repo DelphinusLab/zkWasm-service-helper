@@ -95,6 +95,11 @@ export interface FinalBatchProof {
     internal_message?: string;
     static_files_verification_data: StaticFileVerificationData;
     verifier_contracts: VerifierContracts[];
+    status: FinalProofStatus;
+}
+export declare enum FinalProofStatus {
+    ProofNotRegistered = "ProofNotRegistered",
+    ProofRegistered = "ProofRegistered"
 }
 export type PaginatedQuery<T> = T & PaginationQuery;
 export interface Round1BatchProofQuery {
@@ -113,6 +118,7 @@ export interface FinalBatchProofQuery {
     id?: string;
     round_2_id?: string;
     task_id?: string;
+    status?: FinalProofStatus;
 }
 export interface PaginationQuery {
     total?: number;
@@ -125,6 +131,7 @@ export interface TaskVerificationData {
 export interface VerifierContracts {
     chain_id: number;
     aggregator_verifier: string;
+    batch_verifier: string;
     circuit_size: number;
 }
 export type TaskType = "Setup" | "Prove" | "Reset";
@@ -139,7 +146,8 @@ export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "F
 export declare enum AutoSubmitStatus {
     Round1 = "Round1",
     Round2 = "Round2",
-    Done = "Done",
+    Batched = "Batched",
+    RegisteredProof = "RegisteredProof",
     Failed = "Failed"
 }
 export type TaskMetadata = {
@@ -178,8 +186,8 @@ export interface WithoutInitialContext {
 export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
 export declare enum TaskMetadataKeys {
     ProofSubmitMode = "ProofSubmitMode",
-    Round1BatchProofId = "Round1BatchProofTaskId",
-    Round2BatchProofId = "Round2BatchProofTaskId",
+    Round1BatchProofId = "Round1BatchProofId",
+    Round2BatchProofId = "Round2BatchProofId",
     FinalBatchProofId = "FinalBatchProofId"
 }
 export declare enum TaskMetadataValsProofSubmitMode {
@@ -263,6 +271,13 @@ export interface VerifyProofParams {
     aux: Uint8Array;
     instances: Array<Uint8Array>;
 }
+export interface VerifyBatchProofParams {
+    membership_proof_index: Array<BigInt>;
+    verify_instance: Uint8Array;
+    sibling_instances: Array<Uint8Array>;
+    round_1_shadow_instance: Uint8Array;
+    target_instances: Array<Uint8Array>;
+}
 export interface LogQuery {
     id: string;
     user_address: string;
@@ -294,6 +309,7 @@ export interface ContractDeployments {
     aggregator_config_address: string;
     aggregator_verifier_steps: string[];
     aggregator_verifier: string;
+    batch_verifier: string;
     static_file_checksum: Uint8Array;
 }
 export interface ChainInfo {

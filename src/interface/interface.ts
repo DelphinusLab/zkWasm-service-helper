@@ -121,6 +121,12 @@ export interface FinalBatchProof {
   internal_message?: string;
   static_files_verification_data: StaticFileVerificationData;
   verifier_contracts: VerifierContracts[];
+  status: FinalProofStatus;
+}
+
+export enum FinalProofStatus {
+  ProofNotRegistered = "ProofNotRegistered",
+  ProofRegistered = "ProofRegistered",
 }
 
 export type PaginatedQuery<T> = T & PaginationQuery;
@@ -143,6 +149,7 @@ export interface FinalBatchProofQuery {
   id?: string;
   round_2_id?: string;
   task_id?: string;
+  status?: FinalProofStatus;
 }
 
 export interface PaginationQuery {
@@ -158,6 +165,7 @@ export interface TaskVerificationData {
 export interface VerifierContracts {
   chain_id: number;
   aggregator_verifier: string;
+  batch_verifier: string;
   circuit_size: number;
 }
 
@@ -182,7 +190,8 @@ export type TaskStatus =
 export enum AutoSubmitStatus {
   Round1 = "Round1",
   Round2 = "Round2",
-  Done = "Done",
+  Batched = "Batched",
+  RegisteredProof = "RegisteredProof",
   Failed = "Failed",
 }
 
@@ -231,8 +240,8 @@ export type AddImageParams = BaseAddImageParams &
 
 export enum TaskMetadataKeys {
   ProofSubmitMode = "ProofSubmitMode",
-  Round1BatchProofId = "Round1BatchProofTaskId",
-  Round2BatchProofId = "Round2BatchProofTaskId",
+  Round1BatchProofId = "Round1BatchProofId",
+  Round2BatchProofId = "Round2BatchProofId",
   FinalBatchProofId = "FinalBatchProofId",
 }
 
@@ -331,9 +340,20 @@ export interface QueryParams {
 export interface VerifyProofParams {
   aggregate_proof: Uint8Array;
   shadow_instances: Uint8Array;
-
   aux: Uint8Array;
   instances: Array<Uint8Array>;
+}
+
+export interface VerifyBatchProofParams {
+  // Should be of length 1
+  membership_proof_index: Array<BigInt>;
+  // Shadow instance of the aggregate proof
+  verify_instance: Uint8Array;
+  // Array of length 12, where the entries are (round 1 target instances)
+  sibling_instances: Array<Uint8Array>;
+  round_1_shadow_instance: Uint8Array;
+  // Single proof instance (base wasm image proof)
+  target_instances: Array<Uint8Array>;
 }
 
 export interface LogQuery {
@@ -370,6 +390,7 @@ export interface ContractDeployments {
   aggregator_config_address: string;
   aggregator_verifier_steps: string[];
   aggregator_verifier: string;
+  batch_verifier: string;
   static_file_checksum: Uint8Array;
 }
 // returned from zkwasm service server

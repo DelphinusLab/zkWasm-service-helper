@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AutoSubmitStatus = exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.InputContextType = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
+exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.AutoSubmitStatus = exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.InputContextType = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
 const interface_js_1 = require("./interface/interface.js");
 Object.defineProperty(exports, "InputContextType", { enumerable: true, get: function () { return interface_js_1.InputContextType; } });
 Object.defineProperty(exports, "ImageMetadataKeys", { enumerable: true, get: function () { return interface_js_1.ImageMetadataKeys; } });
 Object.defineProperty(exports, "ImageMetadataValsProvePaymentSrc", { enumerable: true, get: function () { return interface_js_1.ImageMetadataValsProvePaymentSrc; } });
 Object.defineProperty(exports, "TaskMetadataKeys", { enumerable: true, get: function () { return interface_js_1.TaskMetadataKeys; } });
 Object.defineProperty(exports, "TaskMetadataValsProofSubmitMode", { enumerable: true, get: function () { return interface_js_1.TaskMetadataValsProofSubmitMode; } });
+Object.defineProperty(exports, "Round1BatchProofStatus", { enumerable: true, get: function () { return interface_js_1.Round1BatchProofStatus; } });
+Object.defineProperty(exports, "Round2BatchProofStatus", { enumerable: true, get: function () { return interface_js_1.Round2BatchProofStatus; } });
 Object.defineProperty(exports, "AutoSubmitStatus", { enumerable: true, get: function () { return interface_js_1.AutoSubmitStatus; } });
+Object.defineProperty(exports, "FinalProofStatus", { enumerable: true, get: function () { return interface_js_1.FinalProofStatus; } });
 const util_js_1 = require("./helper/util.js");
 Object.defineProperty(exports, "ZkWasmUtil", { enumerable: true, get: function () { return util_js_1.ZkWasmUtil; } });
 const endpoint_js_1 = require("./helper/endpoint.js");
