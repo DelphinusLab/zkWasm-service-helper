@@ -346,13 +346,13 @@ export class ZkWasmUtil {
     }
     static async verifyProof(verify_contract, params) {
         let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
-        let shadow_instances = this.bytesToBigIntArray(params.shadow_instances);
+        let verify_instance = this.bytesToBigIntArray(params.verify_instance);
         let aux = this.bytesToBigIntArray(params.aux);
         let instances = [];
         params.instances.forEach((instance) => {
             instances.push(this.bytesToBigIntArray(instance));
         });
-        let result = await verify_contract.verify.send(aggregate_proof, shadow_instances, aux, instances);
+        let result = await verify_contract.verify.send(aggregate_proof, verify_instance, aux, instances);
         return result;
     }
     static composeBatchVerifierContract(signer, verifier_addr) {

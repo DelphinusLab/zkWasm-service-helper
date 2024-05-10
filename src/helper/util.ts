@@ -416,7 +416,7 @@ export class ZkWasmUtil {
     params: VerifyProofParams
   ) {
     let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
-    let shadow_instances = this.bytesToBigIntArray(params.shadow_instances);
+    let verify_instance = this.bytesToBigIntArray(params.verify_instance);
     let aux = this.bytesToBigIntArray(params.aux);
     let instances: Array<BigInt[]> = [];
     params.instances.forEach((instance) => {
@@ -425,7 +425,7 @@ export class ZkWasmUtil {
 
     let result = await verify_contract.verify.send(
       aggregate_proof,
-      shadow_instances,
+      verify_instance,
       aux,
       instances
     );
