@@ -395,6 +395,85 @@ let helper = new ZkWasmServiceHelper(endpoint, "", "");
     );
 ```
 
+### Query Auto Submitted Batch Proofs
+
+This example typescript code will query task details:
+
+```typescript
+import {
+    ZkWasmServiceHelper,
+    ZkWasmUtil,
+    Round1BatchProof,
+    Round1BatchProofQuery,
+    PaginationResult,
+    PaginatedQuery,
+    Round1BatchProofStatus,
+    Round2BatchProofStatus,
+    Task,
+} from "zkwasm-service-helper";
+import BN from "bn.js";
+
+const endpoint = ""https://rpc.zkwasmhub.com:8090";
+const taskid = "xxxx"
+
+let helper = new ZkWasmServiceHelper(endpoint, "", "");
+
+// Query the Round 1 Queue to check the status of the first round of batch proofs
+let round1QueueQuery: PaginatedQuery<Round1BatchProofQuery> = {
+    task_id: taskid!, // Task id of the task that the batch proof is associated with
+    id: null, // null can also be empty string "" to ignore fields in the query filter
+    status: Round1BatchProofStatus.Batched,
+    circuit_size: null, // null or 22 since all images should be utilizing circuit size 22
+};
+helper.queryRound1BatchProofs(round1QueueQuery).then((res) => {
+    const response = res as PaginationResult<Round1BatchProof[]>;
+    const proof: Round1BatchProof = response.data[0];
+    console.log("Proof details: ");
+    console.log("    ", proof);
+}).catch((err) => {
+    console.log("queryRound1BatchProofs Error", err);
+}).finally(() =>
+    console.log("Finish queryRound1BatchProofs.")
+);
+
+// Query Round 2 Queue to check the status of the second round of batch proofs
+// This also contains the output of Round 1 batch proof items, which will be used as inputs for the Round 2 batch proof
+let round2QueueQuery: PaginatedQuery<Round2BatchProofQuery> = {
+    task_id: taskid!, // Find a Round 2 Proof item which contains this task id
+    id: null, // null can also be empty string "" to ignore fields in the query filter
+    status: Round2BatchProofStatus.Done,
+    circuit_size: null, // null or 22 since all images should be utilizing circuit size 22
+};
+helper.queryRound2BatchProofs(round2QueueQuery).then((res) => {
+    const response = res as PaginationResult<Round2BatchProof[]>;
+    const proof: Round2BatchProof = response.data[0];
+    console.log("Proof details: ");
+    console.log("    ", proof);
+}).catch((err) => {
+    console.log("queryRound2BatchProofs Error", err);
+}).finally(() =>
+    console.log("Finish queryRound2BatchProofs.")
+);
+
+let finalBatchProofQuery: PaginatedQuery<FinalBatchProofQuery> = {
+    task_id: taskid!,
+    round_2_id: null, // Can also be a round 2 id to find the associated Round 1 outputs.
+    id: null, // null can also be empty string "" to ignore fields in the query filter
+    status: FinalProofStatus.ProofRegistered, // ProofRegistered is the status of whether or not the final proof is registered on chain
+                                              // Which allows verification of underlying proofs.
+};
+helper.queryFinalBatchProofs(round2QueueQuery).then((res) => {
+    const response = res as PaginationResult<FinalBatchProof[]>;
+    const proof: FinalBatchProof = response.data[0];
+    console.log("Proof details: ");
+    console.log("    ", proof);
+}).catch((err) => {
+    console.log("queryFinalBatchProofs Error", err);
+}).finally(() =>
+    console.log("Finish queryFinalBatchProofs.")
+);
+```
+
 ### Notes:
 
 md5 is case insensitive when communicate with our zkwasm service
