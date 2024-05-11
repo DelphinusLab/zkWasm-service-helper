@@ -192,60 +192,6 @@ async function VerifyProof() {
 }
 ```
 
-```typescript
-import {
-  VerifyProofParams,
-  ZkWasmUtil,
-  Task,
-  VerifyBatchProofParams,
-} from "zkwasm-service-helper";
-import { withBrowserConnector } from "web3subscriber/src/client";
-import { DelphinusBrowserConnector } from "web3subscriber/src/provider";
-
-async function VerifyProof() {
-  // Fetch a task from the playground service which contains the proof information
-  // See the example to build query function to fetch task details
-  const task: Task = await fetchTaskFromService();
-
-  await withBrowserConnector(async (connector: DelphinusBrowserConnector) => {
-    let chainidhex = "0x" + selectedChainId!.toString(16);
-    await connector.switchNet(chainidhex);
-
-    let contract = await ZkWasmUtil.composeVerifyContract(
-      connector,
-      aggregator_verifier_address
-    );
-
-    // If the proof has no shadow instance, use the batch instances to try and verify instead.
-    // Mostly for legacy purposes.
-    // Proofs submitted with Auto Submit will not be verified using this method.
-    // See below for an example of verifying a proof which has been batched with the Auto Submitted Proof service.
-    let verify_instance =
-      task.shadow_instances.length === 0
-        ? task.batch_instances
-        : task.shadow_instances;
-
-    let proofParams: VerifyProofParams = {
-      aggregate_proof: task.proof,
-      shadow_instances: verify_instance,
-      aux: task.aux,
-      instances: [task.target_instances], // The target instances are wrapped in an array
-    };
-
-    let tx = await ZkWasmUtil.verifyProof(
-      contract.getEthersContract(),
-      proofParams
-    );
-    // wait for tx to be mined, can add no. of confirmations as arg
-    await tx.wait();
-
-    console.log("transaction:", tx.hash);
-  });
-}
-
-verifyProof();
-```
-
 ### Verifying a batched proof
 
 This example typescript code will verify a batched proof which utilises Delphinus' web3subscriber library.
