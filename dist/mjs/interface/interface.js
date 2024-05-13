@@ -32,6 +32,7 @@ export var AutoSubmitStatus;
 export var ImageMetadataKeys;
 (function (ImageMetadataKeys) {
     ImageMetadataKeys["ProvePaymentSrc"] = "ProvePaymentSrc";
+    ImageMetadataKeys["AutoSubmitNetworks"] = "AutoSubmitNetworks";
 })(ImageMetadataKeys || (ImageMetadataKeys = {}));
 export var ImageMetadataValsProvePaymentSrc;
 (function (ImageMetadataValsProvePaymentSrc) {
