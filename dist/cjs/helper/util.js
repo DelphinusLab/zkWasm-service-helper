@@ -126,8 +126,12 @@ class ZkWasmUtil {
         message += params.description_url;
         message += params.avator_url;
         message += params.circuit_size;
-        message += params.metadata_keys;
-        message += params.metadata_vals;
+        for (const key of params.metadata_keys) {
+            message += key;
+        }
+        for (const val of params.metadata_vals) {
+            message += val;
+        }
         // Additional params afterwards
         if (params.initial_context) {
             message += params.initial_context_md5;
@@ -146,8 +150,12 @@ class ZkWasmUtil {
         for (const input of params.private_inputs) {
             message += input;
         }
-        message += params.metadata_keys;
-        message += params.metadata_vals;
+        for (const key of params.metadata_keys) {
+            message += key;
+        }
+        for (const val of params.metadata_vals) {
+            message += val;
+        }
         // Only handle input_context if selected input_context_type.Custom
         if (params.input_context_type === interface_js_1.InputContextType.Custom &&
             params.input_context) {
@@ -166,8 +174,12 @@ class ZkWasmUtil {
         message += params.md5;
         message += params.circuit_size;
         message += params.user_address;
-        message += params.metadata_keys;
-        message += params.metadata_vals;
+        for (const key of params.metadata_keys) {
+            message += key;
+        }
+        for (const val of params.metadata_vals) {
+            message += val;
+        }
         if (params.reset_context) {
             message += params.reset_context_md5;
         }
