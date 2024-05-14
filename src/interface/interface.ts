@@ -206,6 +206,7 @@ export interface PaginationResult<T> {
 
 export enum ImageMetadataKeys {
   ProvePaymentSrc = "ProvePaymentSrc",
+  AutoSubmitNetworks = "AutoSubmitNetworks",
 }
 
 export enum ImageMetadataValsProvePaymentSrc {

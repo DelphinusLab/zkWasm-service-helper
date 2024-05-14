@@ -158,7 +158,8 @@ export interface PaginationResult<T> {
     total: number;
 }
 export declare enum ImageMetadataKeys {
-    ProvePaymentSrc = "ProvePaymentSrc"
+    ProvePaymentSrc = "ProvePaymentSrc",
+    AutoSubmitNetworks = "AutoSubmitNetworks"
 }
 export declare enum ImageMetadataValsProvePaymentSrc {
     Default = "Default",
