@@ -382,6 +382,7 @@ export interface AppConfig {
   topup_token_data: TokenData;
   deployments: ContractDeployments[];
   subscription_plans: SubscriptionParams[];
+  min_credits_top_up : number;
 }
 
 export interface ContractDeployments {
