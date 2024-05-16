@@ -300,9 +300,9 @@ export interface AppConfig {
     latest_server_checksum: Uint8Array;
     topup_token_params: TokenParams;
     topup_token_data: TokenData;
+    min_tokens_for_credit_topup: number;
     deployments: ContractDeployments[];
     subscription_plans: SubscriptionParams[];
-    min_credits_top_up: number;
 }
 export interface ContractDeployments {
     chain_id: number;
