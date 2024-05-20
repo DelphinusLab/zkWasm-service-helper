@@ -52,6 +52,7 @@ export interface Round1BatchProof {
     batch_finished?: string;
     internal_message?: string;
     static_files_verification_data: StaticFileVerificationData;
+    auto_submit_network_chain_id: number;
     status: Round1BatchProofStatus;
 }
 export interface StaticFileVerificationData {
@@ -74,6 +75,8 @@ export interface Round2BatchProof {
     batch_started?: string;
     batch_finished?: string;
     internal_message?: string;
+    auto_submit_network_chain_id: number;
+    verifier_contracts: VerifierContracts;
     static_files_verification_data: StaticFileVerificationData;
     status: Round2BatchProofStatus;
 }
@@ -94,7 +97,9 @@ export interface FinalBatchProof {
     batched_time?: string;
     internal_message?: string;
     static_files_verification_data: StaticFileVerificationData;
-    verifier_contracts: VerifierContracts[];
+    auto_submit_network_chain_id: number;
+    verifier_contracts: VerifierContracts;
+    registered_tx_hash: string | null;
     status: FinalProofStatus;
 }
 export declare enum FinalProofStatus {
