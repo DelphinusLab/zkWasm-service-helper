@@ -112,18 +112,21 @@ export interface Round1BatchProofQuery {
     task_id?: string;
     status?: Round1BatchProofStatus;
     circuit_size?: number;
+    chain_id?: number;
 }
 export interface Round2BatchProofQuery {
     id?: string;
     task_id?: string;
     status?: Round2BatchProofStatus;
     circuit_size?: number;
+    chain_id?: number;
 }
 export interface FinalBatchProofQuery {
     id?: string;
     round_2_id?: string;
     task_id?: string;
     status?: FinalProofStatus;
+    chain_id?: number;
 }
 export interface PaginationQuery {
     total?: number;
