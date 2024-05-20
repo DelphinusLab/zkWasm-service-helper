@@ -375,6 +375,7 @@ export interface AppConfig {
   task_fee_list: {
     setup_fee: string;
     prove_fee: string;
+    auto_submit_prove_fee_per_network: string;
   };
   chain_info_list: Array<ChainInfo>;
   latest_server_checksum: Uint8Array;
