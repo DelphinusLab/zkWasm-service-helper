@@ -311,6 +311,7 @@ export interface AppConfig {
     topup_token_data: TokenData;
     deployments: ContractDeployments[];
     subscription_plans: SubscriptionParams[];
+    supported_auto_submit_network_ids: number[];
 }
 export interface ContractDeployments {
     chain_id: number;
