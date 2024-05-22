@@ -44,6 +44,11 @@ export interface Task {
   auto_submit_status?: AutoSubmitStatus;
 }
 
+export interface AutoSubmitBatchMetadata {
+  chain_id: number;
+  id: string;
+}
+
 export interface Round1BatchProof {
   _id?: any;
   // The task id of the original aggregate proof task
@@ -58,6 +63,7 @@ export interface Round1BatchProof {
   batch_finished?: string;
   internal_message?: string;
   static_files_verification_data: StaticFileVerificationData;
+  auto_submit_network_chain_id: number;
   status: Round1BatchProofStatus;
 }
 
@@ -93,6 +99,8 @@ export interface Round2BatchProof {
   batch_started?: string;
   batch_finished?: string;
   internal_message?: string;
+  auto_submit_network_chain_id: number;
+  verifier_contracts: VerifierContracts;
   static_files_verification_data: StaticFileVerificationData;
   status: Round2BatchProofStatus;
 }
@@ -120,7 +128,9 @@ export interface FinalBatchProof {
   batched_time?: string;
   internal_message?: string;
   static_files_verification_data: StaticFileVerificationData;
-  verifier_contracts: VerifierContracts[];
+  auto_submit_network_chain_id: number;
+  verifier_contracts: VerifierContracts;
+  registered_tx_hash: string | null;
   status: FinalProofStatus;
 }
 
@@ -136,6 +146,7 @@ export interface Round1BatchProofQuery {
   task_id?: string;
   status?: Round1BatchProofStatus;
   circuit_size?: number;
+  chain_id?: number;
 }
 
 export interface Round2BatchProofQuery {
@@ -143,6 +154,7 @@ export interface Round2BatchProofQuery {
   task_id?: string;
   status?: Round2BatchProofStatus;
   circuit_size?: number;
+  chain_id?: number;
 }
 
 export interface FinalBatchProofQuery {
@@ -150,6 +162,7 @@ export interface FinalBatchProofQuery {
   round_2_id?: string;
   task_id?: string;
   status?: FinalProofStatus;
+  chain_id?: number;
 }
 
 export interface PaginationQuery {
@@ -383,6 +396,7 @@ export interface AppConfig {
   topup_token_data: TokenData;
   deployments: ContractDeployments[];
   subscription_plans: SubscriptionParams[];
+  supported_auto_submit_network_ids: number[];
 }
 
 export interface ContractDeployments {
