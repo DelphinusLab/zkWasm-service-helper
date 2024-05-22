@@ -44,6 +44,11 @@ export interface Task {
   auto_submit_status?: AutoSubmitStatus;
 }
 
+export interface AutoSubmitBatchMetadata {
+  chain_id: number;
+  id: string;
+}
+
 export interface Round1BatchProof {
   _id?: any;
   // The task id of the original aggregate proof task

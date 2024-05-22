@@ -40,6 +40,10 @@ export interface Task {
     metadata: TaskMetadata;
     auto_submit_status?: AutoSubmitStatus;
 }
+export interface AutoSubmitBatchMetadata {
+    chain_id: number;
+    id: string;
+}
 export interface Round1BatchProof {
     _id?: any;
     task_id: string;
