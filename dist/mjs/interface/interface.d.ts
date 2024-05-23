@@ -352,11 +352,8 @@ export interface Image {
     initial_context?: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
-    metadata: {
-        values: {
-            [key: string]: string;
-        };
-    };
+    prove_payment_src: ProvePaymentSrc;
+    auto_submit_network_ids: number[];
 }
 export interface ImageChecksum {
     x: Uint8Array;
