@@ -14,7 +14,6 @@ import {
   User,
   UserQueryParams,
   PaymentParams,
-  SubscriptionDuration,
   SubscriptionParams,
   Subscription,
   SubscriptionType,
@@ -38,10 +37,6 @@ import {
   WithoutInitialContext,
   WithoutInputContextType,
   WithoutResetContext,
-  ImageMetadataKeys,
-  ImageMetadataValsProvePaymentSrc,
-  TaskMetadataKeys,
-  TaskMetadataValsProofSubmitMode,
   Round1BatchProof,
   Round2BatchProof,
   FinalBatchProof,
@@ -53,10 +48,11 @@ import {
   PaginatedQuery,
   PaginationQuery,
   AutoSubmitStatus,
-  TaskMetadata,
   VerifyBatchProofParams,
   FinalProofStatus,
   AutoSubmitBatchMetadata,
+  ProofSubmitMode,
+  ProvePaymentSrc,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -68,14 +64,12 @@ export {
   ZkWasmServiceHelper,
   ZkWasmUtil,
   InputContextType,
-  ImageMetadataKeys,
-  ImageMetadataValsProvePaymentSrc,
-  TaskMetadataKeys,
-  TaskMetadataValsProofSubmitMode,
   AutoSubmitStatus,
   Round1BatchProofStatus,
   Round2BatchProofStatus,
   FinalProofStatus,
+  ProofSubmitMode,
+  ProvePaymentSrc,
 };
 
 export type {
@@ -124,7 +118,6 @@ export type {
   FinalBatchProofQuery,
   PaginatedQuery,
   PaginationQuery,
-  TaskMetadata,
   VerifyBatchProofParams,
   AutoSubmitBatchMetadata,
 };

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TaskMetadataValsProofSubmitMode = exports.TaskMetadataKeys = exports.ImageMetadataValsProvePaymentSrc = exports.ImageMetadataKeys = exports.AutoSubmitStatus = exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.InputContextType = void 0;
+exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
@@ -32,25 +32,13 @@ var AutoSubmitStatus;
     AutoSubmitStatus["RegisteredProof"] = "RegisteredProof";
     AutoSubmitStatus["Failed"] = "Failed";
 })(AutoSubmitStatus = exports.AutoSubmitStatus || (exports.AutoSubmitStatus = {}));
-var ImageMetadataKeys;
-(function (ImageMetadataKeys) {
-    ImageMetadataKeys["ProvePaymentSrc"] = "ProvePaymentSrc";
-    ImageMetadataKeys["AutoSubmitNetworks"] = "AutoSubmitNetworks";
-})(ImageMetadataKeys = exports.ImageMetadataKeys || (exports.ImageMetadataKeys = {}));
-var ImageMetadataValsProvePaymentSrc;
-(function (ImageMetadataValsProvePaymentSrc) {
-    ImageMetadataValsProvePaymentSrc["Default"] = "Default";
-    ImageMetadataValsProvePaymentSrc["CreatorPay"] = "CreatorPay";
-})(ImageMetadataValsProvePaymentSrc = exports.ImageMetadataValsProvePaymentSrc || (exports.ImageMetadataValsProvePaymentSrc = {}));
-var TaskMetadataKeys;
-(function (TaskMetadataKeys) {
-    TaskMetadataKeys["ProofSubmitMode"] = "ProofSubmitMode";
-    TaskMetadataKeys["Round1BatchProofId"] = "Round1BatchProofId";
-    TaskMetadataKeys["Round2BatchProofId"] = "Round2BatchProofId";
-    TaskMetadataKeys["FinalBatchProofId"] = "FinalBatchProofId";
-})(TaskMetadataKeys = exports.TaskMetadataKeys || (exports.TaskMetadataKeys = {}));
-var TaskMetadataValsProofSubmitMode;
-(function (TaskMetadataValsProofSubmitMode) {
-    TaskMetadataValsProofSubmitMode["Manual"] = "Manual";
-    TaskMetadataValsProofSubmitMode["Auto"] = "Auto";
-})(TaskMetadataValsProofSubmitMode = exports.TaskMetadataValsProofSubmitMode || (exports.TaskMetadataValsProofSubmitMode = {}));
+var ProvePaymentSrc;
+(function (ProvePaymentSrc) {
+    ProvePaymentSrc["Default"] = "Default";
+    ProvePaymentSrc["CreatorPay"] = "CreatorPay";
+})(ProvePaymentSrc = exports.ProvePaymentSrc || (exports.ProvePaymentSrc = {}));
+var ProofSubmitMode;
+(function (ProofSubmitMode) {
+    ProofSubmitMode["Manual"] = "Manual";
+    ProofSubmitMode["Auto"] = "Auto";
+})(ProofSubmitMode = exports.ProofSubmitMode || (exports.ProofSubmitMode = {}));

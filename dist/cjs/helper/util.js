@@ -126,15 +126,13 @@ class ZkWasmUtil {
         message += params.description_url;
         message += params.avator_url;
         message += params.circuit_size;
-        for (const key of params.metadata_keys) {
-            message += key;
-        }
-        for (const val of params.metadata_vals) {
-            message += val;
-        }
         // Additional params afterwards
         if (params.initial_context) {
             message += params.initial_context_md5;
+        }
+        message += params.prove_payment_src;
+        for (const chainId of params.auto_submit_network_ids) {
+            message += chainId;
         }
         return message;
     }
@@ -149,12 +147,6 @@ class ZkWasmUtil {
         }
         for (const input of params.private_inputs) {
             message += input;
-        }
-        for (const key of params.metadata_keys) {
-            message += key;
-        }
-        for (const val of params.metadata_vals) {
-            message += val;
         }
         // Only handle input_context if selected input_context_type.Custom
         if (params.input_context_type === interface_js_1.InputContextType.Custom &&
@@ -174,11 +166,9 @@ class ZkWasmUtil {
         message += params.md5;
         message += params.circuit_size;
         message += params.user_address;
-        for (const key of params.metadata_keys) {
-            message += key;
-        }
-        for (const val of params.metadata_vals) {
-            message += val;
+        message += params.prove_payment_src;
+        for (const chainId of params.auto_submit_network_ids) {
+            message += chainId;
         }
         if (params.reset_context) {
             message += params.reset_context_md5;

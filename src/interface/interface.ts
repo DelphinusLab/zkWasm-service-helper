@@ -40,13 +40,20 @@ export interface Task {
   internal_message?: string;
   task_verification_data: TaskVerificationData;
   debug_logs?: string;
-  metadata: TaskMetadata;
+  proof_submit_mode?: ProofSubmitMode;
+  batch_proof_data?: BatchProofData;
   auto_submit_status?: AutoSubmitStatus;
 }
 
 export interface AutoSubmitBatchMetadata {
   chain_id: number;
   id: string;
+}
+
+export interface BatchProofData {
+  round_1_batch_ids?: AutoSubmitBatchMetadata[];
+  round_2_batch_ids?: AutoSubmitBatchMetadata[];
+  final_proof_batch_ids?: AutoSubmitBatchMetadata[];
 }
 
 export interface Round1BatchProof {
@@ -208,21 +215,12 @@ export enum AutoSubmitStatus {
   Failed = "Failed",
 }
 
-export type TaskMetadata = {
-  values: Record<TaskMetadataKeys, unknown>;
-};
-
 export interface PaginationResult<T> {
   data: T;
   total: number;
 }
 
-export enum ImageMetadataKeys {
-  ProvePaymentSrc = "ProvePaymentSrc",
-  AutoSubmitNetworks = "AutoSubmitNetworks",
-}
-
-export enum ImageMetadataValsProvePaymentSrc {
+export enum ProvePaymentSrc {
   Default = "Default",
   CreatorPay = "CreatorPay",
 }
@@ -235,8 +233,8 @@ export interface BaseAddImageParams {
   description_url: string;
   avator_url: string;
   circuit_size: number;
-  metadata_keys: ImageMetadataKeys[];
-  metadata_vals: string[];
+  prove_payment_src: ProvePaymentSrc;
+  auto_submit_network_ids: number[];
 }
 
 export interface WithInitialContext {
@@ -252,14 +250,7 @@ export interface WithoutInitialContext {
 export type AddImageParams = BaseAddImageParams &
   (WithInitialContext | WithoutInitialContext);
 
-export enum TaskMetadataKeys {
-  ProofSubmitMode = "ProofSubmitMode",
-  Round1BatchProofId = "Round1BatchProofId",
-  Round2BatchProofId = "Round2BatchProofId",
-  FinalBatchProofId = "FinalBatchProofId",
-}
-
-export enum TaskMetadataValsProofSubmitMode {
+export enum ProofSubmitMode {
   Manual = "Manual",
   Auto = "Auto",
 }
@@ -269,8 +260,8 @@ export interface BaseProvingParams {
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
-  metadata_keys: TaskMetadataKeys[];
-  metadata_vals: string[];
+  proof_submit_mode: ProofSubmitMode;
+  auto_submit_network_ids: number[];
 }
 
 export interface WithCustomInputContextType {
@@ -308,8 +299,8 @@ export interface BaseResetImageParams {
   md5: string;
   circuit_size: number;
   user_address: string;
-  metadata_keys: ImageMetadataKeys[];
-  metadata_vals: string[];
+  prove_payment_src: ProvePaymentSrc;
+  auto_submit_network_ids: number[];
 }
 
 export interface WithResetContext {
