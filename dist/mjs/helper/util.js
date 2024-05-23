@@ -254,6 +254,7 @@ export class ZkWasmUtil {
         for (const input of params.private_inputs) {
             message += input;
         }
+        message += params.proof_submit_mode;
         // Only handle input_context if selected input_context_type.Custom
         if (params.input_context_type === InputContextType.Custom &&
             params.input_context) {

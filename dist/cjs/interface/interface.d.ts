@@ -206,7 +206,6 @@ export interface BaseProvingParams {
     public_inputs: Array<string>;
     private_inputs: Array<string>;
     proof_submit_mode: ProofSubmitMode;
-    auto_submit_network_ids: number[];
 }
 export interface WithCustomInputContextType {
     input_context_type: InputContextType.Custom;
