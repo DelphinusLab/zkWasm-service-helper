@@ -111,6 +111,7 @@ let info: ProvingParams = {
   public_inputs: pb_inputs,
   private_inputs: priv_inputs,
   // Whether the proof will be batched and verified through the auto submit service or manually submitted.
+  // If the field is not specified, the default value will be ProofSubmitMode.Manual and the proof will not be batched.
   proof_submit_mode: proofSubmitMode,
 };
 
