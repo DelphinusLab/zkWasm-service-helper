@@ -25,7 +25,8 @@ import {
   AddImageParams,
   WithSignature,
   ZkWasmUtil,
-  zkWasmServiceHelper
+  zkWasmServiceHelper,
+  ProvePaymentSrc,
 } from "zkwasm-service-helper";
 
 const endpoint = ""https://rpc.zkwasmhub.com:8090";
@@ -44,6 +45,15 @@ let info: AddImageParams = {
         description_url: "",
         avator_url: "",
         circuit_size: circuitSize,
+
+        // Determines whether the credits will be deducted from the user supplying proof requests (default) or the user who created the image
+        // Currently Enum values are Default and CreatorPay
+        prove_payment_src: ProvePaymentSrc.Default,
+
+        // Networks which the auto submit service will batch and submit the proof to.
+        // Unsupported networks will be rejected.
+        // If empty array, Auto Submitted proofs will be rejected.
+        auto_submit_network_ids: [97, 1, 11155111]
       };
 
 // Optional Initial Context information
@@ -92,11 +102,16 @@ let helper = new ZkWasmServiceHelper(endpoint, "", "");
 let pb_inputs: Array<string> = helper.parseProvingTaskInput(public_inputs);
 let priv_inputs: Array<string> = helper.parseProvingTaskInput(private_inputs);
 
+// Use the helper Enum type to determine the proof submit mode
+let proofSubmitMode = ProofSubmitMode.Auto ? ProofSubmitMode.Auto : ProofSubmitMode.Manual;
+
 let info: ProvingParams = {
   user_address: user_addr.toLowerCase(),
   md5: image_md5,
   public_inputs: pb_inputs,
   private_inputs: priv_inputs,
+  // Whether the proof will be batched and verified through the auto submit service or manually submitted.
+  proof_submit_mode: proofSubmitMode,
 };
 
 // Context type for proof task. If none provided, will default to InputContextType.ImageCurrent in the server and use the image's current context
