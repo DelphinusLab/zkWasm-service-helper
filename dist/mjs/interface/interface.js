@@ -29,25 +29,13 @@ export var AutoSubmitStatus;
     AutoSubmitStatus["RegisteredProof"] = "RegisteredProof";
     AutoSubmitStatus["Failed"] = "Failed";
 })(AutoSubmitStatus || (AutoSubmitStatus = {}));
-export var ImageMetadataKeys;
-(function (ImageMetadataKeys) {
-    ImageMetadataKeys["ProvePaymentSrc"] = "ProvePaymentSrc";
-    ImageMetadataKeys["AutoSubmitNetworks"] = "AutoSubmitNetworks";
-})(ImageMetadataKeys || (ImageMetadataKeys = {}));
-export var ImageMetadataValsProvePaymentSrc;
-(function (ImageMetadataValsProvePaymentSrc) {
-    ImageMetadataValsProvePaymentSrc["Default"] = "Default";
-    ImageMetadataValsProvePaymentSrc["CreatorPay"] = "CreatorPay";
-})(ImageMetadataValsProvePaymentSrc || (ImageMetadataValsProvePaymentSrc = {}));
-export var TaskMetadataKeys;
-(function (TaskMetadataKeys) {
-    TaskMetadataKeys["ProofSubmitMode"] = "ProofSubmitMode";
-    TaskMetadataKeys["Round1BatchProofId"] = "Round1BatchProofId";
-    TaskMetadataKeys["Round2BatchProofId"] = "Round2BatchProofId";
-    TaskMetadataKeys["FinalBatchProofId"] = "FinalBatchProofId";
-})(TaskMetadataKeys || (TaskMetadataKeys = {}));
-export var TaskMetadataValsProofSubmitMode;
-(function (TaskMetadataValsProofSubmitMode) {
-    TaskMetadataValsProofSubmitMode["Manual"] = "Manual";
-    TaskMetadataValsProofSubmitMode["Auto"] = "Auto";
-})(TaskMetadataValsProofSubmitMode || (TaskMetadataValsProofSubmitMode = {}));
+export var ProvePaymentSrc;
+(function (ProvePaymentSrc) {
+    ProvePaymentSrc["Default"] = "Default";
+    ProvePaymentSrc["CreatorPay"] = "CreatorPay";
+})(ProvePaymentSrc || (ProvePaymentSrc = {}));
+export var ProofSubmitMode;
+(function (ProofSubmitMode) {
+    ProofSubmitMode["Manual"] = "Manual";
+    ProofSubmitMode["Auto"] = "Auto";
+})(ProofSubmitMode || (ProofSubmitMode = {}));
