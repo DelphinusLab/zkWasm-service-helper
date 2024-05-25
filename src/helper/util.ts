@@ -10,6 +10,7 @@ import {
   LogQuery,
   ContextHexString,
   InputContextType,
+  VerifyBatchProofParams,
 } from "../interface/interface.js";
 import { Contract, formatUnits, Signer, Wallet } from "ethers";
 import {
@@ -61,6 +62,83 @@ export class ZkWasmUtil {
         stateMutability: "view",
         type: "function",
         constant: true,
+      },
+    ],
+  };
+
+  static batch_verifier_contract = {
+    contract_name: "ProofTracker",
+    abi: [
+      {
+        type: "constructor",
+        inputs: [
+          {
+            internalType: "address",
+            name: "verifier_address",
+            type: "address",
+          },
+        ],
+      },
+      {
+        type: "function",
+        name: "check_verified_proof",
+        inputs: [
+          {
+            internalType: "uint256[]",
+            name: "membership_proof_index",
+            type: "uint256[]",
+          },
+          {
+            internalType: "uint256[]",
+            name: "verify_instance",
+            type: "uint256[]",
+          },
+          {
+            internalType: "uint256[][]",
+            name: "sibling_instances",
+            type: "uint256[][]",
+          },
+          {
+            internalType: "uint256[][]",
+            name: "target_instances",
+            type: "uint256[][]",
+          },
+        ],
+        outputs: [],
+        stateMutability: "view",
+      },
+      {
+        type: "function",
+        name: "register_proofs",
+        inputs: [
+          { internalType: "uint256[]", name: "proof", type: "uint256[]" },
+          {
+            internalType: "uint256[]",
+            name: "verify_instance",
+            type: "uint256[]",
+          },
+          { internalType: "uint256[]", name: "aux", type: "uint256[]" },
+          {
+            internalType: "uint256[][]",
+            name: "instances",
+            type: "uint256[][]",
+          },
+        ],
+        outputs: [],
+        stateMutability: "nonpayable",
+      },
+      {
+        type: "function",
+        name: "set_verifier",
+        inputs: [{ internalType: "address", name: "vaddr", type: "address" }],
+        outputs: [],
+        stateMutability: "nonpayable",
+      },
+      {
+        type: "event",
+        name: "ProofAck",
+        inputs: [{ name: "hash", type: "uint256", indexed: false }],
+        anonymous: false,
       },
     ],
   };
@@ -186,11 +264,15 @@ export class ZkWasmUtil {
     message += params.description_url;
     message += params.avator_url;
     message += params.circuit_size;
-    message += params.metadata_keys;
-    message += params.metadata_vals;
+
     // Additional params afterwards
     if (params.initial_context) {
       message += params.initial_context_md5;
+    }
+
+    message += params.prove_payment_src;
+    for (const chainId of params.auto_submit_network_ids) {
+      message += chainId;
     }
     return message;
   }
@@ -209,6 +291,8 @@ export class ZkWasmUtil {
     for (const input of params.private_inputs) {
       message += input;
     }
+
+    message += params.proof_submit_mode;
 
     // Only handle input_context if selected input_context_type.Custom
     if (
@@ -233,8 +317,12 @@ export class ZkWasmUtil {
     message += params.md5;
     message += params.circuit_size;
     message += params.user_address;
-    message += params.metadata_keys;
-    message += params.metadata_vals;
+
+    message += params.prove_payment_src;
+    for (const chainId of params.auto_submit_network_ids) {
+      message += chainId;
+    }
+
     if (params.reset_context) {
       message += params.reset_context_md5;
     }
@@ -335,24 +423,70 @@ export class ZkWasmUtil {
     params: VerifyProofParams
   ) {
     let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
-    let batchInstances = this.bytesToBigIntArray(params.batch_instances);
+    let verify_instance = this.bytesToBigIntArray(params.verify_instance);
     let aux = this.bytesToBigIntArray(params.aux);
-    let instances = this.bytesToBigIntArray(params.instances);
-    // let args = ZkWasmUtil.parseArgs(params.instances).map((x) =>
-    //   x.toString(10)
-    // );
-    // console.log("args are:", args);
-    // if (args.length == 0) {
-    //   args = ["0x0"];
-    // }
-    // // convert to BigInt array
-    // let bigIntArgs = args.map((x) => BigInt(x));
+    let instances: Array<BigInt[]> = [];
+    params.instances.forEach((instance) => {
+      instances.push(this.bytesToBigIntArray(instance));
+    });
 
     let result = await verify_contract.verify.send(
       aggregate_proof,
-      batchInstances,
+      verify_instance,
       aux,
-      [instances]
+      instances
+    );
+    return result;
+  }
+
+  static composeBatchVerifierContract(
+    signer: DelphinusBrowserConnector | DelphinusWalletConnector,
+    verifier_addr: string
+  ) {
+    return signer.getContractWithSigner(
+      verifier_addr,
+      this.batch_verifier_contract.abi
+    );
+  }
+
+  static async verifyBatchedProof(
+    batch_verifier_contract: Contract,
+    params: VerifyBatchProofParams
+  ) {
+    let membership_proof_index = params.membership_proof_index;
+    let verify_instance = this.bytesToBigIntArray(params.verify_instance);
+
+    let sibling_instances: Array<BigInt> = [];
+
+    params.sibling_instances.forEach((instance) => {
+      //
+      sibling_instances.push(this.bytesToBigIntArray(instance)[0]);
+    });
+
+    let target_instances: Array<BigInt[]> = [];
+    params.target_instances.forEach((instance) => {
+      target_instances.push(this.bytesToBigIntArray(instance));
+    });
+
+    let round_1_shadow_instance = this.bytesToBigIntArray(
+      params.round_1_shadow_instance
+    );
+
+    // Add the round 1 shadow instance to the flattened sibling instances as this is the expected input format
+    // for the contract. (12 round 1 target instances + 1 round 1 shadow instance)
+    sibling_instances.push(round_1_shadow_instance[0]);
+
+    console.log("Verify Batch Proof Inputs");
+    console.log("membership_proof_index: ", membership_proof_index);
+    console.log("verify_instance: ", verify_instance);
+    console.log("sibling_instances: ", [sibling_instances]);
+    console.log("target_instances: ", target_instances);
+
+    let result = await batch_verifier_contract.check_verified_proof.send(
+      membership_proof_index,
+      verify_instance,
+      [sibling_instances],
+      target_instances
     );
     return result;
   }

@@ -126,6 +126,27 @@ export class ZkWasmServiceHelper {
         }
         return tasks;
     }
+    async queryRound1BatchProofs(query) {
+        let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading proof data!");
+        }
+        return proofData;
+    }
+    async queryRound2BatchProofs(query) {
+        let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_2_BATCH, JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading proof data!");
+        }
+        return proofData;
+    }
+    async queryFinalBatchProofs(query) {
+        let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.FINAL_BATCH, JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading proof data!");
+        }
+        return proofData;
+    }
     async queryLogs(query) {
         let logs = await this.sendRequestWithSignature("GET", TaskEndpoint.LOGS, query);
         if (this.endpoint.enable_logs) {
@@ -232,4 +253,7 @@ export var TaskEndpoint;
     TaskEndpoint["PAY"] = "/pay";
     TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
+    TaskEndpoint["ROUND_1_BATCH"] = "/round1_batch_proofs";
+    TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
+    TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
 })(TaskEndpoint || (TaskEndpoint = {}));

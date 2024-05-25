@@ -20,6 +20,7 @@ export interface Task {
     proof: Uint8Array;
     aux: Uint8Array;
     external_host_table: Uint8Array;
+    shadow_instances: Uint8Array;
     batch_instances: Uint8Array;
     instances: Uint8Array;
     public_inputs: Array<string>;
@@ -36,6 +37,110 @@ export interface Task {
     internal_message?: string;
     task_verification_data: TaskVerificationData;
     debug_logs?: string;
+    proof_submit_mode?: ProofSubmitMode;
+    batch_proof_data?: BatchProofData;
+    auto_submit_status?: AutoSubmitStatus;
+}
+export interface AutoSubmitBatchMetadata {
+    chain_id: number;
+    id: string;
+}
+export interface BatchProofData {
+    round_1_batch_ids?: AutoSubmitBatchMetadata[];
+    round_2_batch_ids?: AutoSubmitBatchMetadata[];
+    final_proof_batch_ids?: AutoSubmitBatchMetadata[];
+}
+export interface Round1BatchProof {
+    _id?: any;
+    task_id: string;
+    base_proof_circuit_size: number;
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batch_started?: string;
+    batch_finished?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    auto_submit_network_chain_id: number;
+    status: Round1BatchProofStatus;
+}
+export interface StaticFileVerificationData {
+    static_file_checksum: Uint8Array;
+}
+export declare enum Round1BatchProofStatus {
+    Pending = "Pending",
+    Batched = "Batched",
+    Failed = "Failed"
+}
+export interface Round2BatchProof {
+    _id?: any;
+    round_1_ids: string[];
+    task_ids: string[];
+    target_instances: number[][];
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batch_started?: string;
+    batch_finished?: string;
+    internal_message?: string;
+    auto_submit_network_chain_id: number;
+    verifier_contracts: VerifierContracts;
+    static_files_verification_data: StaticFileVerificationData;
+    status: Round2BatchProofStatus;
+}
+export declare enum Round2BatchProofStatus {
+    Pending = "Pending",
+    Batched = "Batched",
+    Failed = "Failed"
+}
+export interface FinalBatchProof {
+    _id?: any;
+    round_2_ids: string[];
+    task_ids: string[];
+    target_instances: number[][];
+    proof: number[];
+    batch_instances: number[];
+    shadow_instances?: number[];
+    aux: number[];
+    batched_time?: string;
+    internal_message?: string;
+    static_files_verification_data: StaticFileVerificationData;
+    auto_submit_network_chain_id: number;
+    verifier_contracts: VerifierContracts;
+    registered_tx_hash: string | null;
+    status: FinalProofStatus;
+}
+export declare enum FinalProofStatus {
+    ProofNotRegistered = "ProofNotRegistered",
+    ProofRegistered = "ProofRegistered"
+}
+export type PaginatedQuery<T> = T & PaginationQuery;
+export interface Round1BatchProofQuery {
+    id?: string;
+    task_id?: string;
+    status?: Round1BatchProofStatus;
+    circuit_size?: number;
+    chain_id?: number;
+}
+export interface Round2BatchProofQuery {
+    id?: string;
+    task_id?: string;
+    status?: Round2BatchProofStatus;
+    circuit_size?: number;
+    chain_id?: number;
+}
+export interface FinalBatchProofQuery {
+    id?: string;
+    round_2_id?: string;
+    task_id?: string;
+    status?: FinalProofStatus;
+    chain_id?: number;
+}
+export interface PaginationQuery {
+    total?: number;
+    start?: number;
 }
 export interface TaskVerificationData {
     static_file_checksum: Uint8Array;
@@ -44,6 +149,7 @@ export interface TaskVerificationData {
 export interface VerifierContracts {
     chain_id: number;
     aggregator_verifier: string;
+    batch_verifier: string;
     circuit_size: number;
 }
 export type TaskType = "Setup" | "Prove" | "Reset";
@@ -55,14 +161,18 @@ export type TaskType = "Setup" | "Prove" | "Reset";
  **/
 export type ImageStatus = "Received" | "Initialized" | "Verified";
 export type TaskStatus = "Pending" | "Processing" | "DryRunFailed" | "Done" | "Fail" | "Stale";
+export declare enum AutoSubmitStatus {
+    Round1 = "Round1",
+    Round2 = "Round2",
+    Batched = "Batched",
+    RegisteredProof = "RegisteredProof",
+    Failed = "Failed"
+}
 export interface PaginationResult<T> {
     data: T;
     total: number;
 }
-export declare enum ImageMetadataKeys {
-    ProvePaymentSrc = "ProvePaymentSrc"
-}
-export declare enum ImageMetadataValsProvePaymentSrc {
+export declare enum ProvePaymentSrc {
     Default = "Default",
     CreatorPay = "CreatorPay"
 }
@@ -74,8 +184,8 @@ export interface BaseAddImageParams {
     description_url: string;
     avator_url: string;
     circuit_size: number;
-    metadata_keys: ImageMetadataKeys[];
-    metadata_vals: string[];
+    prove_payment_src: ProvePaymentSrc;
+    auto_submit_network_ids: number[];
 }
 export interface WithInitialContext {
     initial_context: unknown;
@@ -86,11 +196,16 @@ export interface WithoutInitialContext {
     initial_context_md5?: never;
 }
 export type AddImageParams = BaseAddImageParams & (WithInitialContext | WithoutInitialContext);
+export declare enum ProofSubmitMode {
+    Manual = "Manual",
+    Auto = "Auto"
+}
 export interface BaseProvingParams {
     user_address: string;
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
+    proof_submit_mode: ProofSubmitMode;
 }
 export interface WithCustomInputContextType {
     input_context_type: InputContextType.Custom;
@@ -117,8 +232,8 @@ export interface BaseResetImageParams {
     md5: string;
     circuit_size: number;
     user_address: string;
-    metadata_keys: ImageMetadataKeys[];
-    metadata_vals: string[];
+    prove_payment_src: ProvePaymentSrc;
+    auto_submit_network_ids: number[];
 }
 export interface WithResetContext {
     reset_context: unknown;
@@ -157,9 +272,16 @@ export interface QueryParams {
 }
 export interface VerifyProofParams {
     aggregate_proof: Uint8Array;
-    batch_instances: Uint8Array;
+    verify_instance: Uint8Array;
     aux: Uint8Array;
-    instances: Uint8Array;
+    instances: Array<Uint8Array>;
+}
+export interface VerifyBatchProofParams {
+    membership_proof_index: Array<BigInt>;
+    verify_instance: Uint8Array;
+    sibling_instances: Array<Uint8Array>;
+    round_1_shadow_instance: Uint8Array;
+    target_instances: Array<Uint8Array>;
 }
 export interface LogQuery {
     id: string;
@@ -177,6 +299,7 @@ export interface AppConfig {
     task_fee_list: {
         setup_fee: string;
         prove_fee: string;
+        auto_submit_prove_fee_per_network: string;
     };
     chain_info_list: Array<ChainInfo>;
     latest_server_checksum: Uint8Array;
@@ -184,6 +307,7 @@ export interface AppConfig {
     topup_token_data: TokenData;
     deployments: ContractDeployments[];
     subscription_plans: SubscriptionParams[];
+    supported_auto_submit_network_ids: number[];
 }
 export interface ContractDeployments {
     chain_id: number;
@@ -192,6 +316,7 @@ export interface ContractDeployments {
     aggregator_config_address: string;
     aggregator_verifier_steps: string[];
     aggregator_verifier: string;
+    batch_verifier: string;
     static_file_checksum: Uint8Array;
 }
 export interface ChainInfo {
@@ -226,11 +351,8 @@ export interface Image {
     initial_context?: Uint8Array;
     status: string;
     checksum: ImageChecksum | null;
-    metadata: {
-        values: {
-            [key: string]: string;
-        };
-    };
+    prove_payment_src: ProvePaymentSrc;
+    auto_submit_network_ids: number[];
 }
 export interface ImageChecksum {
     x: Uint8Array;
