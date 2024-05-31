@@ -25,7 +25,7 @@ import {
   AddImageParams,
   WithSignature,
   ZkWasmUtil,
-  zkWasmServiceHelper,
+  ZkWasmServiceHelper,
   ProvePaymentSrc,
 } from "zkwasm-service-helper";
 
@@ -89,7 +89,7 @@ import {
   ProvingParams,
   WithSignature,
   ZkWasmUtil,
-  zkWasmServiceHelper
+  ZkWasmServiceHelper
 } from "zkwasm-service-helper";
 
 const endpoint = ""https://rpc.zkwasmhub.com:8090";
