@@ -42,7 +42,8 @@ export interface Task {
     auto_submit_status?: AutoSubmitStatus;
 }
 export interface ReducedTask {
-    id: any;
+    _id: any;
+    user_address: string;
     md5: string;
     task_type: string;
     status: TaskStatus;

@@ -46,7 +46,8 @@ export interface Task {
 }
 
 export interface ReducedTask {
-  id: any;
+  _id: any;
+  user_address: string;
   md5: string;
   task_type: string;
   status: TaskStatus;
