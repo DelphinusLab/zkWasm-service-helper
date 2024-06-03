@@ -126,6 +126,50 @@ export class ZkWasmServiceHelper {
         }
         return tasks;
     }
+    async loadTaskList(query) {
+        let headers = { "Content-Type": "application/json" };
+        let queryJson = JSON.parse("{}");
+        // Validate query params
+        if (query.start != null && query.start < 0) {
+            throw new Error("start must be positive");
+        }
+        if (query.total != null && query.total <= 0) {
+            throw new Error("total must be positive");
+        }
+        if (query.id != null && query.id != "") {
+            // Validate it is a hex string (mongodb objectid)
+            if (!ZkWasmUtil.isHexString(query.id)) {
+                throw new Error("id must be a hex string or ");
+            }
+        }
+        if (query.user_address != null && query.user_address != "") {
+            // Validate it is a hex string (ethereum address)
+            if (!ethers.isAddress(query.user_address)) {
+                throw new Error("user_address must be a valid ethereum address");
+            }
+        }
+        if (query.md5 != null && query.md5 != "") {
+            // Validate it is a hex string (md5)
+            if (!ZkWasmUtil.isHexString(query.md5)) {
+                throw new Error("md5 must be a hex string");
+            }
+        }
+        //build query JSON
+        let objKeys = Object.keys(query);
+        objKeys.forEach((key) => {
+            if (query[key] != "" && query[key] != null)
+                queryJson[key] = query[key];
+        });
+        if (this.endpoint.enable_logs) {
+            console.log("params:", query);
+            console.log("json", queryJson);
+        }
+        let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+        if (this.endpoint.enable_logs) {
+            console.log("loading task board!");
+        }
+        return tasks;
+    }
     async queryRound1BatchProofs(query) {
         let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
