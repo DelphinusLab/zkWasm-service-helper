@@ -45,6 +45,19 @@ export interface Task {
   auto_submit_status?: AutoSubmitStatus;
 }
 
+export interface ConciseTask {
+  _id: any;
+  user_address: string;
+  md5: string;
+  task_type: string;
+  status: TaskStatus;
+  submit_time: string;
+  process_started?: string;
+  process_finished?: string;
+  proof_submit_mode?: ProofSubmitMode;
+  auto_submit_status?: AutoSubmitStatus;
+}
+
 export interface AutoSubmitBatchMetadata {
   chain_id: number;
   id: string;

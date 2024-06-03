@@ -1,5 +1,6 @@
 import {
   Task,
+  ConciseTask,
   ProvingParams,
   DeployParams,
   QueryParams,
@@ -74,6 +75,7 @@ export {
 
 export type {
   Task,
+  ConciseTask,
   ProvingParams,
   DeployParams,
   QueryParams,
