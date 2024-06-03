@@ -41,7 +41,7 @@ export interface Task {
     batch_proof_data?: BatchProofData;
     auto_submit_status?: AutoSubmitStatus;
 }
-export interface ReducedTask {
+export interface ConciseTask {
     _id: any;
     user_address: string;
     md5: string;

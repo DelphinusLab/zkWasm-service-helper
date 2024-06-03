@@ -30,7 +30,7 @@ import {
   Round1BatchProof,
   FinalBatchProofQuery,
   FinalBatchProof,
-  ReducedTask,
+  ConciseTask,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -210,7 +210,7 @@ export class ZkWasmServiceHelper {
 
   async loadTaskList(
     query: QueryParams
-  ): Promise<PaginationResult<ReducedTask[]>> {
+  ): Promise<PaginationResult<ConciseTask[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
