@@ -447,6 +447,31 @@ export class ZkWasmUtil {
             reader.readAsArrayBuffer(file);
         });
     }
+    // Convert Bytes into a temporary file (Buffer for nodejs), as it will be submitted through multipart to a server, file does not need to be saved
+    static async bytesToTempFile(data) {
+        this.validateContextBytes(data);
+        if (typeof window === "undefined") {
+            // Node.js environment
+            const { Buffer } = await import("buffer");
+            const buffer = Buffer.from(data);
+            return buffer;
+        }
+        else {
+            // Browser environment
+            throw new Error("File creation in the browser is not supported by this function.");
+        }
+    }
+    static async bytesToFile(data) {
+        this.validateContextBytes(data);
+        if (typeof window === "undefined") {
+            throw new Error("File creation in NodeJS env is not supported by this function.");
+        }
+        else {
+            // Browser environment
+            const blob = new Blob([data]);
+            return new File([blob], "context.bin");
+        }
+    }
     static MAX_CONTEXT_SIZE = 4096;
     // Validate bytes are a multiple of 8 bytes (64 bits) and length less than 4KB
     static validateContextBytes(data) {
