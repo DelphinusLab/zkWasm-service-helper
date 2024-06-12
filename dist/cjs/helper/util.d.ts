@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import BN from "bn.js";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, LogQuery, ContextHexString, VerifyBatchProofParams } from "../interface/interface.js";
 import { Contract, Signer } from "ethers";
@@ -98,7 +99,7 @@ export declare class ZkWasmUtil {
     static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
     static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
     static browserLoadContextFileAsBytes(file: File): Promise<Uint8Array>;
-    static bytesToTempFile(data: Uint8Array): Blob;
+    static bytesToTempFile(data: Uint8Array): Promise<Buffer>;
     static MAX_CONTEXT_SIZE: number;
     static validateContextBytes(data: Uint8Array): boolean;
 }

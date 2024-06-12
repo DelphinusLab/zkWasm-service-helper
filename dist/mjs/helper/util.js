@@ -448,20 +448,18 @@ export class ZkWasmUtil {
         });
     }
     // Convert Bytes into a temporary file, as it will be submitted through multipart to a server, file does not need to be saved
-    static bytesToTempFile(data) {
+    static async bytesToTempFile(data) {
         this.validateContextBytes(data);
-        let blob;
-        if (typeof Blob === "undefined") {
+        if (typeof window === "undefined") {
             // Node.js environment
-            const { Blob } = require("buffer");
+            const { Buffer } = await import("buffer");
             const buffer = Buffer.from(data);
-            blob = new Blob([buffer]);
+            return buffer;
         }
         else {
             // Browser environment
-            blob = new Blob([data]);
+            throw new Error("File creation in the browser is not supported by this function.");
         }
-        return blob;
     }
     static MAX_CONTEXT_SIZE = 4096;
     // Validate bytes are a multiple of 8 bytes (64 bits) and length less than 4KB

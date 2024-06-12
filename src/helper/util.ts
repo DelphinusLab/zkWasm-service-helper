@@ -568,21 +568,20 @@ export class ZkWasmUtil {
   }
 
   // Convert Bytes into a temporary file, as it will be submitted through multipart to a server, file does not need to be saved
-  static bytesToTempFile(data: Uint8Array): Blob {
+  static async bytesToTempFile(data: Uint8Array): Promise<Buffer> {
     this.validateContextBytes(data);
-    let blob: Blob;
 
-    if (typeof Blob === "undefined") {
+    if (typeof window === "undefined") {
       // Node.js environment
-      const { Blob } = require("buffer");
+      const { Buffer } = await import("buffer");
       const buffer = Buffer.from(data);
-      blob = new Blob([buffer]);
+      return buffer;
     } else {
       // Browser environment
-      blob = new Blob([data]);
+      throw new Error(
+        "File creation in the browser is not supported by this function."
+      );
     }
-
-    return blob;
   }
 
   static MAX_CONTEXT_SIZE = 4096;
