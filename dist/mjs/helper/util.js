@@ -447,6 +447,12 @@ export class ZkWasmUtil {
             reader.readAsArrayBuffer(file);
         });
     }
+    // Convert Bytes into a temporary file, as it will be submitted through multipart to a server, file does not need to be saved
+    static bytesToTempFile(data) {
+        this.validateContextBytes(data);
+        let blob = new Blob([data]);
+        return blob;
+    }
     static MAX_CONTEXT_SIZE = 4096;
     // Validate bytes are a multiple of 8 bytes (64 bits) and length less than 4KB
     static validateContextBytes(data) {
