@@ -376,7 +376,7 @@ class ZkWasmUtil {
             });
         });
     }
-    // Convert Bytes into a temporary file, as it will be submitted through multipart to a server, file does not need to be saved
+    // Convert Bytes into a temporary file (Buffer for nodejs), as it will be submitted through multipart to a server, file does not need to be saved
     static bytesToTempFile(data) {
         return __awaiter(this, void 0, void 0, function* () {
             this.validateContextBytes(data);
@@ -389,6 +389,19 @@ class ZkWasmUtil {
             else {
                 // Browser environment
                 throw new Error("File creation in the browser is not supported by this function.");
+            }
+        });
+    }
+    static bytesToFile(data) {
+        return __awaiter(this, void 0, void 0, function* () {
+            this.validateContextBytes(data);
+            if (typeof window === "undefined") {
+                throw new Error("File creation in NodeJS env is not supported by this function.");
+            }
+            else {
+                // Browser environment
+                const blob = new Blob([data]);
+                return new File([blob], "context.bin");
             }
         });
     }

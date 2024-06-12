@@ -89,65 +89,85 @@ import {
   ProvingParams,
   WithSignature,
   ZkWasmUtil,
-  ZkWasmServiceHelper
+  ZkWasmServiceHelper,
+  ProofSubmitMode,
+  InputContextType,
+  WithCustomInputContextType,
 } from "zkwasm-service-helper";
 
-const endpoint = ""https://rpc.zkwasmhub.com:8090";
-const image_md5 = "xxxx";
-const public_inputs = "0x22:i64 0x21:i64";
-const private_inputs = "";
-const user_addr = "0xaaaaaa";
+async function AddNewProofTask() {
+  const endpoint = "https://rpc.zkwasmhub.com:8090";
+  const image_md5 = "xxxxx";
+  const public_inputs = "0x22:i64 0x21:i64";
+  const private_inputs = "";
+  const user_addr = "";
+  const privateKey = "";
 
-let helper = new ZkWasmServiceHelper(endpoint, "", "");
-let pb_inputs: Array<string> = helper.parseProvingTaskInput(public_inputs);
-let priv_inputs: Array<string> = helper.parseProvingTaskInput(private_inputs);
+  let helper = new ZkWasmServiceHelper(endpoint, "", "");
+  let pb_inputs: Array<string> = ZkWasmUtil.validateInputs(public_inputs);
+  let priv_inputs: Array<string> = ZkWasmUtil.validateInputs(private_inputs);
 
-// Use the helper Enum type to determine the proof submit mode
-let proofSubmitMode = ProofSubmitMode.Auto ? ProofSubmitMode.Auto : ProofSubmitMode.Manual;
+  // Use the helper Enum type to determine the proof submit mode
+  let proofSubmitMode = ProofSubmitMode.Auto
+    ? ProofSubmitMode.Auto
+    : ProofSubmitMode.Manual;
 
-let info: ProvingParams = {
-  user_address: user_addr.toLowerCase(),
-  md5: image_md5,
-  public_inputs: pb_inputs,
-  private_inputs: priv_inputs,
-  // Whether the proof will be batched and verified through the auto submit service or manually submitted.
-  // If the field is not specified, the default value will be ProofSubmitMode.Manual and the proof will not be batched.
-  proof_submit_mode: proofSubmitMode,
-};
-
-// Context type for proof task. If none provided, will default to InputContextType.ImageCurrent in the server and use the image's current context
-let selectedInputContextType = InputContextType.ImageCurrent;
-
-// For Custom Context, upload a binary file first containing the context.
-if (selectedInputContextType === InputContextType.Custom) {
-
-  let contextFile = await ZkWasmUtil.loadContexFileAsBytes("<YourFilePath>");
-
-  let context_info: WithCustomInputContextType = {
-    input_context: contextFile,
-    input_context_md5: ZkWasmUtil.convertToMd5(contextFile),
-    input_context_type: selectedInputContextType,
+  let info: ProvingParams = {
+    user_address: user_addr.toLowerCase(),
+    md5: image_md5,
+    public_inputs: pb_inputs,
+    private_inputs: priv_inputs,
+    // Whether the proof will be batched and verified through the auto submit service or manually submitted.
+    // If the field is not specified, the default value will be ProofSubmitMode.Manual and the proof will not be batched.
+    proof_submit_mode: proofSubmitMode,
   };
-  info = { ...info, ...context_info };
-} else {
-  info = { ...info, input_context_type: selectedInputContextType };
+
+  // Context type for proof task. If none provided, will default to InputContextType.ImageCurrent in the server and use the image's current context
+  let selectedInputContextType = InputContextType.Custom;
+
+  // For Custom Context, upload a binary file first containing the context.
+  if (selectedInputContextType === InputContextType.Custom) {
+    // Load bytes into Tempfile/Buffer type - Server side example with NodeJS
+    const contextBytes = new Uint8Array(64);
+    contextBytes.fill(1);
+    ZkWasmUtil.validateContextBytes(contextBytes);
+    let bytesFile = await ZkWasmUtil.bytesToTempFile(contextBytes);
+    let context_info: WithCustomInputContextType = {
+      input_context: bytesFile,
+      input_context_md5: ZkWasmUtil.convertToMd5(contextBytes),
+      input_context_type: selectedInputContextType,
+    };
+
+    // // LOADING AS FILE DIRECTLY - Browser side example
+    // let contextFile = await ZkWasmUtil.loadContexFileAsBytes("<YourFilePath>");
+
+    // let context_info: WithCustomInputContextType = {
+    //   input_context: contextFile,
+    //   input_context_md5: ZkWasmUtil.convertToMd5(contextFile),
+    //   input_context_type: selectedInputContextType,
+    // };
+    info = { ...info, ...context_info };
+  } else {
+    info = { ...info, input_context_type: selectedInputContextType };
+  }
+  let msgString = ZkWasmUtil.createProvingSignMessage(info);
+
+  let signature: string;
+  try {
+    signature = await ZkWasmUtil.signMessage(msgString, privateKey);
+  } catch (e: unknown) {
+    console.log("error signing message", e);
+    return;
+  }
+
+  let task: WithSignature<ProvingParams> = {
+    ...info,
+    signature: signature,
+  };
+
+  let response = await helper.addProvingTask(task);
+  console.log(response);
 }
-let msgString = ZkWasmUtil.createProvingSignMessage(info);
-
-let signature: string;
-try {
-  signature = await ZkWasmUtil.signMessage(msgString, priv);
-} catch (e: unknown) {
-  console.log("error signing message", e);
-  return;
-}
-
-let task: WithSignature<ProvingParams> = {
-  ...info,
-  signature: signature,
-};
-
-let response = await helper.addProvingTask(task);
 ```
 
 ### Verifying a proof
