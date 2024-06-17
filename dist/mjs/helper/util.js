@@ -2,7 +2,10 @@ import BN from "bn.js";
 import { Md5 } from "ts-md5";
 import { InputContextType, } from "../interface/interface.js";
 import { Contract, formatUnits, Wallet } from "ethers";
-import ERC20 from "../abi/ERC20.json";
+//import ERC20 from "../abi/ERC20.json";
+import fs from 'fs';
+const ERC20String = fs.readFileSync('../abi/ERC20.json', 'utf-8');
+const ERC20 = JSON.parse(ERC20String);
 export class ZkWasmUtil {
     static contract_abi = {
         contractName: "AggregatorVerifier",

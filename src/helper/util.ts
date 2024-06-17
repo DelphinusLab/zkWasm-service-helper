@@ -17,7 +17,10 @@ import {
   DelphinusWalletConnector,
   DelphinusBrowserConnector,
 } from "web3subscriber/src/provider.js";
-import ERC20 from "../abi/ERC20.json";
+//import ERC20 from "../abi/ERC20.json";
+import fs from 'fs';
+const ERC20String = fs.readFileSync('../abi/ERC20.json', 'utf-8');
+const ERC20 = JSON.parse(ERC20String);
 
 export class ZkWasmUtil {
   static contract_abi = {
