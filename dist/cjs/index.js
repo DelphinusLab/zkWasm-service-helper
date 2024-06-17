@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProvePaymentSrc = exports.ProofSubmitMode = exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.AutoSubmitStatus = exports.InputContextType = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
+exports.ProvePaymentSrc = exports.ProofSubmitMode = exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.AutoSubmitStatus = exports.InputContextType = exports.ERC20Lib = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
 const interface_js_1 = require("./interface/interface.js");
 Object.defineProperty(exports, "InputContextType", { enumerable: true, get: function () { return interface_js_1.InputContextType; } });
 Object.defineProperty(exports, "Round1BatchProofStatus", { enumerable: true, get: function () { return interface_js_1.Round1BatchProofStatus; } });
@@ -15,3 +15,5 @@ const endpoint_js_1 = require("./helper/endpoint.js");
 Object.defineProperty(exports, "ZkWasmServiceEndpoint", { enumerable: true, get: function () { return endpoint_js_1.ZkWasmServiceEndpoint; } });
 const task_js_1 = require("./helper/task.js");
 Object.defineProperty(exports, "ZkWasmServiceHelper", { enumerable: true, get: function () { return task_js_1.ZkWasmServiceHelper; } });
+const ERC20_js_1 = require("./abi/ERC20.js");
+Object.defineProperty(exports, "ERC20Lib", { enumerable: true, get: function () { return ERC20_js_1.ERC20Lib; } });
