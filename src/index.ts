@@ -59,7 +59,7 @@ import {
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
 import { ZkWasmServiceHelper } from "./helper/task.js";
-import { ERC20Lib } from "abi/ERC20.js";
+import { ERC20Lib } from "./abi/ERC20.js";
 
 export {
   ZkWasmServiceEndpoint,

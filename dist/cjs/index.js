@@ -15,5 +15,5 @@ const endpoint_js_1 = require("./helper/endpoint.js");
 Object.defineProperty(exports, "ZkWasmServiceEndpoint", { enumerable: true, get: function () { return endpoint_js_1.ZkWasmServiceEndpoint; } });
 const task_js_1 = require("./helper/task.js");
 Object.defineProperty(exports, "ZkWasmServiceHelper", { enumerable: true, get: function () { return task_js_1.ZkWasmServiceHelper; } });
-const ERC20_js_1 = require("abi/ERC20.js");
+const ERC20_js_1 = require("./abi/ERC20.js");
 Object.defineProperty(exports, "ERC20Lib", { enumerable: true, get: function () { return ERC20_js_1.ERC20Lib; } });
