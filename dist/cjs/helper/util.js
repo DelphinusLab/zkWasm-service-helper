@@ -40,10 +40,8 @@ const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
 const interface_js_1 = require("../interface/interface.js");
 const ethers_1 = require("ethers");
-//import ERC20 from "../abi/ERC20.json";
-const fs_1 = __importDefault(require("fs"));
-const ERC20String = fs_1.default.readFileSync('../abi/ERC20.json', 'utf-8');
-const ERC20 = JSON.parse(ERC20String);
+//import ERC20 from "../abi/ERC20";
+const ERC20_js_1 = require("../abi/ERC20.js");
 class ZkWasmUtil {
     static hexToBNs(hexString) {
         let bytes = new Array(Math.ceil(hexString.length / 16));
@@ -317,7 +315,7 @@ class ZkWasmUtil {
         });
     }
     static ERC20Contract(contractAddress, signer) {
-        return new ethers_1.Contract(contractAddress, ERC20, signer);
+        return new ethers_1.Contract(contractAddress, ERC20_js_1.ERC20Lib.ERC20, signer);
     }
     static bytesToJSONString(data) {
         const bufferView = new Uint8Array(data);
