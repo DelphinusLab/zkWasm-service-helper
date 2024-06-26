@@ -54,6 +54,7 @@ import {
   AutoSubmitBatchMetadata,
   ProofSubmitMode,
   ProvePaymentSrc,
+  NodeStatistics,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -124,4 +125,5 @@ export type {
   PaginationQuery,
   VerifyBatchProofParams,
   AutoSubmitBatchMetadata,
+  NodeStatistics,
 };
