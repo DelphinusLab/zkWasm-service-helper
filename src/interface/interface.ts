@@ -18,6 +18,12 @@ export interface NodeStatistics {
   };
 }
 
+export interface NodeStatisticsQueryParams {
+  address?: string;
+  start?: number;
+  total?: number;
+}
+
 export enum InputContextType {
   Custom = "Custom",
   ImageInitial = "ImageInitial",

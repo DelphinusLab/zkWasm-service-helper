@@ -16,6 +16,11 @@ export interface NodeStatistics {
         last_successful_proof_processing_time: number;
     };
 }
+export interface NodeStatisticsQueryParams {
+    address?: string;
+    start?: number;
+    total?: number;
+}
 export declare enum InputContextType {
     Custom = "Custom",
     ImageInitial = "ImageInitial",
