@@ -161,7 +161,7 @@ export class ZkWasmServiceHelper {
 
   async queryNodeStatistics(
     query: NodeStatisticsQueryParams
-  ): Promise<NodeStatistics> {
+  ): Promise<NodeStatistics[]> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse(JSON.stringify(query));
 
@@ -174,7 +174,7 @@ export class ZkWasmServiceHelper {
       console.log("loading node statistics");
     }
 
-    return res as NodeStatistics;
+    return res as NodeStatistics[];
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
