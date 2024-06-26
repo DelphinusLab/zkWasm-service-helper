@@ -167,7 +167,7 @@ export class ZkWasmServiceHelper {
 
     let res = await this.endpoint.invokeRequest(
       "GET",
-      `/statistics`,
+      `/node_statistics`,
       queryJson
     );
     if (this.endpoint.enable_logs) {

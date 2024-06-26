@@ -127,7 +127,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse(JSON.stringify(query));
-            let res = yield this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
+            let res = yield this.endpoint.invokeRequest("GET", `/node_statistics`, queryJson);
             if (this.endpoint.enable_logs) {
                 console.log("loading node statistics");
             }
