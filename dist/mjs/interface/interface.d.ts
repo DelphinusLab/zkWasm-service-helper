@@ -4,6 +4,23 @@ export interface Statistics {
     totalTasks: number;
     totalDeployed: number;
 }
+export interface NodeStatistics {
+    address: string;
+    statistics: {
+        successful_tasks: number;
+        failed_tasks: number;
+        total_tasks: number;
+        timed_out_count: number;
+        last_timed_out: string;
+        last_successful_proof_task_time: string;
+        last_successful_proof_processing_time: number;
+    };
+}
+export interface NodeStatisticsQueryParams {
+    address?: string;
+    start?: number;
+    total?: number;
+}
 export declare enum InputContextType {
     Custom = "Custom",
     ImageInitial = "ImageInitial",

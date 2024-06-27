@@ -1,4 +1,4 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, Round1BatchProofQuery, Round2BatchProofQuery, Round2BatchProof, Round1BatchProof, FinalBatchProofQuery, FinalBatchProof, ConciseTask } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, Round1BatchProofQuery, Round2BatchProofQuery, Round2BatchProof, Round1BatchProof, FinalBatchProofQuery, FinalBatchProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -11,6 +11,7 @@ export declare class ZkWasmServiceHelper {
     queryDepositHistory(history_query: TxHistoryQueryParams): Promise<PaginationResult<ERC20DepositInfo[]>>;
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
+    queryNodeStatistics(query: NodeStatisticsQueryParams): Promise<NodeStatistics[]>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     loadTaskList(query: QueryParams): Promise<PaginationResult<ConciseTask[]>>;
     queryRound1BatchProofs(query: PaginatedQuery<Round1BatchProofQuery>): Promise<PaginationResult<Round1BatchProof[]>>;

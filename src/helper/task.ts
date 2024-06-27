@@ -31,6 +31,8 @@ import {
   FinalBatchProofQuery,
   FinalBatchProof,
   ConciseTask,
+  NodeStatistics,
+  NodeStatisticsQueryParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -155,6 +157,24 @@ export class ZkWasmServiceHelper {
       totalTasks: st.total_tasks,
       totalDeployed: st.total_deployed,
     };
+  }
+
+  async queryNodeStatistics(
+    query: NodeStatisticsQueryParams
+  ): Promise<NodeStatistics[]> {
+    let headers = { "Content-Type": "application/json" };
+    let queryJson = JSON.parse(JSON.stringify(query));
+
+    let res = await this.endpoint.invokeRequest(
+      "GET",
+      `/node_statistics`,
+      queryJson
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading node statistics");
+    }
+
+    return res as NodeStatistics[];
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
