@@ -266,14 +266,14 @@ export class ZkWasmUtil {
     message += params.avator_url;
     message += params.circuit_size;
 
-    // Additional params afterwards
-    if (params.initial_context) {
-      message += params.initial_context_md5;
-    }
-
     message += params.prove_payment_src;
     for (const chainId of params.auto_submit_network_ids) {
       message += chainId;
+    }
+
+    // Additional params afterwards
+    if (params.initial_context) {
+      message += params.initial_context_md5;
     }
     return message;
   }
