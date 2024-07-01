@@ -1,0 +1,23 @@
+{
+  "name": "zkwasm-service-helper-examples",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Examples for zkwasm playground helper lib to communicate with zkwasm cloud service",
+  "dependencies": {
+    "tsx": "^4.16.0",
+    "zkwasm-service-helper": "https://github.com/DelphinusLab/zkWasm-service-helper#zkwas-289"
+  },
+  "scripts": {
+    "build": "rm -fr dist/* && npx tsc -p tsconfig.json && npx tsc -p tsconfig-cjs.json && sh ./addhybridpackage.sh"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@babel/preset-typescript": "^7.23.3",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^18.11.17",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "typescript": "^4.3.4"
+  }
+}
