@@ -419,7 +419,8 @@ export class ZkWasmUtil {
             const fileContents = await this.loadContextFileFromPath(filePath);
             let bytes = new TextEncoder().encode(fileContents);
             this.validateContextBytes(bytes);
-            return Buffer.from(bytes);
+            const md5 = this.convertToMd5(bytes);
+            return [Buffer.from(bytes), md5];
         }
         catch (err) {
             throw err;
