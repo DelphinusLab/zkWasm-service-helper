@@ -345,7 +345,7 @@ class ZkWasmUtil {
                 const fileContents = yield this.loadContextFileFromPath(filePath);
                 let bytes = new TextEncoder().encode(fileContents);
                 this.validateContextBytes(bytes);
-                return bytes;
+                return Buffer.from(bytes);
             }
             catch (err) {
                 throw err;

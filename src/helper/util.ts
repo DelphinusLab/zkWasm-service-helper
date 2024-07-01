@@ -529,12 +529,12 @@ export class ZkWasmUtil {
   }
 
   // For nodejs/server environments only
-  static async loadContexFileAsBytes(filePath: string): Promise<Uint8Array> {
+  static async loadContexFileAsBytes(filePath: string): Promise<Buffer> {
     try {
       const fileContents = await this.loadContextFileFromPath(filePath);
       let bytes = new TextEncoder().encode(fileContents);
       this.validateContextBytes(bytes);
-      return bytes;
+      return Buffer.from(bytes);
     } catch (err) {
       throw err;
     }
