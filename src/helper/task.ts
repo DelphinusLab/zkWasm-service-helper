@@ -385,7 +385,7 @@ export class ZkWasmServiceHelper {
       true
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addProvingTask response:", response.toString());
+      console.log("get addProvingTask response:", response);
     }
     return response;
   }

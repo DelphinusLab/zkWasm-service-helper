@@ -18,7 +18,7 @@ import {
   DelphinusBrowserConnector,
 } from "web3subscriber/src/provider.js";
 //import ERC20 from "../abi/ERC20";
-import { ERC20Lib } from "../abi/ERC20.js"
+import { ERC20Lib } from "../abi/ERC20.js";
 
 export class ZkWasmUtil {
   static contract_abi = {
@@ -513,9 +513,13 @@ export class ZkWasmUtil {
   ): Promise<ContextHexString> {
     if (typeof window === "undefined") {
       // We are in Node.js
-      const fs = require("fs");
-      //const fs = await import("fs").then((module) => module.promises);
-      return fs.readFile(filePath, "utf8");
+      const fs = await import("fs/promises");
+
+      const file = await fs.readFile(filePath, {
+        encoding: "utf-8",
+      });
+
+      return file;
     } else {
       // Browser environment
       throw new Error(

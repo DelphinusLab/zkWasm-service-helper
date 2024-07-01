@@ -402,9 +402,11 @@ export class ZkWasmUtil {
     static async loadContextFileFromPath(filePath) {
         if (typeof window === "undefined") {
             // We are in Node.js
-            const fs = require("fs");
-            //const fs = await import("fs").then((module) => module.promises);
-            return fs.readFile(filePath, "utf8");
+            const fs = await import("fs/promises");
+            const file = await fs.readFile(filePath, {
+                encoding: "utf-8",
+            });
+            return file;
         }
         else {
             // Browser environment
