@@ -293,7 +293,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
             if (this.endpoint.enable_logs) {
-                console.log("get addProvingTask response:", response.toString());
+                console.log("get addProvingTask response:", response);
             }
             return response;
         });

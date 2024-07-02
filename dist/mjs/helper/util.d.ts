@@ -97,7 +97,7 @@ export declare class ZkWasmUtil {
     static ERC20Contract(contractAddress: string, signer: Signer): Contract;
     static bytesToJSONString(data: Uint8Array): string;
     static loadContextFileFromPath(filePath: string): Promise<ContextHexString>;
-    static loadContexFileAsBytes(filePath: string): Promise<Uint8Array>;
+    static loadContexFileAsBytes(filePath: string): Promise<[Buffer, string]>;
     static browserLoadContextFileAsBytes(file: File): Promise<Uint8Array>;
     static bytesToTempFile(data: Uint8Array): Promise<Buffer>;
     static bytesToFile(data: Uint8Array): Promise<File>;

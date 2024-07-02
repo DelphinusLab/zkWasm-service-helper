@@ -233,13 +233,13 @@ export class ZkWasmUtil {
         message += params.description_url;
         message += params.avator_url;
         message += params.circuit_size;
-        // Additional params afterwards
-        if (params.initial_context) {
-            message += params.initial_context_md5;
-        }
         message += params.prove_payment_src;
         for (const chainId of params.auto_submit_network_ids) {
             message += chainId;
+        }
+        // Additional params afterwards
+        if (params.initial_context) {
+            message += params.initial_context_md5;
         }
         return message;
     }
@@ -402,9 +402,11 @@ export class ZkWasmUtil {
     static async loadContextFileFromPath(filePath) {
         if (typeof window === "undefined") {
             // We are in Node.js
-            const fs = require("fs");
-            //const fs = await import("fs").then((module) => module.promises);
-            return fs.readFile(filePath, "utf8");
+            const fs = await import("fs/promises");
+            const file = await fs.readFile(filePath, {
+                encoding: "utf-8",
+            });
+            return file;
         }
         else {
             // Browser environment
@@ -417,7 +419,8 @@ export class ZkWasmUtil {
             const fileContents = await this.loadContextFileFromPath(filePath);
             let bytes = new TextEncoder().encode(fileContents);
             this.validateContextBytes(bytes);
-            return bytes;
+            const md5 = this.convertToMd5(bytes);
+            return [Buffer.from(bytes), md5];
         }
         catch (err) {
             throw err;

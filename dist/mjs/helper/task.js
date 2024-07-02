@@ -231,7 +231,7 @@ export class ZkWasmServiceHelper {
     async addProvingTask(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
         if (this.endpoint.enable_logs) {
-            console.log("get addProvingTask response:", response.toString());
+            console.log("get addProvingTask response:", response);
         }
         return response;
     }
