@@ -4,23 +4,23 @@ export var InputContextType;
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType || (InputContextType = {}));
-export var Round1BatchProofStatus;
-(function (Round1BatchProofStatus) {
-    Round1BatchProofStatus["Pending"] = "Pending";
-    Round1BatchProofStatus["Batched"] = "Batched";
-    Round1BatchProofStatus["Failed"] = "Failed";
-})(Round1BatchProofStatus || (Round1BatchProofStatus = {}));
-export var Round2BatchProofStatus;
-(function (Round2BatchProofStatus) {
-    Round2BatchProofStatus["Pending"] = "Pending";
-    Round2BatchProofStatus["Batched"] = "Batched";
-    Round2BatchProofStatus["Failed"] = "Failed";
-})(Round2BatchProofStatus || (Round2BatchProofStatus = {}));
-export var FinalProofStatus;
-(function (FinalProofStatus) {
-    FinalProofStatus["ProofNotRegistered"] = "ProofNotRegistered";
-    FinalProofStatus["ProofRegistered"] = "ProofRegistered";
-})(FinalProofStatus || (FinalProofStatus = {}));
+export var AutoSubmitProofStatus;
+(function (AutoSubmitProofStatus) {
+    AutoSubmitProofStatus["Pending"] = "Pending";
+    AutoSubmitProofStatus["Batched"] = "Batched";
+    AutoSubmitProofStatus["Failed"] = "Failed";
+})(AutoSubmitProofStatus || (AutoSubmitProofStatus = {}));
+export var Round1Status;
+(function (Round1Status) {
+    Round1Status["Pending"] = "Pending";
+    Round1Status["Batched"] = "Batched";
+    Round1Status["Failed"] = "Failed";
+})(Round1Status || (Round1Status = {}));
+export var Round2Status;
+(function (Round2Status) {
+    Round2Status["ProofNotRegistered"] = "ProofNotRegistered";
+    Round2Status["ProofRegistered"] = "ProofRegistered";
+})(Round2Status || (Round2Status = {}));
 export var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
     AutoSubmitStatus["Round1"] = "Round1";

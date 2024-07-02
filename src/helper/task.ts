@@ -24,12 +24,12 @@ import {
   User,
   Subscription,
   PaginatedQuery,
-  Round1BatchProofQuery,
-  Round2BatchProofQuery,
-  Round2BatchProof,
-  Round1BatchProof,
-  FinalBatchProofQuery,
-  FinalBatchProof,
+  AutoSubmitProofQuery,
+  Round1InfoQuery,
+  Round1Info,
+  Round2Info,
+  Round2InfoQuery,
+  AutoSubmitProof,
   ConciseTask,
   NodeStatistics,
   NodeStatisticsQueryParams,
@@ -285,9 +285,9 @@ export class ZkWasmServiceHelper {
     return tasks;
   }
 
-  async queryRound1BatchProofs(
-    query: PaginatedQuery<Round1BatchProofQuery>
-  ): Promise<PaginationResult<Round1BatchProof[]>> {
+  async queryAutoSubmitProofs(
+    query: PaginatedQuery<AutoSubmitProofQuery>
+  ): Promise<PaginationResult<AutoSubmitProof[]>> {
     let proofData = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_1_BATCH,
@@ -299,9 +299,9 @@ export class ZkWasmServiceHelper {
     return proofData;
   }
 
-  async queryRound2BatchProofs(
-    query: PaginatedQuery<Round2BatchProofQuery>
-  ): Promise<PaginationResult<Round2BatchProof[]>> {
+  async queryRound1Info(
+    query: PaginatedQuery<Round1InfoQuery>
+  ): Promise<PaginationResult<Round1Info[]>> {
     let proofData = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_2_BATCH,
@@ -313,9 +313,9 @@ export class ZkWasmServiceHelper {
     return proofData;
   }
 
-  async queryFinalBatchProofs(
-    query: PaginatedQuery<FinalBatchProofQuery>
-  ): Promise<PaginationResult<FinalBatchProof[]>> {
+  async queryRound2Info(
+    query: PaginatedQuery<Round2InfoQuery>
+  ): Promise<PaginationResult<Round2Info[]>> {
     let proofData = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.FINAL_BATCH,

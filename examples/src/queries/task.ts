@@ -1,5 +1,4 @@
 import {
-  ZkWasmServiceHelper,
   ZkWasmUtil,
   QueryParams,
   PaginationResult,
@@ -17,7 +16,7 @@ import { ServiceHelper } from "../config";
 //   taskstatus: null,
 // };
 
-export async function QueryTasks(queryParams: QueryParams) {
+export async function queryTasks(queryParams: QueryParams) {
   const response: PaginationResult<Task[]> = await ServiceHelper.loadTasks(
     queryParams
   );

@@ -3,15 +3,15 @@ import {
   Task,
   QueryParams,
   AutoSubmitStatus,
-  Round2BatchProof,
-  Round2BatchProofStatus,
   VerifyBatchProofParams,
+  Round1Status,
+  Round1Info,
 } from "zkwasm-service-helper";
 import { withDelphinusWalletConnector } from "web3subscriber/src/client";
 
 import { ServiceHelperConfig, Web3ChainConfig } from "../config";
-import { QueryTasks } from "../queries/task";
-import { QueryFinalBatchProof, QueryRound2Queue } from "../queries/autosubmit";
+import { queryTasks } from "../queries/task";
+import { queryRound1ProofInfo } from "../queries/autosubmit";
 import {
   DelphinusBaseProvider,
   GetBaseProvider,
@@ -33,7 +33,7 @@ export async function VerifyAutoSubmitProof() {
 
   // Fetch a task from the playground service which contains the proof information
   // See the example to build query function to fetch task details
-  const taskResponse = await QueryTasks(queryParams);
+  const taskResponse = await queryTasks(queryParams);
 
   // Handle missing tasks accordingly
   // Assume task exists
@@ -49,17 +49,17 @@ export async function VerifyAutoSubmitProof() {
     return;
   }
 
-  const queryRound2QueueResponse = await QueryRound2Queue({
-    task_id: task._id["$oid"],
+  const round_1_info_response = await queryRound1ProofInfo({
+    task_id: task._id.$oid,
     chain_id: Web3ChainConfig.chainId,
-    status: Round2BatchProofStatus.Batched,
+    status: Round1Status.Batched,
     total: 1,
   });
 
   // Handle missing round 2 proofs accordingly
   // Assume round 2 proof exists
   // Since the response returned is the input to the round 2 proof, we will use this to verify the proof
-  const round_1_output: Round2BatchProof = queryRound2QueueResponse.data[0];
+  const round_1_output: Round1Info = round_1_info_response.data[0];
 
   // Convert the Number[] into bytes/Uint8Array
   const round_1_target_instances: Array<Uint8Array> =
@@ -87,17 +87,10 @@ export async function VerifyAutoSubmitProof() {
     target_instances: [task.instances],
   };
 
-  const finalBatchResponse = await QueryFinalBatchProof({
-    task_id: task._id["$oid"],
-    chain_id: Web3ChainConfig.chainId,
-  });
-
-  // Handle missing final batch proofs accordingly
-  // Assume final batch proof exists
-  const finalBatchProof = finalBatchResponse.data[0];
-
   // Use the Batch Verifier contract address to verify the proof
-  const contractAddress = finalBatchProof.verifier_contracts.batch_verifier;
+  const contractAddress = task.task_verification_data.verifier_contracts.find(
+    (x) => x.chain_id === Web3ChainConfig.chainId
+  )?.batch_verifier!;
 
   await withDelphinusWalletConnector(
     async (connector) => {

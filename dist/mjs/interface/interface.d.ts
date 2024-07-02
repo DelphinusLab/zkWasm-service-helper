@@ -45,7 +45,7 @@ export interface Task {
     input_context: Uint8Array;
     input_context_type?: InputContextType;
     output_context: Uint8Array;
-    _id: any;
+    _id: ObjectId;
     submit_time: string;
     process_started?: string;
     process_finished?: string;
@@ -58,6 +58,9 @@ export interface Task {
     batch_proof_data?: BatchProofData;
     auto_submit_status?: AutoSubmitStatus;
 }
+export type ObjectId = {
+    $oid: string;
+};
 export interface ConciseTask {
     _id: any;
     user_address: string;
@@ -79,7 +82,7 @@ export interface BatchProofData {
     round_2_batch_ids?: AutoSubmitBatchMetadata[];
     final_proof_batch_ids?: AutoSubmitBatchMetadata[];
 }
-export interface Round1BatchProof {
+export interface AutoSubmitProof {
     _id?: any;
     task_id: string;
     base_proof_circuit_size: number;
@@ -92,17 +95,17 @@ export interface Round1BatchProof {
     internal_message?: string;
     static_files_verification_data: StaticFileVerificationData;
     auto_submit_network_chain_id: number;
-    status: Round1BatchProofStatus;
+    status: AutoSubmitProofStatus;
 }
 export interface StaticFileVerificationData {
     static_file_checksum: Uint8Array;
 }
-export declare enum Round1BatchProofStatus {
+export declare enum AutoSubmitProofStatus {
     Pending = "Pending",
     Batched = "Batched",
     Failed = "Failed"
 }
-export interface Round2BatchProof {
+export interface Round1Info {
     _id?: any;
     round_1_ids: string[];
     task_ids: string[];
@@ -117,14 +120,14 @@ export interface Round2BatchProof {
     auto_submit_network_chain_id: number;
     verifier_contracts: VerifierContracts;
     static_files_verification_data: StaticFileVerificationData;
-    status: Round2BatchProofStatus;
+    status: Round1Status;
 }
-export declare enum Round2BatchProofStatus {
+export declare enum Round1Status {
     Pending = "Pending",
     Batched = "Batched",
     Failed = "Failed"
 }
-export interface FinalBatchProof {
+export interface Round2Info {
     _id?: any;
     round_2_ids: string[];
     task_ids: string[];
@@ -139,32 +142,32 @@ export interface FinalBatchProof {
     auto_submit_network_chain_id: number;
     verifier_contracts: VerifierContracts;
     registered_tx_hash: string | null;
-    status: FinalProofStatus;
+    status: Round2Status;
 }
-export declare enum FinalProofStatus {
+export declare enum Round2Status {
     ProofNotRegistered = "ProofNotRegistered",
     ProofRegistered = "ProofRegistered"
 }
 export type PaginatedQuery<T> = T & PaginationQuery;
-export interface Round1BatchProofQuery {
+export interface AutoSubmitProofQuery {
     id?: string;
     task_id?: string;
-    status?: Round1BatchProofStatus;
+    status?: AutoSubmitProofStatus;
     circuit_size?: number;
     chain_id?: number;
 }
-export interface Round2BatchProofQuery {
+export interface Round1InfoQuery {
     id?: string;
     task_id?: string;
-    status?: Round2BatchProofStatus;
+    status?: Round1Status;
     circuit_size?: number;
     chain_id?: number;
 }
-export interface FinalBatchProofQuery {
+export interface Round2InfoQuery {
     id?: string;
     round_2_id?: string;
     task_id?: string;
-    status?: FinalProofStatus;
+    status?: Round2Status;
     chain_id?: number;
 }
 export interface PaginationQuery {

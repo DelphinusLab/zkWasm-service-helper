@@ -179,21 +179,21 @@ export class ZkWasmServiceHelper {
         }
         return tasks;
     }
-    async queryRound1BatchProofs(query) {
+    async queryAutoSubmitProofs(query) {
         let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
             console.log("loading proof data!");
         }
         return proofData;
     }
-    async queryRound2BatchProofs(query) {
+    async queryRound1Info(query) {
         let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_2_BATCH, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
             console.log("loading proof data!");
         }
         return proofData;
     }
-    async queryFinalBatchProofs(query) {
+    async queryRound2Info(query) {
         let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.FINAL_BATCH, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
             console.log("loading proof data!");

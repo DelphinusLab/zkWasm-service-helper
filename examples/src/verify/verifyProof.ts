@@ -14,7 +14,7 @@ import {
   GetBaseProvider,
 } from "web3subscriber/src/provider";
 import { ServiceHelperConfig, Web3ChainConfig } from "../config";
-import { QueryTasks } from "../queries/task";
+import { queryTasks } from "../queries/task";
 
 const provider: DelphinusBaseProvider = GetBaseProvider(
   Web3ChainConfig.providerUrl // web3 provider URL for the verifier chain
@@ -32,7 +32,7 @@ export async function VerifyProof() {
 
   // Fetch a task from the playground service which contains the proof information
   // See the example to build query function to fetch task details
-  const response = await QueryTasks(queryParams);
+  const response = await queryTasks(queryParams);
 
   // Handle missing tasks accordingly
   // Assume task exists
@@ -41,7 +41,7 @@ export async function VerifyProof() {
   const verifierContractAddress =
     task.task_verification_data.verifier_contracts.find(
       (x) => x.chain_id === Web3ChainConfig.chainId
-    );
+    )?.aggregator_verifier;
 
   if (!verifierContractAddress) {
     console.log(
@@ -55,7 +55,7 @@ export async function VerifyProof() {
     async (connector) => {
       let contract = await ZkWasmUtil.composeVerifyContract(
         connector,
-        task.task_verification_data.verifier_contracts[0].aggregator_verifier
+        verifierContractAddress
       );
 
       // If the proof has no shadow instances, use the batch instances to try and verify instead.
