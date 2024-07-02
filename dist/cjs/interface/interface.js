@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.FinalProofStatus = exports.Round2BatchProofStatus = exports.Round1BatchProofStatus = exports.InputContextType = void 0;
+exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType = exports.InputContextType || (exports.InputContextType = {}));
-var Round1BatchProofStatus;
-(function (Round1BatchProofStatus) {
-    Round1BatchProofStatus["Pending"] = "Pending";
-    Round1BatchProofStatus["Batched"] = "Batched";
-    Round1BatchProofStatus["Failed"] = "Failed";
-})(Round1BatchProofStatus = exports.Round1BatchProofStatus || (exports.Round1BatchProofStatus = {}));
-var Round2BatchProofStatus;
-(function (Round2BatchProofStatus) {
-    Round2BatchProofStatus["Pending"] = "Pending";
-    Round2BatchProofStatus["Batched"] = "Batched";
-    Round2BatchProofStatus["Failed"] = "Failed";
-})(Round2BatchProofStatus = exports.Round2BatchProofStatus || (exports.Round2BatchProofStatus = {}));
-var FinalProofStatus;
-(function (FinalProofStatus) {
-    FinalProofStatus["ProofNotRegistered"] = "ProofNotRegistered";
-    FinalProofStatus["ProofRegistered"] = "ProofRegistered";
-})(FinalProofStatus = exports.FinalProofStatus || (exports.FinalProofStatus = {}));
+var AutoSubmitProofStatus;
+(function (AutoSubmitProofStatus) {
+    AutoSubmitProofStatus["Pending"] = "Pending";
+    AutoSubmitProofStatus["Batched"] = "Batched";
+    AutoSubmitProofStatus["Failed"] = "Failed";
+})(AutoSubmitProofStatus = exports.AutoSubmitProofStatus || (exports.AutoSubmitProofStatus = {}));
+var Round1Status;
+(function (Round1Status) {
+    Round1Status["Pending"] = "Pending";
+    Round1Status["Batched"] = "Batched";
+    Round1Status["Failed"] = "Failed";
+})(Round1Status = exports.Round1Status || (exports.Round1Status = {}));
+var Round2Status;
+(function (Round2Status) {
+    Round2Status["ProofNotRegistered"] = "ProofNotRegistered";
+    Round2Status["ProofRegistered"] = "ProofRegistered";
+})(Round2Status = exports.Round2Status || (exports.Round2Status = {}));
 var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
     AutoSubmitStatus["Round1"] = "Round1";

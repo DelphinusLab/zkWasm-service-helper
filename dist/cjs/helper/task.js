@@ -226,7 +226,7 @@ class ZkWasmServiceHelper {
             return tasks;
         });
     }
-    queryRound1BatchProofs(query) {
+    queryAutoSubmitProofs(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let proofData = yield this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
@@ -235,7 +235,7 @@ class ZkWasmServiceHelper {
             return proofData;
         });
     }
-    queryRound2BatchProofs(query) {
+    queryRound1Info(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let proofData = yield this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_2_BATCH, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
@@ -244,7 +244,7 @@ class ZkWasmServiceHelper {
             return proofData;
         });
     }
-    queryFinalBatchProofs(query) {
+    queryRound2Info(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let proofData = yield this.endpoint.invokeRequest("GET", TaskEndpoint.FINAL_BATCH, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {

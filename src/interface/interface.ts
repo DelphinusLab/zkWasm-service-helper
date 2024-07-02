@@ -50,7 +50,7 @@ export interface Task {
   input_context: Uint8Array;
   input_context_type?: InputContextType; // The type of context for the task
   output_context: Uint8Array; // The context output from the task which should go to the image
-  _id: any;
+  _id: ObjectId;
   submit_time: string;
   process_started?: string;
   process_finished?: string;
@@ -63,6 +63,10 @@ export interface Task {
   batch_proof_data?: BatchProofData;
   auto_submit_status?: AutoSubmitStatus;
 }
+
+export type ObjectId = {
+  $oid: string;
+};
 
 export interface ConciseTask {
   _id: any;
@@ -88,7 +92,7 @@ export interface BatchProofData {
   final_proof_batch_ids?: AutoSubmitBatchMetadata[];
 }
 
-export interface Round1BatchProof {
+export interface AutoSubmitProof {
   _id?: any;
   // The task id of the original aggregate proof task
   task_id: string;
@@ -103,21 +107,21 @@ export interface Round1BatchProof {
   internal_message?: string;
   static_files_verification_data: StaticFileVerificationData;
   auto_submit_network_chain_id: number;
-  status: Round1BatchProofStatus;
+  status: AutoSubmitProofStatus;
 }
 
 export interface StaticFileVerificationData {
   static_file_checksum: Uint8Array;
 }
 
-export enum Round1BatchProofStatus {
+export enum AutoSubmitProofStatus {
   Pending = "Pending",
   Batched = "Batched",
   Failed = "Failed",
 }
 
-// Round2BatchProof is the task for the second round of aggregation
-export interface Round2BatchProof {
+// Round1Info contains input to Round2 and output of Round1
+export interface Round1Info {
   _id?: any;
   // _ids of round 1 batch proofs which will be/are aggregated in this round 2 batch proof
   round_1_ids: string[];
@@ -141,16 +145,16 @@ export interface Round2BatchProof {
   auto_submit_network_chain_id: number;
   verifier_contracts: VerifierContracts;
   static_files_verification_data: StaticFileVerificationData;
-  status: Round2BatchProofStatus;
+  status: Round1Status;
 }
 
-export enum Round2BatchProofStatus {
+export enum Round1Status {
   Pending = "Pending",
   Batched = "Batched",
   Failed = "Failed",
 }
 
-export interface FinalBatchProof {
+export interface Round2Info {
   _id?: any;
   // _ids of round 2 id which is aggregated in this final batch proof
   round_2_ids: string[];
@@ -170,37 +174,37 @@ export interface FinalBatchProof {
   auto_submit_network_chain_id: number;
   verifier_contracts: VerifierContracts;
   registered_tx_hash: string | null;
-  status: FinalProofStatus;
+  status: Round2Status;
 }
 
-export enum FinalProofStatus {
+export enum Round2Status {
   ProofNotRegistered = "ProofNotRegistered",
   ProofRegistered = "ProofRegistered",
 }
 
 export type PaginatedQuery<T> = T & PaginationQuery;
 
-export interface Round1BatchProofQuery {
+export interface AutoSubmitProofQuery {
   id?: string;
   task_id?: string;
-  status?: Round1BatchProofStatus;
+  status?: AutoSubmitProofStatus;
   circuit_size?: number;
   chain_id?: number;
 }
 
-export interface Round2BatchProofQuery {
+export interface Round1InfoQuery {
   id?: string;
   task_id?: string;
-  status?: Round2BatchProofStatus;
+  status?: Round1Status;
   circuit_size?: number;
   chain_id?: number;
 }
 
-export interface FinalBatchProofQuery {
+export interface Round2InfoQuery {
   id?: string;
   round_2_id?: string;
   task_id?: string;
-  status?: FinalProofStatus;
+  status?: Round2Status;
   chain_id?: number;
 }
 
