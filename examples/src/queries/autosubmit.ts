@@ -1,12 +1,12 @@
 import {
-  Round1BatchProof,
-  Round1BatchProofQuery,
   PaginationResult,
   PaginatedQuery,
-  Round2BatchProofQuery,
-  Round2BatchProof,
-  FinalBatchProof,
-  FinalBatchProofQuery,
+  AutoSubmitProofQuery,
+  AutoSubmitProof,
+  Round1InfoQuery,
+  Round1Info,
+  Round2InfoQuery,
+  Round2Info,
 } from "zkwasm-service-helper";
 import { ServiceHelper } from "../config";
 
@@ -22,14 +22,14 @@ import { ServiceHelper } from "../config";
 //   total: 1,
 //   chain_id: 11155111, // Chain id of the auto submit network if required
 // };
-export async function QueryRound1Queue(
-  queryParams: PaginatedQuery<Round1BatchProofQuery>
-): Promise<PaginationResult<Round1BatchProof[]>> {
-  const response: PaginationResult<Round1BatchProof[]> =
-    await ServiceHelper.queryRound1BatchProofs(queryParams);
+export async function queryAutoSubmitProofs(
+  queryParams: PaginatedQuery<AutoSubmitProofQuery>
+): Promise<PaginationResult<AutoSubmitProof[]>> {
+  const response: PaginationResult<AutoSubmitProof[]> =
+    await ServiceHelper.queryAutoSubmitProofs(queryParams);
 
   // The response will contain items in the batch proof queue for Round 1
-  const round1_input_data: Round1BatchProof = response.data[0];
+  const round1_input_data: AutoSubmitProof = response.data[0];
   console.log("Proof details: ");
   console.log("    ", round1_input_data);
 
@@ -45,33 +45,33 @@ export async function QueryRound1Queue(
 //   chain_id: 11155111, // Chain id of the auto submit network if required
 // };
 
-export async function QueryRound2Queue(
-  queryParams: PaginatedQuery<Round2BatchProofQuery>
-): Promise<PaginationResult<Round2BatchProof[]>> {
-  const response: PaginationResult<Round2BatchProof[]> =
-    await ServiceHelper.queryRound2BatchProofs(queryParams);
+export async function queryRound1ProofInfo(
+  queryParams: PaginatedQuery<Round1InfoQuery>
+): Promise<PaginationResult<Round1Info[]>> {
+  const response: PaginationResult<Round1Info[]> =
+    await ServiceHelper.queryRound1Info(queryParams);
 
   // The response will contain items in the batch proof queue for Round 2
   // Note that the items in the response contain the inputs to Round 2, which are also the outputs of Round 1.
-  const round2_input_data: Round2BatchProof = response.data[0];
+  const round2_input_data: Round1Info = response.data[0];
   console.log("Proof details: ");
   console.log("    ", round2_input_data);
 
   return response;
 }
 
-export async function QueryFinalBatchProof(
-  queryParams: PaginatedQuery<FinalBatchProofQuery>
-): Promise<PaginationResult<FinalBatchProof[]>> {
+export async function queryRound2ProofInfo(
+  queryParams: PaginatedQuery<Round2InfoQuery>
+): Promise<PaginationResult<Round2Info[]>> {
   const task_id = "<YourTaskId>";
 
-  const response: PaginationResult<FinalBatchProof[]> =
-    await ServiceHelper.queryFinalBatchProofs(queryParams);
+  const response: PaginationResult<Round2Info[]> =
+    await ServiceHelper.queryRound2Info(queryParams);
 
   // The response contains fully batched round 2 output information.
   // Log it here for demonstration purposes.
 
-  const proof: FinalBatchProof = response.data[0];
+  const proof: Round2Info = response.data[0];
   console.log("Proof details: ");
   console.log("    ", proof);
 
