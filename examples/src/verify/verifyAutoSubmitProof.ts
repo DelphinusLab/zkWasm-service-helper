@@ -6,16 +6,12 @@ import {
   VerifyBatchProofParams,
   Round1Status,
   Round1Info,
-  Round2Status,
 } from "zkwasm-service-helper";
 import { withDelphinusWalletConnector } from "web3subscriber/src/client";
 
 import { ServiceHelperConfig, Web3ChainConfig } from "../config";
 import { queryTasks } from "../queries/task";
-import {
-  queryRound1ProofInfo,
-  queryRound2ProofInfo,
-} from "../queries/autosubmit";
+import { queryRound1ProofInfo } from "../queries/autosubmit";
 import {
   DelphinusBaseProvider,
   GetBaseProvider,
@@ -91,19 +87,10 @@ export async function VerifyAutoSubmitProof() {
     target_instances: [task.instances],
   };
 
-  const round2_response = await queryRound2ProofInfo({
-    task_id: task._id["$oid"],
-    chain_id: Web3ChainConfig.chainId,
-    // This is a naive check as the Auto Submit service may have registered the proof only on one chain and not other ones.
-    status: Round2Status.ProofRegistered,
-  });
-
-  // Handle missing round 2 batch proofs accordingly
-  // Assume round 2 batch proof exists
-  const round_2_output = round2_response.data[0];
-
   // Use the Batch Verifier contract address to verify the proof
-  const contractAddress = round_2_output.verifier_contracts.batch_verifier;
+  const contractAddress = task.task_verification_data.verifier_contracts.find(
+    (x) => x.chain_id === Web3ChainConfig.chainId
+  )?.batch_verifier!;
 
   await withDelphinusWalletConnector(
     async (connector) => {
