@@ -10,7 +10,7 @@ export interface TimingStatistics {
   sum: number;
   avg: number;
   latest_time_taken_secs: number;
-  latest_timestamp_utc: string;
+  latest_timestamp: string;
 }
 
 export interface NodeStatistics {
@@ -21,11 +21,8 @@ export interface NodeStatistics {
     total_tasks: number;
     timed_out_count: number;
     last_timed_out: string;
-    last_successful_proof_task_time: string;
-    last_successful_proof_processing_time: number;
     setup_timing_stats?: TimingStatistics;
     proof_timing_stats?: TimingStatistics;
-    deploy_timing_stats?: TimingStatistics;
   };
 }
 
