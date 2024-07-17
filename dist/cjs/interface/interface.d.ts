@@ -5,9 +5,6 @@ export interface Statistics {
     totalDeployed: number;
 }
 export interface TimingStatistics {
-    n: number;
-    sum: number;
-    avg: number;
     latest_time_taken_secs: number;
     latest_timestamp: string;
 }
