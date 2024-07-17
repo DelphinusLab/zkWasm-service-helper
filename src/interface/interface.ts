@@ -5,11 +5,6 @@ export interface Statistics {
   totalDeployed: number;
 }
 
-export interface TimingStatistics {
-  latest_time_taken_secs: number;
-  latest_timestamp: string;
-}
-
 export interface NodeStatistics {
   address: string;
   statistics: {
@@ -18,8 +13,8 @@ export interface NodeStatistics {
     total_tasks: number;
     timed_out_count: number;
     last_timed_out: string;
-    setup_timing_stats?: TimingStatistics;
-    proof_timing_stats?: TimingStatistics;
+    last_successful_proof_task_time: string;
+    last_successful_proof_processing_time: number;
   };
 }
 
