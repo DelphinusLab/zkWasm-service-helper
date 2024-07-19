@@ -66,7 +66,7 @@ export class ZkWasmServiceEndpoint {
             if (this.enable_logs) {
                 console.error(json);
             }
-            throw new Error(`${json["error"].code}: ${json["error"].message}`);
+            throw new Error(json["error"].code + " " + json["error"].message);
         }
         return json["result"];
     }
