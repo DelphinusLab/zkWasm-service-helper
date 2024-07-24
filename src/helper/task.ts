@@ -33,6 +33,7 @@ import {
   ConciseTask,
   NodeStatistics,
   NodeStatisticsQueryParams,
+  SetMaintenanceModeParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -429,6 +430,18 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
+  async setMaintenanceMode(req: SetMaintenanceModeParams) {
+    const response = await this.endpoint.invokeRequest(
+      "POST",
+      TaskEndpoint.SET_MAINTENANCE_MODE,
+      JSON.parse(JSON.stringify(req))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("setMaintenanceMode response:", response.toString());
+    }
+    return response;
+  }
+
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
@@ -491,6 +504,7 @@ export enum TaskEndpoint {
   RESET = "/reset",
   MODIFY = "/modify",
   PAY = "/pay",
+  SET_MAINTENANCE_MODE = "/set_maintenance_mode",
   SUBSCRIBE = "/subscribe",
   LOGS = "/logs",
   ROUND_1_BATCH = "/round1_batch_proofs",

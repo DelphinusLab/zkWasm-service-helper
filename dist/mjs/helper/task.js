@@ -256,6 +256,13 @@ export class ZkWasmServiceHelper {
         }
         return response;
     }
+    async setMaintenanceMode(req) {
+        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SET_MAINTENANCE_MODE, JSON.parse(JSON.stringify(req)));
+        if (this.endpoint.enable_logs) {
+            console.log("setMaintenanceMode response:", response.toString());
+        }
+        return response;
+    }
     async sendRequestWithSignature(method, path, task, isFormData = false) {
         // TODO: create return types for tasks using this method
         let headers = this.createHeaders(task);
@@ -304,6 +311,7 @@ export var TaskEndpoint;
     TaskEndpoint["RESET"] = "/reset";
     TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
+    TaskEndpoint["SET_MAINTENANCE_MODE"] = "/set_maintenance_mode";
     TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
     TaskEndpoint["ROUND_1_BATCH"] = "/round1_batch_proofs";

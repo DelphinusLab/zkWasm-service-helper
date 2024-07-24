@@ -467,3 +467,7 @@ export interface TransactionInfo {
     user_address: string;
     receiver_address: string;
 }
+export interface SetMaintenanceModeParams {
+    address: string;
+    active: boolean;
+}
