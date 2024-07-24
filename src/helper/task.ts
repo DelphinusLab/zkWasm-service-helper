@@ -431,10 +431,16 @@ export class ZkWasmServiceHelper {
   }
 
   async setMaintenanceMode(req: SetMaintenanceModeParams) {
+    const data = new FormData();
+    Object.keys(req).forEach(key => {
+        const value = (req as any)[key];
+        data.append(key, value.toString());
+    });
+
     const response = await this.endpoint.invokeRequest(
       "POST",
       TaskEndpoint.SET_MAINTENANCE_MODE,
-      JSON.parse(JSON.stringify(req))
+      data,
     );
     if (this.endpoint.enable_logs) {
       console.log("setMaintenanceMode response:", response.toString());
