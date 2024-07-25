@@ -257,7 +257,7 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async setMaintenanceMode(req) {
-        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SET_MAINTENANCE_MODE, JSON.parse(JSON.stringify(req)));
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, req, true);
         if (this.endpoint.enable_logs) {
             console.log("setMaintenanceMode response:", response.toString());
         }

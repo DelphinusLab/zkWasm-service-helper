@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = void 0;
+exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
@@ -42,3 +42,8 @@ var ProofSubmitMode;
     ProofSubmitMode["Manual"] = "Manual";
     ProofSubmitMode["Auto"] = "Auto";
 })(ProofSubmitMode = exports.ProofSubmitMode || (exports.ProofSubmitMode = {}));
+var MaintenanceModeType;
+(function (MaintenanceModeType) {
+    MaintenanceModeType[MaintenanceModeType["Disabled"] = 0] = "Disabled";
+    MaintenanceModeType[MaintenanceModeType["Enabled"] = 1] = "Enabled";
+})(MaintenanceModeType = exports.MaintenanceModeType || (exports.MaintenanceModeType = {}));

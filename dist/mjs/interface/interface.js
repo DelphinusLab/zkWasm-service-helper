@@ -39,3 +39,8 @@ export var ProofSubmitMode;
     ProofSubmitMode["Manual"] = "Manual";
     ProofSubmitMode["Auto"] = "Auto";
 })(ProofSubmitMode || (ProofSubmitMode = {}));
+export var MaintenanceModeType;
+(function (MaintenanceModeType) {
+    MaintenanceModeType[MaintenanceModeType["Disabled"] = 0] = "Disabled";
+    MaintenanceModeType[MaintenanceModeType["Enabled"] = 1] = "Enabled";
+})(MaintenanceModeType || (MaintenanceModeType = {}));

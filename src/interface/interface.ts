@@ -569,7 +569,11 @@ export interface TransactionInfo {
   receiver_address: string;
 }
 
+export enum MaintenanceModeType {
+  Disabled,
+  Enabled,
+}
+
 export interface SetMaintenanceModeParams {
-  address: string;
-  active: boolean;
+  mode: MaintenanceModeType,
 }

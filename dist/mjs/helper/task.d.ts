@@ -25,7 +25,7 @@ export declare class ZkWasmServiceHelper {
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
     addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
     modifyImage(data: WithSignature<ModifyImageParams>): Promise<any>;
-    setMaintenanceMode(req: SetMaintenanceModeParams): Promise<any>;
+    setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>): Promise<any>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;
