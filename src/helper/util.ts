@@ -7,6 +7,7 @@ import {
   ResetImageParams,
   ModifyImageParams,
   VerifyProofParams,
+  SetMaintenanceModeParams,
   LogQuery,
   ContextHexString,
   InputContextType,
@@ -275,6 +276,12 @@ export class ZkWasmUtil {
     if (params.initial_context) {
       message += params.initial_context_md5;
     }
+    return message;
+  }
+
+  static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string {
+    let message = "";
+    message += params.mode;
     return message;
   }
 

@@ -243,6 +243,11 @@ export class ZkWasmUtil {
         }
         return message;
     }
+    static createSetMaintenanceModeSignMessage(params) {
+        let message = "";
+        message += params.mode;
+        return message;
+    }
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";
