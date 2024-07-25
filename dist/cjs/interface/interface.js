@@ -44,6 +44,6 @@ var ProofSubmitMode;
 })(ProofSubmitMode = exports.ProofSubmitMode || (exports.ProofSubmitMode = {}));
 var MaintenanceModeType;
 (function (MaintenanceModeType) {
-    MaintenanceModeType[MaintenanceModeType["Disabled"] = 0] = "Disabled";
-    MaintenanceModeType[MaintenanceModeType["Enabled"] = 1] = "Enabled";
+    MaintenanceModeType["Disabled"] = "Disabled";
+    MaintenanceModeType["Enabled"] = "Enabled";
 })(MaintenanceModeType = exports.MaintenanceModeType || (exports.MaintenanceModeType = {}));

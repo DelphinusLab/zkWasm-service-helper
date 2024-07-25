@@ -77,6 +77,7 @@ export {
   Round2Status,
   ProofSubmitMode,
   ProvePaymentSrc,
+  MaintenanceModeType,
 };
 
 export type {
@@ -130,6 +131,5 @@ export type {
   AutoSubmitBatchMetadata,
   NodeStatistics,
   NodeStatisticsQueryParams,
-  MaintenanceModeType,
   SetMaintenanceModeParams,
 };

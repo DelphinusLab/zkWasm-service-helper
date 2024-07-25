@@ -570,8 +570,8 @@ export interface TransactionInfo {
 }
 
 export enum MaintenanceModeType {
-  Disabled,
-  Enabled,
+  Disabled = "Disabled",
+  Enabled = "Enabled",
 }
 
 export interface SetMaintenanceModeParams {

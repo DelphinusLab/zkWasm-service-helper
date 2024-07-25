@@ -468,8 +468,8 @@ export interface TransactionInfo {
     receiver_address: string;
 }
 export declare enum MaintenanceModeType {
-    Disabled = 0,
-    Enabled = 1
+    Disabled = "Disabled",
+    Enabled = "Enabled"
 }
 export interface SetMaintenanceModeParams {
     mode: MaintenanceModeType;

@@ -41,6 +41,6 @@ export var ProofSubmitMode;
 })(ProofSubmitMode || (ProofSubmitMode = {}));
 export var MaintenanceModeType;
 (function (MaintenanceModeType) {
-    MaintenanceModeType[MaintenanceModeType["Disabled"] = 0] = "Disabled";
-    MaintenanceModeType[MaintenanceModeType["Enabled"] = 1] = "Enabled";
+    MaintenanceModeType["Disabled"] = "Disabled";
+    MaintenanceModeType["Enabled"] = "Enabled";
 })(MaintenanceModeType || (MaintenanceModeType = {}));
