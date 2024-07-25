@@ -56,6 +56,8 @@ import {
   ProvePaymentSrc,
   NodeStatistics,
   NodeStatisticsQueryParams,
+  MaintenanceModeType,
+  SetMaintenanceModeParams,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -128,4 +130,6 @@ export type {
   AutoSubmitBatchMetadata,
   NodeStatistics,
   NodeStatisticsQueryParams,
+  MaintenanceModeType,
+  SetMaintenanceModeParams,
 };

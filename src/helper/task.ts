@@ -34,6 +34,7 @@ import {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
+  MaintenanceModeType,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
