@@ -7,7 +7,6 @@ import {
   Statistics,
   AddImageParams,
   WithSignature,
-  WithVerifySignature,
   UserQueryParams,
   PaymentParams,
   TxHistoryQueryParams,
@@ -19,7 +18,6 @@ import {
   TransactionInfo,
   AppConfig,
   OmitSignature,
-  OmitVerifySignature,
   ModifyImageParams,
   SubscriptionRequest,
   ERC20DepositInfo,
@@ -36,7 +34,6 @@ import {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
-  MaintenanceModeType,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -433,7 +430,7 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async setMaintenanceMode(req: WithVerifySignature<SetMaintenanceModeParams>) {
+  async setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>) {
     let response = await this.sendRequestWithSignature<SetMaintenanceModeParams>(
       "POST",
       TaskEndpoint.SET_MAINTENANCE_MODE,
@@ -449,7 +446,7 @@ export class ZkWasmServiceHelper {
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
-    task: WithSignature<T> | WithVerifySignature<T>,
+    task: WithSignature<T>,
     isFormData = false
   ): Promise<any> {
     // TODO: create return types for tasks using this method
@@ -487,14 +484,14 @@ export class ZkWasmServiceHelper {
     return this.endpoint.invokeRequest(method, path, payload, headers);
   }
 
-  createHeaders<T>(task: WithSignature<T> | WithVerifySignature<T>): Record<string, string> {
+  createHeaders<T>(task: WithSignature<T>): Record<string, string> {
     let headers = {
       "x-eth-signature": task.signature,
     };
     return headers;
   }
 
-  omitSignature<T>(task: WithSignature<T> | WithVerifySignature<T>): OmitSignature<T> | OmitVerifySignature<T> {
+  omitSignature<T>(task: WithSignature<T>): OmitSignature<T> {
     const { signature, ...task_details } = task;
     return task_details;
   }

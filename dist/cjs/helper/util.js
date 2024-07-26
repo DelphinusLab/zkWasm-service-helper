@@ -165,7 +165,7 @@ class ZkWasmUtil {
         message += params.mode;
         message += params.nonce;
         message += params.request_type;
-        message += params.node_address;
+        message += params.user_address;
         return message;
     }
     static createProvingSignMessage(params) {

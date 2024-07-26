@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = void 0;
+exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = void 0;
 var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";
@@ -47,3 +47,8 @@ var MaintenanceModeType;
     MaintenanceModeType["Disabled"] = "Disabled";
     MaintenanceModeType["Enabled"] = "Enabled";
 })(MaintenanceModeType = exports.MaintenanceModeType || (exports.MaintenanceModeType = {}));
+var AdminRequestType;
+(function (AdminRequestType) {
+    AdminRequestType["Default"] = "Default";
+    AdminRequestType["MaintenanceMode"] = "MaintenanceMode";
+})(AdminRequestType = exports.AdminRequestType || (exports.AdminRequestType = {}));

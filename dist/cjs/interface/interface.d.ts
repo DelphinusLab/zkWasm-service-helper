@@ -297,14 +297,6 @@ export interface VerifyData {
     aggregator_instances: Array<BigInt>;
     aux_instances: Array<BigInt>;
 }
-export type WithVerifySignature<T> = T & {
-    signature: string;
-} & {
-    nonce: number;
-    request_type: string;
-    node_address: string;
-};
-export type OmitVerifySignature<T> = Omit<WithVerifySignature<T>, "signature">;
 export interface QueryParams {
     user_address: string | null;
     md5: string | null;
@@ -479,9 +471,13 @@ export declare enum MaintenanceModeType {
     Disabled = "Disabled",
     Enabled = "Enabled"
 }
+export declare enum AdminRequestType {
+    Default = "Default",
+    MaintenanceMode = "MaintenanceMode"
+}
 export interface SetMaintenanceModeParams {
     mode: MaintenanceModeType;
     nonce: number;
-    request_type: string;
-    node_address: string;
+    request_type: AdminRequestType;
+    user_address: string;
 }

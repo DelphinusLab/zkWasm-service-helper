@@ -12,7 +12,6 @@ import {
   Statistics,
   AddImageParams,
   WithSignature,
-  WithVerifySignature,
   User,
   UserQueryParams,
   PaymentParams,
@@ -59,6 +58,7 @@ import {
   NodeStatisticsQueryParams,
   MaintenanceModeType,
   SetMaintenanceModeParams,
+  AdminRequestType,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -79,6 +79,7 @@ export {
   ProofSubmitMode,
   ProvePaymentSrc,
   MaintenanceModeType,
+  AdminRequestType,
 };
 
 export type {
@@ -97,7 +98,6 @@ export type {
   TaskStatus,
   TaskType,
   WithSignature,
-  WithVerifySignature,
   User,
   UserQueryParams,
   Subscription,

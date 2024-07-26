@@ -44,3 +44,8 @@ export var MaintenanceModeType;
     MaintenanceModeType["Disabled"] = "Disabled";
     MaintenanceModeType["Enabled"] = "Enabled";
 })(MaintenanceModeType || (MaintenanceModeType = {}));
+export var AdminRequestType;
+(function (AdminRequestType) {
+    AdminRequestType["Default"] = "Default";
+    AdminRequestType["MaintenanceMode"] = "MaintenanceMode";
+})(AdminRequestType || (AdminRequestType = {}));
