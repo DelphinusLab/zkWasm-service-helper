@@ -282,6 +282,9 @@ export class ZkWasmUtil {
   static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string {
     let message = "";
     message += params.mode;
+    message += params.nonce;
+    message += params.request_type;
+    message += params.node_address;
     return message;
   }
 

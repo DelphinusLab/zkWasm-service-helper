@@ -481,4 +481,7 @@ export declare enum MaintenanceModeType {
 }
 export interface SetMaintenanceModeParams {
     mode: MaintenanceModeType;
+    nonce: number;
+    request_type: string;
+    node_address: string;
 }

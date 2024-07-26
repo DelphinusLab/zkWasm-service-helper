@@ -246,6 +246,9 @@ export class ZkWasmUtil {
     static createSetMaintenanceModeSignMessage(params) {
         let message = "";
         message += params.mode;
+        message += params.nonce;
+        message += params.request_type;
+        message += params.node_address;
         return message;
     }
     static createProvingSignMessage(params) {
