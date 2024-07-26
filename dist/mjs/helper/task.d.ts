@@ -38,7 +38,7 @@ export declare enum TaskEndpoint {
     RESET = "/reset",
     MODIFY = "/modify",
     PAY = "/pay",
-    SET_MAINTENANCE_MODE = "/set_maintenance_mode",
+    SET_MAINTENANCE_MODE = "/admin/set_maintenance_mode",
     SUBSCRIBE = "/subscribe",
     LOGS = "/logs",
     ROUND_1_BATCH = "/round1_batch_proofs",

@@ -311,7 +311,7 @@ export var TaskEndpoint;
     TaskEndpoint["RESET"] = "/reset";
     TaskEndpoint["MODIFY"] = "/modify";
     TaskEndpoint["PAY"] = "/pay";
-    TaskEndpoint["SET_MAINTENANCE_MODE"] = "/set_maintenance_mode";
+    TaskEndpoint["SET_MAINTENANCE_MODE"] = "/admin/set_maintenance_mode";
     TaskEndpoint["SUBSCRIBE"] = "/subscribe";
     TaskEndpoint["LOGS"] = "/logs";
     TaskEndpoint["ROUND_1_BATCH"] = "/round1_batch_proofs";
