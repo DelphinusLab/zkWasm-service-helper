@@ -96,6 +96,7 @@ export type {
   AddImageParams,
   TaskStatus,
   TaskType,
+  WithSignature,
   WithVerifySignature,
   User,
   UserQueryParams,
