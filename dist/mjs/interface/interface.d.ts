@@ -467,3 +467,17 @@ export interface TransactionInfo {
     user_address: string;
     receiver_address: string;
 }
+export declare enum MaintenanceModeType {
+    Disabled = "Disabled",
+    Enabled = "Enabled"
+}
+export declare enum AdminRequestType {
+    Default = "Default",
+    MaintenanceMode = "MaintenanceMode"
+}
+export interface SetMaintenanceModeParams {
+    mode: MaintenanceModeType;
+    nonce: number;
+    request_type: AdminRequestType;
+    user_address: string;
+}

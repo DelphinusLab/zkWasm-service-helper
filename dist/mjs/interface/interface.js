@@ -39,3 +39,13 @@ export var ProofSubmitMode;
     ProofSubmitMode["Manual"] = "Manual";
     ProofSubmitMode["Auto"] = "Auto";
 })(ProofSubmitMode || (ProofSubmitMode = {}));
+export var MaintenanceModeType;
+(function (MaintenanceModeType) {
+    MaintenanceModeType["Disabled"] = "Disabled";
+    MaintenanceModeType["Enabled"] = "Enabled";
+})(MaintenanceModeType || (MaintenanceModeType = {}));
+export var AdminRequestType;
+(function (AdminRequestType) {
+    AdminRequestType["Default"] = "Default";
+    AdminRequestType["MaintenanceMode"] = "MaintenanceMode";
+})(AdminRequestType || (AdminRequestType = {}));

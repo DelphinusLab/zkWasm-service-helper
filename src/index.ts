@@ -56,6 +56,9 @@ import {
   ProvePaymentSrc,
   NodeStatistics,
   NodeStatisticsQueryParams,
+  MaintenanceModeType,
+  SetMaintenanceModeParams,
+  AdminRequestType,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -75,6 +78,8 @@ export {
   Round2Status,
   ProofSubmitMode,
   ProvePaymentSrc,
+  MaintenanceModeType,
+  AdminRequestType,
 };
 
 export type {
@@ -128,4 +133,5 @@ export type {
   AutoSubmitBatchMetadata,
   NodeStatistics,
   NodeStatisticsQueryParams,
+  SetMaintenanceModeParams,
 };
