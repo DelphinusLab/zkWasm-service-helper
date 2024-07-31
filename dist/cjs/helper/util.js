@@ -160,6 +160,14 @@ class ZkWasmUtil {
         }
         return message;
     }
+    static createSetMaintenanceModeSignMessage(params) {
+        let message = "";
+        message += params.mode;
+        message += params.nonce;
+        message += params.request_type;
+        message += params.user_address;
+        return message;
+    }
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";
