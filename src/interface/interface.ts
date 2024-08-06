@@ -21,7 +21,7 @@ export interface NodeStatistics {
     setup_timing_stats?: TimingStatistics;
     proof_timing_stats?: TimingStatistics;
   };
-  latest_version_info: {
+  latest_version_info?: {
     version: string;
   };
 }
@@ -583,8 +583,8 @@ export enum AdminRequestType {
 }
 
 export interface SetMaintenanceModeParams {
-  mode: MaintenanceModeType,
-  nonce : number,
-  request_type: AdminRequestType,
-  user_address: string,
+  mode: MaintenanceModeType;
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
 }
