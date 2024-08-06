@@ -19,6 +19,9 @@ export interface NodeStatistics {
         setup_timing_stats?: TimingStatistics;
         proof_timing_stats?: TimingStatistics;
     };
+    latest_version_info: {
+        version: string;
+    };
 }
 export interface NodeStatisticsQueryParams {
     address?: string;
