@@ -59,6 +59,7 @@ import {
   MaintenanceModeType,
   SetMaintenanceModeParams,
   AdminRequestType,
+  ServerVersionInfo,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -134,4 +135,5 @@ export type {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
+  ServerVersionInfo,
 };
