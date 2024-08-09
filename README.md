@@ -43,7 +43,7 @@ npm install
 
 ### 3. Run the example you want to run.
 
-Currently only the scripts under `src/tasks` and `src/verify` are runnable. The `queries` are merely examples which are used in these executable scripts.
+Currently only the scripts under `src/tasks` and `src/verify` are runnable. The `queries` are merely examples that are used in these executable scripts.
 
 ```bash
 npx tsx src/tasks/addNewImage.ts
