@@ -162,7 +162,7 @@ export class ZkWasmServiceHelper {
 
   async queryNodeStatistics(
     query: NodeStatisticsQueryParams
-  ): Promise<NodeStatistics[]> {
+  ): Promise<PaginationResult<NodeStatistics[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse(JSON.stringify(query));
 
@@ -175,7 +175,7 @@ export class ZkWasmServiceHelper {
       console.log("loading node statistics");
     }
 
-    return res as NodeStatistics[];
+    return res as PaginationResult<NodeStatistics[]>;
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
@@ -431,12 +431,13 @@ export class ZkWasmServiceHelper {
   }
 
   async setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>) {
-    let response = await this.sendRequestWithSignature<SetMaintenanceModeParams>(
-      "POST",
-      TaskEndpoint.SET_MAINTENANCE_MODE,
-      req,
-      true,
-    );
+    let response =
+      await this.sendRequestWithSignature<SetMaintenanceModeParams>(
+        "POST",
+        TaskEndpoint.SET_MAINTENANCE_MODE,
+        req,
+        true
+      );
     if (this.endpoint.enable_logs) {
       console.log("setMaintenanceMode response:", response.toString());
     }
