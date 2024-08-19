@@ -300,7 +300,6 @@ export enum ProofSubmitMode {
 }
 
 export interface BaseProvingParams {
-  user_address: string;
   md5: string;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
@@ -325,12 +324,12 @@ export interface WithoutInputContextType {
   input_context_md5?: never;
 }
 
-export type ProvingParams = BaseProvingParams &
-  (
-    | WithCustomInputContextType
-    | WithoutInputContextType
-    | WithNonCustomInputContextType
-  );
+export type ContextOptions =
+  | WithCustomInputContextType
+  | WithoutInputContextType
+  | WithNonCustomInputContextType;
+
+export type ProvingParams = BaseProvingParams & ContextOptions;
 
 export interface DeployParams {
   user_address: string;
@@ -366,7 +365,12 @@ export interface ModifyImageParams {
   avator_url: string;
 }
 
-export type WithSignature<T> = T & { signature: string; user_address: string };
+export type WithSignature<T> = T & {
+  signature: string;
+  user_address: string;
+  nonce: number;
+};
+
 export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
   proof: Array<BigInt>;
@@ -569,6 +573,7 @@ export interface User {
    */
   balance: Uint8Array;
   credits: string;
+  nonce: number;
 }
 
 export interface TransactionInfo {

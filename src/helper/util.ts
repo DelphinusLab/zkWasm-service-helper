@@ -279,7 +279,9 @@ export class ZkWasmUtil {
     return message;
   }
 
-  static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string {
+  static createSetMaintenanceModeSignMessage(
+    params: SetMaintenanceModeParams
+  ): string {
     let message = "";
     message += params.mode;
     message += params.nonce;
@@ -291,7 +293,7 @@ export class ZkWasmUtil {
   static createProvingSignMessage(params: ProvingParams): string {
     // No need to sign the file itself, just the md5
     let message = "";
-    message += params.user_address;
+    //message += params.user_address;
     message += params.md5;
 
     // for array elements, append one by one
