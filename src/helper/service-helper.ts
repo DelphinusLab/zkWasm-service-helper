@@ -1,5 +1,5 @@
 import FormData from "form-data";
-import { ZkWasmUtil } from "helper/util.js";
+import { ZkWasmUtil } from "../helper/util.js";
 import {
   QueryParams,
   ProvingParams,
