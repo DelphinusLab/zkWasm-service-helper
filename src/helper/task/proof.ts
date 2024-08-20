@@ -5,7 +5,7 @@ import {
   ProvingParams,
   RequiresNonce,
   WithSignature,
-} from "interface/interface.js";
+} from "../../interface/interface.js";
 import { ZkWasmServiceHelper } from "../service-helper";
 import { SignedRequest } from "./shared";
 

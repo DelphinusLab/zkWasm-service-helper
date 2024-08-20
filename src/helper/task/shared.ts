@@ -1,4 +1,4 @@
-import { SignatureRequest } from "interface/interface.js";
+import { SignatureRequest } from "../../interface/interface.js";
 
 export abstract class SignedRequest {
   user_address: string;

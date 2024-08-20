@@ -1,4 +1,4 @@
-import { InputContextType, } from "interface/interface.js";
+import { InputContextType, } from "../../interface/interface.js";
 import { ZkWasmServiceHelper } from "../service-helper";
 import { SignedRequest } from "./shared";
 export class ProvingTask extends SignedRequest {

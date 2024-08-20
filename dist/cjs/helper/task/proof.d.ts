@@ -1,4 +1,4 @@
-import { InputContextType, ProofSubmitMode, ProvingParams, RequiresNonce, WithSignature } from "interface/interface.js";
+import { InputContextType, ProofSubmitMode, ProvingParams, RequiresNonce, WithSignature } from "../../interface/interface.js";
 import { SignedRequest } from "./shared";
 export declare class ProvingTask extends SignedRequest {
     md5: string;
