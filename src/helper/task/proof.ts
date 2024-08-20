@@ -3,29 +3,13 @@ import {
   InputContextType,
   ProofSubmitMode,
   ProvingParams,
+  RequiresNonce,
   WithSignature,
-} from "interface/interface";
-import { ZkWasmServiceHelper } from "./task";
-
-abstract class SignedRequest {
-  user_address: string;
-  nonce: number;
-  signature: string | undefined;
-
-  constructor(user_address: string, nonce: number) {
-    this.user_address = user_address;
-    this.nonce = nonce;
-  }
-
-  // When creating the message, ensure that the fields are in the correct order with the fields to be submitted from the inheriting class.
-  abstract createSignMessage(): string;
-  abstract createSignedTaskParams(): WithSignature<unknown>;
-  /// where T is the return type of the submitTask method
-  abstract submitTask(endpoint: string): Promise<unknown>;
-}
+} from "interface/interface.js";
+import { ZkWasmServiceHelper } from "../service-helper";
+import { SignedRequest } from "./shared";
 
 export class ProvingTask extends SignedRequest {
-  // Since inheriting from signed request, user_address and nonce will always be first
   md5: string;
   public_inputs: string[];
   private_inputs: string[];
@@ -35,7 +19,8 @@ export class ProvingTask extends SignedRequest {
   input_context_md5: string | undefined;
 
   constructor(params: ProvingParams, user_address: string, nonce: number) {
-    super(user_address, nonce);
+    super(user_address);
+    this.nonce = nonce;
     this.md5 = params.md5;
     this.public_inputs = params.public_inputs;
     this.private_inputs = params.private_inputs;
@@ -44,6 +29,10 @@ export class ProvingTask extends SignedRequest {
       params.input_context_type || InputContextType.ImageCurrent;
     this.input_context = params.input_context;
     this.input_context_md5 = params.input_context_md5;
+  }
+
+  requiresNonce(): boolean {
+    return true;
   }
 
   createSignMessage(): string {
@@ -78,7 +67,7 @@ export class ProvingTask extends SignedRequest {
     return message;
   }
 
-  createSignedTaskParams(): WithSignature<ProvingParams> {
+  createSignedTaskParams(): WithSignature<RequiresNonce<ProvingParams>> {
     let context: ContextOptions;
 
     switch (this.input_context_type) {
@@ -108,7 +97,7 @@ export class ProvingTask extends SignedRequest {
     }
     return {
       user_address: this.user_address,
-      nonce: this.nonce,
+      nonce: this.nonce!,
       md5: this.md5,
       public_inputs: this.public_inputs,
       private_inputs: this.private_inputs,
@@ -118,8 +107,8 @@ export class ProvingTask extends SignedRequest {
     };
   }
 
-  async submitTask(endpoint: string): Promise<void> {
-    const helper = new ZkWasmServiceHelper(endpoint, "", "");
+  async submitTask(server_url: string): Promise<void> {
+    const helper = new ZkWasmServiceHelper(server_url, "", "");
 
     return await helper.addProvingTask(this.createSignedTaskParams());
   }

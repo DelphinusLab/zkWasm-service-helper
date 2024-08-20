@@ -1,5 +1,5 @@
 import FormData from "form-data";
-import { ZkWasmUtil } from "./util.js";
+import { ZkWasmUtil } from "helper/util.js";
 import {
   QueryParams,
   ProvingParams,
@@ -34,6 +34,8 @@ import {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
+  SignatureRequest,
+  RequiresNonce,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -364,13 +366,10 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async addNewWasmImage(task: WithSignature<AddImageParams>) {
-    let response = await this.sendRequestWithSignature<AddImageParams>(
-      "POST",
-      TaskEndpoint.SETUP,
-      task,
-      true
-    );
+  async addNewWasmImage(task: WithSignature<RequiresNonce<AddImageParams>>) {
+    let response = await this.sendRequestWithSignature<
+      RequiresNonce<AddImageParams>
+    >("POST", TaskEndpoint.SETUP, task, true);
 
     if (this.endpoint.enable_logs) {
       console.log("get addNewWasmImage response:", response.toString());
@@ -378,13 +377,10 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async addProvingTask(task: WithSignature<ProvingParams>) {
-    let response = await this.sendRequestWithSignature<ProvingParams>(
-      "POST",
-      TaskEndpoint.PROVE,
-      task,
-      true
-    );
+  async addProvingTask(task: SignatureRequest<RequiresNonce<ProvingParams>>) {
+    let response = await this.sendRequestWithSignature<
+      RequiresNonce<ProvingParams>
+    >("POST", TaskEndpoint.PROVE, task, true);
     if (this.endpoint.enable_logs) {
       console.log("get addProvingTask response:", response);
     }
@@ -403,13 +399,10 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async addResetTask(task: WithSignature<ResetImageParams>) {
-    let response = await this.sendRequestWithSignature<ResetImageParams>(
-      "POST",
-      TaskEndpoint.RESET,
-      task,
-      true
-    );
+  async addResetTask(task: WithSignature<RequiresNonce<ResetImageParams>>) {
+    let response = await this.sendRequestWithSignature<
+      RequiresNonce<ResetImageParams>
+    >("POST", TaskEndpoint.RESET, task, true);
 
     if (this.endpoint.enable_logs) {
       console.log("get addResetTask response:", response.toString());
@@ -417,12 +410,10 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async modifyImage(data: WithSignature<ModifyImageParams>) {
-    let response = await this.sendRequestWithSignature<ModifyImageParams>(
-      "POST",
-      TaskEndpoint.MODIFY,
-      data
-    );
+  async modifyImage(data: WithSignature<RequiresNonce<ModifyImageParams>>) {
+    let response = await this.sendRequestWithSignature<
+      RequiresNonce<ModifyImageParams>
+    >("POST", TaskEndpoint.MODIFY, data);
 
     if (this.endpoint.enable_logs) {
       console.log("get modifyImage response:", response.toString());
@@ -447,7 +438,7 @@ export class ZkWasmServiceHelper {
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
-    task: WithSignature<T>,
+    task: SignatureRequest<T>,
     isFormData = false
   ): Promise<any> {
     // TODO: create return types for tasks using this method

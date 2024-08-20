@@ -240,7 +240,6 @@ export declare enum ProofSubmitMode {
     Auto = "Auto"
 }
 export interface BaseProvingParams {
-    user_address: string;
     md5: string;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
@@ -261,7 +260,8 @@ export interface WithoutInputContextType {
     input_context?: never;
     input_context_md5?: never;
 }
-export type ProvingParams = BaseProvingParams & (WithCustomInputContextType | WithoutInputContextType | WithNonCustomInputContextType);
+export type ContextOptions = WithCustomInputContextType | WithoutInputContextType | WithNonCustomInputContextType;
+export type ProvingParams = BaseProvingParams & ContextOptions;
 export interface DeployParams {
     user_address: string;
     md5: string;
@@ -293,6 +293,13 @@ export type WithSignature<T> = T & {
     signature: string;
     user_address: string;
 };
+export type WithOptionalNonce<T> = T & {
+    nonce?: number;
+};
+export type RequiresNonce<T> = T & {
+    nonce: number;
+};
+export type SignatureRequest<T> = WithSignature<WithOptionalNonce<T>>;
 export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
     proof: Array<BigInt>;
@@ -468,6 +475,7 @@ export interface User {
      */
     balance: Uint8Array;
     credits: string;
+    nonce: number;
 }
 export interface TransactionInfo {
     txhash: string;

@@ -171,7 +171,7 @@ class ZkWasmUtil {
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";
-        message += params.user_address;
+        //message += params.user_address;
         message += params.md5;
         // for array elements, append one by one
         for (const input of params.public_inputs) {

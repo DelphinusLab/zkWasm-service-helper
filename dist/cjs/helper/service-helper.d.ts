@@ -1,4 +1,4 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, SignatureRequest, RequiresNonce } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -20,13 +20,13 @@ export declare class ZkWasmServiceHelper {
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addSubscription(subscription: SubscriptionRequest): Promise<any>;
-    addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;
-    addProvingTask(task: WithSignature<ProvingParams>): Promise<any>;
+    addNewWasmImage(task: WithSignature<RequiresNonce<AddImageParams>>): Promise<any>;
+    addProvingTask(task: SignatureRequest<RequiresNonce<ProvingParams>>): Promise<any>;
     addDeployTask(task: WithSignature<DeployParams>): Promise<any>;
-    addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
-    modifyImage(data: WithSignature<ModifyImageParams>): Promise<any>;
+    addResetTask(task: WithSignature<RequiresNonce<ResetImageParams>>): Promise<any>;
+    modifyImage(data: WithSignature<RequiresNonce<ModifyImageParams>>): Promise<any>;
     setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>): Promise<any>;
-    sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
+    sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: SignatureRequest<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;
 }

@@ -25,7 +25,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TaskEndpoint = exports.ZkWasmServiceHelper = void 0;
 const form_data_1 = __importDefault(require("form-data"));
-const util_js_1 = require("./util.js");
+const util_js_1 = require("helper/util.js");
 const endpoint_js_1 = require("./endpoint.js");
 const ethers_1 = require("ethers");
 class ZkWasmServiceHelper {

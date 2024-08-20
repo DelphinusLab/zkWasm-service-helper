@@ -1,5 +1,5 @@
 import FormData from "form-data";
-import { ZkWasmUtil } from "./util.js";
+import { ZkWasmUtil } from "helper/util.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
 export class ZkWasmServiceHelper {

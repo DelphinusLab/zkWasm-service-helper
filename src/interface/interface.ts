@@ -368,8 +368,19 @@ export interface ModifyImageParams {
 export type WithSignature<T> = T & {
   signature: string;
   user_address: string;
+};
+
+export type WithOptionalNonce<T> = T & {
+  nonce?: number;
+};
+
+// Type to enforce nonce at the outer level
+export type RequiresNonce<T> = T & {
   nonce: number;
 };
+
+// Combined type for requests that may or may not need a nonce
+export type SignatureRequest<T> = WithSignature<WithOptionalNonce<T>>;
 
 export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
