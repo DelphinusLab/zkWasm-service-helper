@@ -37,13 +37,15 @@ class ZkWasmServiceEndpoint {
                     }
                     return {
                         success: false,
-                        error: e.response ? {
-                            code: e.response.status,
-                            message: e.response.data
-                        } : {
-                            code: null,
-                            message: e.message,
-                        },
+                        error: e.response
+                            ? {
+                                code: e.response.status,
+                                message: e.response.data,
+                            }
+                            : {
+                                code: null,
+                                message: e.message,
+                            },
                     };
                 }
             }
@@ -60,13 +62,15 @@ class ZkWasmServiceEndpoint {
                     }
                     return {
                         success: false,
-                        error: e.response ? {
-                            code: e.response.status,
-                            message: e.response.data
-                        } : {
-                            code: null,
-                            message: e.message,
-                        },
+                        error: e.response
+                            ? {
+                                code: e.response.status,
+                                message: e.response.data,
+                            }
+                            : {
+                                code: null,
+                                message: e.message,
+                            },
                     };
                 }
             }
@@ -78,7 +82,9 @@ class ZkWasmServiceEndpoint {
                 if (this.enable_logs) {
                     console.error(json);
                 }
-                throw new Error(json["error"].message);
+                // Errors should be in the format {success: false, result: T }
+                // Consider throwing the object instead of the message
+                throw new Error(json["error"].message.result.message);
             }
             return json["result"];
         });
