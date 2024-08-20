@@ -6,8 +6,8 @@ import {
   RequiresNonce,
   WithSignature,
 } from "../../interface/interface.js";
-import { ZkWasmServiceHelper } from "../service-helper";
-import { SignedRequest } from "./shared";
+import { ZkWasmServiceHelper } from "../service-helper.js";
+import { SignedRequest } from "./shared.js";
 
 export class ProvingTask extends SignedRequest {
   md5: string;

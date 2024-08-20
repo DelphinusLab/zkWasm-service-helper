@@ -1,5 +1,5 @@
 import { AddImageParams, ProvePaymentSrc, RequiresNonce, WithSignature } from "../../interface/interface.js";
-import { SignedRequest } from "./shared";
+import { SignedRequest } from "./shared.js";
 export declare class SetupTask extends SignedRequest {
     md5: string;
     wasm_bytes: ArrayBuffer;

@@ -1,4 +1,4 @@
-import { ProvingTask } from "./proof";
-import { SetupTask } from "./setup";
+import { ProvingTask } from "./proof.js";
+import { SetupTask } from "./setup.js";
 
 export { ProvingTask, SetupTask };
