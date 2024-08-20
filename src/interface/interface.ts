@@ -72,6 +72,11 @@ export interface Task {
   auto_submit_status?: AutoSubmitStatus;
 }
 
+export interface TaskReceipt {
+  md5: string;
+  id: string;
+}
+
 export type ObjectId = {
   $oid: string;
 };

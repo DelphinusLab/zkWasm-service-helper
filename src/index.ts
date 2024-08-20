@@ -61,6 +61,7 @@ import {
   AdminRequestType,
   ServerVersionInfo,
   RequiresNonce,
+  TaskReceipt,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -141,4 +142,5 @@ export type {
   SetMaintenanceModeParams,
   ServerVersionInfo,
   RequiresNonce,
+  TaskReceipt,
 };

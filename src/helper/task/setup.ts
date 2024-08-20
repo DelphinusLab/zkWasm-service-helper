@@ -2,6 +2,7 @@ import {
   AddImageParams,
   ProvePaymentSrc,
   RequiresNonce,
+  TaskReceipt,
   WithSignature,
 } from "../../interface/interface.js";
 import { ZkWasmServiceHelper } from "../service-helper.js";
@@ -73,7 +74,7 @@ export class SetupTask extends SignedRequest {
     };
   }
 
-  async submitTask(server_url: string): Promise<void> {
+  async submitTask(server_url: string): Promise<TaskReceipt> {
     const helper = new ZkWasmServiceHelper(server_url, "", "");
 
     return await helper.addNewWasmImage(this.createSignedTaskParams());

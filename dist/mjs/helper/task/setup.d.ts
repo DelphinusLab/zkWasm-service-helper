@@ -1,4 +1,4 @@
-import { AddImageParams, ProvePaymentSrc, RequiresNonce, WithSignature } from "../../interface/interface.js";
+import { AddImageParams, ProvePaymentSrc, RequiresNonce, TaskReceipt, WithSignature } from "../../interface/interface.js";
 import { SignedRequest } from "./shared.js";
 export declare class SetupTask extends SignedRequest {
     md5: string;
@@ -13,5 +13,5 @@ export declare class SetupTask extends SignedRequest {
     requiresNonce(): boolean;
     createSignMessage(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<AddImageParams>>;
-    submitTask(server_url: string): Promise<void>;
+    submitTask(server_url: string): Promise<TaskReceipt>;
 }

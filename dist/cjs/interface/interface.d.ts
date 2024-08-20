@@ -65,6 +65,10 @@ export interface Task {
     batch_proof_data?: BatchProofData;
     auto_submit_status?: AutoSubmitStatus;
 }
+export interface TaskReceipt {
+    md5: string;
+    id: string;
+}
 export type ObjectId = {
     $oid: string;
 };

@@ -1,4 +1,4 @@
-import { InputContextType, ProofSubmitMode, ProvingParams, RequiresNonce, WithSignature } from "../../interface/interface.js";
+import { InputContextType, ProofSubmitMode, ProvingParams, RequiresNonce, TaskReceipt, WithSignature } from "../../interface/interface.js";
 import { SignedRequest } from "./shared.js";
 export declare class ProvingTask extends SignedRequest {
     md5: string;
@@ -12,5 +12,5 @@ export declare class ProvingTask extends SignedRequest {
     requiresNonce(): boolean;
     createSignMessage(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<ProvingParams>>;
-    submitTask(server_url: string): Promise<void>;
+    submitTask(server_url: string): Promise<TaskReceipt>;
 }

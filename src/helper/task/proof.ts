@@ -4,6 +4,7 @@ import {
   ProofSubmitMode,
   ProvingParams,
   RequiresNonce,
+  TaskReceipt,
   WithSignature,
 } from "../../interface/interface.js";
 import { ZkWasmServiceHelper } from "../service-helper.js";
@@ -107,7 +108,7 @@ export class ProvingTask extends SignedRequest {
     };
   }
 
-  async submitTask(server_url: string): Promise<void> {
+  async submitTask(server_url: string): Promise<TaskReceipt> {
     const helper = new ZkWasmServiceHelper(server_url, "", "");
 
     return await helper.addProvingTask(this.createSignedTaskParams());
