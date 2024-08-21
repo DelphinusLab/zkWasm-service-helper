@@ -24,11 +24,10 @@ export class SetupTask extends SignedRequest {
   constructor(
     service_url: string,
     params: AddImageParams,
-    user_address: string,
-    nonce: number
+    user_address: string
   ) {
     super(service_url, user_address);
-    this.nonce = nonce;
+
     this.md5 = params.image_md5;
     this.image_name = params.name;
     this.description_url = params.description_url;

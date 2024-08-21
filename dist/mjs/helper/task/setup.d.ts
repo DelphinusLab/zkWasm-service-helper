@@ -11,7 +11,7 @@ export declare class SetupTask extends SignedRequest {
     auto_submit_network_ids: number[];
     initial_context: unknown;
     initial_context_md5: string | undefined;
-    constructor(service_url: string, params: AddImageParams, user_address: string, nonce: number);
+    constructor(service_url: string, params: AddImageParams, user_address: string);
     createSignMessage(): Promise<string>;
     createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<AddImageParams>>;

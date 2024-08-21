@@ -13,9 +13,8 @@ exports.ProvingTask = void 0;
 const interface_js_1 = require("../../interface/interface.js");
 const shared_js_1 = require("./shared.js");
 class ProvingTask extends shared_js_1.SignedRequest {
-    constructor(service_url, params, user_address, nonce) {
+    constructor(service_url, params, user_address) {
         super(service_url, user_address);
-        this.nonce = nonce;
         this.md5 = params.md5;
         this.public_inputs = params.public_inputs;
         this.private_inputs = params.private_inputs;

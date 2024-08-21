@@ -8,9 +8,8 @@ export class ProvingTask extends SignedRequest {
     input_context_type;
     input_context;
     input_context_md5;
-    constructor(service_url, params, user_address, nonce) {
+    constructor(service_url, params, user_address) {
         super(service_url, user_address);
-        this.nonce = nonce;
         this.md5 = params.md5;
         this.public_inputs = params.public_inputs;
         this.private_inputs = params.private_inputs;

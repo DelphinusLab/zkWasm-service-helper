@@ -12,9 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetupTask = void 0;
 const shared_js_1 = require("./shared.js");
 class SetupTask extends shared_js_1.SignedRequest {
-    constructor(service_url, params, user_address, nonce) {
+    constructor(service_url, params, user_address) {
         super(service_url, user_address);
-        this.nonce = nonce;
         this.md5 = params.image_md5;
         this.image_name = params.name;
         this.description_url = params.description_url;

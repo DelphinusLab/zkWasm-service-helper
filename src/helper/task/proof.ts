@@ -22,11 +22,10 @@ export class ProvingTask extends SignedRequest {
   constructor(
     service_url: string,
     params: ProvingParams,
-    user_address: string,
-    nonce: number
+    user_address: string
   ) {
     super(service_url, user_address);
-    this.nonce = nonce;
+
     this.md5 = params.md5;
     this.public_inputs = params.public_inputs;
     this.private_inputs = params.private_inputs;
