@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SetupTask = exports.ProvingTask = exports.AdminRequestType = exports.MaintenanceModeType = exports.ProvePaymentSrc = exports.ProofSubmitMode = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.AutoSubmitStatus = exports.InputContextType = exports.ERC20Lib = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
+exports.ModifyRequest = exports.ResetTask = exports.SetupTask = exports.ProvingTask = exports.AdminRequestType = exports.MaintenanceModeType = exports.ProvePaymentSrc = exports.ProofSubmitMode = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.AutoSubmitStatus = exports.InputContextType = exports.ERC20Lib = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
 const interface_js_1 = require("./interface/interface.js");
 Object.defineProperty(exports, "InputContextType", { enumerable: true, get: function () { return interface_js_1.InputContextType; } });
 Object.defineProperty(exports, "AutoSubmitProofStatus", { enumerable: true, get: function () { return interface_js_1.AutoSubmitProofStatus; } });
@@ -20,5 +20,7 @@ Object.defineProperty(exports, "ZkWasmServiceHelper", { enumerable: true, get: f
 const index_js_1 = require("./helper/task/index.js");
 Object.defineProperty(exports, "ProvingTask", { enumerable: true, get: function () { return index_js_1.ProvingTask; } });
 Object.defineProperty(exports, "SetupTask", { enumerable: true, get: function () { return index_js_1.SetupTask; } });
+Object.defineProperty(exports, "ResetTask", { enumerable: true, get: function () { return index_js_1.ResetTask; } });
+Object.defineProperty(exports, "ModifyRequest", { enumerable: true, get: function () { return index_js_1.ModifyRequest; } });
 const ERC20_js_1 = require("./abi/ERC20.js");
 Object.defineProperty(exports, "ERC20Lib", { enumerable: true, get: function () { return ERC20_js_1.ERC20Lib; } });

@@ -67,7 +67,12 @@ import {
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
 import { ZkWasmServiceHelper } from "./helper/service-helper.js";
-import { ProvingTask, SetupTask } from "./helper/task/index.js";
+import {
+  ProvingTask,
+  SetupTask,
+  ResetTask,
+  ModifyRequest,
+} from "./helper/task/index.js";
 import { ERC20Lib } from "./abi/ERC20.js";
 
 export {
@@ -86,6 +91,8 @@ export {
   AdminRequestType,
   ProvingTask,
   SetupTask,
+  ResetTask,
+  ModifyRequest,
 };
 
 export type {
