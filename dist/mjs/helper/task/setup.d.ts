@@ -9,9 +9,11 @@ export declare class SetupTask extends SignedRequest {
     circuit_size: number;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
-    constructor(params: AddImageParams, user_address: string, nonce: number);
-    requiresNonce(): boolean;
-    createSignMessage(): string;
+    initial_context: unknown;
+    initial_context_md5: string | undefined;
+    constructor(service_url: string, params: AddImageParams, user_address: string, nonce: number);
+    createSignMessage(): Promise<string>;
+    createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<AddImageParams>>;
-    submitTask(server_url: string): Promise<TaskReceipt>;
+    submitTask(): Promise<TaskReceipt>;
 }

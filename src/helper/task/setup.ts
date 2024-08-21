@@ -5,7 +5,7 @@ import {
   TaskReceipt,
   WithSignature,
 } from "../../interface/interface.js";
-import { ZkWasmServiceHelper } from "../service-helper.js";
+
 import { SignedRequest } from "./shared.js";
 
 export class SetupTask extends SignedRequest {
@@ -18,8 +18,16 @@ export class SetupTask extends SignedRequest {
   prove_payment_src: ProvePaymentSrc;
   auto_submit_network_ids: number[];
 
-  constructor(params: AddImageParams, user_address: string, nonce: number) {
-    super(user_address);
+  initial_context: unknown;
+  initial_context_md5: string | undefined;
+
+  constructor(
+    service_url: string,
+    params: AddImageParams,
+    user_address: string,
+    nonce: number
+  ) {
+    super(service_url, user_address);
     this.nonce = nonce;
     this.md5 = params.image_md5;
     this.image_name = params.name;
@@ -31,12 +39,14 @@ export class SetupTask extends SignedRequest {
     this.wasm_bytes = params.image;
   }
 
-  requiresNonce(): boolean {
-    return true;
+  async createSignMessage(): Promise<string> {
+    const nonce = await this.fetchNonce();
+    this.nonce = nonce;
+    // No need to sign the file itself, just the md5
+    return this.createSignMessageFromFields();
   }
 
-  createSignMessage(): string {
-    // No need to sign the file itself, just the md5
+  createSignMessageFromFields(): string {
     let message = "";
     message += this.user_address;
     message += this.nonce;
@@ -52,9 +62,9 @@ export class SetupTask extends SignedRequest {
     }
 
     // Additional params afterwards
-    // if (this.initial_context) {
-    //   message += this.initial_context_md5;
-    // }
+    if (this.initial_context) {
+      message += this.initial_context_md5;
+    }
     return message;
   }
 
@@ -74,9 +84,7 @@ export class SetupTask extends SignedRequest {
     };
   }
 
-  async submitTask(server_url: string): Promise<TaskReceipt> {
-    const helper = new ZkWasmServiceHelper(server_url, "", "");
-
-    return await helper.addNewWasmImage(this.createSignedTaskParams());
+  async submitTask(): Promise<TaskReceipt> {
+    return await this.helper.addNewWasmImage(this.createSignedTaskParams());
   }
 }

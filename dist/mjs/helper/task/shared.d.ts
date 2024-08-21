@@ -1,12 +1,16 @@
+import { ZkWasmServiceHelper } from "../../helper/service-helper.js";
 import { SignatureRequest } from "../../interface/interface.js";
 export declare abstract class SignedRequest {
+    helper: ZkWasmServiceHelper;
     user_address: string;
-    nonce: number | undefined;
+    protected nonce: number | undefined;
     protected signature: string | undefined;
-    constructor(user_address: string);
-    abstract requiresNonce(): boolean;
-    abstract createSignMessage(): string;
-    abstract createSignedTaskParams(): SignatureRequest<unknown>;
-    abstract submitTask(endpoint: string): Promise<unknown>;
+    constructor(service_url: string, user_address: string);
+    fetchNonce(): Promise<number>;
+    setNonce(nonce: number): void;
     setSignature(signature: string): void;
+    abstract createSignMessage(): Promise<string>;
+    abstract createSignMessageFromFields(): string;
+    abstract createSignedTaskParams(): SignatureRequest<unknown>;
+    abstract submitTask(): Promise<unknown>;
 }

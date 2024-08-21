@@ -11,11 +11,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProvingTask = void 0;
 const interface_js_1 = require("../../interface/interface.js");
-const service_helper_js_1 = require("../service-helper.js");
 const shared_js_1 = require("./shared.js");
 class ProvingTask extends shared_js_1.SignedRequest {
-    constructor(params, user_address, nonce) {
-        super(user_address);
+    constructor(service_url, params, user_address, nonce) {
+        super(service_url, user_address);
         this.nonce = nonce;
         this.md5 = params.md5;
         this.public_inputs = params.public_inputs;
@@ -26,11 +25,14 @@ class ProvingTask extends shared_js_1.SignedRequest {
         this.input_context = params.input_context;
         this.input_context_md5 = params.input_context_md5;
     }
-    requiresNonce() {
-        return true;
-    }
     createSignMessage() {
-        // No need to sign the file itself, just the md5
+        return __awaiter(this, void 0, void 0, function* () {
+            const nonce = yield this.fetchNonce();
+            this.nonce = nonce;
+            return this.createSignMessageFromFields();
+        });
+    }
+    createSignMessageFromFields() {
         let message = "";
         message += this.user_address;
         message += this.nonce;
@@ -81,10 +83,9 @@ class ProvingTask extends shared_js_1.SignedRequest {
         }
         return Object.assign(Object.assign({ user_address: this.user_address, nonce: this.nonce, md5: this.md5, public_inputs: this.public_inputs, private_inputs: this.private_inputs, proof_submit_mode: this.proof_submit_mode }, context), { signature: this.signature });
     }
-    submitTask(server_url) {
+    submitTask() {
         return __awaiter(this, void 0, void 0, function* () {
-            const helper = new service_helper_js_1.ZkWasmServiceHelper(server_url, "", "");
-            return yield helper.addProvingTask(this.createSignedTaskParams());
+            return yield this.helper.addProvingTask(this.createSignedTaskParams());
         });
     }
 }

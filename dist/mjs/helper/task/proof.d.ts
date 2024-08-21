@@ -8,9 +8,9 @@ export declare class ProvingTask extends SignedRequest {
     input_context_type: InputContextType;
     input_context?: unknown;
     input_context_md5: string | undefined;
-    constructor(params: ProvingParams, user_address: string, nonce: number);
-    requiresNonce(): boolean;
-    createSignMessage(): string;
+    constructor(service_url: string, params: ProvingParams, user_address: string, nonce: number);
+    createSignMessage(): Promise<string>;
+    createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<ProvingParams>>;
-    submitTask(server_url: string): Promise<TaskReceipt>;
+    submitTask(): Promise<TaskReceipt>;
 }

@@ -1,4 +1,3 @@
-import { ZkWasmServiceHelper } from "../service-helper.js";
 import { SignedRequest } from "./shared.js";
 export class SetupTask extends SignedRequest {
     md5;
@@ -9,8 +8,10 @@ export class SetupTask extends SignedRequest {
     circuit_size;
     prove_payment_src;
     auto_submit_network_ids;
-    constructor(params, user_address, nonce) {
-        super(user_address);
+    initial_context;
+    initial_context_md5;
+    constructor(service_url, params, user_address, nonce) {
+        super(service_url, user_address);
         this.nonce = nonce;
         this.md5 = params.image_md5;
         this.image_name = params.name;
@@ -21,11 +22,13 @@ export class SetupTask extends SignedRequest {
         this.auto_submit_network_ids = params.auto_submit_network_ids;
         this.wasm_bytes = params.image;
     }
-    requiresNonce() {
-        return true;
-    }
-    createSignMessage() {
+    async createSignMessage() {
+        const nonce = await this.fetchNonce();
+        this.nonce = nonce;
         // No need to sign the file itself, just the md5
+        return this.createSignMessageFromFields();
+    }
+    createSignMessageFromFields() {
         let message = "";
         message += this.user_address;
         message += this.nonce;
@@ -39,9 +42,9 @@ export class SetupTask extends SignedRequest {
             message += chainId;
         }
         // Additional params afterwards
-        // if (this.initial_context) {
-        //   message += this.initial_context_md5;
-        // }
+        if (this.initial_context) {
+            message += this.initial_context_md5;
+        }
         return message;
     }
     createSignedTaskParams() {
@@ -59,8 +62,7 @@ export class SetupTask extends SignedRequest {
             signature: this.signature,
         };
     }
-    async submitTask(server_url) {
-        const helper = new ZkWasmServiceHelper(server_url, "", "");
-        return await helper.addNewWasmImage(this.createSignedTaskParams());
+    async submitTask() {
+        return await this.helper.addNewWasmImage(this.createSignedTaskParams());
     }
 }

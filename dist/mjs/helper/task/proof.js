@@ -1,5 +1,4 @@
 import { InputContextType, } from "../../interface/interface.js";
-import { ZkWasmServiceHelper } from "../service-helper.js";
 import { SignedRequest } from "./shared.js";
 export class ProvingTask extends SignedRequest {
     md5;
@@ -9,8 +8,8 @@ export class ProvingTask extends SignedRequest {
     input_context_type;
     input_context;
     input_context_md5;
-    constructor(params, user_address, nonce) {
-        super(user_address);
+    constructor(service_url, params, user_address, nonce) {
+        super(service_url, user_address);
         this.nonce = nonce;
         this.md5 = params.md5;
         this.public_inputs = params.public_inputs;
@@ -21,11 +20,12 @@ export class ProvingTask extends SignedRequest {
         this.input_context = params.input_context;
         this.input_context_md5 = params.input_context_md5;
     }
-    requiresNonce() {
-        return true;
+    async createSignMessage() {
+        const nonce = await this.fetchNonce();
+        this.nonce = nonce;
+        return this.createSignMessageFromFields();
     }
-    createSignMessage() {
-        // No need to sign the file itself, just the md5
+    createSignMessageFromFields() {
         let message = "";
         message += this.user_address;
         message += this.nonce;
@@ -85,8 +85,7 @@ export class ProvingTask extends SignedRequest {
             signature: this.signature,
         };
     }
-    async submitTask(server_url) {
-        const helper = new ZkWasmServiceHelper(server_url, "", "");
-        return await helper.addProvingTask(this.createSignedTaskParams());
+    async submitTask() {
+        return await this.helper.addProvingTask(this.createSignedTaskParams());
     }
 }

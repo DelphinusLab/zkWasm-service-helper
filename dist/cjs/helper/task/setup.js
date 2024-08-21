@@ -10,11 +10,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetupTask = void 0;
-const service_helper_js_1 = require("../service-helper.js");
 const shared_js_1 = require("./shared.js");
 class SetupTask extends shared_js_1.SignedRequest {
-    constructor(params, user_address, nonce) {
-        super(user_address);
+    constructor(service_url, params, user_address, nonce) {
+        super(service_url, user_address);
         this.nonce = nonce;
         this.md5 = params.image_md5;
         this.image_name = params.name;
@@ -25,11 +24,15 @@ class SetupTask extends shared_js_1.SignedRequest {
         this.auto_submit_network_ids = params.auto_submit_network_ids;
         this.wasm_bytes = params.image;
     }
-    requiresNonce() {
-        return true;
-    }
     createSignMessage() {
-        // No need to sign the file itself, just the md5
+        return __awaiter(this, void 0, void 0, function* () {
+            const nonce = yield this.fetchNonce();
+            this.nonce = nonce;
+            // No need to sign the file itself, just the md5
+            return this.createSignMessageFromFields();
+        });
+    }
+    createSignMessageFromFields() {
         let message = "";
         message += this.user_address;
         message += this.nonce;
@@ -43,9 +46,9 @@ class SetupTask extends shared_js_1.SignedRequest {
             message += chainId;
         }
         // Additional params afterwards
-        // if (this.initial_context) {
-        //   message += this.initial_context_md5;
-        // }
+        if (this.initial_context) {
+            message += this.initial_context_md5;
+        }
         return message;
     }
     createSignedTaskParams() {
@@ -63,10 +66,9 @@ class SetupTask extends shared_js_1.SignedRequest {
             signature: this.signature,
         };
     }
-    submitTask(server_url) {
+    submitTask() {
         return __awaiter(this, void 0, void 0, function* () {
-            const helper = new service_helper_js_1.ZkWasmServiceHelper(server_url, "", "");
-            return yield helper.addNewWasmImage(this.createSignedTaskParams());
+            return yield this.helper.addNewWasmImage(this.createSignedTaskParams());
         });
     }
 }
