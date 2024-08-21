@@ -28,9 +28,9 @@ class ModifyRequest extends shared_js_1.SignedRequest {
     }
     createSignMessageFromFields() {
         let message = JSON.stringify({
+            md5: this.md5,
             user_address: this.user_address,
             nonce: this.nonce,
-            md5: this.md5,
             description_url: this.description_url,
             avator_url: this.avator_url,
         });
@@ -38,9 +38,9 @@ class ModifyRequest extends shared_js_1.SignedRequest {
     }
     createSignedTaskParams() {
         return {
+            md5: this.md5,
             user_address: this.user_address,
             nonce: this.nonce,
-            md5: this.md5,
             description_url: this.description_url || "",
             avator_url: this.avator_url || "",
             signature: this.signature,

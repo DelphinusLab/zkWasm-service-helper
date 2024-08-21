@@ -37,6 +37,7 @@ export abstract class SignedRequest {
   // Create message without async calls and nonce fetching, aka from the fields already set
   abstract createSignMessageFromFields(): string;
   // Ensure param ordering matches the message created in createSignMessage
+  // For JSON stringified messages, the fields must match the deserialization order in the server as well.
   abstract createSignedTaskParams(): SignatureRequest<unknown>;
 
   abstract submitTask(): Promise<unknown>;
