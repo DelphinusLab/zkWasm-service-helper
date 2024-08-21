@@ -52,7 +52,7 @@ export class ModifyRequest extends SignedRequest {
     };
   }
 
-  async submitTask(): Promise<TaskReceipt> {
+  async submitTask(): Promise<string> {
     return await this.helper.modifyImage(this.createSignedTaskParams());
   }
 }
