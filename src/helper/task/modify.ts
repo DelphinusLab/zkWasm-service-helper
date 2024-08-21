@@ -21,6 +21,8 @@ export class ModifyRequest extends SignedRequest {
     super(service_url, user_address);
 
     this.md5 = params.md5;
+    this.description_url = params.description_url;
+    this.avator_url = params.avator_url;
   }
 
   async createSignMessage(): Promise<string> {

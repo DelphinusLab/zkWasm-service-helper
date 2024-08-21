@@ -15,6 +15,8 @@ class ModifyRequest extends shared_js_1.SignedRequest {
     constructor(service_url, params, user_address) {
         super(service_url, user_address);
         this.md5 = params.md5;
+        this.description_url = params.description_url;
+        this.avator_url = params.avator_url;
     }
     createSignMessage() {
         return __awaiter(this, void 0, void 0, function* () {

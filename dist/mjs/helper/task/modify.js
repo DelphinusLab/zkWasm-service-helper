@@ -6,6 +6,8 @@ export class ModifyRequest extends SignedRequest {
     constructor(service_url, params, user_address) {
         super(service_url, user_address);
         this.md5 = params.md5;
+        this.description_url = params.description_url;
+        this.avator_url = params.avator_url;
     }
     async createSignMessage() {
         const nonce = await this.fetchNonce();
