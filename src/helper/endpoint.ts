@@ -59,12 +59,32 @@ export class ZkWasmServiceEndpoint {
         if (this.enable_logs) {
           console.log(e);
         }
+
+        // Check type of response.data, if it is a string, return the string otherwise return the object
+
+        if (typeof e.response.data === "string") {
+          return {
+            success: false,
+            error: e.response
+              ? {
+                  code: e.response.status,
+                  message: e.response.data,
+                }
+              : {
+                  code: null,
+                  message: e.message,
+                },
+          };
+        }
+        // Errors should be in the format {success: false, result: T }
+        // TODO: Remove above implementation of just string response.
+        // Consider throwing the object instead of the message
         return {
           success: false,
           error: e.response
             ? {
                 code: e.response.status,
-                message: e.response.data,
+                message: e.response.data.result.message,
               }
             : {
                 code: null,
@@ -80,9 +100,8 @@ export class ZkWasmServiceEndpoint {
       if (this.enable_logs) {
         console.error(json);
       }
-      // Errors should be in the format {success: false, result: T }
-      // Consider throwing the object instead of the message
-      throw new Error(json["error"].message.result.message);
+
+      throw new Error(json["error"].message);
     }
     return json["result"];
   }
