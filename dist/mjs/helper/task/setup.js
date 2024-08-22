@@ -48,14 +48,16 @@ export class SetupTask extends SignedRequest {
         return {
             user_address: this.user_address,
             nonce: this.nonce,
-            image: this.wasm_bytes,
-            image_md5: this.md5,
             name: this.image_name,
+            image_md5: this.md5,
+            image: this.wasm_bytes,
             description_url: this.description_url || "",
             avator_url: this.avator_url || "",
             circuit_size: this.circuit_size,
             prove_payment_src: this.prove_payment_src,
             auto_submit_network_ids: this.auto_submit_network_ids,
+            initial_context: this.initial_context,
+            initial_context_md5: this.initial_context_md5 || "",
             signature: this.signature,
         };
     }
