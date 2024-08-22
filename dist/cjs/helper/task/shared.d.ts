@@ -12,5 +12,5 @@ export declare abstract class SignedRequest {
     abstract createSignMessage(): Promise<string>;
     abstract createSignMessageFromFields(): string;
     abstract createSignedTaskParams(): SignatureRequest<unknown>;
-    abstract submitTask(): Promise<unknown>;
+    abstract submitTask(signature: string): Promise<unknown>;
 }

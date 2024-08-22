@@ -13,7 +13,7 @@ exports.SignedRequest = void 0;
 const service_helper_js_1 = require("../../helper/service-helper.js");
 class SignedRequest {
     constructor(service_url, user_address) {
-        this.user_address = user_address;
+        this.user_address = user_address.toLowerCase();
         this.helper = new service_helper_js_1.ZkWasmServiceHelper(service_url, "", "");
     }
     fetchNonce() {

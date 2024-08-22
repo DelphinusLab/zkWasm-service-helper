@@ -9,7 +9,7 @@ export abstract class SignedRequest {
   protected signature: string | undefined;
 
   constructor(service_url: string, user_address: string) {
-    this.user_address = user_address;
+    this.user_address = user_address.toLowerCase();
     this.helper = new ZkWasmServiceHelper(service_url, "", "");
   }
 
@@ -40,5 +40,5 @@ export abstract class SignedRequest {
   // For JSON stringified messages, the fields must match the deserialization order in the server as well.
   abstract createSignedTaskParams(): SignatureRequest<unknown>;
 
-  abstract submitTask(): Promise<unknown>;
+  abstract submitTask(signature: string): Promise<unknown>;
 }

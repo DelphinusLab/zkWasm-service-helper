@@ -8,5 +8,5 @@ export declare class ModifyRequest extends SignedRequest {
     createSignMessage(): Promise<string>;
     createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<ModifyImageParams>>;
-    submitTask(): Promise<string>;
+    submitTask(signature: string): Promise<string>;
 }

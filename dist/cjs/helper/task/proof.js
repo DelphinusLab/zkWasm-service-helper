@@ -82,8 +82,9 @@ class ProvingTask extends shared_js_1.SignedRequest {
         }
         return Object.assign(Object.assign({ user_address: this.user_address, nonce: this.nonce, md5: this.md5, public_inputs: this.public_inputs, private_inputs: this.private_inputs, proof_submit_mode: this.proof_submit_mode }, context), { signature: this.signature });
     }
-    submitTask() {
+    submitTask(signature) {
         return __awaiter(this, void 0, void 0, function* () {
+            this.setSignature(signature);
             return yield this.helper.addProvingTask(this.createSignedTaskParams());
         });
     }

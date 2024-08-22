@@ -15,5 +15,5 @@ export declare class SetupTask extends SignedRequest {
     createSignMessage(): Promise<string>;
     createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<AddImageParams>>;
-    submitTask(): Promise<TaskReceipt>;
+    submitTask(signature: string): Promise<TaskReceipt>;
 }

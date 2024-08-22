@@ -12,5 +12,5 @@ export declare class ProvingTask extends SignedRequest {
     createSignMessage(): Promise<string>;
     createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<ProvingParams>>;
-    submitTask(): Promise<TaskReceipt>;
+    submitTask(signature: string): Promise<TaskReceipt>;
 }

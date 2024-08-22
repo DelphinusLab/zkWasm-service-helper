@@ -6,7 +6,7 @@ export class SignedRequest {
     nonce;
     signature;
     constructor(service_url, user_address) {
-        this.user_address = user_address;
+        this.user_address = user_address.toLowerCase();
         this.helper = new ZkWasmServiceHelper(service_url, "", "");
     }
     async fetchNonce() {

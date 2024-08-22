@@ -22,7 +22,6 @@ class ModifyRequest extends shared_js_1.SignedRequest {
         return __awaiter(this, void 0, void 0, function* () {
             const nonce = yield this.fetchNonce();
             this.nonce = nonce;
-            // No need to sign the file itself, just the md5
             return this.createSignMessageFromFields();
         });
     }
@@ -46,8 +45,9 @@ class ModifyRequest extends shared_js_1.SignedRequest {
             signature: this.signature,
         };
     }
-    submitTask() {
+    submitTask(signature) {
         return __awaiter(this, void 0, void 0, function* () {
+            this.setSignature(signature);
             return yield this.helper.modifyImage(this.createSignedTaskParams());
         });
     }

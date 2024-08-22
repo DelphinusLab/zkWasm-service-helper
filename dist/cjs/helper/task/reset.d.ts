@@ -11,5 +11,5 @@ export declare class ResetTask extends SignedRequest {
     createSignMessage(): Promise<string>;
     createSignMessageFromFields(): string;
     createSignedTaskParams(): WithSignature<RequiresNonce<ResetImageParams>>;
-    submitTask(): Promise<TaskReceipt>;
+    submitTask(signature: string): Promise<TaskReceipt>;
 }

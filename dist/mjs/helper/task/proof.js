@@ -84,7 +84,8 @@ export class ProvingTask extends SignedRequest {
             signature: this.signature,
         };
     }
-    async submitTask() {
+    async submitTask(signature) {
+        this.setSignature(signature);
         return await this.helper.addProvingTask(this.createSignedTaskParams());
     }
 }

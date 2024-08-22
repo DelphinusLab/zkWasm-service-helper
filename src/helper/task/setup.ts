@@ -41,7 +41,6 @@ export class SetupTask extends SignedRequest {
   async createSignMessage(): Promise<string> {
     const nonce = await this.fetchNonce();
     this.nonce = nonce;
-    // No need to sign the file itself, just the md5
     return this.createSignMessageFromFields();
   }
 
@@ -82,7 +81,8 @@ export class SetupTask extends SignedRequest {
     };
   }
 
-  async submitTask(): Promise<TaskReceipt> {
+  async submitTask(signature: string): Promise<TaskReceipt> {
+    this.setSignature(signature);
     return await this.helper.addNewWasmImage(this.createSignedTaskParams());
   }
 }
