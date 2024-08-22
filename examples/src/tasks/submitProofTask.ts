@@ -5,6 +5,7 @@ import {
   ProofSubmitMode,
   InputContextType,
   WithCustomInputContextType,
+  ProvingTask,
 } from "zkwasm-service-helper";
 
 import { ServiceHelper, ServiceHelperConfig } from "../config";
@@ -17,13 +18,15 @@ export async function AddNewProofTask() {
   const pb_inputs: Array<string> = ZkWasmUtil.validateInputs(public_inputs);
   const priv_inputs: Array<string> = ZkWasmUtil.validateInputs(private_inputs);
 
+  const server_url = ServiceHelperConfig.serverUrl;
+  const user_address = ServiceHelperConfig.userAddress.toLowerCase();
+
   // Use the helper Enum type to determine the proof submit mode
   const proofSubmitMode = ProofSubmitMode.Auto
     ? ProofSubmitMode.Auto
     : ProofSubmitMode.Manual;
 
   let provingParams: ProvingParams = {
-    user_address: ServiceHelperConfig.userAddress.toLowerCase(),
     md5: image_md5,
     public_inputs: pb_inputs,
     private_inputs: priv_inputs,
@@ -69,10 +72,12 @@ export async function AddNewProofTask() {
       input_context_type: selectedInputContextType,
     };
   }
-  const msgString = ZkWasmUtil.createProvingSignMessage(provingParams);
+
+  const proveTask = new ProvingTask(server_url, provingParams, user_address);
 
   let signature: string;
   try {
+    const msgString = await proveTask.createSignMessage();
     signature = await ZkWasmUtil.signMessage(
       msgString,
       ServiceHelperConfig.privateKey
@@ -82,12 +87,7 @@ export async function AddNewProofTask() {
     return;
   }
 
-  const fullParams: WithSignature<ProvingParams> = {
-    ...provingParams,
-    signature: signature,
-  };
-
-  const response = await ServiceHelper.addProvingTask(fullParams);
+  const response = await proveTask.submitTask(signature);
   console.log(response);
 }
 

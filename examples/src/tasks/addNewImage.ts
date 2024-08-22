@@ -1,28 +1,30 @@
 import {
   AddImageParams,
-  WithSignature,
   ZkWasmUtil,
   ProvePaymentSrc,
   WithInitialContext,
+  SetupTask,
 } from "zkwasm-service-helper";
 
 import path from "node:path";
 
 import fs from "node:fs";
-import { ServiceHelper, ServiceHelperConfig } from "../config";
+import { ServiceHelperConfig } from "../config";
 
 export async function AddNewWasmImage() {
   const __dirname = path.resolve(path.dirname(""));
   const wasmFilePath = path.resolve(__dirname, "./src/files/image.wasm");
   const contextFilePath = path.resolve(__dirname, "./src/files/context.data");
   const fileSelected: Buffer = fs.readFileSync(wasmFilePath);
+  const server_url = ServiceHelperConfig.serverUrl;
   const md5 = ZkWasmUtil.convertToMd5(fileSelected as Uint8Array);
+  const user_address = ServiceHelperConfig.userAddress.toLowerCase();
 
   let params: AddImageParams = {
     name: "image.wasm",
     image_md5: md5,
     image: fileSelected,
-    user_address: ServiceHelperConfig.userAddress.toLowerCase(),
+    user_address: user_address,
     description_url: "",
     avator_url: "",
     circuit_size: 22,
@@ -51,17 +53,16 @@ export async function AddNewWasmImage() {
     params = { ...params, ...context_info };
   }
 
-  let msg = ZkWasmUtil.createAddImageSignMessage(params);
-  let signature: string = await ZkWasmUtil.signMessage(
-    msg,
+  const setupTask = new SetupTask(server_url, params, user_address);
+
+  // Create message for signing, internally fetches nonce for user as well.
+  const message = await setupTask.createSignMessage();
+  const signature: string = await ZkWasmUtil.signMessage(
+    message,
     ServiceHelperConfig.privateKey
   ); //Need user private key to sign the msg
-  let task: WithSignature<AddImageParams> = {
-    ...params,
-    signature,
-  };
 
-  let response = await ServiceHelper.addNewWasmImage(task);
+  let response = await setupTask.submitTask(signature);
 
   console.log("Add Image Response: ", response);
 }
