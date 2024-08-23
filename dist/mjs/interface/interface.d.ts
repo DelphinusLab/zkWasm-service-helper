@@ -59,6 +59,7 @@ export interface Task {
     task_fee?: Uint8Array;
     status_message?: string;
     internal_message?: string;
+    guest_statics?: number;
     task_verification_data: TaskVerificationData;
     debug_logs?: string;
     proof_submit_mode?: ProofSubmitMode;
