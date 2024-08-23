@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MaintenanceRequest = void 0;
 const shared_js_1 = require("./shared.js");
-const service_helper_1 = require("../../helper/service-helper");
+const service_helper_js_1 = require("../../helper/service-helper.js");
 class MaintenanceRequest extends shared_js_1.SignedRequest {
     constructor(params, service_url, user_address) {
         super(service_url, user_address);
@@ -49,7 +49,7 @@ class MaintenanceRequest extends shared_js_1.SignedRequest {
     }
     setMaintenanceMode(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.helper.sendRequestWithSignature("POST", service_helper_1.TaskEndpoint.SET_MAINTENANCE_MODE, params, false);
+            return yield this.helper.sendRequestWithSignature("POST", service_helper_js_1.TaskEndpoint.SET_MAINTENANCE_MODE, params, false);
         });
     }
 }

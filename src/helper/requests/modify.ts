@@ -2,7 +2,6 @@ import { TaskEndpoint } from "../../helper/service-helper.js";
 import {
   ModifyImageParams,
   RequiresNonce,
-  TaskReceipt,
   WithSignature,
 } from "../../interface/interface.js";
 
