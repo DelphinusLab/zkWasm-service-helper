@@ -1,16 +1,9 @@
 import BN from "bn.js";
 import { Md5 } from "ts-md5";
 import {
-  AddImageParams,
-  ProvingParams,
-  DeployParams,
-  ResetImageParams,
-  ModifyImageParams,
   VerifyProofParams,
-  SetMaintenanceModeParams,
   LogQuery,
   ContextHexString,
-  InputContextType,
   VerifyBatchProofParams,
 } from "../interface/interface.js";
 import { Contract, formatUnits, Signer, Wallet } from "ethers";

@@ -1,4 +1,4 @@
-import { TaskEndpoint } from "helper/service-helper.js";
+import { TaskEndpoint } from "../../helper/service-helper.js";
 import { InputContextType, } from "../../interface/interface.js";
 import { SignedRequest } from "./shared.js";
 export class ProvingTask extends SignedRequest {

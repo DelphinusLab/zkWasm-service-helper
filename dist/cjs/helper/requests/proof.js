@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProvingTask = void 0;
-const service_helper_js_1 = require("helper/service-helper.js");
+const service_helper_js_1 = require("../../helper/service-helper.js");
 const interface_js_1 = require("../../interface/interface.js");
 const shared_js_1 = require("./shared.js");
 class ProvingTask extends shared_js_1.SignedRequest {

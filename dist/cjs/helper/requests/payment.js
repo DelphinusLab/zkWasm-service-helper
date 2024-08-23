@@ -10,14 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Payment = void 0;
-const service_helper_1 = require("helper/service-helper");
+const service_helper_js_1 = require("../../helper/service-helper.js");
 class Payment {
     constructor(server_url) {
-        this.helper = new service_helper_1.ZkWasmServiceHelper(server_url, "", "");
+        this.helper = new service_helper_js_1.ZkWasmServiceHelper(server_url, "", "");
     }
     addPayment(payRequest) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.helper.endpoint.invokeRequest("POST", service_helper_1.TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
+            const response = yield this.helper.endpoint.invokeRequest("POST", service_helper_js_1.TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
             if (this.helper.endpoint.enable_logs) {
                 console.log("get addPayment response:", response.toString());
             }
@@ -26,7 +26,7 @@ class Payment {
     }
     addSubscription(subscription) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.helper.endpoint.invokeRequest("POST", service_helper_1.TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
+            const response = yield this.helper.endpoint.invokeRequest("POST", service_helper_js_1.TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
             if (this.helper.endpoint.enable_logs) {
                 console.log("get addSubscription response:", response.toString());
             }

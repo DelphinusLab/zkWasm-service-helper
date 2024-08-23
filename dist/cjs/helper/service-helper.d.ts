@@ -1,4 +1,4 @@
-import { QueryParams, Statistics, WithSignature, UserQueryParams, TxHistoryQueryParams, LogQuery, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams } from "../interface/interface.js";
+import { QueryParams, Statistics, WithSignature, UserQueryParams, TxHistoryQueryParams, LogQuery, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -18,7 +18,6 @@ export declare class ZkWasmServiceHelper {
     queryRound1Info(query: PaginatedQuery<Round1InfoQuery>): Promise<PaginationResult<Round1Info[]>>;
     queryRound2Info(query: PaginatedQuery<Round2InfoQuery>): Promise<PaginationResult<Round2Info[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
-    setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>): Promise<any>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;

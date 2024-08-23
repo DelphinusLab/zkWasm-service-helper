@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SetupTask = void 0;
-const service_helper_js_1 = require("helper/service-helper.js");
+const service_helper_js_1 = require("../../helper/service-helper.js");
 const shared_js_1 = require("./shared.js");
 class SetupTask extends shared_js_1.SignedRequest {
     constructor(service_url, params, user_address) {

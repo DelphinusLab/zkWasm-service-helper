@@ -1,4 +1,4 @@
-import { TaskEndpoint } from "helper/service-helper.js";
+import { TaskEndpoint } from "../../helper/service-helper.js";
 import {
   AddImageParams,
   ProvePaymentSrc,

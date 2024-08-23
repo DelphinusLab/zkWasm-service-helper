@@ -1,4 +1,4 @@
-import { TaskEndpoint, ZkWasmServiceHelper } from "helper/service-helper";
+import { TaskEndpoint, ZkWasmServiceHelper, } from "../../helper/service-helper.js";
 export class Payment {
     helper;
     constructor(server_url) {

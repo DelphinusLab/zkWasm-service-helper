@@ -1,5 +1,11 @@
-import { TaskEndpoint, ZkWasmServiceHelper } from "helper/service-helper";
-import { PaymentParams, SubscriptionRequest } from "interface/interface";
+import {
+  TaskEndpoint,
+  ZkWasmServiceHelper,
+} from "../../helper/service-helper.js";
+import {
+  PaymentParams,
+  SubscriptionRequest,
+} from "../../interface/interface.js";
 
 export class Payment {
   helper: ZkWasmServiceHelper;

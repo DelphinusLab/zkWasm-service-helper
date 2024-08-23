@@ -1,4 +1,4 @@
-import { WithSignature } from "interface/interface.js";
+import { WithSignature } from "../../interface/interface.js";
 import { ZkWasmServiceHelper } from "../service-helper.js";
 export declare abstract class SignedRequest {
     helper: ZkWasmServiceHelper;

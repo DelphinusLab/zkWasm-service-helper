@@ -262,15 +262,6 @@ class ZkWasmServiceHelper {
             return logs;
         });
     }
-    setMaintenanceMode(req) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, req, true);
-            if (this.endpoint.enable_logs) {
-                console.log("setMaintenanceMode response:", response.toString());
-            }
-            return response;
-        });
-    }
     sendRequestWithSignature(method, path, task, isFormData = false) {
         return __awaiter(this, void 0, void 0, function* () {
             // TODO: create return types for tasks using this method

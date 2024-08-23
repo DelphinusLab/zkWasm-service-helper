@@ -1,4 +1,4 @@
-import { TaskEndpoint } from "helper/service-helper.js";
+import { TaskEndpoint } from "../../helper/service-helper.js";
 import { SignedRequest } from "./shared.js";
 export class ResetTask extends SignedRequest {
     md5;
