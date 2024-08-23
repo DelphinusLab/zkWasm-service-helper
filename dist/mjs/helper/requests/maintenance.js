@@ -1,4 +1,4 @@
-import { SignedRequest } from "./shared";
+import { SignedRequest } from "./shared.js";
 import { TaskEndpoint } from "../../helper/service-helper";
 export class MaintenanceRequest extends SignedRequest {
     params;

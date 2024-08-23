@@ -10,9 +10,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MaintenanceRequest = void 0;
-const shared_1 = require("./shared");
+const shared_js_1 = require("./shared.js");
 const service_helper_1 = require("../../helper/service-helper");
-class MaintenanceRequest extends shared_1.SignedRequest {
+class MaintenanceRequest extends shared_js_1.SignedRequest {
     constructor(params, service_url, user_address) {
         super(service_url, user_address);
         this.params = params;

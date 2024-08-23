@@ -1,5 +1,5 @@
 import { SetMaintenanceModeParams, WithSignature } from "interface/interface";
-import { SignedRequest } from "./shared";
+import { SignedRequest } from "./shared.js";
 export declare class MaintenanceRequest extends SignedRequest {
     params: SetMaintenanceModeParams;
     constructor(params: SetMaintenanceModeParams, service_url: string, user_address: string);

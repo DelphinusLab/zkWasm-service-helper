@@ -3,7 +3,7 @@ import {
   SetMaintenanceModeParams,
   WithSignature,
 } from "interface/interface";
-import { SignedRequest } from "./shared";
+import { SignedRequest } from "./shared.js";
 import { TaskEndpoint } from "../../helper/service-helper";
 
 export class MaintenanceRequest extends SignedRequest {
