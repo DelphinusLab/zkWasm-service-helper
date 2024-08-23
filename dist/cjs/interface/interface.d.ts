@@ -297,13 +297,9 @@ export type WithSignature<T> = T & {
     signature: string;
     user_address: string;
 };
-export type WithOptionalNonce<T> = T & {
-    nonce?: number;
-};
 export type RequiresNonce<T> = T & {
     nonce: number;
 };
-export type SignatureRequest<T> = WithSignature<WithOptionalNonce<T>>;
 export type OmitSignature<T> = Omit<WithSignature<T>, "signature">;
 export interface VerifyData {
     proof: Array<BigInt>;

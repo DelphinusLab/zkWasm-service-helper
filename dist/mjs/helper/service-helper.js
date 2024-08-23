@@ -207,55 +207,6 @@ export class ZkWasmServiceHelper {
         }
         return logs;
     }
-    async addPayment(payRequest) {
-        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
-        if (this.endpoint.enable_logs) {
-            console.log("get addPayment response:", response.toString());
-        }
-        return response;
-    }
-    async addSubscription(subscription) {
-        const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
-        if (this.endpoint.enable_logs) {
-            console.log("get addSubscription response:", response.toString());
-        }
-        return response;
-    }
-    async addNewWasmImage(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
-        if (this.endpoint.enable_logs) {
-            console.log("get addNewWasmImage response:", response.toString());
-        }
-        return response;
-    }
-    async addProvingTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
-        if (this.endpoint.enable_logs) {
-            console.log("get addProvingTask response:", response);
-        }
-        return response;
-    }
-    async addDeployTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
-        if (this.endpoint.enable_logs) {
-            console.log("get addDeployTask response:", response.toString());
-        }
-        return response;
-    }
-    async addResetTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
-        if (this.endpoint.enable_logs) {
-            console.log("get addResetTask response:", response.toString());
-        }
-        return response;
-    }
-    async modifyImage(data) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
-        if (this.endpoint.enable_logs) {
-            console.log("get modifyImage response:", response.toString());
-        }
-        return response;
-    }
     async setMaintenanceMode(req) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, req, true);
         if (this.endpoint.enable_logs) {

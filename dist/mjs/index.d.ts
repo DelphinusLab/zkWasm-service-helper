@@ -2,7 +2,7 @@ import { Task, ConciseTask, ProvingParams, DeployParams, QueryParams, VerifyProo
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
 import { ZkWasmServiceHelper } from "./helper/service-helper.js";
-import { ProvingTask, SetupTask, ResetTask, ModifyRequest } from "./helper/task/index.js";
+import { ProvingTask, SetupTask, ResetTask, ModifyRequest } from "./helper/requests/index.js";
 import { ERC20Lib } from "./abi/ERC20.js";
 export { ZkWasmServiceEndpoint, ZkWasmServiceHelper, ZkWasmUtil, ERC20Lib, InputContextType, AutoSubmitStatus, AutoSubmitProofStatus, Round1Status, Round2Status, ProofSubmitMode, ProvePaymentSrc, MaintenanceModeType, AdminRequestType, ProvingTask, SetupTask, ResetTask, ModifyRequest, };
 export type { Task, ConciseTask, ProvingParams, DeployParams, QueryParams, VerifyProofParams, VerifyData, StatusState, DeploymentInfo, Image, Statistics, AddImageParams, TaskStatus, TaskType, WithSignature, User, UserQueryParams, Subscription, SubscriptionType, PaymentParams, SubscriptionParams, SubscriptionRequest, TxHistoryQueryParams, TransactionInfo, ResetImageParams, AppConfig, PaginationResult, LogQuery, ModifyImageParams, ChainDetails, ContextHexString, WithCustomInputContextType, WithInitialContext, WithNonCustomInputContextType, WithResetContext, WithoutInitialContext, WithoutInputContextType, WithoutResetContext, AutoSubmitProof, Round1Info, Round2Info, AutoSubmitProofQuery, Round1InfoQuery, Round2InfoQuery, PaginatedQuery, PaginationQuery, VerifyBatchProofParams, AutoSubmitBatchMetadata, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ServerVersionInfo, RequiresNonce, TaskReceipt, };

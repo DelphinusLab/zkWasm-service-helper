@@ -72,7 +72,8 @@ import {
   SetupTask,
   ResetTask,
   ModifyRequest,
-} from "./helper/task/index.js";
+  Payment,
+} from "./helper/requests/index.js";
 import { ERC20Lib } from "./abi/ERC20.js";
 
 export {

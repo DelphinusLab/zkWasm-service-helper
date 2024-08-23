@@ -34,7 +34,6 @@ import {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
-  SignatureRequest,
   RequiresNonce,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
@@ -342,85 +341,6 @@ export class ZkWasmServiceHelper {
     return logs;
   }
 
-  async addPayment(payRequest: PaymentParams) {
-    const response = await this.endpoint.invokeRequest(
-      "POST",
-      TaskEndpoint.PAY,
-      JSON.parse(JSON.stringify(payRequest))
-    );
-    if (this.endpoint.enable_logs) {
-      console.log("get addPayment response:", response.toString());
-    }
-    return response;
-  }
-
-  async addSubscription(subscription: SubscriptionRequest) {
-    const response = await this.endpoint.invokeRequest(
-      "POST",
-      TaskEndpoint.SUBSCRIBE,
-      JSON.parse(JSON.stringify(subscription))
-    );
-    if (this.endpoint.enable_logs) {
-      console.log("get addSubscription response:", response.toString());
-    }
-    return response;
-  }
-
-  async addNewWasmImage(task: WithSignature<RequiresNonce<AddImageParams>>) {
-    let response = await this.sendRequestWithSignature<
-      RequiresNonce<AddImageParams>
-    >("POST", TaskEndpoint.SETUP, task, true);
-
-    if (this.endpoint.enable_logs) {
-      console.log("get addNewWasmImage response:", response.toString());
-    }
-    return response;
-  }
-
-  async addProvingTask(task: SignatureRequest<RequiresNonce<ProvingParams>>) {
-    let response = await this.sendRequestWithSignature<
-      RequiresNonce<ProvingParams>
-    >("POST", TaskEndpoint.PROVE, task, true);
-    if (this.endpoint.enable_logs) {
-      console.log("get addProvingTask response:", response);
-    }
-    return response;
-  }
-
-  async addDeployTask(task: WithSignature<DeployParams>) {
-    let response = await this.sendRequestWithSignature<DeployParams>(
-      "POST",
-      TaskEndpoint.DEPLOY,
-      task
-    );
-    if (this.endpoint.enable_logs) {
-      console.log("get addDeployTask response:", response.toString());
-    }
-    return response;
-  }
-
-  async addResetTask(task: WithSignature<RequiresNonce<ResetImageParams>>) {
-    let response = await this.sendRequestWithSignature<
-      RequiresNonce<ResetImageParams>
-    >("POST", TaskEndpoint.RESET, task, true);
-
-    if (this.endpoint.enable_logs) {
-      console.log("get addResetTask response:", response.toString());
-    }
-    return response;
-  }
-
-  async modifyImage(data: WithSignature<RequiresNonce<ModifyImageParams>>) {
-    let response = await this.sendRequestWithSignature<
-      RequiresNonce<ModifyImageParams>
-    >("POST", TaskEndpoint.MODIFY, data);
-
-    if (this.endpoint.enable_logs) {
-      console.log("get modifyImage response:", response.toString());
-    }
-    return response;
-  }
-
   async setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>) {
     let response =
       await this.sendRequestWithSignature<SetMaintenanceModeParams>(
@@ -438,7 +358,7 @@ export class ZkWasmServiceHelper {
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
-    task: SignatureRequest<T>,
+    task: WithSignature<T>,
     isFormData = false
   ): Promise<any> {
     // TODO: create return types for tasks using this method

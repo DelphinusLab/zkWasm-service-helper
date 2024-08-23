@@ -17,7 +17,7 @@ const endpoint_js_1 = require("./helper/endpoint.js");
 Object.defineProperty(exports, "ZkWasmServiceEndpoint", { enumerable: true, get: function () { return endpoint_js_1.ZkWasmServiceEndpoint; } });
 const service_helper_js_1 = require("./helper/service-helper.js");
 Object.defineProperty(exports, "ZkWasmServiceHelper", { enumerable: true, get: function () { return service_helper_js_1.ZkWasmServiceHelper; } });
-const index_js_1 = require("./helper/task/index.js");
+const index_js_1 = require("./helper/requests/index.js");
 Object.defineProperty(exports, "ProvingTask", { enumerable: true, get: function () { return index_js_1.ProvingTask; } });
 Object.defineProperty(exports, "SetupTask", { enumerable: true, get: function () { return index_js_1.SetupTask; } });
 Object.defineProperty(exports, "ResetTask", { enumerable: true, get: function () { return index_js_1.ResetTask; } });

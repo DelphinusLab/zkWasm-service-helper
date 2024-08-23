@@ -38,7 +38,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ZkWasmUtil = void 0;
 const bn_js_1 = __importDefault(require("bn.js"));
 const ts_md5_1 = require("ts-md5");
-const interface_js_1 = require("../interface/interface.js");
 const ethers_1 = require("ethers");
 //import ERC20 from "../abi/ERC20";
 const ERC20_js_1 = require("../abi/ERC20.js");
@@ -138,77 +137,6 @@ class ZkWasmUtil {
         return (0, ethers_1.formatUnits)(amt, "ether");
     }
     static createLogsMesssage(params) {
-        return JSON.stringify(params);
-    }
-    //this is form data
-    static createAddImageSignMessage(params) {
-        //sign all the fields except the image itself and signature
-        let message = "";
-        message += params.name;
-        message += params.image_md5;
-        message += params.user_address;
-        message += params.description_url;
-        message += params.avator_url;
-        message += params.circuit_size;
-        message += params.prove_payment_src;
-        for (const chainId of params.auto_submit_network_ids) {
-            message += chainId;
-        }
-        // Additional params afterwards
-        if (params.initial_context) {
-            message += params.initial_context_md5;
-        }
-        return message;
-    }
-    static createSetMaintenanceModeSignMessage(params) {
-        let message = "";
-        message += params.mode;
-        message += params.nonce;
-        message += params.request_type;
-        message += params.user_address;
-        return message;
-    }
-    static createProvingSignMessage(params) {
-        // No need to sign the file itself, just the md5
-        let message = "";
-        //message += params.user_address;
-        message += params.md5;
-        // for array elements, append one by one
-        for (const input of params.public_inputs) {
-            message += input;
-        }
-        for (const input of params.private_inputs) {
-            message += input;
-        }
-        message += params.proof_submit_mode;
-        // Only handle input_context if selected input_context_type.Custom
-        if (params.input_context_type === interface_js_1.InputContextType.Custom &&
-            params.input_context) {
-            message += params.input_context_md5;
-        }
-        if (params.input_context_type) {
-            message += params.input_context_type;
-        }
-        return message;
-    }
-    static createDeploySignMessage(params) {
-        return JSON.stringify(params);
-    }
-    static createResetImageMessage(params) {
-        let message = "";
-        message += params.md5;
-        message += params.circuit_size;
-        message += params.user_address;
-        message += params.prove_payment_src;
-        for (const chainId of params.auto_submit_network_ids) {
-            message += chainId;
-        }
-        if (params.reset_context) {
-            message += params.reset_context_md5;
-        }
-        return message;
-    }
-    static createModifyImageMessage(params) {
         return JSON.stringify(params);
     }
     static bytesToBN(data, chunksize = 32) {

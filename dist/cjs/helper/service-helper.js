@@ -262,69 +262,6 @@ class ZkWasmServiceHelper {
             return logs;
         });
     }
-    addPayment(payRequest) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
-            if (this.endpoint.enable_logs) {
-                console.log("get addPayment response:", response.toString());
-            }
-            return response;
-        });
-    }
-    addSubscription(subscription) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
-            if (this.endpoint.enable_logs) {
-                console.log("get addSubscription response:", response.toString());
-            }
-            return response;
-        });
-    }
-    addNewWasmImage(task) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
-            if (this.endpoint.enable_logs) {
-                console.log("get addNewWasmImage response:", response.toString());
-            }
-            return response;
-        });
-    }
-    addProvingTask(task) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
-            if (this.endpoint.enable_logs) {
-                console.log("get addProvingTask response:", response);
-            }
-            return response;
-        });
-    }
-    addDeployTask(task) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
-            if (this.endpoint.enable_logs) {
-                console.log("get addDeployTask response:", response.toString());
-            }
-            return response;
-        });
-    }
-    addResetTask(task) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
-            if (this.endpoint.enable_logs) {
-                console.log("get addResetTask response:", response.toString());
-            }
-            return response;
-        });
-    }
-    modifyImage(data) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
-            if (this.endpoint.enable_logs) {
-                console.log("get modifyImage response:", response.toString());
-            }
-            return response;
-        });
-    }
     setMaintenanceMode(req) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, req, true);

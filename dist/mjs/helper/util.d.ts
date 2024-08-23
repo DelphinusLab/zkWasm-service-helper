@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import BN from "bn.js";
-import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, SetMaintenanceModeParams, LogQuery, ContextHexString, VerifyBatchProofParams } from "../interface/interface.js";
+import { VerifyProofParams, LogQuery, ContextHexString, VerifyBatchProofParams } from "../interface/interface.js";
 import { Contract, Signer } from "ethers";
 import { DelphinusWalletConnector, DelphinusBrowserConnector } from "web3subscriber/src/provider.js";
 export declare class ZkWasmUtil {
@@ -77,12 +77,6 @@ export declare class ZkWasmUtil {
     static convertToMd5(value: Uint8Array): string;
     static convertAmount(balance: Uint8Array): string;
     static createLogsMesssage(params: LogQuery): string;
-    static createAddImageSignMessage(params: AddImageParams): string;
-    static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string;
-    static createProvingSignMessage(params: ProvingParams): string;
-    static createDeploySignMessage(params: DeployParams): string;
-    static createResetImageMessage(params: ResetImageParams): string;
-    static createModifyImageMessage(params: ModifyImageParams): string;
     static bytesToBN(data: Uint8Array, chunksize?: number): BN[];
     static bnToHexString(bn: BN): string;
     static bytesToHexStrings(data: Uint8Array, chunksize?: number): string[];
