@@ -33,6 +33,6 @@ export class MaintenanceRequest extends SignedRequest {
         return await this.setMaintenanceMode(this.createSignedTaskParams());
     }
     async setMaintenanceMode(params) {
-        return await this.helper.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, params, false);
+        return await this.helper.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, params, true);
     }
 }

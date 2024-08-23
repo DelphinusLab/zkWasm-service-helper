@@ -49,7 +49,7 @@ class MaintenanceRequest extends shared_js_1.SignedRequest {
     }
     setMaintenanceMode(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.helper.sendRequestWithSignature("POST", service_helper_js_1.TaskEndpoint.SET_MAINTENANCE_MODE, params, false);
+            return yield this.helper.sendRequestWithSignature("POST", service_helper_js_1.TaskEndpoint.SET_MAINTENANCE_MODE, params, true);
         });
     }
 }

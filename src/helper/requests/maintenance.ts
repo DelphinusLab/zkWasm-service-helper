@@ -54,6 +54,6 @@ export class MaintenanceRequest extends SignedRequest {
   ): Promise<string> {
     return await this.helper.sendRequestWithSignature<
       RequiresNonce<SetMaintenanceModeParams>
-    >("POST", TaskEndpoint.SET_MAINTENANCE_MODE, params, false);
+    >("POST", TaskEndpoint.SET_MAINTENANCE_MODE, params, true);
   }
 }
