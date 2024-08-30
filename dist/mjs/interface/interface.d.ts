@@ -19,6 +19,9 @@ export interface NodeStatistics {
         setup_timing_stats?: TimingStatistics;
         proof_timing_stats?: TimingStatistics;
     };
+    version_info?: {
+        version: string;
+    };
 }
 export interface NodeStatisticsQueryParams {
     address?: string;
@@ -56,6 +59,7 @@ export interface Task {
     task_fee?: Uint8Array;
     status_message?: string;
     internal_message?: string;
+    guest_statics?: number;
     task_verification_data: TaskVerificationData;
     debug_logs?: string;
     proof_submit_mode?: ProofSubmitMode;
@@ -344,6 +348,11 @@ export interface AppConfig {
     deployments: ContractDeployments[];
     subscription_plans: SubscriptionParams[];
     supported_auto_submit_network_ids: number[];
+    server_version_info: ServerVersionInfo;
+}
+export interface ServerVersionInfo {
+    current_version: string;
+    minimum_supported_node_version: string;
 }
 export interface ContractDeployments {
     chain_id: number;
