@@ -10,8 +10,8 @@ import {
 import { ServiceHelper, ServiceHelperConfig } from "../config";
 
 export async function AddNewProofTask() {
-  const image_md5 = "<YOUR_MD5>";
-  const public_inputs = "0x22:i64 0x21:i64";
+  const image_md5 = "DD02D2F6B8883F1BB34E803FB21E58FD";
+  const public_inputs = "0x22:i64 0x22:i64";
   const private_inputs = "";
 
   const pb_inputs: Array<string> = ZkWasmUtil.validateInputs(public_inputs);
@@ -33,30 +33,28 @@ export async function AddNewProofTask() {
   };
 
   // Context type for proof task. If none provided, will default to InputContextType.ImageCurrent in the server and use the image's current context
-  const selectedInputContextType =
-    InputContextType.ImageCurrent as InputContextType; // (as InputContextType) for compiler to allow comparison below since just hardcoded here.
+  const selectedInputContextType = InputContextType.Custom as InputContextType; // (as InputContextType) for compiler to allow comparison below since just hardcoded here.
 
   // For Custom Context, upload a binary file first containing the context.
   if (selectedInputContextType === InputContextType.Custom) {
-    // Load bytes into Tempfile/Buffer type - Server side example with NodeJS
+    // As an example, fill some bytes for the context file.
+    // Browsers should handle file loading themselves, but here is an example of how to load a file as bytes.
     const contextBytes = new Uint8Array(64);
     contextBytes.fill(1);
     ZkWasmUtil.validateContextBytes(contextBytes);
     let bytesFile = await ZkWasmUtil.bytesToTempFile(contextBytes);
+    let md5 = ZkWasmUtil.convertToMd5(contextBytes);
 
-    // // LOADING AS FILE DIRECTLY - Server side example with NodeJS
-    // let bytesFile = await ZkWasmUtil.loadContexFileAsBytes("<YourFilePath>");
-    // // Convert uint8array to buffer
-    // const contextBytes: Buffer = Buffer.from(bytesFile);
+    // LOADING AS FILE DIRECTLY - Server side example with NodeJS
+    // let [bytesFile, md5] = await ZkWasmUtil.loadContexFileAsBytes(
+    //   "./src/files/context.data"
+    // );
 
     let context_info: WithCustomInputContextType = {
       input_context: bytesFile,
-      input_context_md5: ZkWasmUtil.convertToMd5(contextBytes),
+      input_context_md5: md5,
       input_context_type: selectedInputContextType,
     };
-
-    // // LOADING AS FILE DIRECTLY - Browser side example
-    // let contextFile = await ZkWasmUtil.loadContexFileAsBytes("<YourFilePath>");
 
     // let context_info: WithCustomInputContextType = {
     //   input_context: contextFile,
