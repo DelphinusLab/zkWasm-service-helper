@@ -279,7 +279,9 @@ export class ZkWasmUtil {
     return message;
   }
 
-  static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string {
+  static createSetMaintenanceModeSignMessage(
+    params: SetMaintenanceModeParams
+  ): string {
     let message = "";
     message += params.mode;
     message += params.nonce;
@@ -523,7 +525,7 @@ export class ZkWasmUtil {
   ): Promise<ContextHexString> {
     if (typeof window === "undefined") {
       // We are in Node.js
-      const fs = await import("fs/promises");
+      const fs = require("fs").promises;
 
       const file = await fs.readFile(filePath, {
         encoding: "utf-8",
