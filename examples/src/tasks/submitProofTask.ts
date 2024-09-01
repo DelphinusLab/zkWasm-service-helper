@@ -33,7 +33,8 @@ export async function AddNewProofTask() {
   };
 
   // Context type for proof task. If none provided, will default to InputContextType.ImageCurrent in the server and use the image's current context
-  const selectedInputContextType = InputContextType.Custom as InputContextType; // (as InputContextType) for compiler to allow comparison below since just hardcoded here.
+  const selectedInputContextType =
+    InputContextType.ImageCurrent as InputContextType; // (as InputContextType) for compiler to allow comparison below since just hardcoded here.
 
   // For Custom Context, upload a binary file first containing the context.
   if (selectedInputContextType === InputContextType.Custom) {
