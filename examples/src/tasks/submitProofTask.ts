@@ -10,8 +10,8 @@ import {
 import { ServiceHelper, ServiceHelperConfig } from "../config";
 
 export async function AddNewProofTask() {
-  const image_md5 = "DD02D2F6B8883F1BB34E803FB21E58FD";
-  const public_inputs = "0x22:i64 0x22:i64";
+  const image_md5 = "<YOUR_IMAGE_MD5>";
+  const public_inputs = "0x22:i64 0x21:i64";
   const private_inputs = "";
 
   const pb_inputs: Array<string> = ZkWasmUtil.validateInputs(public_inputs);
