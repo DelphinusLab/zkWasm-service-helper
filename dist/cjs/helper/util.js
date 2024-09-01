@@ -334,7 +334,7 @@ class ZkWasmUtil {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof window === "undefined") {
                 // We are in Node.js
-                const fs = yield Promise.resolve().then(() => __importStar(require("fs/promises")));
+                const fs = require("fs").promises;
                 const file = yield fs.readFile(filePath, {
                     encoding: "utf-8",
                 });
