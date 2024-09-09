@@ -40,13 +40,13 @@ export interface Task {
     md5: string;
     task_type: string;
     status: TaskStatus;
-    single_proof: Uint8Array;
-    proof: Uint8Array;
+    single_proof: Array<Uint8Array>;
+    proof: Array<Uint8Array>;
     aux: Uint8Array;
     external_host_table: Uint8Array;
     shadow_instances: Uint8Array;
-    batch_instances: Uint8Array;
-    instances: Uint8Array;
+    batch_instances: Array<Uint8Array>;
+    instances: Array<Uint8Array>;
     public_inputs: Array<string>;
     private_inputs: Array<string>;
     input_context: Uint8Array;
