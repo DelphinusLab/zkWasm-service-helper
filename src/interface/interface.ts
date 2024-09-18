@@ -38,6 +38,11 @@ export enum InputContextType {
   ImageCurrent = "ImageCurrent",
 }
 
+export enum CompressionType {
+  None = "None",
+  GZip = "GZip",
+}
+
 export type ContextHexString = string; // Hex string of the input context bytes
 
 export interface Task {
@@ -71,6 +76,7 @@ export interface Task {
   proof_submit_mode?: ProofSubmitMode;
   batch_proof_data?: BatchProofData;
   auto_submit_status?: AutoSubmitStatus;
+  compression?: CompressionType;
 }
 
 export type ObjectId = {
