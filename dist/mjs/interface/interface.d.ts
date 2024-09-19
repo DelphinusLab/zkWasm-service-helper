@@ -33,6 +33,10 @@ export declare enum InputContextType {
     ImageInitial = "ImageInitial",
     ImageCurrent = "ImageCurrent"
 }
+export declare enum CompressionType {
+    None = "None",
+    GZip = "GZip"
+}
 export type ContextHexString = string;
 export interface Task {
     user_address: string;
@@ -65,6 +69,7 @@ export interface Task {
     proof_submit_mode?: ProofSubmitMode;
     batch_proof_data?: BatchProofData;
     auto_submit_status?: AutoSubmitStatus;
+    compression?: CompressionType;
 }
 export type ObjectId = {
     $oid: string;

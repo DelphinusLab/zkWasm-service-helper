@@ -60,6 +60,7 @@ import {
   SetMaintenanceModeParams,
   AdminRequestType,
   ServerVersionInfo,
+  CompressionType,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -81,6 +82,7 @@ export {
   ProvePaymentSrc,
   MaintenanceModeType,
   AdminRequestType,
+  CompressionType,
 };
 
 export type {
