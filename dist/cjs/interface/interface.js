@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = exports.ProverLevel = void 0;
+exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.CompressionType = exports.InputContextType = exports.ProverLevel = void 0;
 var ProverLevel;
 (function (ProverLevel) {
     ProverLevel["Inactive"] = "Inactive";
@@ -14,6 +14,11 @@ var InputContextType;
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType = exports.InputContextType || (exports.InputContextType = {}));
+var CompressionType;
+(function (CompressionType) {
+    CompressionType["None"] = "None";
+    CompressionType["GZip"] = "GZip";
+})(CompressionType = exports.CompressionType || (exports.CompressionType = {}));
 var AutoSubmitProofStatus;
 (function (AutoSubmitProofStatus) {
     AutoSubmitProofStatus["Pending"] = "Pending";
