@@ -51,23 +51,23 @@ export interface Task {
   md5: string;
   task_type: string;
   status: TaskStatus;
-  single_proof: number[];
-  proof: number[];
-  aux: number[];
-  external_host_table: number[];
-  shadow_instances: number[];
-  batch_instances: number[];
-  instances: number[];
+  single_proof: Uint8Array;
+  proof: Uint8Array;
+  aux: Uint8Array;
+  external_host_table: Uint8Array;
+  shadow_instances: Uint8Array;
+  batch_instances: Uint8Array;
+  instances: Uint8Array;
   public_inputs: Array<string>;
   private_inputs: Array<string>;
-  input_context: number[];
+  input_context: Uint8Array;
   input_context_type?: InputContextType; // The type of context for the task
-  output_context: number[]; // The context output from the task which should go to the image
+  output_context: Uint8Array; // The context output from the task which should go to the image
   _id: ObjectId;
   submit_time: string;
   process_started?: string;
   process_finished?: string;
-  task_fee?: number[];
+  task_fee?: Uint8Array;
   status_message?: string;
   internal_message?: string;
   guest_statics?: number;
@@ -126,7 +126,7 @@ export interface AutoSubmitProof {
 }
 
 export interface StaticFileVerificationData {
-  static_file_checksum: number[];
+  static_file_checksum: Uint8Array;
 }
 
 export enum AutoSubmitProofStatus {
@@ -229,7 +229,7 @@ export interface PaginationQuery {
 }
 
 export interface TaskVerificationData {
-  static_file_checksum: number[];
+  static_file_checksum: Uint8Array;
   verifier_contracts: Array<VerifierContracts>;
 }
 
@@ -432,7 +432,7 @@ export interface AppConfig {
     auto_submit_prove_fee_per_network: string;
   };
   chain_info_list: Array<ChainInfo>;
-  latest_server_checksum: number[];
+  latest_server_checksum: Uint8Array;
   topup_token_params: TokenParams;
   topup_token_data: TokenData;
   deployments: ContractDeployments[];
@@ -454,7 +454,7 @@ export interface ContractDeployments {
   aggregator_verifier_steps: string[];
   aggregator_verifier: string;
   batch_verifier: string;
-  static_file_checksum: number[];
+  static_file_checksum: Uint8Array;
 }
 // returned from zkwasm service server
 export interface ChainInfo {
@@ -488,8 +488,8 @@ export interface Image {
   description_url: string;
   avator_url: string;
   circuit_size: number;
-  context?: number[];
-  initial_context?: number[];
+  context?: Uint8Array;
+  initial_context?: Uint8Array;
   status: string;
   checksum: ImageChecksum | null;
   prove_payment_src: ProvePaymentSrc;
@@ -497,8 +497,8 @@ export interface Image {
 }
 
 export interface ImageChecksum {
-  x: number[];
-  y: number[];
+  x: Uint8Array;
+  y: Uint8Array;
 }
 
 export interface PaymentParams {
@@ -574,13 +574,13 @@ export interface User {
    * @deprecated This field is deprecated and will be removed in a future version.
    * Use `credits` as an alternative.
    */
-  balance: number[];
+  balance: Uint8Array;
   credits: string;
 }
 
 export interface TransactionInfo {
   txhash: string;
-  value: number[];
+  value: Uint8Array;
   user_address: string;
   receiver_address: string;
 }
