@@ -61,6 +61,8 @@ import {
   AdminRequestType,
   ServerVersionInfo,
   CompressionType,
+  EstimatedProofFeeParams,
+  EstimatedProofFee,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -138,4 +140,6 @@ export type {
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
   ServerVersionInfo,
+  EstimatedProofFeeParams,
+  EstimatedProofFee,
 };
