@@ -501,6 +501,7 @@ export interface EstimatedProofFeeParams {
     proof_submit_mode: ProofSubmitMode;
 }
 export interface EstimatedProofFee {
-    min: number;
-    max: number;
+    min?: number;
+    max?: number;
+    msg: string;
 }

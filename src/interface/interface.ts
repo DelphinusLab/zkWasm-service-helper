@@ -609,6 +609,7 @@ export interface EstimatedProofFeeParams {
 }
 
 export interface EstimatedProofFee {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
+  msg : string;
 }
