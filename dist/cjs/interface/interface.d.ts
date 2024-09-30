@@ -474,6 +474,7 @@ export interface User {
      */
     balance: Uint8Array;
     credits: string;
+    credit_deficit: string;
 }
 export interface TransactionInfo {
     txhash: string;
