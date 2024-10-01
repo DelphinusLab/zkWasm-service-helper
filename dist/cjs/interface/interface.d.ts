@@ -494,6 +494,7 @@ export interface User {
      */
     balance: Uint8Array;
     credits: string;
+    credit_deficit: string;
 }
 export interface TransactionInfo {
     txhash: string;
@@ -514,4 +515,14 @@ export interface SetMaintenanceModeParams {
     nonce: number;
     request_type: AdminRequestType;
     user_address: string;
+}
+export interface EstimatedProofFeeParams {
+    user_address: string;
+    md5: string;
+    proof_submit_mode: ProofSubmitMode;
+}
+export interface EstimatedProofFee {
+    min?: number;
+    max?: number;
+    msg: string;
 }

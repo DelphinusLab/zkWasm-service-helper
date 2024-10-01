@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary } from "../interface/interface.js";
+=======
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, EstimatedProofFeeParams, EstimatedProofFee } from "../interface/interface.js";
+>>>>>>> ZKWAS-349: big image fee endpoint updates (#102)
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -27,6 +31,7 @@ export declare class ZkWasmServiceHelper {
     addResetTask(task: WithSignature<ResetImageParams>): Promise<any>;
     modifyImage(data: WithSignature<ModifyImageParams>): Promise<any>;
     setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>): Promise<any>;
+    queryEstimateProofFee(query: EstimatedProofFeeParams): Promise<EstimatedProofFee>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;
@@ -44,5 +49,6 @@ export declare enum TaskEndpoint {
     LOGS = "/logs",
     ROUND_1_BATCH = "/round1_batch_proofs",
     ROUND_2_BATCH = "/round2_batch_proofs",
-    FINAL_BATCH = "/final_batch_proofs"
+    FINAL_BATCH = "/final_batch_proofs",
+    GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee"
 }
