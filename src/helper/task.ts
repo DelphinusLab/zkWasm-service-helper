@@ -34,6 +34,8 @@ import {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
+  EstimatedProofFeeParams,
+  EstimatedProofFee,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -444,6 +446,18 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
+  async queryEstimateProofFee(query: EstimatedProofFeeParams): Promise<EstimatedProofFee> {
+    const config = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.GET_ESTIMATED_PROOF_FEE,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("get queryEstimateProofFee response.");
+    }
+    return config;
+  }
+
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
@@ -512,4 +526,5 @@ export enum TaskEndpoint {
   ROUND_1_BATCH = "/round1_batch_proofs",
   ROUND_2_BATCH = "/round2_batch_proofs",
   FINAL_BATCH = "/final_batch_proofs",
+  GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
 }
