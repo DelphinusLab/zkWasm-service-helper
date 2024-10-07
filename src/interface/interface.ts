@@ -247,6 +247,7 @@ export type ImageStatus = "Received" | "Initialized" | "Verified";
 export type TaskStatus =
   | "Pending"
   | "Processing"
+  | "DryRunSuccess"
   | "DryRunFailed"
   | "Done"
   | "Fail"
