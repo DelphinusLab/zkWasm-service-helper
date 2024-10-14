@@ -624,7 +624,7 @@ export interface ArchiveTasksParams {
 }
 
 export interface RestoreTasksParams {
-  archive_id: ObjectId;
+  archive_id: string;
   nonce: number;
   request_type: AdminRequestType;
   user_address: string;
