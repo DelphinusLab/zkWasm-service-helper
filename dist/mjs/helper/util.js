@@ -251,6 +251,22 @@ export class ZkWasmUtil {
         message += params.user_address;
         return message;
     }
+    static createArchiveTasksSignMessage(params) {
+        let message = "";
+        message += params.timestamp;
+        message += params.nonce;
+        message += params.request_type;
+        message += params.user_address;
+        return message;
+    }
+    static createRestoreTasksSignMessage(params) {
+        let message = "";
+        message += params.archive_id;
+        message += params.nonce;
+        message += params.request_type;
+        message += params.user_address;
+        return message;
+    }
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";

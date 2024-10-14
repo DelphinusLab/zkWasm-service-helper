@@ -63,6 +63,8 @@ import {
   CompressionType,
   EstimatedProofFeeParams,
   EstimatedProofFee,
+  ArchiveTasksParams,
+  RestoreTasksParams,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -142,4 +144,6 @@ export type {
   ServerVersionInfo,
   EstimatedProofFeeParams,
   EstimatedProofFee,
+  ArchiveTasksParams,
+  RestoreTasksParams,
 };

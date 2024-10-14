@@ -614,3 +614,17 @@ export interface EstimatedProofFee {
   max?: number;
   msg : string;
 }
+
+export interface ArchiveTasksParams {
+  timestamp: string;
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
+}
+
+export interface RestoreTasksParams {
+  archive_id: ObjectId;
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
+}

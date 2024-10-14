@@ -343,6 +343,24 @@ class ZkWasmServiceHelper {
             return config;
         });
     }
+    archiveTasks(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.ARCHIVE_TASKS, req, true);
+            if (this.endpoint.enable_logs) {
+                console.log("archiveTasks response:", response.toString());
+            }
+            return response;
+        });
+    }
+    restoreTasks(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESTORE_TASKS, req, true);
+            if (this.endpoint.enable_logs) {
+                console.log("restoreTasks response:", response.toString());
+            }
+            return response;
+        });
+    }
     sendRequestWithSignature(method, path, task, isFormData = false) {
         return __awaiter(this, void 0, void 0, function* () {
             // TODO: create return types for tasks using this method
@@ -401,4 +419,6 @@ var TaskEndpoint;
     TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
+    TaskEndpoint["ARCHIVE_TASKS"] = "/archive_tasks";
+    TaskEndpoint["RESTORE_TASKS"] = "/restore_tasks";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));
