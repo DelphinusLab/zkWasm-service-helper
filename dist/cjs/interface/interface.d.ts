@@ -488,7 +488,8 @@ export declare enum MaintenanceModeType {
 }
 export declare enum AdminRequestType {
     Default = "Default",
-    MaintenanceMode = "MaintenanceMode"
+    MaintenanceMode = "MaintenanceMode",
+    ArchiveOperation = "ArchiveOperation"
 }
 export interface SetMaintenanceModeParams {
     mode: MaintenanceModeType;

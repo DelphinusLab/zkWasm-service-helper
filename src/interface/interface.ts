@@ -594,6 +594,7 @@ export enum MaintenanceModeType {
 export enum AdminRequestType {
   Default = "Default",
   MaintenanceMode = "MaintenanceMode",
+  ArchiveOperation = "ArchiveOperation",
 }
 
 export interface SetMaintenanceModeParams {
