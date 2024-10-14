@@ -594,6 +594,7 @@ export enum MaintenanceModeType {
 export enum AdminRequestType {
   Default = "Default",
   MaintenanceMode = "MaintenanceMode",
+  ArchiveOperation = "ArchiveOperation",
 }
 
 export interface SetMaintenanceModeParams {
@@ -613,4 +614,18 @@ export interface EstimatedProofFee {
   min?: number;
   max?: number;
   msg : string;
+}
+
+export interface ArchiveProveTasksParams {
+  timestamp: string;
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
+}
+
+export interface RestoreProveTasksParams {
+  archive_id: string;
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
 }

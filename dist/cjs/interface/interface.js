@@ -56,4 +56,5 @@ var AdminRequestType;
 (function (AdminRequestType) {
     AdminRequestType["Default"] = "Default";
     AdminRequestType["MaintenanceMode"] = "MaintenanceMode";
+    AdminRequestType["ArchiveOperation"] = "ArchiveOperation";
 })(AdminRequestType = exports.AdminRequestType || (exports.AdminRequestType = {}));

@@ -12,6 +12,8 @@ import {
   ContextHexString,
   InputContextType,
   VerifyBatchProofParams,
+  ArchiveProveTasksParams,
+  RestoreProveTasksParams,
 } from "../interface/interface.js";
 import { Contract, formatUnits, Signer, Wallet } from "ethers";
 import {
@@ -284,6 +286,28 @@ export class ZkWasmUtil {
   ): string {
     let message = "";
     message += params.mode;
+    message += params.nonce;
+    message += params.request_type;
+    message += params.user_address;
+    return message;
+  }
+
+  static createArchiveProveTasksSignMessage(
+    params: ArchiveProveTasksParams,
+  ): string {
+    let message = "";
+    message += params.timestamp;
+    message += params.nonce;
+    message += params.request_type;
+    message += params.user_address;
+    return message;
+  }
+
+  static createRestoreProveTasksSignMessage(
+    params: RestoreProveTasksParams,
+  ): string {
+    let message = "";
+    message += params.archive_id;
     message += params.nonce;
     message += params.request_type;
     message += params.user_address;

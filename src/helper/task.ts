@@ -36,6 +36,8 @@ import {
   SetMaintenanceModeParams,
   EstimatedProofFeeParams,
   EstimatedProofFee,
+  ArchiveProveTasksParams,
+  RestoreProveTasksParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -458,6 +460,34 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
+  async archiveProveTasks(req: WithSignature<ArchiveProveTasksParams>) {
+    let response =
+      await this.sendRequestWithSignature<ArchiveProveTasksParams>(
+        "POST",
+        TaskEndpoint.ARCHIVE_PROVE_TASKS,
+        req,
+        true
+      );
+    if (this.endpoint.enable_logs) {
+      console.log("archiveTasks response:", response.toString());
+    }
+    return response;
+  }
+
+  async restoreProveTasks(req: WithSignature<RestoreProveTasksParams>) {
+    let response =
+      await this.sendRequestWithSignature<RestoreProveTasksParams>(
+        "POST",
+        TaskEndpoint.RESTORE_PROVE_TASKS,
+        req,
+        true
+      );
+    if (this.endpoint.enable_logs) {
+      console.log("restoreTasks finished");
+    }
+    return response;
+  }
+
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
@@ -527,4 +557,6 @@ export enum TaskEndpoint {
   ROUND_2_BATCH = "/round2_batch_proofs",
   FINAL_BATCH = "/final_batch_proofs",
   GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
+  ARCHIVE_PROVE_TASKS = "/admin/archive_prove_tasks",
+  RESTORE_PROVE_TASKS = "/admin/restore_prove_tasks",
 }
