@@ -138,6 +138,10 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
+            // Set default total to 2 if not provided
+            if (!query.total) {
+                query.total = 2;
+            }
             // Validate query params
             if (query.start != null && query.start < 0) {
                 throw new Error("start must be positive");
