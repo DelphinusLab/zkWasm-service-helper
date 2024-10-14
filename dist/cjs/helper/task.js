@@ -345,7 +345,7 @@ class ZkWasmServiceHelper {
     }
     archiveProveTasks(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.ARCHIVE_TASKS, req, true);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.ARCHIVE_PROVE_TASKS, req, true);
             if (this.endpoint.enable_logs) {
                 console.log("archiveTasks response:", response.toString());
             }
@@ -354,7 +354,7 @@ class ZkWasmServiceHelper {
     }
     restoreProveTasks(req) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESTORE_TASKS, req, true);
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESTORE_PROVE_TASKS, req, true);
             if (this.endpoint.enable_logs) {
                 console.log("restoreTasks finished");
             }
@@ -419,6 +419,6 @@ var TaskEndpoint;
     TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
-    TaskEndpoint["ARCHIVE_TASKS"] = "/admin/archive_tasks";
-    TaskEndpoint["RESTORE_TASKS"] = "/admin/restore_tasks";
+    TaskEndpoint["ARCHIVE_PROVE_TASKS"] = "/admin/archive_prove_tasks";
+    TaskEndpoint["RESTORE_PROVE_TASKS"] = "/admin/restore_prove_tasks";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

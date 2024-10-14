@@ -48,6 +48,6 @@ export declare enum TaskEndpoint {
     ROUND_2_BATCH = "/round2_batch_proofs",
     FINAL_BATCH = "/final_batch_proofs",
     GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
-    ARCHIVE_TASKS = "/admin/archive_tasks",
-    RESTORE_TASKS = "/admin/restore_tasks"
+    ARCHIVE_PROVE_TASKS = "/admin/archive_prove_tasks",
+    RESTORE_PROVE_TASKS = "/admin/restore_prove_tasks"
 }

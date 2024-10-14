@@ -464,7 +464,7 @@ export class ZkWasmServiceHelper {
     let response =
       await this.sendRequestWithSignature<ArchiveProveTasksParams>(
         "POST",
-        TaskEndpoint.ARCHIVE_TASKS,
+        TaskEndpoint.ARCHIVE_PROVE_TASKS,
         req,
         true
       );
@@ -478,7 +478,7 @@ export class ZkWasmServiceHelper {
     let response =
       await this.sendRequestWithSignature<RestoreProveTasksParams>(
         "POST",
-        TaskEndpoint.RESTORE_TASKS,
+        TaskEndpoint.RESTORE_PROVE_TASKS,
         req,
         true
       );
@@ -557,6 +557,6 @@ export enum TaskEndpoint {
   ROUND_2_BATCH = "/round2_batch_proofs",
   FINAL_BATCH = "/final_batch_proofs",
   GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
-  ARCHIVE_TASKS = "/admin/archive_tasks",
-  RESTORE_TASKS = "/admin/restore_tasks",
+  ARCHIVE_PROVE_TASKS = "/admin/archive_prove_tasks",
+  RESTORE_PROVE_TASKS = "/admin/restore_prove_tasks",
 }
