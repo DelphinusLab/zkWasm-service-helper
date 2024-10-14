@@ -36,8 +36,8 @@ import {
   SetMaintenanceModeParams,
   EstimatedProofFeeParams,
   EstimatedProofFee,
-  ArchiveTasksParams,
-  RestoreTasksParams,
+  ArchiveProveTasksParams,
+  RestoreProveTasksParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -460,9 +460,9 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
-  async archiveTasks(req: WithSignature<ArchiveTasksParams>) {
+  async archiveProveTasks(req: WithSignature<ArchiveProveTasksParams>) {
     let response =
-      await this.sendRequestWithSignature<ArchiveTasksParams>(
+      await this.sendRequestWithSignature<ArchiveProveTasksParams>(
         "POST",
         TaskEndpoint.ARCHIVE_TASKS,
         req,
@@ -474,9 +474,9 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
-  async restoreTasks(req: WithSignature<RestoreTasksParams>) {
+  async restoreProveTasks(req: WithSignature<RestoreProveTasksParams>) {
     let response =
-      await this.sendRequestWithSignature<RestoreTasksParams>(
+      await this.sendRequestWithSignature<RestoreProveTasksParams>(
         "POST",
         TaskEndpoint.RESTORE_TASKS,
         req,

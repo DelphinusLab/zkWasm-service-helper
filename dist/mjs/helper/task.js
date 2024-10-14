@@ -270,14 +270,14 @@ export class ZkWasmServiceHelper {
         }
         return config;
     }
-    async archiveTasks(req) {
+    async archiveProveTasks(req) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.ARCHIVE_TASKS, req, true);
         if (this.endpoint.enable_logs) {
             console.log("archiveTasks response:", response.toString());
         }
         return response;
     }
-    async restoreTasks(req) {
+    async restoreProveTasks(req) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESTORE_TASKS, req, true);
         if (this.endpoint.enable_logs) {
             console.log("restoreTasks finished");

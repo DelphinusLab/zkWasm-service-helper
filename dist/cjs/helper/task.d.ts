@@ -1,4 +1,4 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, EstimatedProofFeeParams, EstimatedProofFee, ArchiveTasksParams, RestoreTasksParams } from "../interface/interface.js";
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, EstimatedProofFeeParams, EstimatedProofFee, ArchiveProveTasksParams, RestoreProveTasksParams } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -27,8 +27,8 @@ export declare class ZkWasmServiceHelper {
     modifyImage(data: WithSignature<ModifyImageParams>): Promise<any>;
     setMaintenanceMode(req: WithSignature<SetMaintenanceModeParams>): Promise<any>;
     queryEstimateProofFee(query: EstimatedProofFeeParams): Promise<EstimatedProofFee>;
-    archiveTasks(req: WithSignature<ArchiveTasksParams>): Promise<any>;
-    restoreTasks(req: WithSignature<RestoreTasksParams>): Promise<any>;
+    archiveProveTasks(req: WithSignature<ArchiveProveTasksParams>): Promise<any>;
+    restoreProveTasks(req: WithSignature<RestoreProveTasksParams>): Promise<any>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;

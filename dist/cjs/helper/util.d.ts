@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import BN from "bn.js";
-import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, SetMaintenanceModeParams, LogQuery, ContextHexString, VerifyBatchProofParams, ArchiveTasksParams, RestoreTasksParams } from "../interface/interface.js";
+import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, SetMaintenanceModeParams, LogQuery, ContextHexString, VerifyBatchProofParams, ArchiveProveTasksParams, RestoreProveTasksParams } from "../interface/interface.js";
 import { Contract, Signer } from "ethers";
 import { DelphinusWalletConnector, DelphinusBrowserConnector } from "web3subscriber/src/provider.js";
 export declare class ZkWasmUtil {
@@ -79,8 +79,8 @@ export declare class ZkWasmUtil {
     static createLogsMesssage(params: LogQuery): string;
     static createAddImageSignMessage(params: AddImageParams): string;
     static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string;
-    static createArchiveTasksSignMessage(params: ArchiveTasksParams): string;
-    static createRestoreTasksSignMessage(params: RestoreTasksParams): string;
+    static createArchiveProveTasksSignMessage(params: ArchiveProveTasksParams): string;
+    static createRestoreProveTasksSignMessage(params: RestoreProveTasksParams): string;
     static createProvingSignMessage(params: ProvingParams): string;
     static createDeploySignMessage(params: DeployParams): string;
     static createResetImageMessage(params: ResetImageParams): string;

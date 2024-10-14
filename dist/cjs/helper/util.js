@@ -168,7 +168,7 @@ class ZkWasmUtil {
         message += params.user_address;
         return message;
     }
-    static createArchiveTasksSignMessage(params) {
+    static createArchiveProveTasksSignMessage(params) {
         let message = "";
         message += params.timestamp;
         message += params.nonce;
@@ -176,7 +176,7 @@ class ZkWasmUtil {
         message += params.user_address;
         return message;
     }
-    static createRestoreTasksSignMessage(params) {
+    static createRestoreProveTasksSignMessage(params) {
         let message = "";
         message += params.archive_id;
         message += params.nonce;

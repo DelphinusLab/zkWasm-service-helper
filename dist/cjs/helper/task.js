@@ -343,7 +343,7 @@ class ZkWasmServiceHelper {
             return config;
         });
     }
-    archiveTasks(req) {
+    archiveProveTasks(req) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.ARCHIVE_TASKS, req, true);
             if (this.endpoint.enable_logs) {
@@ -352,7 +352,7 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
-    restoreTasks(req) {
+    restoreProveTasks(req) {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESTORE_TASKS, req, true);
             if (this.endpoint.enable_logs) {

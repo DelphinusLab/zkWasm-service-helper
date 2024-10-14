@@ -507,13 +507,13 @@ export interface EstimatedProofFee {
     max?: number;
     msg: string;
 }
-export interface ArchiveTasksParams {
+export interface ArchiveProveTasksParams {
     timestamp: string;
     nonce: number;
     request_type: AdminRequestType;
     user_address: string;
 }
-export interface RestoreTasksParams {
+export interface RestoreProveTasksParams {
     archive_id: string;
     nonce: number;
     request_type: AdminRequestType;
