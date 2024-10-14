@@ -356,7 +356,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESTORE_TASKS, req, true);
             if (this.endpoint.enable_logs) {
-                console.log("restoreTasks response:", response.toString());
+                console.log("restoreTasks finished");
             }
             return response;
         });

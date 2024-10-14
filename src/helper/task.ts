@@ -483,7 +483,7 @@ export class ZkWasmServiceHelper {
         true
       );
     if (this.endpoint.enable_logs) {
-      console.log("restoreTasks response:", response.toString());
+      console.log("restoreTasks finished");
     }
     return response;
   }
