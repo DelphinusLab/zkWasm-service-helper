@@ -339,6 +339,6 @@ export var TaskEndpoint;
     TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
-    TaskEndpoint["ARCHIVE_TASKS"] = "/archive_tasks";
-    TaskEndpoint["RESTORE_TASKS"] = "/restore_tasks";
+    TaskEndpoint["ARCHIVE_TASKS"] = "/admin/archive_tasks";
+    TaskEndpoint["RESTORE_TASKS"] = "/admin/restore_tasks";
 })(TaskEndpoint || (TaskEndpoint = {}));
