@@ -22,6 +22,20 @@ export interface NodeStatistics {
     version_info?: {
         version: string;
     };
+    performance_track: string;
+    prover_level: ProverLevel;
+    last_attempted_task?: {
+        task_id: {
+            $oid: string;
+        };
+        timestamp: string;
+    };
+}
+export declare enum ProverLevel {
+    Inactive = 0,
+    Intern = 1,
+    Active = 2,
+    Certified = 3
 }
 export interface NodeStatisticsQueryParams {
     address?: string;

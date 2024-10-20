@@ -60,6 +60,7 @@ import {
   SetMaintenanceModeParams,
   AdminRequestType,
   ServerVersionInfo,
+  ProverLevel,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -81,6 +82,7 @@ export {
   ProvePaymentSrc,
   MaintenanceModeType,
   AdminRequestType,
+  ProverLevel,
 };
 
 export type {
