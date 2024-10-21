@@ -35,10 +35,10 @@ export interface NodeStatistics {
 }
 
 export enum ProverLevel {
-  Inactive,
-  Intern,
-  Active,
-  Certified,
+  Inactive = "Inactive",
+  Intern = "Intern",
+  Active = "Active",
+  Certified = "Certified",
 }
 
 export interface NodeStatisticsQueryParams {

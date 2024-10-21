@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.InputContextType = exports.ProverLevel = void 0;
 var ProverLevel;
 (function (ProverLevel) {
-    ProverLevel[ProverLevel["Inactive"] = 0] = "Inactive";
-    ProverLevel[ProverLevel["Intern"] = 1] = "Intern";
-    ProverLevel[ProverLevel["Active"] = 2] = "Active";
-    ProverLevel[ProverLevel["Certified"] = 3] = "Certified";
+    ProverLevel["Inactive"] = "Inactive";
+    ProverLevel["Intern"] = "Intern";
+    ProverLevel["Active"] = "Active";
+    ProverLevel["Certified"] = "Certified";
 })(ProverLevel = exports.ProverLevel || (exports.ProverLevel = {}));
 var InputContextType;
 (function (InputContextType) {
