@@ -91,10 +91,9 @@ export class ZkWasmServiceHelper {
         }
         return res;
     }
-    async queryProverNodeSummary(query) {
+    async queryProverNodeSummary() {
         let headers = { "Content-Type": "application/json" };
-        let queryJson = JSON.parse(JSON.stringify(query));
-        let res = await this.endpoint.invokeRequest("GET", `/prover_node_summary`, queryJson);
+        let res = await this.endpoint.invokeRequest("GET", `/prover_node_summary`, JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
             console.log("loading node summary");
         }

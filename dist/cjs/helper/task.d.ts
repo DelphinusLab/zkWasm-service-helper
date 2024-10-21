@@ -12,7 +12,7 @@ export declare class ZkWasmServiceHelper {
     queryConfig(): Promise<AppConfig>;
     loadStatistics(): Promise<Statistics>;
     queryNodeStatistics(query: NodeStatisticsQueryParams): Promise<PaginationResult<NodeStatistics[]>>;
-    queryProverNodeSummary(query: NodeStatisticsQueryParams): Promise<ProverNodesSummary>;
+    queryProverNodeSummary(): Promise<ProverNodesSummary>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     loadTaskList(query: QueryParams): Promise<PaginationResult<ConciseTask[]>>;
     queryAutoSubmitProofs(query: PaginatedQuery<AutoSubmitProofQuery>): Promise<PaginationResult<AutoSubmitProof[]>>;

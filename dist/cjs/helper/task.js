@@ -134,11 +134,10 @@ class ZkWasmServiceHelper {
             return res;
         });
     }
-    queryProverNodeSummary(query) {
+    queryProverNodeSummary() {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
-            let queryJson = JSON.parse(JSON.stringify(query));
-            let res = yield this.endpoint.invokeRequest("GET", `/prover_node_summary`, queryJson);
+            let res = yield this.endpoint.invokeRequest("GET", `/prover_node_summary`, JSON.parse("{}"));
             if (this.endpoint.enable_logs) {
                 console.log("loading node summary");
             }

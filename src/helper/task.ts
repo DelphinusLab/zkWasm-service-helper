@@ -179,16 +179,13 @@ export class ZkWasmServiceHelper {
     return res as PaginationResult<NodeStatistics[]>;
   }
 
-  async queryProverNodeSummary(
-    query: NodeStatisticsQueryParams
-  ): Promise<ProverNodesSummary> {
+  async queryProverNodeSummary(): Promise<ProverNodesSummary> {
     let headers = { "Content-Type": "application/json" };
-    let queryJson = JSON.parse(JSON.stringify(query));
 
     let res = await this.endpoint.invokeRequest(
       "GET",
       `/prover_node_summary`,
-      queryJson
+      JSON.parse("{}")
     );
     if (this.endpoint.enable_logs) {
       console.log("loading node summary");
