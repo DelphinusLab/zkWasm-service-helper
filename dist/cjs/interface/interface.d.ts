@@ -214,7 +214,7 @@ export type TaskType = "Setup" | "Prove" | "Reset";
  *  Verified: At least one of the proof task had been done successfully for the image.
  **/
 export type ImageStatus = "Received" | "Initialized" | "Verified";
-export type TaskStatus = "Pending" | "Processing" | "DryRunSuccess" | "DryRunFailed" | "Done" | "Fail" | "Stale";
+export type TaskStatus = "Pending" | "Processing" | "DryRunSuccess" | "DryRunFailed" | "Done" | "Fail" | "Unprovable" | "Stale";
 export declare enum AutoSubmitStatus {
     Round1 = "Round1",
     Round2 = "Round2",

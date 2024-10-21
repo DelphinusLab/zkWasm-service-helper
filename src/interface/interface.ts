@@ -266,6 +266,7 @@ export type TaskStatus =
   | "DryRunFailed"
   | "Done"
   | "Fail"
+  | "Unprovable"
   | "Stale";
 
 export enum AutoSubmitStatus {
