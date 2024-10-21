@@ -61,6 +61,7 @@ import {
   AdminRequestType,
   ServerVersionInfo,
   ProverLevel,
+  ProverNodesSummary,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -138,4 +139,5 @@ export type {
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
   ServerVersionInfo,
+  ProverNodesSummary,
 };

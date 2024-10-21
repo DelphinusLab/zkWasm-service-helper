@@ -34,6 +34,13 @@ export interface NodeStatistics {
   };
 }
 
+export interface ProverNodesSummary {
+  certified_prover_count: number;
+  active_prover_count: number;
+  intern_prover_count: number;
+  inactive_prover_count: number;
+}
+
 export enum ProverLevel {
   Inactive = "Inactive",
   Intern = "Intern",
