@@ -134,6 +134,16 @@ class ZkWasmServiceHelper {
             return res;
         });
     }
+    queryProverNodeSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let headers = { "Content-Type": "application/json" };
+            let res = yield this.endpoint.invokeRequest("GET", `/prover_node_summary`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading node summary");
+            }
+            return res;
+        });
+    }
     loadTasks(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };

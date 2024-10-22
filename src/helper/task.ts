@@ -34,6 +34,7 @@ import {
   NodeStatistics,
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
+  ProverNodesSummary,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -176,6 +177,21 @@ export class ZkWasmServiceHelper {
     }
 
     return res as PaginationResult<NodeStatistics[]>;
+  }
+
+  async queryProverNodeSummary(): Promise<ProverNodesSummary> {
+    let headers = { "Content-Type": "application/json" };
+
+    let res = await this.endpoint.invokeRequest(
+      "GET",
+      `/prover_node_summary`,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading node summary");
+    }
+
+    return res as ProverNodesSummary;
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {

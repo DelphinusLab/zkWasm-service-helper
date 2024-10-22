@@ -22,6 +22,26 @@ export interface NodeStatistics {
     version_info?: {
         version: string;
     };
+    performance_track: string;
+    prover_level: ProverLevel;
+    last_attempted_task?: {
+        task_id: {
+            $oid: string;
+        };
+        timestamp: string;
+    };
+}
+export interface ProverNodesSummary {
+    certified_prover_count: number;
+    active_prover_count: number;
+    intern_prover_count: number;
+    inactive_prover_count: number;
+}
+export declare enum ProverLevel {
+    Inactive = "Inactive",
+    Intern = "Intern",
+    Active = "Active",
+    Certified = "Certified"
 }
 export interface NodeStatisticsQueryParams {
     address?: string;
@@ -200,7 +220,7 @@ export type TaskType = "Setup" | "Prove" | "Reset";
  *  Verified: At least one of the proof task had been done successfully for the image.
  **/
 export type ImageStatus = "Received" | "Initialized" | "Verified";
-export type TaskStatus = "Pending" | "Processing" | "DryRunSuccess" | "DryRunFailed" | "Done" | "Fail" | "Stale";
+export type TaskStatus = "Pending" | "Processing" | "DryRunSuccess" | "DryRunFailed" | "Done" | "Fail" | "Unprovable" | "Stale";
 export declare enum AutoSubmitStatus {
     Round1 = "Round1",
     Round2 = "Round2",

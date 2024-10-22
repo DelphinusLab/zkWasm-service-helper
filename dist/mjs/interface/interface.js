@@ -1,3 +1,10 @@
+export var ProverLevel;
+(function (ProverLevel) {
+    ProverLevel["Inactive"] = "Inactive";
+    ProverLevel["Intern"] = "Intern";
+    ProverLevel["Active"] = "Active";
+    ProverLevel["Certified"] = "Certified";
+})(ProverLevel || (ProverLevel = {}));
 export var InputContextType;
 (function (InputContextType) {
     InputContextType["Custom"] = "Custom";

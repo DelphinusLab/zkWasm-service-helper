@@ -24,6 +24,28 @@ export interface NodeStatistics {
   version_info?: {
     version: string;
   };
+  performance_track: string;
+  prover_level: ProverLevel;
+  last_attempted_task?: {
+    task_id: {
+      $oid: string;
+    };
+    timestamp: string;
+  };
+}
+
+export interface ProverNodesSummary {
+  certified_prover_count: number;
+  active_prover_count: number;
+  intern_prover_count: number;
+  inactive_prover_count: number;
+}
+
+export enum ProverLevel {
+  Inactive = "Inactive",
+  Intern = "Intern",
+  Active = "Active",
+  Certified = "Certified",
 }
 
 export interface NodeStatisticsQueryParams {
@@ -251,6 +273,7 @@ export type TaskStatus =
   | "DryRunFailed"
   | "Done"
   | "Fail"
+  | "Unprovable"
   | "Stale";
 
 export enum AutoSubmitStatus {
