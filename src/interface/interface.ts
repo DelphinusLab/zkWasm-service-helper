@@ -65,6 +65,11 @@ export enum CompressionType {
   GZip = "GZip",
 }
 
+export enum ExternalHostTableFileType {
+  Json = "Json",
+  Tar = "Tar",
+}
+
 export type ContextHexString = string; // Hex string of the input context bytes
 
 export interface Task {
@@ -99,6 +104,7 @@ export interface Task {
   batch_proof_data?: BatchProofData;
   auto_submit_status?: AutoSubmitStatus;
   compression?: CompressionType;
+  external_host_table_file_type?: ExternalHostTableFileType;
 }
 
 export type ObjectId = {
@@ -636,5 +642,5 @@ export interface EstimatedProofFeeParams {
 export interface EstimatedProofFee {
   min?: number;
   max?: number;
-  msg : string;
+  msg: string;
 }

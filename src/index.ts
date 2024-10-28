@@ -65,6 +65,7 @@ import {
   CompressionType,
   EstimatedProofFeeParams,
   EstimatedProofFee,
+  ExternalHostTableFileType,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -88,6 +89,7 @@ export {
   AdminRequestType,
   ProverLevel,
   CompressionType,
+  ExternalHostTableFileType,
 };
 
 export type {

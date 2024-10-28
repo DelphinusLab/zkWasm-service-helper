@@ -16,6 +16,11 @@ export var CompressionType;
     CompressionType["None"] = "None";
     CompressionType["GZip"] = "GZip";
 })(CompressionType || (CompressionType = {}));
+export var ExternalHostTableFileType;
+(function (ExternalHostTableFileType) {
+    ExternalHostTableFileType["Json"] = "Json";
+    ExternalHostTableFileType["Tar"] = "Tar";
+})(ExternalHostTableFileType || (ExternalHostTableFileType = {}));
 export var AutoSubmitProofStatus;
 (function (AutoSubmitProofStatus) {
     AutoSubmitProofStatus["Pending"] = "Pending";

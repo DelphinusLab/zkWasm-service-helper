@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.CompressionType = exports.InputContextType = exports.ProverLevel = void 0;
+exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.ExternalHostTableFileType = exports.CompressionType = exports.InputContextType = exports.ProverLevel = void 0;
 var ProverLevel;
 (function (ProverLevel) {
     ProverLevel["Inactive"] = "Inactive";
@@ -19,6 +19,11 @@ var CompressionType;
     CompressionType["None"] = "None";
     CompressionType["GZip"] = "GZip";
 })(CompressionType = exports.CompressionType || (exports.CompressionType = {}));
+var ExternalHostTableFileType;
+(function (ExternalHostTableFileType) {
+    ExternalHostTableFileType["Json"] = "Json";
+    ExternalHostTableFileType["Tar"] = "Tar";
+})(ExternalHostTableFileType = exports.ExternalHostTableFileType || (exports.ExternalHostTableFileType = {}));
 var AutoSubmitProofStatus;
 (function (AutoSubmitProofStatus) {
     AutoSubmitProofStatus["Pending"] = "Pending";

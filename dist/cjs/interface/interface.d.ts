@@ -57,6 +57,10 @@ export declare enum CompressionType {
     None = "None",
     GZip = "GZip"
 }
+export declare enum ExternalHostTableFileType {
+    Json = "Json",
+    Tar = "Tar"
+}
 export type ContextHexString = string;
 export interface Task {
     user_address: string;
@@ -90,6 +94,7 @@ export interface Task {
     batch_proof_data?: BatchProofData;
     auto_submit_status?: AutoSubmitStatus;
     compression?: CompressionType;
+    external_host_table_file_type?: ExternalHostTableFileType;
 }
 export type ObjectId = {
     $oid: string;
