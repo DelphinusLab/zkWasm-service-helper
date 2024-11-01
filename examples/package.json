@@ -5,7 +5,7 @@
   "description": "Examples for zkwasm playground helper lib to communicate with zkwasm cloud service",
   "dependencies": {
     "tsx": "^4.16.0",
-    "zkwasm-service-helper": "git+https://github.com/DelphinusLab/zkWasm-service-helper.git#feature/Sept2024"
+    "zkwasm-service-helper": "git+https://github.com/DelphinusLab/zkWasm-service-helper.git"
   },
   "scripts": {
     "build": "rm -fr dist/* && npx tsc -p tsconfig.json && npx tsc -p tsconfig-cjs.json && sh ./addhybridpackage.sh"
