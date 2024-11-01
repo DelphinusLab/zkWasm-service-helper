@@ -53,6 +53,10 @@ export declare enum InputContextType {
     ImageInitial = "ImageInitial",
     ImageCurrent = "ImageCurrent"
 }
+export declare enum CompressionType {
+    None = "None",
+    GZip = "GZip"
+}
 export type ContextHexString = string;
 export interface Task {
     user_address: string;
@@ -85,6 +89,7 @@ export interface Task {
     proof_submit_mode?: ProofSubmitMode;
     batch_proof_data?: BatchProofData;
     auto_submit_status?: AutoSubmitStatus;
+    compression?: CompressionType;
 }
 export type ObjectId = {
     $oid: string;
@@ -489,6 +494,7 @@ export interface User {
      */
     balance: Uint8Array;
     credits: string;
+    credit_deficit: string;
 }
 export interface TransactionInfo {
     txhash: string;
@@ -509,4 +515,14 @@ export interface SetMaintenanceModeParams {
     nonce: number;
     request_type: AdminRequestType;
     user_address: string;
+}
+export interface EstimatedProofFeeParams {
+    user_address: string;
+    md5: string;
+    proof_submit_mode: ProofSubmitMode;
+}
+export interface EstimatedProofFee {
+    min?: number;
+    max?: number;
+    msg: string;
 }

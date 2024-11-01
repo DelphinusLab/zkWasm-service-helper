@@ -62,6 +62,9 @@ import {
   ServerVersionInfo,
   ProverLevel,
   ProverNodesSummary,
+  CompressionType,
+  EstimatedProofFeeParams,
+  EstimatedProofFee,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -84,6 +87,7 @@ export {
   MaintenanceModeType,
   AdminRequestType,
   ProverLevel,
+  CompressionType,
 };
 
 export type {
@@ -140,4 +144,6 @@ export type {
   SetMaintenanceModeParams,
   ServerVersionInfo,
   ProverNodesSummary,
+  EstimatedProofFeeParams,
+  EstimatedProofFee,
 };

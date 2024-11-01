@@ -11,6 +11,11 @@ export var InputContextType;
     InputContextType["ImageInitial"] = "ImageInitial";
     InputContextType["ImageCurrent"] = "ImageCurrent";
 })(InputContextType || (InputContextType = {}));
+export var CompressionType;
+(function (CompressionType) {
+    CompressionType["None"] = "None";
+    CompressionType["GZip"] = "GZip";
+})(CompressionType || (CompressionType = {}));
 export var AutoSubmitProofStatus;
 (function (AutoSubmitProofStatus) {
     AutoSubmitProofStatus["Pending"] = "Pending";

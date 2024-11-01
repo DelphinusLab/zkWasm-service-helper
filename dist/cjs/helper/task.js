@@ -350,6 +350,15 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
+    queryEstimateProofFee(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const config = yield this.endpoint.invokeRequest("GET", TaskEndpoint.GET_ESTIMATED_PROOF_FEE, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("get queryEstimateProofFee response.");
+            }
+            return config;
+        });
+    }
     sendRequestWithSignature(method, path, task, isFormData = false) {
         return __awaiter(this, void 0, void 0, function* () {
             // TODO: create return types for tasks using this method
@@ -407,4 +416,5 @@ var TaskEndpoint;
     TaskEndpoint["ROUND_1_BATCH"] = "/round1_batch_proofs";
     TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
+    TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));
