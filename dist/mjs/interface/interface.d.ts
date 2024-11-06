@@ -31,11 +31,18 @@ export interface NodeStatistics {
         timestamp: string;
     };
 }
+export interface NodeAvailabilitySummary {
+    certified_count: [number, number];
+    active_count: [number, number];
+    intern_count: [number, number];
+    inactive_count: [number, number];
+}
 export interface ProverNodesSummary {
     certified_prover_count: number;
     active_prover_count: number;
     intern_prover_count: number;
     inactive_prover_count: number;
+    availability_summary: NodeAvailabilitySummary;
 }
 export declare enum ProverLevel {
     Inactive = "Inactive",
