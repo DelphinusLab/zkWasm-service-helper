@@ -99,6 +99,14 @@ export class ZkWasmServiceHelper {
         }
         return res;
     }
+    async queryOnlineNodesSummary() {
+        let headers = { "Content-Type": "application/json" };
+        let res = await this.endpoint.invokeRequest("GET", TaskEndpoint.ONLINE_NODES_SUMMARY, JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading node summary");
+        }
+        return res;
+    }
     async loadTasks(query) {
         let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
@@ -339,4 +347,5 @@ export var TaskEndpoint;
     TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
+    TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
 })(TaskEndpoint || (TaskEndpoint = {}));

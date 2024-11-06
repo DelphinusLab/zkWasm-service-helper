@@ -144,6 +144,16 @@ class ZkWasmServiceHelper {
             return res;
         });
     }
+    queryOnlineNodesSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let headers = { "Content-Type": "application/json" };
+            let res = yield this.endpoint.invokeRequest("GET", TaskEndpoint.ONLINE_NODES_SUMMARY, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading node summary");
+            }
+            return res;
+        });
+    }
     loadTasks(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let headers = { "Content-Type": "application/json" };
@@ -417,4 +427,5 @@ var TaskEndpoint;
     TaskEndpoint["ROUND_2_BATCH"] = "/round2_batch_proofs";
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
+    TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

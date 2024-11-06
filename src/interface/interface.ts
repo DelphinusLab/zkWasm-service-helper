@@ -34,11 +34,11 @@ export interface NodeStatistics {
   };
 }
 
-export interface NodeAvailabilitySummary {
-  certified_count: [number, number];
-  active_count: [number, number];
-  intern_count: [number, number];
-  inactive_count: [number, number];
+export interface OnlineNodesSummary {
+  certified: string[];
+  active: string[];
+  intern: string[];
+  inactive: string[];
 }
 
 export interface ProverNodesSummary {
@@ -46,7 +46,6 @@ export interface ProverNodesSummary {
   active_prover_count: number;
   intern_prover_count: number;
   inactive_prover_count: number;
-  availability_summary: NodeAvailabilitySummary,
 }
 
 export enum ProverLevel {
