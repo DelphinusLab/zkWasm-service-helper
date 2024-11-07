@@ -35,10 +35,10 @@ export interface NodeStatistics {
 }
 
 export interface OnlineNodesSummary {
-  certified: string[];
-  active: string[];
-  intern: string[];
-  inactive: string[];
+  certified: [string, string][];
+  active: [string, string][];
+  intern: [string, string][];
+  inactive: [string, string][];
 }
 
 export interface ProverNodesSummary {
