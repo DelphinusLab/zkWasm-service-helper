@@ -145,7 +145,7 @@ export type {
   SetMaintenanceModeParams,
   ServerVersionInfo,
   ProverNodesSummary,
-  OnlineNodesSummary as NodeAvailabilitySummary,
+  OnlineNodesSummary,
   EstimatedProofFeeParams,
   EstimatedProofFee,
 };
