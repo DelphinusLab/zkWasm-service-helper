@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary } from "../interface/interface.js";
-=======
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, EstimatedProofFeeParams, EstimatedProofFee } from "../interface/interface.js";
->>>>>>> ZKWAS-349: big image fee endpoint updates (#102)
+import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -17,6 +13,7 @@ export declare class ZkWasmServiceHelper {
     loadStatistics(): Promise<Statistics>;
     queryNodeStatistics(query: NodeStatisticsQueryParams): Promise<PaginationResult<NodeStatistics[]>>;
     queryProverNodeSummary(): Promise<ProverNodesSummary>;
+    queryOnlineNodesSummary(): Promise<OnlineNodesSummary>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     loadTaskList(query: QueryParams): Promise<PaginationResult<ConciseTask[]>>;
     queryAutoSubmitProofs(query: PaginatedQuery<AutoSubmitProofQuery>): Promise<PaginationResult<AutoSubmitProof[]>>;
@@ -50,5 +47,6 @@ export declare enum TaskEndpoint {
     ROUND_1_BATCH = "/round1_batch_proofs",
     ROUND_2_BATCH = "/round2_batch_proofs",
     FINAL_BATCH = "/final_batch_proofs",
-    GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee"
+    GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
+    ONLINE_NODES_SUMMARY = "/online_nodes_summary"
 }

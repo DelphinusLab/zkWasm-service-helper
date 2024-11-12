@@ -35,6 +35,7 @@ import {
   NodeStatisticsQueryParams,
   SetMaintenanceModeParams,
   ProverNodesSummary,
+  OnlineNodesSummary,
   EstimatedProofFeeParams,
   EstimatedProofFee,
 } from "../interface/interface.js";
@@ -194,6 +195,21 @@ export class ZkWasmServiceHelper {
     }
 
     return res as ProverNodesSummary;
+  }
+
+  async queryOnlineNodesSummary(): Promise<OnlineNodesSummary> {
+    let headers = { "Content-Type": "application/json" };
+
+    let res = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.ONLINE_NODES_SUMMARY,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading node summary");
+    }
+
+    return res as OnlineNodesSummary;
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
@@ -554,4 +570,5 @@ export enum TaskEndpoint {
   ROUND_2_BATCH = "/round2_batch_proofs",
   FINAL_BATCH = "/final_batch_proofs",
   GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
+  ONLINE_NODES_SUMMARY = "/online_nodes_summary",
 }

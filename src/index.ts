@@ -62,6 +62,7 @@ import {
   ServerVersionInfo,
   ProverLevel,
   ProverNodesSummary,
+  OnlineNodesSummary,
   CompressionType,
   EstimatedProofFeeParams,
   EstimatedProofFee,
@@ -144,6 +145,7 @@ export type {
   SetMaintenanceModeParams,
   ServerVersionInfo,
   ProverNodesSummary,
+  OnlineNodesSummary,
   EstimatedProofFeeParams,
   EstimatedProofFee,
 };

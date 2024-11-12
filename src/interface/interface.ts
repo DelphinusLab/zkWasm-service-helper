@@ -34,6 +34,13 @@ export interface NodeStatistics {
   };
 }
 
+export interface OnlineNodesSummary {
+  certified: [string, string][];
+  active: [string, string][];
+  intern: [string, string][];
+  inactive: [string, string][];
+}
+
 export interface ProverNodesSummary {
   certified_prover_count: number;
   active_prover_count: number;
@@ -636,5 +643,5 @@ export interface EstimatedProofFeeParams {
 export interface EstimatedProofFee {
   min?: number;
   max?: number;
-  msg : string;
+  msg: string;
 }
