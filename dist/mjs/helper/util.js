@@ -93,6 +93,34 @@ export class ZkWasmUtil {
             },
             {
                 type: "function",
+                name: "verify",
+                inputs: [
+                    {
+                        internalType: "uint256[]",
+                        name: "sibling_instances",
+                        type: "uint256[]",
+                    },
+                    {
+                        internalType: "uint256[]",
+                        name: "verify_instance",
+                        type: "uint256[]",
+                    },
+                    {
+                        internalType: "uint256[]",
+                        name: "membership_proof_index",
+                        type: "uint256[]",
+                    },
+                    {
+                        internalType: "uint256[][]",
+                        name: "target_instances",
+                        type: "uint256[][]",
+                    },
+                ],
+                outputs: [],
+                stateMutability: "view",
+            },
+            {
+                type: "function",
                 name: "register_proofs",
                 inputs: [
                     { internalType: "uint256[]", name: "proof", type: "uint256[]" },
