@@ -311,7 +311,7 @@ class ZkWasmUtil {
             console.log("verify_instance: ", verify_instance);
             console.log("sibling_instances: ", [sibling_instances]);
             console.log("target_instances: ", target_instances);
-            let result = yield batch_verifier_contract.check_verified_proof.send(membership_proof_index, verify_instance, [sibling_instances], target_instances);
+            let result = yield batch_verifier_contract.verify.send(sibling_instances, verify_instance, membership_proof_index, target_instances);
             return result;
         });
     }

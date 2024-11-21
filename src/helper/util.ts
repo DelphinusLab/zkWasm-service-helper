@@ -495,7 +495,7 @@ export class ZkWasmUtil {
     console.log("sibling_instances: ", [sibling_instances]);
     console.log("target_instances: ", target_instances);
 
-    let result = await batch_verifier_contract.check_verified_proof.send(
+    let result = await batch_verifier_contract.verify.send(
       sibling_instances,
       verify_instance,
       membership_proof_index,
