@@ -99,6 +99,7 @@ export async function VerifyAutoSubmitProof() {
         contractAddress
       );
 
+      // This calls the `verify` function on the BatchVerifier contract
       let tx = await ZkWasmUtil.verifyBatchedProof(
         contract.getEthersContract(),
         proof_info
@@ -108,6 +109,17 @@ export async function VerifyAutoSubmitProof() {
 
       console.log("transaction:", tx.hash);
       console.log("receipt:", receipt);
+
+      // Alternatively, this calls the `checkVerifiedProof` function on the BatchVerifier contract
+      let checkVerifiedProof = await ZkWasmUtil.checkVerifiedProof(
+        contract.getEthersContract(),
+        proof_info
+      );
+      // wait for tx to be mined, can add no. of confirmations as arg
+      const receipt_checkVerifiedProof = await checkVerifiedProof.wait();
+
+      console.log("transaction:", checkVerifiedProof.hash);
+      console.log("receipt:", receipt_checkVerifiedProof);
     },
     provider,
     ServiceHelperConfig.privateKey
