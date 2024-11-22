@@ -532,7 +532,7 @@ export class ZkWasmUtil {
     return result;
   }
 
-  static async _verifyBatchedProof(
+  static async checkVerifiedProof(
     batch_verifier_contract: Contract,
     params: VerifyBatchProofParams
   ) {

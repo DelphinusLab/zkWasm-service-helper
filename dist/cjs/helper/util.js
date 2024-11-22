@@ -315,7 +315,7 @@ class ZkWasmUtil {
             return result;
         });
     }
-    static _verifyBatchedProof(batch_verifier_contract, params) {
+    static checkVerifiedProof(batch_verifier_contract, params) {
         return __awaiter(this, void 0, void 0, function* () {
             let membership_proof_index = params.membership_proof_index;
             let verify_instance = this.bytesToBigIntArray(params.verify_instance);

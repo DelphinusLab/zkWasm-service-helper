@@ -422,7 +422,7 @@ export class ZkWasmUtil {
         let result = await batch_verifier_contract.verify.send(sibling_instances, verify_instance, membership_proof_index, target_instances);
         return result;
     }
-    static async _verifyBatchedProof(batch_verifier_contract, params) {
+    static async checkVerifiedProof(batch_verifier_contract, params) {
         let membership_proof_index = params.membership_proof_index;
         let verify_instance = this.bytesToBigIntArray(params.verify_instance);
         let sibling_instances = [];
