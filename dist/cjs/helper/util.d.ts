@@ -94,6 +94,7 @@ export declare class ZkWasmUtil {
     static verifyProof(verify_contract: Contract, params: VerifyProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static composeBatchVerifierContract(signer: DelphinusBrowserConnector | DelphinusWalletConnector, verifier_addr: string): import("web3subscriber/src/client.js").DelphinusContract | Promise<import("web3subscriber/src/client.js").DelphinusContract>;
     static verifyBatchedProof(batch_verifier_contract: Contract, params: VerifyBatchProofParams): Promise<import("ethers").ContractTransactionResponse>;
+    static checkVerifiedProof(batch_verifier_contract: Contract, params: VerifyBatchProofParams): Promise<import("ethers").ContractTransactionResponse>;
     static signMessage(message: string, priv_key: string): Promise<string>;
     static ERC20Contract(contractAddress: string, signer: Signer): Contract;
     static bytesToJSONString(data: Uint8Array): string;
