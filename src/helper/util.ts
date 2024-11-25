@@ -520,7 +520,7 @@ export class ZkWasmUtil {
     console.log("Verify Batch Proof Inputs");
     console.log("membership_proof_index: ", membership_proof_index);
     console.log("verify_instance: ", verify_instance);
-    console.log("sibling_instances: ", [sibling_instances]);
+    console.log("sibling_instances: ", sibling_instances);
     console.log("target_instances: ", target_instances);
 
     let result = await batch_verifier_contract.verify.send(
