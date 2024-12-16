@@ -11,7 +11,7 @@ import {
 import { withDelphinusWalletConnector } from "web3subscriber/src/client";
 
 import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
-import { queryRound1ProofInfo } from "../queries/autosubmit";
+
 import {
   DelphinusBaseProvider,
   GetBaseProvider,

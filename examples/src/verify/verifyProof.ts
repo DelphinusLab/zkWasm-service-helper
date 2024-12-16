@@ -11,11 +11,9 @@ import {
 } from "web3subscriber/src/client";
 import {
   DelphinusBaseProvider,
-  DelphinusBrowserConnector,
   GetBaseProvider,
 } from "web3subscriber/src/provider";
 import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
-import { queryTasks } from "../queries/task";
 
 const provider: DelphinusBaseProvider = GetBaseProvider(
   Web3ChainConfig.providerUrl // web3 provider URL for the verifier chain
