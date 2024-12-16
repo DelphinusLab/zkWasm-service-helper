@@ -6,11 +6,11 @@ import {
   VerifyBatchProofParams,
   Round1Status,
   Round1Info,
+  PaginationResult,
 } from "zkwasm-service-helper";
 import { withDelphinusWalletConnector } from "web3subscriber/src/client";
 
-import { ServiceHelperConfig, Web3ChainConfig } from "../config";
-import { queryTasks } from "../queries/task";
+import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
 import { queryRound1ProofInfo } from "../queries/autosubmit";
 import {
   DelphinusBaseProvider,
@@ -33,7 +33,9 @@ export async function VerifyAutoSubmitProof() {
 
   // Fetch a task from the playground service which contains the proof information
   // See the example to build query function to fetch task details
-  const taskResponse = await queryTasks(queryParams);
+  const taskResponse: PaginationResult<Task[]> = await ServiceHelper.loadTasks(
+    queryParams
+  );
 
   // Handle missing tasks accordingly
   // Assume task exists
@@ -49,12 +51,13 @@ export async function VerifyAutoSubmitProof() {
     return;
   }
 
-  const round_1_info_response = await queryRound1ProofInfo({
-    task_id: task._id.$oid,
-    chain_id: Web3ChainConfig.chainId,
-    status: Round1Status.Batched,
-    total: 1,
-  });
+  const round_1_info_response: PaginationResult<Round1Info[]> =
+    await ServiceHelper.queryRound1Info({
+      task_id: task._id.$oid,
+      chain_id: Web3ChainConfig.chainId,
+      status: Round1Status.Batched,
+      total: 1,
+    });
 
   // Handle missing round 2 proofs accordingly
   // Assume round 2 proof exists

@@ -3,6 +3,7 @@ import {
   ZkWasmUtil,
   Task,
   QueryParams,
+  PaginationResult,
 } from "zkwasm-service-helper";
 import {
   withBrowserConnector,
@@ -13,7 +14,7 @@ import {
   DelphinusBrowserConnector,
   GetBaseProvider,
 } from "web3subscriber/src/provider";
-import { ServiceHelperConfig, Web3ChainConfig } from "../config";
+import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
 import { queryTasks } from "../queries/task";
 
 const provider: DelphinusBaseProvider = GetBaseProvider(
@@ -32,7 +33,9 @@ export async function VerifyProof() {
 
   // Fetch a task from the playground service which contains the proof information
   // See the example to build query function to fetch task details
-  const response = await queryTasks(queryParams);
+  const response: PaginationResult<Task[]> = await ServiceHelper.loadTasks(
+    queryParams
+  );
 
   // Handle missing tasks accordingly
   // Assume task exists
