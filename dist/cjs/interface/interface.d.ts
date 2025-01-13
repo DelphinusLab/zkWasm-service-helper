@@ -257,6 +257,7 @@ export interface BaseAddImageParams {
     circuit_size: number;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
+    inherited_merkle_data_md5?: string;
 }
 export interface WithInitialContext {
     initial_context: unknown;
@@ -416,6 +417,9 @@ export interface DeploymentInfo {
     chain_id: number;
     address: string;
 }
+export interface InheritedMerkleDataInfo {
+    md5: string;
+}
 export interface Image {
     user_address: string;
     md5: string;
@@ -429,6 +433,7 @@ export interface Image {
     checksum: ImageChecksum | null;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
+    inherited_merkle_data_info?: InheritedMerkleDataInfo;
 }
 export interface ImageChecksum {
     x: Uint8Array;
