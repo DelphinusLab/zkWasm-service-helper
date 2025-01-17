@@ -262,7 +262,7 @@ export interface BaseAddImageParams {
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
     inherited_merkle_data_md5?: string;
-    prove_run_restrictions: ProveRunRestrictions;
+    prove_run_restrictions?: ProveRunRestrictions;
 }
 export interface WithInitialContext {
     initial_context: unknown;
@@ -311,7 +311,7 @@ export interface BaseResetImageParams {
     user_address: string;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
-    prove_run_restrictions: ProveRunRestrictions;
+    prove_run_restrictions?: ProveRunRestrictions;
 }
 export interface WithResetContext {
     reset_context: unknown;
@@ -440,7 +440,7 @@ export interface Image {
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
     inherited_merkle_data_info?: InheritedMerkleDataInfo;
-    prove_run_restrictions: ProveRunRestrictions;
+    prove_run_restrictions?: ProveRunRestrictions;
 }
 export interface ImageChecksum {
     x: Uint8Array;
