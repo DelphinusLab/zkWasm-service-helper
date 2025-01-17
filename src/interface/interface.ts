@@ -538,7 +538,7 @@ export interface Image {
   prove_payment_src: ProvePaymentSrc;
   auto_submit_network_ids: number[];
   inherited_merkle_data_info?: InheritedMerkleDataInfo;
-  prove_run_restrictions?: ProveRunRestrictions;
+  prove_run_restrictions: ProveRunRestrictions;
 }
 
 export interface ImageChecksum {
