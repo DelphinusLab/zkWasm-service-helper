@@ -307,7 +307,7 @@ export enum ProvePaymentSrc {
   CreatorPay = "CreatorPay",
 }
 
-export enum ProveRunRestrictions {
+export enum AddProveTaskRestrictions {
   Anyone = "Anyone",
   CreatorOnly = "CreatorOnly",
 }
@@ -323,7 +323,7 @@ export interface BaseAddImageParams {
   prove_payment_src: ProvePaymentSrc;
   auto_submit_network_ids: number[];
   inherited_merkle_data_md5?: string;
-  prove_run_restrictions?: ProveRunRestrictions;
+  add_prove_task_restrictions?: AddProveTaskRestrictions;
 }
 
 export interface WithInitialContext {
@@ -389,7 +389,7 @@ export interface BaseResetImageParams {
   user_address: string;
   prove_payment_src: ProvePaymentSrc;
   auto_submit_network_ids: number[];
-  prove_run_restrictions?: ProveRunRestrictions;
+  add_prove_task_restrictions?: AddProveTaskRestrictions;
 }
 
 export interface WithResetContext {
@@ -538,7 +538,7 @@ export interface Image {
   prove_payment_src: ProvePaymentSrc;
   auto_submit_network_ids: number[];
   inherited_merkle_data_info?: InheritedMerkleDataInfo;
-  prove_run_restrictions: ProveRunRestrictions;
+  add_prove_task_restrictions: AddProveTaskRestrictions;
 }
 
 export interface ImageChecksum {

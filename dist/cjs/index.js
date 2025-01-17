@@ -13,7 +13,7 @@ Object.defineProperty(exports, "MaintenanceModeType", { enumerable: true, get: f
 Object.defineProperty(exports, "AdminRequestType", { enumerable: true, get: function () { return interface_js_1.AdminRequestType; } });
 Object.defineProperty(exports, "ProverLevel", { enumerable: true, get: function () { return interface_js_1.ProverLevel; } });
 Object.defineProperty(exports, "CompressionType", { enumerable: true, get: function () { return interface_js_1.CompressionType; } });
-Object.defineProperty(exports, "ProveRunRestrictions", { enumerable: true, get: function () { return interface_js_1.ProveRunRestrictions; } });
+Object.defineProperty(exports, "ProveRunRestrictions", { enumerable: true, get: function () { return interface_js_1.AddProveTaskRestrictions; } });
 const util_js_1 = require("./helper/util.js");
 Object.defineProperty(exports, "ZkWasmUtil", { enumerable: true, get: function () { return util_js_1.ZkWasmUtil; } });
 const endpoint_js_1 = require("./helper/endpoint.js");

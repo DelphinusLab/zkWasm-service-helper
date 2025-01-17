@@ -304,8 +304,8 @@ export class ZkWasmUtil {
     if (params.inherited_merkle_data_md5) {
       message += params.inherited_merkle_data_md5;
     }
-    if (params.prove_run_restrictions) {
-      message += params.prove_run_restrictions;
+    if (params.add_prove_task_restrictions) {
+      message += params.add_prove_task_restrictions;
     }
     return message;
   }
@@ -368,8 +368,8 @@ export class ZkWasmUtil {
     if (params.reset_context) {
       message += params.reset_context_md5;
     }
-    if (params.prove_run_restrictions) {
-      message += params.prove_run_restrictions;
+    if (params.add_prove_task_restrictions) {
+      message += params.add_prove_task_restrictions;
     }
     return message;
   }
