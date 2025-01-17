@@ -90,7 +90,7 @@ export {
   AdminRequestType,
   ProverLevel,
   CompressionType,
-  AddProveTaskRestrictions as ProveRunRestrictions,
+  AddProveTaskRestrictions,
 };
 
 export type {
