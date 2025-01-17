@@ -294,21 +294,19 @@ export class ZkWasmUtil {
     message += params.description_url;
     message += params.avator_url;
     message += params.circuit_size;
-
     message += params.prove_payment_src;
     for (const chainId of params.auto_submit_network_ids) {
       message += chainId;
     }
-
-    // Additional params afterwards
     if (params.initial_context) {
       message += params.initial_context_md5;
     }
-
     if (params.inherited_merkle_data_md5) {
       message += params.inherited_merkle_data_md5;
     }
-
+    if (params.add_prove_task_restrictions) {
+      message += params.add_prove_task_restrictions;
+    }
     return message;
   }
 
@@ -363,14 +361,15 @@ export class ZkWasmUtil {
     message += params.md5;
     message += params.circuit_size;
     message += params.user_address;
-
     message += params.prove_payment_src;
     for (const chainId of params.auto_submit_network_ids) {
       message += chainId;
     }
-
     if (params.reset_context) {
       message += params.reset_context_md5;
+    }
+    if (params.add_prove_task_restrictions) {
+      message += params.add_prove_task_restrictions;
     }
     return message;
   }
