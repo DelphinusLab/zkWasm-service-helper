@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.CompressionType = exports.InputContextType = exports.ProverLevel = void 0;
+exports.AdminRequestType = exports.MaintenanceModeType = exports.ProofSubmitMode = exports.ProveRunRestrictions = exports.ProvePaymentSrc = exports.AutoSubmitStatus = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.CompressionType = exports.InputContextType = exports.ProverLevel = void 0;
 var ProverLevel;
 (function (ProverLevel) {
     ProverLevel["Inactive"] = "Inactive";
@@ -49,6 +49,11 @@ var ProvePaymentSrc;
     ProvePaymentSrc["Default"] = "Default";
     ProvePaymentSrc["CreatorPay"] = "CreatorPay";
 })(ProvePaymentSrc = exports.ProvePaymentSrc || (exports.ProvePaymentSrc = {}));
+var ProveRunRestrictions;
+(function (ProveRunRestrictions) {
+    ProveRunRestrictions["Anyone"] = "Anyone";
+    ProveRunRestrictions["CreatorOnly"] = "CreatorOnly";
+})(ProveRunRestrictions = exports.ProveRunRestrictions || (exports.ProveRunRestrictions = {}));
 var ProofSubmitMode;
 (function (ProofSubmitMode) {
     ProofSubmitMode["Manual"] = "Manual";
