@@ -265,12 +265,14 @@ export class ZkWasmUtil {
         for (const chainId of params.auto_submit_network_ids) {
             message += chainId;
         }
-        // Additional params afterwards
         if (params.initial_context) {
             message += params.initial_context_md5;
         }
         if (params.inherited_merkle_data_md5) {
             message += params.inherited_merkle_data_md5;
+        }
+        if (params.prove_run_restrictions) {
+            message += params.prove_run_restrictions;
         }
         return message;
     }
@@ -319,6 +321,9 @@ export class ZkWasmUtil {
         }
         if (params.reset_context) {
             message += params.reset_context_md5;
+        }
+        if (params.prove_run_restrictions) {
+            message += params.prove_run_restrictions;
         }
         return message;
     }
