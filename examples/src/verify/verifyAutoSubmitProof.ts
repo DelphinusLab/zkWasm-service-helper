@@ -6,12 +6,12 @@ import {
   VerifyBatchProofParams,
   Round1Status,
   Round1Info,
+  PaginationResult,
 } from "zkwasm-service-helper";
 import { withDelphinusWalletConnector } from "web3subscriber/src/client";
 
-import { ServiceHelperConfig, Web3ChainConfig } from "../config";
-import { queryTasks } from "../queries/task";
-import { queryRound1ProofInfo } from "../queries/autosubmit";
+import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
+
 import {
   DelphinusBaseProvider,
   GetBaseProvider,
@@ -33,7 +33,9 @@ export async function VerifyAutoSubmitProof() {
 
   // Fetch a task from the playground service which contains the proof information
   // See the example to build query function to fetch task details
-  const taskResponse = await queryTasks(queryParams);
+  const taskResponse: PaginationResult<Task[]> = await ServiceHelper.loadTasks(
+    queryParams
+  );
 
   // Handle missing tasks accordingly
   // Assume task exists
@@ -49,12 +51,13 @@ export async function VerifyAutoSubmitProof() {
     return;
   }
 
-  const round_1_info_response = await queryRound1ProofInfo({
-    task_id: task._id.$oid,
-    chain_id: Web3ChainConfig.chainId,
-    status: Round1Status.Batched,
-    total: 1,
-  });
+  const round_1_info_response: PaginationResult<Round1Info[]> =
+    await ServiceHelper.queryRound1Info({
+      task_id: task._id.$oid,
+      chain_id: Web3ChainConfig.chainId,
+      status: Round1Status.Batched,
+      total: 1,
+    });
 
   // Handle missing round 2 proofs accordingly
   // Assume round 2 proof exists
@@ -99,6 +102,7 @@ export async function VerifyAutoSubmitProof() {
         contractAddress
       );
 
+      // This calls the `verify` function on the BatchVerifier contract
       let tx = await ZkWasmUtil.verifyBatchedProof(
         contract.getEthersContract(),
         proof_info
@@ -108,6 +112,17 @@ export async function VerifyAutoSubmitProof() {
 
       console.log("transaction:", tx.hash);
       console.log("receipt:", receipt);
+
+      // Alternatively, this calls the `checkVerifiedProof` function on the BatchVerifier contract
+      let checkVerifiedProof = await ZkWasmUtil.checkVerifiedProof(
+        contract.getEthersContract(),
+        proof_info
+      );
+      // wait for tx to be mined, can add no. of confirmations as arg
+      const receipt_checkVerifiedProof = await checkVerifiedProof.wait();
+
+      console.log("transaction:", checkVerifiedProof.hash);
+      console.log("receipt:", receipt_checkVerifiedProof);
     },
     provider,
     ServiceHelperConfig.privateKey

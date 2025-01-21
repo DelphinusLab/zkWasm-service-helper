@@ -93,6 +93,34 @@ export class ZkWasmUtil {
             },
             {
                 type: "function",
+                name: "verify",
+                inputs: [
+                    {
+                        internalType: "uint256[]",
+                        name: "sibling_instances",
+                        type: "uint256[]",
+                    },
+                    {
+                        internalType: "uint256[]",
+                        name: "verify_instance",
+                        type: "uint256[]",
+                    },
+                    {
+                        internalType: "uint256[]",
+                        name: "membership_proof_index",
+                        type: "uint256[]",
+                    },
+                    {
+                        internalType: "uint256[][]",
+                        name: "target_instances",
+                        type: "uint256[][]",
+                    },
+                ],
+                outputs: [],
+                stateMutability: "view",
+            },
+            {
+                type: "function",
                 name: "register_proofs",
                 inputs: [
                     { internalType: "uint256[]", name: "proof", type: "uint256[]" },
@@ -237,9 +265,14 @@ export class ZkWasmUtil {
         for (const chainId of params.auto_submit_network_ids) {
             message += chainId;
         }
-        // Additional params afterwards
         if (params.initial_context) {
             message += params.initial_context_md5;
+        }
+        if (params.inherited_merkle_data_md5) {
+            message += params.inherited_merkle_data_md5;
+        }
+        if (params.add_prove_task_restrictions) {
+            message += params.add_prove_task_restrictions;
         }
         return message;
     }
@@ -288,6 +321,9 @@ export class ZkWasmUtil {
         }
         if (params.reset_context) {
             message += params.reset_context_md5;
+        }
+        if (params.add_prove_task_restrictions) {
+            message += params.add_prove_task_restrictions;
         }
         return message;
     }
@@ -371,6 +407,30 @@ export class ZkWasmUtil {
         return signer.getContractWithSigner(verifier_addr, this.batch_verifier_contract.abi);
     }
     static async verifyBatchedProof(batch_verifier_contract, params) {
+        let membership_proof_index = params.membership_proof_index;
+        let verify_instance = this.bytesToBigIntArray(params.verify_instance);
+        let sibling_instances = [];
+        params.sibling_instances.forEach((instance) => {
+            //
+            sibling_instances.push(this.bytesToBigIntArray(instance)[0]);
+        });
+        let target_instances = [];
+        params.target_instances.forEach((instance) => {
+            target_instances.push(this.bytesToBigIntArray(instance));
+        });
+        let round_1_shadow_instance = this.bytesToBigIntArray(params.round_1_shadow_instance);
+        // Add the round 1 shadow instance to the flattened sibling instances as this is the expected input format
+        // for the contract. (12 round 1 target instances + 1 round 1 shadow instance)
+        sibling_instances.push(round_1_shadow_instance[0]);
+        console.log("Verify Batch Proof Inputs");
+        console.log("membership_proof_index: ", membership_proof_index);
+        console.log("verify_instance: ", verify_instance);
+        console.log("sibling_instances: ", sibling_instances);
+        console.log("target_instances: ", target_instances);
+        let result = await batch_verifier_contract.verify.send(sibling_instances, verify_instance, membership_proof_index, target_instances);
+        return result;
+    }
+    static async checkVerifiedProof(batch_verifier_contract, params) {
         let membership_proof_index = params.membership_proof_index;
         let verify_instance = this.bytesToBigIntArray(params.verify_instance);
         let sibling_instances = [];

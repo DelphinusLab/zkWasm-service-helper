@@ -247,6 +247,10 @@ export declare enum ProvePaymentSrc {
     Default = "Default",
     CreatorPay = "CreatorPay"
 }
+export declare enum AddProveTaskRestrictions {
+    Anyone = "Anyone",
+    CreatorOnly = "CreatorOnly"
+}
 export interface BaseAddImageParams {
     name: string;
     image: any;
@@ -257,6 +261,8 @@ export interface BaseAddImageParams {
     circuit_size: number;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
+    inherited_merkle_data_md5?: string;
+    add_prove_task_restrictions?: AddProveTaskRestrictions;
 }
 export interface WithInitialContext {
     initial_context: unknown;
@@ -305,6 +311,7 @@ export interface BaseResetImageParams {
     user_address: string;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
+    add_prove_task_restrictions?: AddProveTaskRestrictions;
 }
 export interface WithResetContext {
     reset_context: unknown;
@@ -416,6 +423,9 @@ export interface DeploymentInfo {
     chain_id: number;
     address: string;
 }
+export interface InheritedMerkleDataInfo {
+    md5: string;
+}
 export interface Image {
     user_address: string;
     md5: string;
@@ -429,6 +439,8 @@ export interface Image {
     checksum: ImageChecksum | null;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
+    inherited_merkle_data_info?: InheritedMerkleDataInfo;
+    add_prove_task_restrictions: AddProveTaskRestrictions;
 }
 export interface ImageChecksum {
     x: Uint8Array;

@@ -46,6 +46,11 @@ export var ProvePaymentSrc;
     ProvePaymentSrc["Default"] = "Default";
     ProvePaymentSrc["CreatorPay"] = "CreatorPay";
 })(ProvePaymentSrc || (ProvePaymentSrc = {}));
+export var AddProveTaskRestrictions;
+(function (AddProveTaskRestrictions) {
+    AddProveTaskRestrictions["Anyone"] = "Anyone";
+    AddProveTaskRestrictions["CreatorOnly"] = "CreatorOnly";
+})(AddProveTaskRestrictions || (AddProveTaskRestrictions = {}));
 export var ProofSubmitMode;
 (function (ProofSubmitMode) {
     ProofSubmitMode["Manual"] = "Manual";
