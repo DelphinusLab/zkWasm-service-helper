@@ -151,10 +151,19 @@ export class ZkWasmServiceHelper {
             console.log("params:", mergedQuery);
             console.log("json", queryJson);
         }
-        let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+        let tasks = (await this.endpoint.invokeRequest("GET", `/tasks`, queryJson));
         if (this.endpoint.enable_logs) {
             console.log("loading task board!");
         }
+        // Convert the corresponding proof fields into Uint8Array from number[] (json)
+        tasks.data.forEach((task) => {
+            task.instances = new Uint8Array(task.instances);
+            task.proof = new Uint8Array(task.proof);
+            task.batch_instances = new Uint8Array(task.batch_instances);
+            task.shadow_instances = new Uint8Array(task.shadow_instances);
+            task.single_proof = new Uint8Array(task.single_proof);
+            task.aux = new Uint8Array(task.aux);
+        });
         return tasks;
     }
     async loadTaskList(query) {
@@ -202,24 +211,57 @@ export class ZkWasmServiceHelper {
         return tasks;
     }
     async queryAutoSubmitProofs(query) {
-        let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query)));
+        let proofData = (await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query))));
         if (this.endpoint.enable_logs) {
             console.log("loading proof data!");
         }
+        // Convert the corresponding proof fields into Uint8Array from number[] (json)
+        proofData.data.forEach((proof) => {
+            proof.proof = new Uint8Array(proof.proof);
+            proof.aux = new Uint8Array(proof.aux);
+            proof.batch_instances = new Uint8Array(proof.batch_instances);
+            if (proof.shadow_instances) {
+                proof.shadow_instances = new Uint8Array(proof.shadow_instances);
+            }
+        });
         return proofData;
     }
     async queryRound1Info(query) {
-        let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_2_BATCH, JSON.parse(JSON.stringify(query)));
+        let proofData = (await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_2_BATCH, JSON.parse(JSON.stringify(query))));
         if (this.endpoint.enable_logs) {
             console.log("loading proof data!");
         }
+        // Convert the corresponding proof fields into Uint8Array from number[] (json)
+        proofData.data.forEach((proof) => {
+            proof.proof = new Uint8Array(proof.proof);
+            proof.aux = new Uint8Array(proof.aux);
+            proof.batch_instances = new Uint8Array(proof.batch_instances);
+            if (proof.shadow_instances) {
+                proof.shadow_instances = new Uint8Array(proof.shadow_instances);
+            }
+            proof.target_instances = proof.target_instances.map((instance) => {
+                return new Uint8Array(instance);
+            });
+        });
         return proofData;
     }
     async queryRound2Info(query) {
-        let proofData = await this.endpoint.invokeRequest("GET", TaskEndpoint.FINAL_BATCH, JSON.parse(JSON.stringify(query)));
+        let proofData = (await this.endpoint.invokeRequest("GET", TaskEndpoint.FINAL_BATCH, JSON.parse(JSON.stringify(query))));
         if (this.endpoint.enable_logs) {
             console.log("loading proof data!");
         }
+        // Convert the corresponding proof fields into Uint8Array from number[] (json)
+        proofData.data.forEach((proof) => {
+            proof.proof = new Uint8Array(proof.proof);
+            proof.aux = new Uint8Array(proof.aux);
+            proof.batch_instances = new Uint8Array(proof.batch_instances);
+            if (proof.shadow_instances) {
+                proof.shadow_instances = new Uint8Array(proof.shadow_instances);
+            }
+            proof.target_instances = proof.target_instances.map((instance) => {
+                return new Uint8Array(instance);
+            });
+        });
         return proofData;
     }
     async queryLogs(query) {

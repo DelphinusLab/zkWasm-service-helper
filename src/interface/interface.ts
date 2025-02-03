@@ -142,10 +142,10 @@ export interface AutoSubmitProof {
   task_id: string;
   base_proof_circuit_size: number;
   // Proof data which was output from the original aggregate proof task
-  proof: number[];
-  batch_instances: number[];
-  shadow_instances?: number[];
-  aux: number[];
+  proof: Uint8Array;
+  batch_instances: Uint8Array;
+  shadow_instances?: Uint8Array;
+  aux: Uint8Array;
   batch_started?: string;
   batch_finished?: string;
   internal_message?: string;
@@ -174,14 +174,14 @@ export interface Round1Info {
 
   // target_instances is the original aggregate proofs output batch instances
   // it equivalent to each Round1BatchProof.batch_instances
-  target_instances: number[][];
+  target_instances: Uint8Array[];
 
   // output of the round 1 batch proof as input to the round 2 batch proof
   // Assigned when the Round2BatchProof document is created
-  proof: number[];
-  batch_instances: number[];
-  shadow_instances?: number[];
-  aux: number[];
+  proof: Uint8Array;
+  batch_instances: Uint8Array;
+  shadow_instances?: Uint8Array;
+  aux: Uint8Array;
   // Extra Info
   batch_started?: string;
   batch_finished?: string;
@@ -205,13 +205,13 @@ export interface Round2Info {
   task_ids: string[];
 
   // target_instances is the original aggregate proofs output batch instances
-  target_instances: number[][];
+  target_instances: Uint8Array[];
   // output of the round 2 batch proofs
-  proof: number[];
-  batch_instances: number[];
-  shadow_instances?: number[];
+  proof: Uint8Array;
+  batch_instances: Uint8Array;
+  shadow_instances?: Uint8Array;
   // Used to generate solidity contract
-  aux: number[];
+  aux: Uint8Array;
   batched_time?: string;
   internal_message?: string;
   static_files_verification_data: StaticFileVerificationData;

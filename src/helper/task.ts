@@ -265,10 +265,25 @@ export class ZkWasmServiceHelper {
       console.log("json", queryJson);
     }
 
-    let tasks = await this.endpoint.invokeRequest("GET", `/tasks`, queryJson);
+    let tasks = (await this.endpoint.invokeRequest(
+      "GET",
+      `/tasks`,
+      queryJson
+    )) as PaginationResult<Task[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading task board!");
     }
+    // Convert the corresponding proof fields into Uint8Array from number[] (json)
+
+    tasks.data.forEach((task) => {
+      task.instances = new Uint8Array(task.instances);
+      task.proof = new Uint8Array(task.proof);
+      task.batch_instances = new Uint8Array(task.batch_instances);
+      task.shadow_instances = new Uint8Array(task.shadow_instances);
+      task.single_proof = new Uint8Array(task.single_proof);
+      task.aux = new Uint8Array(task.aux);
+    });
+
     return tasks;
   }
 
@@ -332,42 +347,79 @@ export class ZkWasmServiceHelper {
   async queryAutoSubmitProofs(
     query: PaginatedQuery<AutoSubmitProofQuery>
   ): Promise<PaginationResult<AutoSubmitProof[]>> {
-    let proofData = await this.endpoint.invokeRequest(
+    let proofData = (await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_1_BATCH,
       JSON.parse(JSON.stringify(query))
-    );
+    )) as PaginationResult<AutoSubmitProof[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading proof data!");
     }
+
+    // Convert the corresponding proof fields into Uint8Array from number[] (json)
+    proofData.data.forEach((proof) => {
+      proof.proof = new Uint8Array(proof.proof);
+      proof.aux = new Uint8Array(proof.aux);
+      proof.batch_instances = new Uint8Array(proof.batch_instances);
+      if (proof.shadow_instances) {
+        proof.shadow_instances = new Uint8Array(proof.shadow_instances);
+      }
+    });
+
     return proofData;
   }
 
   async queryRound1Info(
     query: PaginatedQuery<Round1InfoQuery>
   ): Promise<PaginationResult<Round1Info[]>> {
-    let proofData = await this.endpoint.invokeRequest(
+    let proofData = (await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_2_BATCH,
       JSON.parse(JSON.stringify(query))
-    );
+    )) as PaginationResult<Round1Info[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading proof data!");
     }
+
+    // Convert the corresponding proof fields into Uint8Array from number[] (json)
+    proofData.data.forEach((proof) => {
+      proof.proof = new Uint8Array(proof.proof);
+      proof.aux = new Uint8Array(proof.aux);
+      proof.batch_instances = new Uint8Array(proof.batch_instances);
+      if (proof.shadow_instances) {
+        proof.shadow_instances = new Uint8Array(proof.shadow_instances);
+      }
+      proof.target_instances = proof.target_instances.map((instance) => {
+        return new Uint8Array(instance);
+      });
+    });
+
     return proofData;
   }
 
   async queryRound2Info(
     query: PaginatedQuery<Round2InfoQuery>
   ): Promise<PaginationResult<Round2Info[]>> {
-    let proofData = await this.endpoint.invokeRequest(
+    let proofData = (await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.FINAL_BATCH,
       JSON.parse(JSON.stringify(query))
-    );
+    )) as PaginationResult<Round2Info[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading proof data!");
     }
+    // Convert the corresponding proof fields into Uint8Array from number[] (json)
+    proofData.data.forEach((proof) => {
+      proof.proof = new Uint8Array(proof.proof);
+      proof.aux = new Uint8Array(proof.aux);
+      proof.batch_instances = new Uint8Array(proof.batch_instances);
+      if (proof.shadow_instances) {
+        proof.shadow_instances = new Uint8Array(proof.shadow_instances);
+      }
+      proof.target_instances = proof.target_instances.map((instance) => {
+        return new Uint8Array(instance);
+      });
+    });
     return proofData;
   }
 
