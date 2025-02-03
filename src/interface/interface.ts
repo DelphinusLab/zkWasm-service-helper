@@ -174,7 +174,7 @@ export interface Round1Info {
 
   // target_instances is the original aggregate proofs output batch instances
   // it equivalent to each Round1BatchProof.batch_instances
-  target_instances: Uint8Array[];
+  target_instances: Array<Uint8Array>;
 
   // output of the round 1 batch proof as input to the round 2 batch proof
   // Assigned when the Round2BatchProof document is created
@@ -205,7 +205,7 @@ export interface Round2Info {
   task_ids: string[];
 
   // target_instances is the original aggregate proofs output batch instances
-  target_instances: Uint8Array[];
+  target_instances: Array<Uint8Array>;
   // output of the round 2 batch proofs
   proof: Uint8Array;
   batch_instances: Uint8Array;

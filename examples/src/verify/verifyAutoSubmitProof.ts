@@ -64,17 +64,6 @@ export async function VerifyAutoSubmitProof() {
   // Since the response returned is the input to the round 2 proof, we will use this to verify the proof
   const round_1_output: Round1Info = round_1_info_response.data[0];
 
-  // Convert the Number[] into bytes/Uint8Array
-  const round_1_target_instances: Array<Uint8Array> =
-    round_1_output.target_instances.map((x) => {
-      return new Uint8Array(x);
-    });
-
-  // Convert the Number[] into bytes/Uint8Array
-  const round_1_shadow_instances: Uint8Array = new Uint8Array(
-    round_1_output.shadow_instances!
-  );
-
   // Find the index of this proof in the round 1 output by comparing task_ids
   // This will be used to verify that this proof was included in a particular batch.
   // If it does not exist, the verification will fail
@@ -85,8 +74,8 @@ export async function VerifyAutoSubmitProof() {
   let proof_info: VerifyBatchProofParams = {
     membership_proof_index: [BigInt(index)],
     verify_instance: task.shadow_instances,
-    sibling_instances: round_1_target_instances,
-    round_1_shadow_instance: round_1_shadow_instances,
+    sibling_instances: round_1_output.target_instances,
+    round_1_shadow_instance: round_1_output.shadow_instances!,
     target_instances: [task.instances],
   };
 
