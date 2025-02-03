@@ -211,6 +211,8 @@ class ZkWasmServiceHelper {
                 task.shadow_instances = new Uint8Array(task.shadow_instances);
                 task.single_proof = new Uint8Array(task.single_proof);
                 task.aux = new Uint8Array(task.aux);
+                // May as well also convert the external host table to Uint8Array
+                task.external_host_table = new Uint8Array(task.external_host_table);
             });
             return tasks;
         });
