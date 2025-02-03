@@ -148,7 +148,7 @@ export interface Round1Info {
     _id?: any;
     round_1_ids: string[];
     task_ids: string[];
-    target_instances: Uint8Array[];
+    target_instances: Array<Uint8Array>;
     proof: Uint8Array;
     batch_instances: Uint8Array;
     shadow_instances?: Uint8Array;
@@ -170,7 +170,7 @@ export interface Round2Info {
     _id?: any;
     round_2_ids: string[];
     task_ids: string[];
-    target_instances: Uint8Array[];
+    target_instances: Array<Uint8Array>;
     proof: Uint8Array;
     batch_instances: Uint8Array;
     shadow_instances?: Uint8Array;

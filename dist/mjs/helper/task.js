@@ -163,6 +163,11 @@ export class ZkWasmServiceHelper {
             task.shadow_instances = new Uint8Array(task.shadow_instances);
             task.single_proof = new Uint8Array(task.single_proof);
             task.aux = new Uint8Array(task.aux);
+            task.input_context = new Uint8Array(task.input_context);
+            task.output_context = new Uint8Array(task.output_context);
+            if (task.task_fee) {
+                task.task_fee = new Uint8Array(task.task_fee);
+            }
             // May as well also convert the external host table to Uint8Array
             task.external_host_table = new Uint8Array(task.external_host_table);
         });
