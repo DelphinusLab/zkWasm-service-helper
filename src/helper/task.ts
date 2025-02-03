@@ -273,9 +273,9 @@ export class ZkWasmServiceHelper {
     if (this.endpoint.enable_logs) {
       console.log("loading task board!");
     }
-    // Convert the corresponding proof fields into Uint8Array from number[] (json)
 
     tasks.data.forEach((task) => {
+      // Convert the corresponding proof fields into Uint8Array from number[] (json)
       task.instances = new Uint8Array(task.instances);
       task.proof = new Uint8Array(task.proof);
       task.batch_instances = new Uint8Array(task.batch_instances);
