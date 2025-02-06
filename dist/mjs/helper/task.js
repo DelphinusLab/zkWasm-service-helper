@@ -155,8 +155,8 @@ export class ZkWasmServiceHelper {
         if (this.endpoint.enable_logs) {
             console.log("loading task board!");
         }
-        // Convert the corresponding proof fields into Uint8Array from number[] (json)
         tasks.data.forEach((task) => {
+            // Convert the corresponding proof fields into Uint8Array from number[] (json)
             task.instances = new Uint8Array(task.instances);
             task.proof = new Uint8Array(task.proof);
             task.batch_instances = new Uint8Array(task.batch_instances);
@@ -168,8 +168,6 @@ export class ZkWasmServiceHelper {
             if (task.task_fee) {
                 task.task_fee = new Uint8Array(task.task_fee);
             }
-            // May as well also convert the external host table to Uint8Array
-            task.external_host_table = new Uint8Array(task.external_host_table);
         });
         return tasks;
     }
@@ -216,6 +214,16 @@ export class ZkWasmServiceHelper {
             console.log("loading task board!");
         }
         return tasks;
+    }
+    async getTaskExternalHostTable(query) {
+        let queryJson = JSON.parse(JSON.stringify(query));
+        let res = await this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson);
+        if (this.endpoint.enable_logs) {
+            console.log("fetching external host table");
+        }
+        // Convert the external host table to Uint8Array.
+        res.external_host_table = new Uint8Array(res.external_host_table);
+        return res;
     }
     async queryAutoSubmitProofs(query) {
         let proofData = (await this.endpoint.invokeRequest("GET", TaskEndpoint.ROUND_1_BATCH, JSON.parse(JSON.stringify(query))));

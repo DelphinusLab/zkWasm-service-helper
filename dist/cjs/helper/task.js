@@ -203,8 +203,8 @@ class ZkWasmServiceHelper {
             if (this.endpoint.enable_logs) {
                 console.log("loading task board!");
             }
-            // Convert the corresponding proof fields into Uint8Array from number[] (json)
             tasks.data.forEach((task) => {
+                // Convert the corresponding proof fields into Uint8Array from number[] (json)
                 task.instances = new Uint8Array(task.instances);
                 task.proof = new Uint8Array(task.proof);
                 task.batch_instances = new Uint8Array(task.batch_instances);
@@ -216,8 +216,6 @@ class ZkWasmServiceHelper {
                 if (task.task_fee) {
                     task.task_fee = new Uint8Array(task.task_fee);
                 }
-                // May as well also convert the external host table to Uint8Array
-                task.external_host_table = new Uint8Array(task.external_host_table);
             });
             return tasks;
         });
@@ -266,6 +264,18 @@ class ZkWasmServiceHelper {
                 console.log("loading task board!");
             }
             return tasks;
+        });
+    }
+    getTaskExternalHostTable(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let queryJson = JSON.parse(JSON.stringify(query));
+            let res = yield this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson);
+            if (this.endpoint.enable_logs) {
+                console.log("fetching external host table");
+            }
+            // Convert the external host table to Uint8Array.
+            res.external_host_table = new Uint8Array(res.external_host_table);
+            return res;
         });
     }
     queryAutoSubmitProofs(query) {
