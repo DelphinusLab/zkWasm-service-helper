@@ -2,6 +2,7 @@ import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
 import {
   QueryParams,
+  TaskExternalHostTableParams,
   ProvingParams,
   DeployParams,
   Statistics,
@@ -14,6 +15,7 @@ import {
   ResetImageParams,
   PaginationResult,
   Task,
+  TaskExternalHostTable,
   Image,
   TransactionInfo,
   AppConfig,
@@ -287,8 +289,6 @@ export class ZkWasmServiceHelper {
       if (task.task_fee) {
         task.task_fee = new Uint8Array(task.task_fee);
       }
-      // May as well also convert the external host table to Uint8Array
-      task.external_host_table = new Uint8Array(task.external_host_table);
     });
 
     return tasks;
@@ -349,6 +349,24 @@ export class ZkWasmServiceHelper {
       console.log("loading task board!");
     }
     return tasks;
+  }
+
+  async getTaskExternalHostTable(
+    query: TaskExternalHostTableParams
+  ): Promise<TaskExternalHostTable> {
+    let queryJson = JSON.parse(JSON.stringify(query));
+    let res = await this.endpoint.invokeRequest(
+      "GET",
+      `/task_external_host_table`,
+      queryJson
+    ) as TaskExternalHostTable;
+    if (this.endpoint.enable_logs) {
+      console.log("fetching external host table");
+    }
+
+    // Convert the external host table to Uint8Array.
+    res.external_host_table = new Uint8Array(res.external_host_table);
+    return res;
   }
 
   async queryAutoSubmitProofs(
