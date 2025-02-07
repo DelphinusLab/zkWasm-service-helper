@@ -4,6 +4,8 @@ import {
   PaginationResult,
   Task,
   CompressionType,
+  TaskExternalHostTableParams,
+  TaskExternalHostTable,
 } from "zkwasm-service-helper";
 import BN from "bn.js";
 import { ServiceHelper } from "../config";
@@ -51,14 +53,29 @@ export async function queryTasks(queryParams: QueryParams) {
   });
   console.log("fee:", fee);
 
-  console.log("Compression type of external host table json:", task.compression);
+  return response;
+}
+
+// Provide the id of the task which has the desired external host table file.
+// export interface TaskExternalHostTableParams {
+//   id: string;
+// }
+
+export async function queryTaskExternalHostTable(queryParams: TaskExternalHostTableParams) {
+  const response: TaskExternalHostTable = await ServiceHelper.getTaskExternalHostTable(
+    queryParams
+  );
+  const externalHostTable = response.external_host_table;
+  const compressionType = response.compression;
+
+  console.log("Compression type of external host table json:", compressionType);
   // Wrap this in Uint8Array because it's "real" type is a number array.
   // There's no logic impact but the change to the API is big so it will have
   // to be fixed later.
   // https://delphinuslab.atlassian.net/browse/ZKWAS-361
-  const externalHostFileBytes = new Uint8Array(task.external_host_table);
+  const externalHostFileBytes = new Uint8Array(externalHostTable);
   const externalHostFileData =
-    task.compression === CompressionType.GZip
+    compressionType === CompressionType.GZip
       ? gunzipSync(Buffer.from(externalHostFileBytes))
       : Buffer.from(externalHostFileBytes);
   console.log("External host table json:");
