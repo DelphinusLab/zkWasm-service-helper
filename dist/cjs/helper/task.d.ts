@@ -1,4 +1,4 @@
-import { QueryParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee } from "../interface/interface.js";
+import { QueryParams, TaskExternalHostTableParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, TaskExternalHostTable, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
@@ -16,6 +16,7 @@ export declare class ZkWasmServiceHelper {
     queryOnlineNodesSummary(): Promise<OnlineNodesSummary>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
     loadTaskList(query: QueryParams): Promise<PaginationResult<ConciseTask[]>>;
+    getTaskExternalHostTable(query: TaskExternalHostTableParams): Promise<TaskExternalHostTable>;
     queryAutoSubmitProofs(query: PaginatedQuery<AutoSubmitProofQuery>): Promise<PaginationResult<AutoSubmitProof[]>>;
     queryRound1Info(query: PaginatedQuery<Round1InfoQuery>): Promise<PaginationResult<Round1Info[]>>;
     queryRound2Info(query: PaginatedQuery<Round2InfoQuery>): Promise<PaginationResult<Round2Info[]>>;

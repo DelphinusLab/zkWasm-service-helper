@@ -73,7 +73,6 @@ export interface Task {
     single_proof: Uint8Array;
     proof: Uint8Array;
     aux: Uint8Array;
-    external_host_table: Uint8Array;
     shadow_instances: Uint8Array;
     batch_instances: Uint8Array;
     instances: Uint8Array;
@@ -111,6 +110,10 @@ export interface ConciseTask {
     process_finished?: string;
     proof_submit_mode?: ProofSubmitMode;
     auto_submit_status?: AutoSubmitStatus;
+}
+export interface TaskExternalHostTable {
+    external_host_table: Uint8Array;
+    compression?: CompressionType;
 }
 export interface AutoSubmitBatchMetadata {
     chain_id: number;
@@ -347,6 +350,9 @@ export interface QueryParams {
     taskstatus: string | null;
     start?: number | null;
     total?: number | null;
+}
+export interface TaskExternalHostTableParams {
+    id: string;
 }
 export interface VerifyProofParams {
     aggregate_proof: Uint8Array;
