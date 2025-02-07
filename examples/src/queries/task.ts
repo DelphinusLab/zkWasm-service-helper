@@ -9,7 +9,7 @@ import {
 } from "zkwasm-service-helper";
 import BN from "bn.js";
 import { ServiceHelper } from "../config";
-import { gunzipSync } from 'zlib';
+import * as fs from "fs";
 
 // Provide the query parameters, all fields are optional
 // const args: QueryParams = {
@@ -74,12 +74,8 @@ export async function queryTaskExternalHostTable(queryParams: TaskExternalHostTa
   // to be fixed later.
   // https://delphinuslab.atlassian.net/browse/ZKWAS-361
   const externalHostFileBytes = new Uint8Array(externalHostTable);
-  const externalHostFileData =
-    compressionType === CompressionType.GZip
-      ? gunzipSync(Buffer.from(externalHostFileBytes))
-      : Buffer.from(externalHostFileBytes);
-  console.log("External host table json:");
-  console.log(externalHostFileData.toString());
-
+  const filename = `external_host_table${compressionType === CompressionType.GZip ? ".tar.gz" : ".json"}`;
+  fs.writeFileSync(filename, externalHostFileBytes);
+  console.log(`External host table file is ${filename}`);
   return response;
 }
