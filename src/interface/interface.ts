@@ -32,6 +32,14 @@ export interface NodeStatistics {
     };
     timestamp: string;
   };
+  online_activity?: OnlineNodeActivity;
+}
+
+export interface OnlineNodeActivity {
+  address: string;
+  prover_level: ProverLevel;
+  last_completed_dry_run_task_id?: string;
+  last_active_time: string;
 }
 
 export interface OnlineNodesSummary {
