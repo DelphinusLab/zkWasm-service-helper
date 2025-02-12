@@ -38,6 +38,7 @@ export interface OnlineNodeInfo {
     prover_level: ProverLevel;
     last_completed_dry_run_task_id?: ObjectId;
     last_active_time: string;
+    online: boolean;
 }
 export interface OnlineNodesSummary {
     certified: OnlineNodeInfo[];
