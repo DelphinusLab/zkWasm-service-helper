@@ -18,6 +18,7 @@ export interface NodeStatistics {
     total_tasks: number;
     timed_out_count: number;
     last_timed_out: string;
+    last_failed_ts: string;
     setup_timing_stats?: TimingStatistics;
     proof_timing_stats?: TimingStatistics;
   };
