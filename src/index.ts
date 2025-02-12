@@ -67,6 +67,7 @@ import {
   EstimatedProofFeeParams,
   EstimatedProofFee,
   AddProveTaskRestrictions,
+  OnlineNodeInfo,
 } from "./interface/interface.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -150,4 +151,5 @@ export type {
   OnlineNodesSummary,
   EstimatedProofFeeParams,
   EstimatedProofFee,
+  OnlineNodeInfo,
 };

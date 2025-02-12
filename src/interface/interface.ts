@@ -18,6 +18,7 @@ export interface NodeStatistics {
     total_tasks: number;
     timed_out_count: number;
     last_timed_out: string;
+    last_failed_ts: string;
     setup_timing_stats?: TimingStatistics;
     proof_timing_stats?: TimingStatistics;
   };
@@ -32,13 +33,22 @@ export interface NodeStatistics {
     };
     timestamp: string;
   };
+  online_activity?: OnlineNodeInfo;
+}
+
+export interface OnlineNodeInfo {
+  address: string;
+  prover_level: ProverLevel;
+  last_completed_dry_run_task_id?: ObjectId;
+  last_active_time: string;
+  online: boolean;
 }
 
 export interface OnlineNodesSummary {
-  certified: [string, string][];
-  active: [string, string][];
-  intern: [string, string][];
-  inactive: [string, string][];
+  certified: OnlineNodeInfo[];
+  active: OnlineNodeInfo[];
+  intern: OnlineNodeInfo[];
+  inactive: OnlineNodeInfo[];
 }
 
 export interface ProverNodesSummary {
