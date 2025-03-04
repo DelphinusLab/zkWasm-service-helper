@@ -156,47 +156,41 @@ class ZkWasmServiceHelper {
     }
     loadTasks(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
-            let queryJson = JSON.parse("{}");
-            // Set default total to 2 if not provided
-            const defaultQuery = {
-                total: 2,
-            };
-            // Merge the original query with default values
-            const mergedQuery = Object.assign(Object.assign({}, defaultQuery), query);
             // Validate query params
-            if (mergedQuery.start != null && mergedQuery.start < 0) {
+            if (query.start != null && query.start < 0) {
                 throw new Error("start must be positive");
             }
-            if (mergedQuery.total != null && mergedQuery.total <= 0) {
+            // If total is not set then default will be used 
+            if (query.total != null && query.total <= 0) {
                 throw new Error("total must be positive");
             }
-            if (mergedQuery.id != null && mergedQuery.id != "") {
+            if (query.id != null && query.id != "") {
                 // Validate it is a hex string (mongodb objectid)
-                if (!util_js_1.ZkWasmUtil.isHexString(mergedQuery.id)) {
+                if (!util_js_1.ZkWasmUtil.isHexString(query.id)) {
                     throw new Error("id must be a hex string or ");
                 }
             }
-            if (mergedQuery.user_address != null && mergedQuery.user_address != "") {
+            if (query.user_address != null && query.user_address != "") {
                 // Validate it is a hex string (ethereum address)
-                if (!ethers_1.ethers.isAddress(mergedQuery.user_address)) {
+                if (!ethers_1.ethers.isAddress(query.user_address)) {
                     throw new Error("user_address must be a valid ethereum address");
                 }
             }
-            if (mergedQuery.md5 != null && mergedQuery.md5 != "") {
+            if (query.md5 != null && query.md5 != "") {
                 // Validate it is a hex string (md5)
-                if (!util_js_1.ZkWasmUtil.isHexString(mergedQuery.md5)) {
+                if (!util_js_1.ZkWasmUtil.isHexString(query.md5)) {
                     throw new Error("md5 must be a hex string");
                 }
             }
-            //build query JSON
-            let objKeys = Object.keys(mergedQuery);
+            // build query JSON
+            let queryJson = JSON.parse("{}");
+            let objKeys = Object.keys(query);
             objKeys.forEach((key) => {
-                if (mergedQuery[key] != "" && mergedQuery[key] != null)
-                    queryJson[key] = mergedQuery[key];
+                if (query[key] != "" && query[key] != null)
+                    queryJson[key] = query[key];
             });
             if (this.endpoint.enable_logs) {
-                console.log("params:", mergedQuery);
+                console.log("params:", query);
                 console.log("json", queryJson);
             }
             let tasks = (yield this.endpoint.invokeRequest("GET", `/tasks`, queryJson));
@@ -218,6 +212,32 @@ class ZkWasmServiceHelper {
                 }
             });
             return tasks;
+        });
+    }
+    getTasksDetailFromIds(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
+            if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
+                throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
+            }
+            let tasks = [];
+            for (const id in ids) {
+                const query = {
+                    user_address: null,
+                    md5: null,
+                    id: id,
+                    tasktype: null,
+                    taskstatus: null,
+                };
+                const task = yield this.loadTasks(query);
+                tasks.push(task.data[0]);
+            }
+            return tasks;
+        });
+    }
+    getTaskDetailFromId(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return (yield this.getTasksDetailFromIds([ids]))[0];
         });
     }
     loadTaskList(query) {

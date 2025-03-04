@@ -381,7 +381,7 @@ export interface LogQuery {
     user_address: string;
 }
 export interface StatusState {
-    tasks: Array<Task>;
+    tasks: Array<ConciseTask>;
     statistics: Statistics;
     loaded: boolean;
     config: AppConfig;

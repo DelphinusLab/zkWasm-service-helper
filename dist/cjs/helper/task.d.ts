@@ -15,6 +15,8 @@ export declare class ZkWasmServiceHelper {
     queryProverNodeSummary(): Promise<ProverNodesSummary>;
     queryOnlineNodesSummary(): Promise<OnlineNodesSummary>;
     loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>>;
+    getTasksDetailFromIds(ids: string[]): Promise<Task[]>;
+    getTaskDetailFromId(ids: string): Promise<Task>;
     loadTaskList(query: QueryParams): Promise<PaginationResult<ConciseTask[]>>;
     getTaskExternalHostTable(query: TaskExternalHostTableParams): Promise<TaskExternalHostTable>;
     queryAutoSubmitProofs(query: PaginatedQuery<AutoSubmitProofQuery>): Promise<PaginationResult<AutoSubmitProof[]>>;
