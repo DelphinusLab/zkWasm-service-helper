@@ -237,7 +237,8 @@ class ZkWasmServiceHelper {
     }
     getTaskDetailFromId(ids) {
         return __awaiter(this, void 0, void 0, function* () {
-            return (yield this.getTasksDetailFromIds([ids]))[0];
+            const tasks = yield this.getTasksDetailFromIds([ids]);
+            return tasks.length === 1 ? tasks[0] : null;
         });
     }
     loadTaskList(query) {

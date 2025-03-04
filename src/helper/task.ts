@@ -309,8 +309,9 @@ export class ZkWasmServiceHelper {
     return tasks;
   }
 
-  async getTaskDetailFromId(ids: string): Promise<Task> {
-    return (await this.getTasksDetailFromIds([ids]))[0];
+  async getTaskDetailFromId(ids: string): Promise<Task | null> {
+    const tasks = await this.getTasksDetailFromIds([ids]);
+    return tasks.length === 1 ? tasks[0] : null;
   }
 
   async loadTaskList(

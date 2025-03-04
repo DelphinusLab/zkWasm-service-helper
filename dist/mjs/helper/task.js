@@ -185,7 +185,8 @@ export class ZkWasmServiceHelper {
         return tasks;
     }
     async getTaskDetailFromId(ids) {
-        return (await this.getTasksDetailFromIds([ids]))[0];
+        const tasks = await this.getTasksDetailFromIds([ids]);
+        return tasks.length === 1 ? tasks[0] : null;
     }
     async loadTaskList(query) {
         let headers = { "Content-Type": "application/json" };
