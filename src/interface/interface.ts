@@ -473,13 +473,6 @@ export interface LogQuery {
   user_address: string;
 }
 
-export interface StatusState {
-  tasks: Array<ConciseTask>;
-  statistics: Statistics;
-  loaded: boolean;
-  config: AppConfig;
-}
-
 export interface AppConfig {
   receiver_address: string;
   deployer_address: string;
