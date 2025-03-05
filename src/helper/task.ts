@@ -215,7 +215,6 @@ export class ZkWasmServiceHelper {
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
     // Set default total to 2 if not provided
@@ -292,6 +291,34 @@ export class ZkWasmServiceHelper {
     });
 
     return tasks;
+  }
+
+  async getTasksDetailFromIds(ids: string[]): Promise<Task[]> {
+    const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
+
+    if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
+      throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
+    }
+
+    let tasks = []
+    for (const id in ids) {
+      const query: QueryParams = {
+        user_address: null,
+        md5: null,
+        id: id,
+        tasktype: null,
+        taskstatus: null,
+      };
+      const task = await this.loadTasks(query);
+      tasks.push(task.data[0]);
+    }
+
+    return tasks;
+  }
+
+  async getTaskDetailFromId(ids: string): Promise<Task | null> {
+    const tasks = await this.getTasksDetailFromIds([ids]);
+    return tasks.length === 1 ? tasks[0] : null;
   }
 
   async loadTaskList(
