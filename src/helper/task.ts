@@ -215,47 +215,54 @@ export class ZkWasmServiceHelper {
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
+    let queryJson = JSON.parse("{}");
+
+    // Set default total to 2 if not provided
+    const defaultQuery = {
+      total: 2,
+    };
+
+    // Merge the original query with default values
+    const mergedQuery = { ...defaultQuery, ...query };
+
     // Validate query params
-    if (query.start != null && query.start < 0) {
+    if (mergedQuery.start != null && mergedQuery.start < 0) {
       throw new Error("start must be positive");
     }
-
-    // If total is not set then default will be used 
-    if (query.total != null && query.total <= 0) {
+    if (mergedQuery.total != null && mergedQuery.total <= 0) {
       throw new Error("total must be positive");
     }
 
-    if (query.id != null && query.id != "") {
+    if (mergedQuery.id != null && mergedQuery.id != "") {
       // Validate it is a hex string (mongodb objectid)
-      if (!ZkWasmUtil.isHexString(query.id)) {
+      if (!ZkWasmUtil.isHexString(mergedQuery.id)) {
         throw new Error("id must be a hex string or ");
       }
     }
 
-    if (query.user_address != null && query.user_address != "") {
+    if (mergedQuery.user_address != null && mergedQuery.user_address != "") {
       // Validate it is a hex string (ethereum address)
-      if (!ethers.isAddress(query.user_address)) {
+      if (!ethers.isAddress(mergedQuery.user_address)) {
         throw new Error("user_address must be a valid ethereum address");
       }
     }
 
-    if (query.md5 != null && query.md5 != "") {
+    if (mergedQuery.md5 != null && mergedQuery.md5 != "") {
       // Validate it is a hex string (md5)
-      if (!ZkWasmUtil.isHexString(query.md5)) {
+      if (!ZkWasmUtil.isHexString(mergedQuery.md5)) {
         throw new Error("md5 must be a hex string");
       }
     }
 
-    // build query JSON
-    let queryJson = JSON.parse("{}");
-    let objKeys = Object.keys(query) as Array<keyof QueryParams>;
+    //build query JSON
+    let objKeys = Object.keys(mergedQuery) as Array<keyof QueryParams>;
     objKeys.forEach((key) => {
-      if (query[key] != "" && query[key] != null)
-        queryJson[key] = query[key];
+      if (mergedQuery[key] != "" && mergedQuery[key] != null)
+        queryJson[key] = mergedQuery[key];
     });
 
     if (this.endpoint.enable_logs) {
-      console.log("params:", query);
+      console.log("params:", mergedQuery);
       console.log("json", queryJson);
     }
 
