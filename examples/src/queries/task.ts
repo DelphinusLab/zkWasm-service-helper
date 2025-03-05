@@ -11,7 +11,6 @@ import BN from "bn.js";
 import { ServiceHelper } from "../config";
 import * as fs from "fs";
 
-
 // Note: `ServiceHelper.loadTasks` provides task detail such as `aggregate_proof`, `instances`, `aux`, 
 // `task_fee` and `batchInstances`. For most queries `ServiceHelper.loadTaskList` will suffice and will be 
 // more performant. 
@@ -21,7 +20,10 @@ import * as fs from "fs";
 // Both `ServiceHelper.getTaskDetailFromId` and `ServiceHelper.getTasksDetailFromIds` will have the least 
 // amount of latency for retrieving task details. See example `queryOneTaskIdThenDetail` and 
 // `queryMultipleTaskIdThenDetail`.
-
+//
+// Additionally, `ServiceHelper.loadTaskList` is able to return more tasks in a single query. This is because
+// `ServiceHelper.loadTasks` has a limit of 10 results per query, and `ServiceHelper.loadTaskList` has a 
+// limit of 100 results per query. 
 
 // QueryParams structure, required as input for query functions, provides the query parameters, all fields 
 // are optional but at least one should be specified.
@@ -32,7 +34,6 @@ import * as fs from "fs";
 //   tasktype: null,
 //   taskstatus: null,
 // };
-
 
 // Example of using `ServiceHelper.loadTasks` to fetch multiple tasks objects with complete detail. This 
 // approach is not recommended, instead use the approach in `queryOneTaskIdThenDetail`.
