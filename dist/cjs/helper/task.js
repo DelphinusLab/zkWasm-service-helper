@@ -156,7 +156,6 @@ class ZkWasmServiceHelper {
     }
     loadTasks(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
             // Set default total to 2 if not provided
             const defaultQuery = {
@@ -218,6 +217,33 @@ class ZkWasmServiceHelper {
                 }
             });
             return tasks;
+        });
+    }
+    getTasksDetailFromIds(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
+            if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
+                throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
+            }
+            let tasks = [];
+            for (const id in ids) {
+                const query = {
+                    user_address: null,
+                    md5: null,
+                    id: id,
+                    tasktype: null,
+                    taskstatus: null,
+                };
+                const task = yield this.loadTasks(query);
+                tasks.push(task.data[0]);
+            }
+            return tasks;
+        });
+    }
+    getTaskDetailFromId(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tasks = yield this.getTasksDetailFromIds([ids]);
+            return tasks.length === 1 ? tasks[0] : null;
         });
     }
     loadTaskList(query) {

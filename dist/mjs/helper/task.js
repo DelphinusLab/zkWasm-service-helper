@@ -108,7 +108,6 @@ export class ZkWasmServiceHelper {
         return res;
     }
     async loadTasks(query) {
-        let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
         // Set default total to 2 if not provided
         const defaultQuery = {
@@ -170,6 +169,29 @@ export class ZkWasmServiceHelper {
             }
         });
         return tasks;
+    }
+    async getTasksDetailFromIds(ids) {
+        const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
+        if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
+            throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
+        }
+        let tasks = [];
+        for (const id in ids) {
+            const query = {
+                user_address: null,
+                md5: null,
+                id: id,
+                tasktype: null,
+                taskstatus: null,
+            };
+            const task = await this.loadTasks(query);
+            tasks.push(task.data[0]);
+        }
+        return tasks;
+    }
+    async getTaskDetailFromId(ids) {
+        const tasks = await this.getTasksDetailFromIds([ids]);
+        return tasks.length === 1 ? tasks[0] : null;
     }
     async loadTaskList(query) {
         let headers = { "Content-Type": "application/json" };
