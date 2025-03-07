@@ -226,7 +226,7 @@ class ZkWasmServiceHelper {
                 throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
             }
             let tasks = [];
-            for (const id in ids) {
+            for (const id of ids) {
                 const query = {
                     user_address: null,
                     md5: null,
