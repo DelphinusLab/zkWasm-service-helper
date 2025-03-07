@@ -301,7 +301,7 @@ export class ZkWasmServiceHelper {
     }
 
     let tasks = []
-    for (const id in ids) {
+    for (const id of ids) {
       const query: QueryParams = {
         user_address: null,
         md5: null,
