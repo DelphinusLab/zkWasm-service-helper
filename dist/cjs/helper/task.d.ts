@@ -1,5 +1,6 @@
 import { QueryParams, TaskExternalHostTableParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, TaskExternalHostTable, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
+import { ArchiveQuery, VolumeDetailQuery, VolumeListQuery } from "interface/archive.js";
 export declare class ZkWasmServiceHelper {
     endpoint: ZkWasmServiceEndpoint;
     constructor(endpoint: string, username: string, useraddress: string, enable_logs?: boolean);
@@ -23,6 +24,10 @@ export declare class ZkWasmServiceHelper {
     queryRound1Info(query: PaginatedQuery<Round1InfoQuery>): Promise<PaginationResult<Round1Info[]>>;
     queryRound2Info(query: PaginatedQuery<Round2InfoQuery>): Promise<PaginationResult<Round2Info[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
+    queryArchiveSummary(): Promise<any>;
+    queryVolumeList(query: VolumeListQuery): Promise<any>;
+    queryVolume(volume_name: string, query: VolumeDetailQuery): Promise<any>;
+    queryArchive(query: ArchiveQuery): Promise<any>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addSubscription(subscription: SubscriptionRequest): Promise<any>;
     addNewWasmImage(task: WithSignature<AddImageParams>): Promise<any>;

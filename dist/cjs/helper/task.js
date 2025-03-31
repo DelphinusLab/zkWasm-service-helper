@@ -295,7 +295,7 @@ class ZkWasmServiceHelper {
     getTaskExternalHostTable(query) {
         return __awaiter(this, void 0, void 0, function* () {
             let queryJson = JSON.parse(JSON.stringify(query));
-            let res = yield this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson);
+            let res = (yield this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson));
             if (this.endpoint.enable_logs) {
                 console.log("fetching external host table");
             }
@@ -371,6 +371,43 @@ class ZkWasmServiceHelper {
                 console.log("loading logs!");
             }
             return logs;
+        });
+    }
+    queryArchiveSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/summary", JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archive summary!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryVolumeList(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume list!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryVolume(volume_name, query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let url = `/archive/volume/${volume_name}`;
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume detail!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchive(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/archive_query", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading Archive query!");
+            }
+            return archiveSummary;
         });
     }
     addPayment(payRequest) {

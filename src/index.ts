@@ -71,6 +71,16 @@ import {
   OnlineNodeInfo,
 } from "./interface/interface.js";
 
+import {
+  ArchiveQuery,
+  ArchiveSummary,
+  ArchiveVolumeMetadata,
+  VolumeDetailQuery,
+  VolumeDetailResponse,
+  VolumeListQuery,
+  VolumeRange,
+} from "interface/archive.js";
+
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
 import { ZkWasmServiceHelper } from "./helper/task.js";
@@ -154,4 +164,11 @@ export type {
   EstimatedProofFeeParams,
   EstimatedProofFee,
   OnlineNodeInfo,
+  ArchiveVolumeMetadata,
+  VolumeDetailQuery,
+  VolumeDetailResponse,
+  VolumeListQuery,
+  VolumeRange,
+  ArchiveQuery,
+  ArchiveSummary,
 };
