@@ -391,6 +391,24 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
+    queryArchivedTask(task_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/task/${task_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived task!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchiveServerConfig() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/config", JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archive server config!");
+            }
+            return archiveSummary;
+        });
+    }
     queryVolume(volume_name, query) {
         return __awaiter(this, void 0, void 0, function* () {
             let url = `/archive/volume/${volume_name}`;

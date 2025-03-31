@@ -518,6 +518,30 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
+  async queryArchivedTask(task_id: string) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      `/archive/task/${task_id}`,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archived task!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchiveServerConfig() {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/config",
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archive server config!");
+    }
+    return archiveSummary;
+  }
+
   async queryVolume(volume_name: string, query: VolumeDetailQuery) {
     let url = `/archive/volume/${volume_name}`;
     let archiveSummary = await this.endpoint.invokeRequest(
