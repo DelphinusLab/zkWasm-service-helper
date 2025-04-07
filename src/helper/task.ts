@@ -43,6 +43,11 @@ import {
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
+import {
+  ArchiveQuery,
+  VolumeDetailQuery,
+  VolumeListQuery,
+} from "interface/archive.js";
 
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
@@ -297,10 +302,12 @@ export class ZkWasmServiceHelper {
     const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
 
     if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
-      throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
+      throw new Error(
+        `Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`
+      );
     }
 
-    let tasks = []
+    let tasks = [];
     for (const id of ids) {
       const query: QueryParams = {
         user_address: null,
@@ -382,11 +389,11 @@ export class ZkWasmServiceHelper {
     query: TaskExternalHostTableParams
   ): Promise<TaskExternalHostTable> {
     let queryJson = JSON.parse(JSON.stringify(query));
-    let res = await this.endpoint.invokeRequest(
+    let res = (await this.endpoint.invokeRequest(
       "GET",
       `/task_external_host_table`,
       queryJson
-    ) as TaskExternalHostTable;
+    )) as TaskExternalHostTable;
     if (this.endpoint.enable_logs) {
       console.log("fetching external host table");
     }
@@ -485,6 +492,79 @@ export class ZkWasmServiceHelper {
       console.log("loading logs!");
     }
     return logs;
+  }
+
+  async queryArchiveSummary() {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/summary",
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archive summary!");
+    }
+    return archiveSummary;
+  }
+
+  async queryVolumeList(query: VolumeListQuery) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/volume_list",
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading volume list!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchivedTask(task_id: string) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      `/archive/task/${task_id}`,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archived task!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchiveServerConfig() {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/config",
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archive server config!");
+    }
+    return archiveSummary;
+  }
+
+  async queryVolume(volume_name: string, query: VolumeDetailQuery) {
+    let url = `/archive/volume/${volume_name}`;
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      url,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading volume detail!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchive(query: ArchiveQuery) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/archive_query",
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading Archive query!");
+    }
+    return archiveSummary;
   }
 
   async addPayment(payRequest: PaymentParams) {

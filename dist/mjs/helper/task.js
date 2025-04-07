@@ -239,7 +239,7 @@ export class ZkWasmServiceHelper {
     }
     async getTaskExternalHostTable(query) {
         let queryJson = JSON.parse(JSON.stringify(query));
-        let res = await this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson);
+        let res = (await this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson));
         if (this.endpoint.enable_logs) {
             console.log("fetching external host table");
         }
@@ -307,6 +307,49 @@ export class ZkWasmServiceHelper {
             console.log("loading logs!");
         }
         return logs;
+    }
+    async queryArchiveSummary() {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/summary", JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archive summary!");
+        }
+        return archiveSummary;
+    }
+    async queryVolumeList(query) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading volume list!");
+        }
+        return archiveSummary;
+    }
+    async queryArchivedTask(task_id) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/task/${task_id}`, JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archived task!");
+        }
+        return archiveSummary;
+    }
+    async queryArchiveServerConfig() {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/config", JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archive server config!");
+        }
+        return archiveSummary;
+    }
+    async queryVolume(volume_name, query) {
+        let url = `/archive/volume/${volume_name}`;
+        let archiveSummary = await this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading volume detail!");
+        }
+        return archiveSummary;
+    }
+    async queryArchive(query) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/archive_query", JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading Archive query!");
+        }
+        return archiveSummary;
     }
     async addPayment(payRequest) {
         const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
