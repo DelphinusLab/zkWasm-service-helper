@@ -14,6 +14,8 @@ export interface NodeStatistics {
         successful_tasks: number;
         failed_tasks: number;
         total_tasks: number;
+        last_successful_task_id?: ObjectId;
+        last_successful_task_ts?: string;
         timed_out_count: number;
         last_timed_out: string;
         last_timed_out_task_id?: ObjectId;
