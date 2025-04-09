@@ -5,23 +5,25 @@ import {
   QueryParams,
   PaginationResult,
 } from "zkwasm-service-helper";
-import {
-  withBrowserConnector,
-  withDelphinusWalletConnector,
-} from "web3subscriber/src/client";
+import { withDelphinusWalletConnector } from "web3subscriber/src/client";
 import {
   DelphinusBaseProvider,
   GetBaseProvider,
 } from "web3subscriber/src/provider";
-import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
+import {
+  ServiceHelper,
+  ServiceHelperConfig,
+  Web3ChainConfig,
+  MANUAL_TASK_ID_TO_VERIFY,
+} from "../config";
 
 const provider: DelphinusBaseProvider = GetBaseProvider(
-  Web3ChainConfig.providerUrl // web3 provider URL for the verifier chain
+  Web3ChainConfig.providerUrl, // web3 provider URL for the verifier chain
 );
 
 export async function VerifyProof() {
   const queryParams: QueryParams = {
-    id: "<YOUR_TASK_ID>",
+    id: MANUAL_TASK_ID_TO_VERIFY!,
     tasktype: "Prove",
     taskstatus: "Done",
     user_address: null,
@@ -31,9 +33,8 @@ export async function VerifyProof() {
 
   // Fetch a task from the playground service which contains the proof information
   // See the example to build query function to fetch task details
-  const response: PaginationResult<Task[]> = await ServiceHelper.loadTasks(
-    queryParams
-  );
+  const response: PaginationResult<Task[]> =
+    await ServiceHelper.loadTasks(queryParams);
 
   // Handle missing tasks accordingly
   // Assume task exists
@@ -41,13 +42,13 @@ export async function VerifyProof() {
 
   const verifierContractAddress =
     task.task_verification_data.verifier_contracts.find(
-      (x) => x.chain_id === Web3ChainConfig.chainId
+      (x) => x.chain_id === Web3ChainConfig.chainId,
     )?.aggregator_verifier;
 
   if (!verifierContractAddress) {
     console.log(
       "Verifier contract not found for chain id: ",
-      Web3ChainConfig.chainId
+      Web3ChainConfig.chainId,
     );
     return;
   }
@@ -56,7 +57,7 @@ export async function VerifyProof() {
     async (connector) => {
       let contract = await ZkWasmUtil.composeVerifyContract(
         connector,
-        verifierContractAddress
+        verifierContractAddress,
       );
 
       // If the proof has no shadow instances, use the batch instances to try and verify instead.
@@ -77,7 +78,7 @@ export async function VerifyProof() {
 
       let tx = await ZkWasmUtil.verifyProof(
         contract.getEthersContract(),
-        verifyProofParams
+        verifyProofParams,
       );
       // wait for tx to be mined, can add no. of confirmations as arg
       const receipt = await tx.wait();
@@ -86,7 +87,7 @@ export async function VerifyProof() {
       console.log("receipt:", receipt);
     },
     provider,
-    ServiceHelperConfig.privateKey
+    ServiceHelperConfig.privateKey,
   );
 }
 
