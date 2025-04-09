@@ -27,8 +27,8 @@ const provider: DelphinusBaseProvider = GetBaseProvider(
 export async function VerifyAutoSubmitProof() {
   const queryParams: QueryParams = {
     id: AUTO_TASK_ID_TO_VERIFY!,
-    tasktype: "Prove",
-    taskstatus: "Done",
+    tasktype: null,
+    taskstatus: null,
     user_address: null,
     md5: null,
     total: 1,
@@ -41,7 +41,12 @@ export async function VerifyAutoSubmitProof() {
 
   // Handle missing tasks accordingly
   // Assume task exists
-  const task: Task = taskResponse.data[0];
+  const task: Task | undefined = taskResponse.data[0];
+
+  if (!task) {
+    console.log("Task not found");
+    return;
+  }
 
   // Check if the base proof task has been registered with the BatchVerifier contract
   // Note that this is a naive check as the Auto Submit service may have registered the proof only on one chain and not other ones.

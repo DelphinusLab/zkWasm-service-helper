@@ -30,5 +30,5 @@ export const ServiceHelper = new ZkWasmServiceHelper(
 // Example information required for verifying a proof.
 export const Web3ChainConfig = {
   providerUrl: PROVIDER_URL!,
-  chainId: CHAIN_ID!,
+  chainId: Number.parseInt(CHAIN_ID!),
 };
