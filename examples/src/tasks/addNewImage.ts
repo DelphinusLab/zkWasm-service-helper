@@ -9,12 +9,12 @@ import {
 import path from "node:path";
 
 import fs from "node:fs";
-import { ServiceHelper, ServiceHelperConfig } from "../config";
+import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
 
 export async function AddNewWasmImage() {
   const __dirname = path.resolve(path.dirname(""));
-  const wasmFilePath = path.resolve(__dirname, "./src/files/image.wasm");
-  const contextFilePath = path.resolve(__dirname, "./src/files/context.data");
+  const wasmFilePath = path.resolve(__dirname, "./data/image.wasm");
+  const contextFilePath = path.resolve(__dirname, "./data/context.data");
   const fileSelected: Buffer = fs.readFileSync(wasmFilePath);
   const md5 = ZkWasmUtil.convertToMd5(fileSelected as Uint8Array);
 
@@ -33,15 +33,14 @@ export async function AddNewWasmImage() {
     // Networks which the auto submit service will batch and submit the proof to.
     // Unsupported networks will be rejected.
     // If empty array, Auto Submitted proofs will be rejected.
-    auto_submit_network_ids: [11155111],
+    auto_submit_network_ids: [Web3ChainConfig.chainId],
   };
 
   // Optional Initial Context information
 
   // Upload a binary file first
-  let [contextFile, contextMd5] = await ZkWasmUtil.loadContexFileAsBytes(
-    contextFilePath
-  );
+  let [contextFile, contextMd5] =
+    await ZkWasmUtil.loadContexFileAsBytes(contextFilePath);
 
   if (contextFile) {
     let context_info: WithInitialContext = {
@@ -54,7 +53,7 @@ export async function AddNewWasmImage() {
   let msg = ZkWasmUtil.createAddImageSignMessage(params);
   let signature: string = await ZkWasmUtil.signMessage(
     msg,
-    ServiceHelperConfig.privateKey
+    ServiceHelperConfig.privateKey,
   ); //Need user private key to sign the msg
   let task: WithSignature<AddImageParams> = {
     ...params,

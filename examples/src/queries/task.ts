@@ -8,24 +8,24 @@ import {
   TaskExternalHostTable,
 } from "zkwasm-service-helper";
 import BN from "bn.js";
-import { ServiceHelper } from "../config";
+import { ServiceHelper, MD5_TO_QUERY, TASK_ID_TO_QUERY } from "../config";
 import * as fs from "fs";
 
-// Note: `ServiceHelper.loadTasks` provides task detail such as `aggregate_proof`, `instances`, `aux`, 
-// `task_fee` and `batchInstances`. For most queries `ServiceHelper.loadTaskList` will suffice and will be 
-// more performant. 
+// Note: `ServiceHelper.loadTasks` provides task detail such as `aggregate_proof`, `instances`, `aux`,
+// `task_fee` and `batchInstances`. For most queries `ServiceHelper.loadTaskList` will suffice and will be
+// more performant.
 //
-// It is recommended that for general queries, `ServiceHelper.loadTaskList` should be used and if task detail 
+// It is recommended that for general queries, `ServiceHelper.loadTaskList` should be used and if task detail
 // is required, it should be done by querying with the id using `ServiceHelper.getTaskDetailFromId`.
-// Both `ServiceHelper.getTaskDetailFromId` and `ServiceHelper.getTasksDetailFromIds` will have the least 
-// amount of latency for retrieving task details. See example `queryOneTaskIdThenDetail` and 
+// Both `ServiceHelper.getTaskDetailFromId` and `ServiceHelper.getTasksDetailFromIds` will have the least
+// amount of latency for retrieving task details. See example `queryOneTaskIdThenDetail` and
 // `queryMultipleTaskIdThenDetail`.
 //
 // Additionally, `ServiceHelper.loadTaskList` is able to return more tasks in a single query. This is because
-// `ServiceHelper.loadTasks` has a limit of 10 results per query, and `ServiceHelper.loadTaskList` has a 
-// limit of 100 results per query. 
+// `ServiceHelper.loadTasks` has a limit of 10 results per query, and `ServiceHelper.loadTaskList` has a
+// limit of 100 results per query.
 
-// QueryParams structure, required as input for query functions, provides the query parameters, all fields 
+// QueryParams structure, required as input for query functions, provides the query parameters, all fields
 // are optional but at least one should be specified.
 // const args: QueryParams = {
 //   id: null,
@@ -35,12 +35,13 @@ import * as fs from "fs";
 //   taskstatus: null,
 // };
 
-// Example of using `ServiceHelper.loadTasks` to fetch multiple tasks objects with complete detail. This 
+// Example of using `ServiceHelper.loadTasks` to fetch multiple tasks objects with complete detail. This
 // approach is not recommended, instead use the approach in `queryOneTaskIdThenDetail`.
 export async function queryTasks(queryParams: QueryParams) {
-  const response: PaginationResult<Task[]> = await ServiceHelper.loadTasks(
-    queryParams
-  );
+  console.log("Running query tasks with params", queryParams);
+
+  const response: PaginationResult<Task[]> =
+    await ServiceHelper.loadTasks(queryParams);
   const task: Task = response.data[0];
 
   // convert the byte array to BN
@@ -75,6 +76,8 @@ export async function queryTasks(queryParams: QueryParams) {
 
 // Example of using ServiceHelper.loadTaskList to fetch multiple tasks objects with concise detail.
 export async function queryTaskList(queryParams: QueryParams) {
+  console.log("Running query task list with params", queryParams);
+
   const response = await ServiceHelper.loadTaskList(queryParams);
   const task = response.data[0];
 
@@ -92,17 +95,19 @@ export async function queryTaskList(queryParams: QueryParams) {
   return response;
 }
 
-// Example of using `ServiceHelper.loadTaskList` to fetch one task and then using id retrieved to fetch 
+// Example of using `ServiceHelper.loadTaskList` to fetch one task and then using id retrieved to fetch
 // complete details with the `ServiceHelper.getTaskDetailFromId` API.
 export async function queryOneTaskIdThenDetail(queryParams: QueryParams) {
-  // Query concise task 
+  console.log("Running query one task id then detail with params", queryParams);
+
+  // Query concise task
   const concise = await ServiceHelper.loadTaskList(queryParams);
 
   // Get the id of the task
-  const id = concise.data[0]._id as string;
+  const id = concise.data[0]._id["$oid"] as string;
 
   // Query task detail with task id
-  const taskDetail = await ServiceHelper.getTaskDetailFromId(id)
+  const taskDetail = await ServiceHelper.getTaskDetailFromId(id);
   if (taskDetail === null) {
     console.log("No task with id found with query", queryParams);
   } else {
@@ -110,14 +115,19 @@ export async function queryOneTaskIdThenDetail(queryParams: QueryParams) {
   }
 }
 
-// Example of using `ServiceHelper.loadTaskList` to fetch multiple tasks and then using their ids to fetch 
+// Example of using `ServiceHelper.loadTaskList` to fetch multiple tasks and then using their ids to fetch
 // complete details with the `ServiceHelper.getTasksDetailFromIds` API.
 export async function queryMultipleTaskIdThenDetail(queryParams: QueryParams) {
-  // Query concise task 
+  console.log(
+    "Running query multiple task ids then detail with params",
+    queryParams,
+  );
+
+  // Query concise task
   const concise = await ServiceHelper.loadTaskList(queryParams);
 
   // Get the ids of the task
-  const ids = concise.data.map((task) => task._id as string);
+  const ids = concise.data.map((task) => task._id["$oid"] as string);
 
   // Query task detail with task id
   const taskDetails = await ServiceHelper.getTasksDetailFromIds(ids);
@@ -134,10 +144,16 @@ export async function queryMultipleTaskIdThenDetail(queryParams: QueryParams) {
 // }
 //
 // Example of using `ServiceHelper.getTaskExternalHostTable` to fetch the external host table of a task.
-export async function queryTaskExternalHostTable(queryParams: TaskExternalHostTableParams) {
-  const response: TaskExternalHostTable = await ServiceHelper.getTaskExternalHostTable(
-    queryParams
+export async function queryTaskExternalHostTable(
+  queryParams: TaskExternalHostTableParams,
+) {
+  console.log(
+    "Running query task external host table with params",
+    queryParams,
   );
+
+  const response: TaskExternalHostTable =
+    await ServiceHelper.getTaskExternalHostTable(queryParams);
   const externalHostTable = response.external_host_table;
   const compressionType = response.compression;
 
@@ -152,3 +168,43 @@ export async function queryTaskExternalHostTable(queryParams: TaskExternalHostTa
   console.log(`External host table file is ${filename}`);
   return response;
 }
+
+async function runQueries() {
+  await queryTasks({
+    id: null,
+    md5: MD5_TO_QUERY!,
+    user_address: null,
+    tasktype: null,
+    taskstatus: null,
+  });
+
+  await queryTaskList({
+    id: null,
+    md5: MD5_TO_QUERY!,
+    user_address: null,
+    tasktype: null,
+    taskstatus: null,
+  });
+
+  await queryOneTaskIdThenDetail({
+    id: null,
+    md5: MD5_TO_QUERY!,
+    user_address: null,
+    tasktype: null,
+    taskstatus: null,
+  });
+
+  await queryMultipleTaskIdThenDetail({
+    id: null,
+    md5: MD5_TO_QUERY!,
+    user_address: null,
+    tasktype: null,
+    taskstatus: null,
+  });
+
+  await queryTaskExternalHostTable({
+    id: TASK_ID_TO_QUERY!,
+  });
+}
+
+runQueries();
