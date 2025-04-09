@@ -52,7 +52,7 @@ export async function AddNewProofTask() {
 
     // LOADING AS FILE DIRECTLY - Server side example with NodeJS
     // let [bytesFile, md5] = await ZkWasmUtil.loadContexFileAsBytes(
-    //   "./src/files/context.data"
+    //   "./data/context.data"
     // );
 
     let context_info: WithCustomInputContextType = {

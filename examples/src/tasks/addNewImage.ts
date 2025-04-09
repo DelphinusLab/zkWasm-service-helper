@@ -13,8 +13,8 @@ import { ServiceHelper, ServiceHelperConfig, Web3ChainConfig } from "../config";
 
 export async function AddNewWasmImage() {
   const __dirname = path.resolve(path.dirname(""));
-  const wasmFilePath = path.resolve(__dirname, "./src/files/image.wasm");
-  const contextFilePath = path.resolve(__dirname, "./src/files/context.data");
+  const wasmFilePath = path.resolve(__dirname, "./data/image.wasm");
+  const contextFilePath = path.resolve(__dirname, "./data/context.data");
   const fileSelected: Buffer = fs.readFileSync(wasmFilePath);
   const md5 = ZkWasmUtil.convertToMd5(fileSelected as Uint8Array);
 
