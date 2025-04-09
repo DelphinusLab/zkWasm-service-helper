@@ -4,6 +4,7 @@
   "private": true,
   "description": "Examples for zkwasm playground helper lib to communicate with zkwasm cloud service",
   "dependencies": {
+    "dotenv": "^16.4.7",
     "tsx": "^4.16.0",
     "zkwasm-service-helper": "git+https://github.com/DelphinusLab/zkWasm-service-helper.git#feature/Feb2025"
   },

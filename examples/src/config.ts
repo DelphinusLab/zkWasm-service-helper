@@ -1,5 +1,8 @@
 import { ZkWasmServiceHelper } from "zkwasm-service-helper";
 import { Wallet } from "ethers";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export const SERVER_URL = process.env.SERVER_URL;
 export const PRIVATE_KEY = process.env.PRIVATE_KEY;
