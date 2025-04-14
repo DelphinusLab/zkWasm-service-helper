@@ -68,4 +68,6 @@ var AdminRequestType;
 (function (AdminRequestType) {
     AdminRequestType["Default"] = "Default";
     AdminRequestType["MaintenanceMode"] = "MaintenanceMode";
+    AdminRequestType["ArchiveOperation"] = "ArchiveOperation";
+    AdminRequestType["ForceTaskToReprocess"] = "ForceTaskToReprocess";
 })(AdminRequestType = exports.AdminRequestType || (exports.AdminRequestType = {}));

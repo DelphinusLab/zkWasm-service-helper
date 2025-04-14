@@ -539,7 +539,9 @@ export declare enum MaintenanceModeType {
 }
 export declare enum AdminRequestType {
     Default = "Default",
-    MaintenanceMode = "MaintenanceMode"
+    MaintenanceMode = "MaintenanceMode",
+    ArchiveOperation = "ArchiveOperation",
+    ForceTaskToReprocess = "ForceTaskToReprocess"
 }
 export interface SetMaintenanceModeParams {
     mode: MaintenanceModeType;
@@ -556,4 +558,16 @@ export interface EstimatedProofFee {
     min?: number;
     max?: number;
     msg: string;
+}
+export interface ForceUnprovableToReprocessParams {
+    task_ids: string[];
+    nonce: number;
+    request_type: AdminRequestType;
+    user_address: string;
+}
+export interface ForceDryrunFailsToReprocessParams {
+    task_ids: string[];
+    nonce: number;
+    request_type: AdminRequestType;
+    user_address: string;
 }

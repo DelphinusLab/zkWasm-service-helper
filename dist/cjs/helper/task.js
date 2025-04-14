@@ -500,6 +500,24 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
+    forceUnprovableToReprocess(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_UNPROVABLE_TO_REPROCESS, req, true);
+            if (this.endpoint.enable_logs) {
+                console.log("forceUnprovableToReprocess response:", response.toString());
+            }
+            return response;
+        });
+    }
+    forceDryrunFailsToReprocess(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_DRYRUN_FAILS_TO_REPROCESS, req, true);
+            if (this.endpoint.enable_logs) {
+                console.log("forceDryrunFailsToReprocess response:", response.toString());
+            }
+            return response;
+        });
+    }
     queryEstimateProofFee(query) {
         return __awaiter(this, void 0, void 0, function* () {
             const config = yield this.endpoint.invokeRequest("GET", TaskEndpoint.GET_ESTIMATED_PROOF_FEE, JSON.parse(JSON.stringify(query)));
@@ -568,4 +586,6 @@ var TaskEndpoint;
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
     TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
+    TaskEndpoint["FORCE_UNPROVABLE_TO_REPROCESS"] = "/admin/force_unprovable_to_reprocess";
+    TaskEndpoint["FORCE_DRYRUN_FAILS_TO_REPROCESS"] = "/admin/force_dryrun_fails_to_reprocess";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));
