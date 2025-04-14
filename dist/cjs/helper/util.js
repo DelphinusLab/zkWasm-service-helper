@@ -173,6 +173,26 @@ class ZkWasmUtil {
         message += params.user_address;
         return message;
     }
+    static createForceUnprovableToReprocessSignMessage(params) {
+        let message = "";
+        for (const task_id of params.task_ids) {
+            message += task_id;
+        }
+        message += params.nonce;
+        message += params.request_type;
+        message += params.user_address;
+        return message;
+    }
+    static createForceDryrunFailsToReprocessSignMessage(params) {
+        let message = "";
+        for (const task_id of params.task_ids) {
+            message += task_id;
+        }
+        message += params.nonce;
+        message += params.request_type;
+        message += params.user_address;
+        return message;
+    }
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";

@@ -407,6 +407,20 @@ export class ZkWasmServiceHelper {
         }
         return response;
     }
+    async forceUnprovableToReprocess(req) {
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_UNPROVABLE_TO_REPROCESS, req, true);
+        if (this.endpoint.enable_logs) {
+            console.log("forceUnprovableToReprocess response:", response.toString());
+        }
+        return response;
+    }
+    async forceDryrunFailsToReprocess(req) {
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_DRYRUN_FAILS_TO_REPROCESS, req, true);
+        if (this.endpoint.enable_logs) {
+            console.log("forceDryrunFailsToReprocess response:", response.toString());
+        }
+        return response;
+    }
     async queryEstimateProofFee(query) {
         const config = await this.endpoint.invokeRequest("GET", TaskEndpoint.GET_ESTIMATED_PROOF_FEE, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
@@ -470,4 +484,6 @@ export var TaskEndpoint;
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
     TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
+    TaskEndpoint["FORCE_UNPROVABLE_TO_REPROCESS"] = "/admin/force_unprovable_to_reprocess";
+    TaskEndpoint["FORCE_DRYRUN_FAILS_TO_REPROCESS"] = "/admin/force_dryrun_fails_to_reprocess";
 })(TaskEndpoint || (TaskEndpoint = {}));
