@@ -7,10 +7,14 @@ import {
   WithCustomInputContextType,
 } from "zkwasm-service-helper";
 
-import { ServiceHelper, ServiceHelperConfig } from "../config";
+import {
+  ServiceHelper,
+  ServiceHelperConfig,
+  SUBMIT_AUTO_SUBMIT_PROOF,
+} from "../config";
 
 export async function AddNewProofTask() {
-  const image_md5 = "<YOUR_IMAGE_MD5>";
+  const image_md5 = "4CB1FBCCEC0C107C41405FC1FB380799";
   const public_inputs = "0x22:i64 0x21:i64";
   const private_inputs = "";
 
@@ -18,7 +22,7 @@ export async function AddNewProofTask() {
   const priv_inputs: Array<string> = ZkWasmUtil.validateInputs(private_inputs);
 
   // Use the helper Enum type to determine the proof submit mode
-  const proofSubmitMode = ProofSubmitMode.Auto
+  const proofSubmitMode = SUBMIT_AUTO_SUBMIT_PROOF
     ? ProofSubmitMode.Auto
     : ProofSubmitMode.Manual;
 
@@ -48,7 +52,7 @@ export async function AddNewProofTask() {
 
     // LOADING AS FILE DIRECTLY - Server side example with NodeJS
     // let [bytesFile, md5] = await ZkWasmUtil.loadContexFileAsBytes(
-    //   "./src/files/context.data"
+    //   "./data/context.data"
     // );
 
     let context_info: WithCustomInputContextType = {
@@ -75,7 +79,7 @@ export async function AddNewProofTask() {
   try {
     signature = await ZkWasmUtil.signMessage(
       msgString,
-      ServiceHelperConfig.privateKey
+      ServiceHelperConfig.privateKey,
     );
   } catch (e: unknown) {
     console.log("error signing message", e);

@@ -156,7 +156,6 @@ class ZkWasmServiceHelper {
     }
     loadTasks(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
             // Set default total to 2 if not provided
             const defaultQuery = {
@@ -216,10 +215,35 @@ class ZkWasmServiceHelper {
                 if (task.task_fee) {
                     task.task_fee = new Uint8Array(task.task_fee);
                 }
-                // May as well also convert the external host table to Uint8Array
-                task.external_host_table = new Uint8Array(task.external_host_table);
             });
             return tasks;
+        });
+    }
+    getTasksDetailFromIds(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
+            if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
+                throw new Error(`Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`);
+            }
+            let tasks = [];
+            for (const id of ids) {
+                const query = {
+                    user_address: null,
+                    md5: null,
+                    id: id,
+                    tasktype: null,
+                    taskstatus: null,
+                };
+                const task = yield this.loadTasks(query);
+                tasks.push(task.data[0]);
+            }
+            return tasks;
+        });
+    }
+    getTaskDetailFromId(ids) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const tasks = yield this.getTasksDetailFromIds([ids]);
+            return tasks.length === 1 ? tasks[0] : null;
         });
     }
     loadTaskList(query) {
@@ -266,6 +290,18 @@ class ZkWasmServiceHelper {
                 console.log("loading task board!");
             }
             return tasks;
+        });
+    }
+    getTaskExternalHostTable(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let queryJson = JSON.parse(JSON.stringify(query));
+            let res = (yield this.endpoint.invokeRequest("GET", `/task_external_host_table`, queryJson));
+            if (this.endpoint.enable_logs) {
+                console.log("fetching external host table");
+            }
+            // Convert the external host table to Uint8Array.
+            res.external_host_table = new Uint8Array(res.external_host_table);
+            return res;
         });
     }
     queryAutoSubmitProofs(query) {
@@ -335,6 +371,61 @@ class ZkWasmServiceHelper {
                 console.log("loading logs!");
             }
             return logs;
+        });
+    }
+    queryArchiveSummary() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/summary", JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archive summary!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryVolumeList(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume list!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchivedTask(task_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/task/${task_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived task!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchiveServerConfig() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/config", JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archive server config!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryVolume(volume_name, query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let url = `/archive/volume/${volume_name}`;
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume detail!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchive(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/archive_query", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading Archive query!");
+            }
+            return archiveSummary;
         });
     }
     addPayment(payRequest) {
@@ -409,6 +500,24 @@ class ZkWasmServiceHelper {
             return response;
         });
     }
+    forceUnprovableToReprocess(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_UNPROVABLE_TO_REPROCESS, req, true);
+            if (this.endpoint.enable_logs) {
+                console.log("forceUnprovableToReprocess response:", response.toString());
+            }
+            return response;
+        });
+    }
+    forceDryrunFailsToReprocess(req) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_DRYRUN_FAILS_TO_REPROCESS, req, true);
+            if (this.endpoint.enable_logs) {
+                console.log("forceDryrunFailsToReprocess response:", response.toString());
+            }
+            return response;
+        });
+    }
     queryEstimateProofFee(query) {
         return __awaiter(this, void 0, void 0, function* () {
             const config = yield this.endpoint.invokeRequest("GET", TaskEndpoint.GET_ESTIMATED_PROOF_FEE, JSON.parse(JSON.stringify(query)));
@@ -477,4 +586,6 @@ var TaskEndpoint;
     TaskEndpoint["FINAL_BATCH"] = "/final_batch_proofs";
     TaskEndpoint["GET_ESTIMATED_PROOF_FEE"] = "/estimated_proof_fee";
     TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
+    TaskEndpoint["FORCE_UNPROVABLE_TO_REPROCESS"] = "/admin/force_unprovable_to_reprocess";
+    TaskEndpoint["FORCE_DRYRUN_FAILS_TO_REPROCESS"] = "/admin/force_dryrun_fails_to_reprocess";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

@@ -34,17 +34,48 @@ cd examples
 npm install
 ```
 
-### 2. Use your own values for the following:
+### 2. Update Config
 
-- Update your data in the `config.ts` file with your private key and address of the zkwasm playground service.
-- Update the `config.ts` with web3 information you want to use such as chain id and provider url etc.
+User specific config values must be provided in the [.env](.env) file:
 
-- Within each script you want to run, you will also need to update values for querying and submitting tasks such as task ids.
+- Change the values of `SERVER_URL` and `PRIVATE_KEY` to your own.
+- Update the `CHAIN_ID` to a network chain id which have been deployed on the server, and update `PROVIDER_URL` to a valid RPC url.
+- Update the following env variables as per your test:
+  - `SUBMIT_AUTO_SUBMIT_PROOF`: Set to true for submitting an Auto proof, otherwise false for Manual proof.
+  - `MANUAL_TASK_ID_TO_VERIFY`: Set to the task id of an existing task in which you want to verify the proof.
+  - `AUTO_TASK_ID_TO_VERIFY`: Set to the task id of any tasks within the auto submit batch which you want to verify.
+  - `TASK_ID_TO_QUERY`: Set to task id to query, by default this is used to fetch the external host table tar gz file.
+  - `MD5_TO_QUERY`: Set image MD5 to query, by default this is used for various task fetches in query script.
+- To customize further you may change various variables within each of the scripts.
 
-### 3. Run the example you want to run.
+### 3. Run the examples
 
-Currently only the scripts under `src/tasks` and `src/verify` are runnable. The `queries` are merely examples which are used in these executable scripts.
+Running tasks examples:
 
 ```bash
+# Add a new image using wasm in `data/image.wasm`.
 npx tsx src/tasks/addNewImage.ts
+
+# Add a new proof for image previously added. This can be Auto or Manual, see `SUBMIT_AUTO_SUBMIT_PROOF`.
+npx tsx src/tasks/submitProofTask.ts
+```
+
+Running verify examples:
+
+```bash
+# Verify proof of task id `MANUAL_TASK_ID_TO_VERIFY`
+npx tsx src/verify/verifyProof.ts
+
+# Verify auto submit batch which includes task id `AUTO_TASK_ID_TO_VERIFY`
+npx tsx src/verify/verifyAutoSubmitProof.ts
+```
+
+Running query examples:
+
+```bash
+# Run task related queries
+npx tsx src/queries/task.ts
+
+# Run auto submit task related queries
+npx tsx src/queries/autosubmit.ts
 ```

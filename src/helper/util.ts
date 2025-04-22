@@ -12,6 +12,8 @@ import {
   ContextHexString,
   InputContextType,
   VerifyBatchProofParams,
+  ForceUnprovableToReprocessParams,
+  ForceDryrunFailsToReprocessParams,
 } from "../interface/interface.js";
 import { Contract, formatUnits, Signer, Wallet } from "ethers";
 import {
@@ -178,7 +180,7 @@ export class ZkWasmUtil {
     for (var i = 0; i < hexString.length; i += 16) {
       bytes[i] = new BN(
         hexString.slice(i, Math.min(i + 16, hexString.length)),
-        16
+        16,
       );
     }
     return bytes;
@@ -311,10 +313,36 @@ export class ZkWasmUtil {
   }
 
   static createSetMaintenanceModeSignMessage(
-    params: SetMaintenanceModeParams
+    params: SetMaintenanceModeParams,
   ): string {
     let message = "";
     message += params.mode;
+    message += params.nonce;
+    message += params.request_type;
+    message += params.user_address;
+    return message;
+  }
+
+  static createForceUnprovableToReprocessSignMessage(
+    params: ForceUnprovableToReprocessParams,
+  ): string {
+    let message = "";
+    for (const task_id of params.task_ids) {
+      message += task_id;
+    }
+    message += params.nonce;
+    message += params.request_type;
+    message += params.user_address;
+    return message;
+  }
+
+  static createForceDryrunFailsToReprocessSignMessage(
+    params: ForceDryrunFailsToReprocessParams,
+  ): string {
+    let message = "";
+    for (const task_id of params.task_ids) {
+      message += task_id;
+    }
     message += params.nonce;
     message += params.request_type;
     message += params.user_address;
@@ -406,7 +434,7 @@ export class ZkWasmUtil {
     // Check if the BN is more than expected chunksize bytes
     if (bn.byteLength() > chunksize) {
       throw new Error(
-        "BN is too large for the specified chunksize: " + bn.toString(10)
+        "BN is too large for the specified chunksize: " + bn.toString(10),
       );
     }
 
@@ -422,7 +450,7 @@ export class ZkWasmUtil {
 
   static hexStringsToBytes(
     hexStrings: string[],
-    chunksize: number
+    chunksize: number,
   ): Uint8Array {
     let bytes = new Uint8Array(chunksize * hexStrings.length);
     for (let i = 0; i < hexStrings.length; i++) {
@@ -435,7 +463,7 @@ export class ZkWasmUtil {
 
   static bytesToBigIntArray(
     data: Uint8Array,
-    chunksize: number = 32
+    chunksize: number = 32,
   ): BigInt[] {
     const bigints = [];
 
@@ -458,14 +486,14 @@ export class ZkWasmUtil {
   // Requires some signer
   static composeVerifyContract(
     signer: DelphinusBrowserConnector | DelphinusWalletConnector,
-    verifier_addr: string
+    verifier_addr: string,
   ) {
     return signer.getContractWithSigner(verifier_addr, this.contract_abi.abi);
   }
 
   static async verifyProof(
     verify_contract: Contract,
-    params: VerifyProofParams
+    params: VerifyProofParams,
   ) {
     let aggregate_proof = this.bytesToBigIntArray(params.aggregate_proof);
     let verify_instance = this.bytesToBigIntArray(params.verify_instance);
@@ -479,24 +507,24 @@ export class ZkWasmUtil {
       aggregate_proof,
       verify_instance,
       aux,
-      instances
+      instances,
     );
     return result;
   }
 
   static composeBatchVerifierContract(
     signer: DelphinusBrowserConnector | DelphinusWalletConnector,
-    verifier_addr: string
+    verifier_addr: string,
   ) {
     return signer.getContractWithSigner(
       verifier_addr,
-      this.batch_verifier_contract.abi
+      this.batch_verifier_contract.abi,
     );
   }
 
   static async verifyBatchedProof(
     batch_verifier_contract: Contract,
-    params: VerifyBatchProofParams
+    params: VerifyBatchProofParams,
   ) {
     let membership_proof_index = params.membership_proof_index;
     let verify_instance = this.bytesToBigIntArray(params.verify_instance);
@@ -514,7 +542,7 @@ export class ZkWasmUtil {
     });
 
     let round_1_shadow_instance = this.bytesToBigIntArray(
-      params.round_1_shadow_instance
+      params.round_1_shadow_instance,
     );
 
     // Add the round 1 shadow instance to the flattened sibling instances as this is the expected input format
@@ -531,14 +559,14 @@ export class ZkWasmUtil {
       sibling_instances,
       verify_instance,
       membership_proof_index,
-      target_instances
+      target_instances,
     );
     return result;
   }
 
   static async checkVerifiedProof(
     batch_verifier_contract: Contract,
-    params: VerifyBatchProofParams
+    params: VerifyBatchProofParams,
   ) {
     let membership_proof_index = params.membership_proof_index;
     let verify_instance = this.bytesToBigIntArray(params.verify_instance);
@@ -556,7 +584,7 @@ export class ZkWasmUtil {
     });
 
     let round_1_shadow_instance = this.bytesToBigIntArray(
-      params.round_1_shadow_instance
+      params.round_1_shadow_instance,
     );
 
     // Add the round 1 shadow instance to the flattened sibling instances as this is the expected input format
@@ -573,7 +601,7 @@ export class ZkWasmUtil {
       membership_proof_index,
       verify_instance,
       [sibling_instances],
-      target_instances
+      target_instances,
     );
     return result;
   }
@@ -595,7 +623,7 @@ export class ZkWasmUtil {
 
   // For nodejs/server environments only
   static async loadContextFileFromPath(
-    filePath: string
+    filePath: string,
   ): Promise<ContextHexString> {
     if (typeof window === "undefined") {
       // We are in Node.js
@@ -609,14 +637,14 @@ export class ZkWasmUtil {
     } else {
       // Browser environment
       throw new Error(
-        "File loading in the browser is not supported by this function."
+        "File loading in the browser is not supported by this function.",
       );
     }
   }
 
   // For nodejs/server environments only
   static async loadContexFileAsBytes(
-    filePath: string
+    filePath: string,
   ): Promise<[Buffer, string]> {
     try {
       const fileContents = await this.loadContextFileFromPath(filePath);
@@ -634,17 +662,17 @@ export class ZkWasmUtil {
     if (typeof window === "undefined") {
       // We are in Node.js
       throw new Error(
-        "File loading in Node.js is not supported by this function."
+        "File loading in Node.js is not supported by this function.",
       );
     }
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
 
-      reader.onload = function () {
+      reader.onload = function() {
         if (reader.result) {
           try {
             ZkWasmUtil.validateContextBytes(
-              new Uint8Array(reader.result as ArrayBuffer)
+              new Uint8Array(reader.result as ArrayBuffer),
             );
             resolve(new Uint8Array(reader.result as ArrayBuffer));
           } catch (err) {
@@ -653,7 +681,7 @@ export class ZkWasmUtil {
         }
       };
 
-      reader.onerror = function (error) {
+      reader.onerror = function(error) {
         reject(error);
       };
 
@@ -673,7 +701,7 @@ export class ZkWasmUtil {
     } else {
       // Browser environment
       throw new Error(
-        "File creation in the browser is not supported by this function."
+        "File creation in the browser is not supported by this function.",
       );
     }
   }
@@ -683,7 +711,7 @@ export class ZkWasmUtil {
 
     if (typeof window === "undefined") {
       throw new Error(
-        "File creation in NodeJS env is not supported by this function."
+        "File creation in NodeJS env is not supported by this function.",
       );
     } else {
       // Browser environment

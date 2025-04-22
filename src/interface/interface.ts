@@ -16,6 +16,7 @@ export interface NodeStatistics {
     successful_tasks: number;
     failed_tasks: number;
     total_tasks: number;
+    last_successful_task_id?: ObjectId;
     timed_out_count: number;
     last_timed_out: string;
     last_timed_out_task_id?: ObjectId;
@@ -96,7 +97,6 @@ export interface Task {
   single_proof: Uint8Array;
   proof: Uint8Array;
   aux: Uint8Array;
-  external_host_table: Uint8Array;
   shadow_instances: Uint8Array;
   batch_instances: Uint8Array;
   instances: Uint8Array;
@@ -136,6 +136,11 @@ export interface ConciseTask {
   process_finished?: string;
   proof_submit_mode?: ProofSubmitMode;
   auto_submit_status?: AutoSubmitStatus;
+}
+
+export interface TaskExternalHostTable {
+  external_host_table: Uint8Array;
+  compression?: CompressionType;
 }
 
 export interface AutoSubmitBatchMetadata {
@@ -444,6 +449,10 @@ export interface QueryParams {
   total?: number | null;
 }
 
+export interface TaskExternalHostTableParams {
+  id: string;
+}
+
 export interface VerifyProofParams {
   aggregate_proof: Uint8Array;
   verify_instance: Uint8Array;
@@ -466,13 +475,6 @@ export interface VerifyBatchProofParams {
 export interface LogQuery {
   id: string;
   user_address: string;
-}
-
-export interface StatusState {
-  tasks: Array<Task>;
-  statistics: Statistics;
-  loaded: boolean;
-  config: AppConfig;
 }
 
 export interface AppConfig {
@@ -652,6 +654,8 @@ export enum MaintenanceModeType {
 export enum AdminRequestType {
   Default = "Default",
   MaintenanceMode = "MaintenanceMode",
+  ArchiveOperation = "ArchiveOperation",
+  ForceTaskToReprocess = "ForceTaskToReprocess",
 }
 
 export interface SetMaintenanceModeParams {
@@ -671,4 +675,18 @@ export interface EstimatedProofFee {
   min?: number;
   max?: number;
   msg: string;
+}
+
+export interface ForceUnprovableToReprocessParams {
+  task_ids: string[];
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
+}
+
+export interface ForceDryrunFailsToReprocessParams {
+  task_ids: string[];
+  nonce: number;
+  request_type: AdminRequestType;
+  user_address: string;
 }

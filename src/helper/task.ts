@@ -2,6 +2,7 @@ import FormData from "form-data";
 import { ZkWasmUtil } from "./util.js";
 import {
   QueryParams,
+  TaskExternalHostTableParams,
   ProvingParams,
   DeployParams,
   Statistics,
@@ -14,6 +15,7 @@ import {
   ResetImageParams,
   PaginationResult,
   Task,
+  TaskExternalHostTable,
   Image,
   TransactionInfo,
   AppConfig,
@@ -38,9 +40,16 @@ import {
   OnlineNodesSummary,
   EstimatedProofFeeParams,
   EstimatedProofFee,
+  ForceUnprovableToReprocessParams,
+  ForceDryrunFailsToReprocessParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
+import {
+  ArchiveQuery,
+  VolumeDetailQuery,
+  VolumeListQuery,
+} from "interface/archive.js";
 
 export class ZkWasmServiceHelper {
   endpoint: ZkWasmServiceEndpoint;
@@ -49,13 +58,13 @@ export class ZkWasmServiceHelper {
     endpoint: string,
     username: string,
     useraddress: string,
-    enable_logs: boolean = true
+    enable_logs: boolean = true,
   ) {
     this.endpoint = new ZkWasmServiceEndpoint(
       endpoint,
       username,
       useraddress,
-      enable_logs
+      enable_logs,
     );
   }
 
@@ -93,7 +102,7 @@ export class ZkWasmServiceHelper {
   }
 
   async queryUserSubscription(
-    user_query: UserQueryParams
+    user_query: UserQueryParams,
   ): Promise<Subscription | null> {
     let req = JSON.parse("{}");
     req["user_address"] = user_query.user_address;
@@ -101,7 +110,7 @@ export class ZkWasmServiceHelper {
     const user = await this.endpoint.invokeRequest(
       "GET",
       "/user_subscription",
-      req
+      req,
     );
     if (this.endpoint.enable_logs) {
       console.log("get queryUserSubscription response.");
@@ -110,7 +119,7 @@ export class ZkWasmServiceHelper {
   }
 
   async queryTxHistory(
-    history_query: TxHistoryQueryParams
+    history_query: TxHistoryQueryParams,
   ): Promise<PaginationResult<TransactionInfo[]>> {
     let req = JSON.parse("{}");
     req["user_address"] = history_query.user_address;
@@ -123,7 +132,7 @@ export class ZkWasmServiceHelper {
   }
 
   async queryDepositHistory(
-    history_query: TxHistoryQueryParams
+    history_query: TxHistoryQueryParams,
   ): Promise<PaginationResult<ERC20DepositInfo[]>> {
     let req = JSON.parse("{}");
     req["user_address"] = history_query.user_address;
@@ -139,7 +148,7 @@ export class ZkWasmServiceHelper {
     const config = await this.endpoint.invokeRequest(
       "GET",
       "/config",
-      JSON.parse("{}")
+      JSON.parse("{}"),
     );
     if (this.endpoint.enable_logs) {
       console.log("get queryConfig response.");
@@ -165,7 +174,7 @@ export class ZkWasmServiceHelper {
   }
 
   async queryNodeStatistics(
-    query: NodeStatisticsQueryParams
+    query: NodeStatisticsQueryParams,
   ): Promise<PaginationResult<NodeStatistics[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse(JSON.stringify(query));
@@ -173,7 +182,7 @@ export class ZkWasmServiceHelper {
     let res = await this.endpoint.invokeRequest(
       "GET",
       `/node_statistics`,
-      queryJson
+      queryJson,
     );
     if (this.endpoint.enable_logs) {
       console.log("loading node statistics");
@@ -188,7 +197,7 @@ export class ZkWasmServiceHelper {
     let res = await this.endpoint.invokeRequest(
       "GET",
       `/prover_node_summary`,
-      JSON.parse("{}")
+      JSON.parse("{}"),
     );
     if (this.endpoint.enable_logs) {
       console.log("loading node summary");
@@ -203,7 +212,7 @@ export class ZkWasmServiceHelper {
     let res = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ONLINE_NODES_SUMMARY,
-      JSON.parse("{}")
+      JSON.parse("{}"),
     );
     if (this.endpoint.enable_logs) {
       console.log("loading node summary");
@@ -213,7 +222,6 @@ export class ZkWasmServiceHelper {
   }
 
   async loadTasks(query: QueryParams): Promise<PaginationResult<Task[]>> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
     // Set default total to 2 if not provided
@@ -268,7 +276,7 @@ export class ZkWasmServiceHelper {
     let tasks = (await this.endpoint.invokeRequest(
       "GET",
       `/tasks`,
-      queryJson
+      queryJson,
     )) as PaginationResult<Task[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading task board!");
@@ -287,15 +295,43 @@ export class ZkWasmServiceHelper {
       if (task.task_fee) {
         task.task_fee = new Uint8Array(task.task_fee);
       }
-      // May as well also convert the external host table to Uint8Array
-      task.external_host_table = new Uint8Array(task.external_host_table);
     });
 
     return tasks;
   }
 
+  async getTasksDetailFromIds(ids: string[]): Promise<Task[]> {
+    const MAX_TASKS_DB_QUERY_RETURN_SIZE = 10;
+
+    if (ids.length > MAX_TASKS_DB_QUERY_RETURN_SIZE) {
+      throw new Error(
+        `Cannot be larger than max ${MAX_TASKS_DB_QUERY_RETURN_SIZE}`,
+      );
+    }
+
+    let tasks = [];
+    for (const id of ids) {
+      const query: QueryParams = {
+        user_address: null,
+        md5: null,
+        id: id,
+        tasktype: null,
+        taskstatus: null,
+      };
+      const task = await this.loadTasks(query);
+      tasks.push(task.data[0]);
+    }
+
+    return tasks;
+  }
+
+  async getTaskDetailFromId(ids: string): Promise<Task | null> {
+    const tasks = await this.getTasksDetailFromIds([ids]);
+    return tasks.length === 1 ? tasks[0] : null;
+  }
+
   async loadTaskList(
-    query: QueryParams
+    query: QueryParams,
   ): Promise<PaginationResult<ConciseTask[]>> {
     let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
@@ -343,7 +379,7 @@ export class ZkWasmServiceHelper {
     let tasks = await this.endpoint.invokeRequest(
       "GET",
       `/tasklist`,
-      queryJson
+      queryJson,
     );
     if (this.endpoint.enable_logs) {
       console.log("loading task board!");
@@ -351,13 +387,31 @@ export class ZkWasmServiceHelper {
     return tasks;
   }
 
+  async getTaskExternalHostTable(
+    query: TaskExternalHostTableParams,
+  ): Promise<TaskExternalHostTable> {
+    let queryJson = JSON.parse(JSON.stringify(query));
+    let res = (await this.endpoint.invokeRequest(
+      "GET",
+      `/task_external_host_table`,
+      queryJson,
+    )) as TaskExternalHostTable;
+    if (this.endpoint.enable_logs) {
+      console.log("fetching external host table");
+    }
+
+    // Convert the external host table to Uint8Array.
+    res.external_host_table = new Uint8Array(res.external_host_table);
+    return res;
+  }
+
   async queryAutoSubmitProofs(
-    query: PaginatedQuery<AutoSubmitProofQuery>
+    query: PaginatedQuery<AutoSubmitProofQuery>,
   ): Promise<PaginationResult<AutoSubmitProof[]>> {
     let proofData = (await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_1_BATCH,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query)),
     )) as PaginationResult<AutoSubmitProof[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading proof data!");
@@ -377,12 +431,12 @@ export class ZkWasmServiceHelper {
   }
 
   async queryRound1Info(
-    query: PaginatedQuery<Round1InfoQuery>
+    query: PaginatedQuery<Round1InfoQuery>,
   ): Promise<PaginationResult<Round1Info[]>> {
     let proofData = (await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ROUND_2_BATCH,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query)),
     )) as PaginationResult<Round1Info[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading proof data!");
@@ -405,12 +459,12 @@ export class ZkWasmServiceHelper {
   }
 
   async queryRound2Info(
-    query: PaginatedQuery<Round2InfoQuery>
+    query: PaginatedQuery<Round2InfoQuery>,
   ): Promise<PaginationResult<Round2Info[]>> {
     let proofData = (await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.FINAL_BATCH,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query)),
     )) as PaginationResult<Round2Info[]>;
     if (this.endpoint.enable_logs) {
       console.log("loading proof data!");
@@ -434,7 +488,7 @@ export class ZkWasmServiceHelper {
     let logs = await this.sendRequestWithSignature(
       "GET",
       TaskEndpoint.LOGS,
-      query
+      query,
     );
     if (this.endpoint.enable_logs) {
       console.log("loading logs!");
@@ -442,11 +496,84 @@ export class ZkWasmServiceHelper {
     return logs;
   }
 
+  async queryArchiveSummary() {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/summary",
+      JSON.parse("{}"),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archive summary!");
+    }
+    return archiveSummary;
+  }
+
+  async queryVolumeList(query: VolumeListQuery) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/volume_list",
+      JSON.parse(JSON.stringify(query)),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading volume list!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchivedTask(task_id: string) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      `/archive/task/${task_id}`,
+      JSON.parse("{}"),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archived task!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchiveServerConfig() {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/config",
+      JSON.parse("{}"),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archive server config!");
+    }
+    return archiveSummary;
+  }
+
+  async queryVolume(volume_name: string, query: VolumeDetailQuery) {
+    let url = `/archive/volume/${volume_name}`;
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      url,
+      JSON.parse(JSON.stringify(query)),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading volume detail!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchive(query: ArchiveQuery) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/archive_query",
+      JSON.parse(JSON.stringify(query)),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading Archive query!");
+    }
+    return archiveSummary;
+  }
+
   async addPayment(payRequest: PaymentParams) {
     const response = await this.endpoint.invokeRequest(
       "POST",
       TaskEndpoint.PAY,
-      JSON.parse(JSON.stringify(payRequest))
+      JSON.parse(JSON.stringify(payRequest)),
     );
     if (this.endpoint.enable_logs) {
       console.log("get addPayment response:", response.toString());
@@ -458,7 +585,7 @@ export class ZkWasmServiceHelper {
     const response = await this.endpoint.invokeRequest(
       "POST",
       TaskEndpoint.SUBSCRIBE,
-      JSON.parse(JSON.stringify(subscription))
+      JSON.parse(JSON.stringify(subscription)),
     );
     if (this.endpoint.enable_logs) {
       console.log("get addSubscription response:", response.toString());
@@ -471,7 +598,7 @@ export class ZkWasmServiceHelper {
       "POST",
       TaskEndpoint.SETUP,
       task,
-      true
+      true,
     );
 
     if (this.endpoint.enable_logs) {
@@ -485,7 +612,7 @@ export class ZkWasmServiceHelper {
       "POST",
       TaskEndpoint.PROVE,
       task,
-      true
+      true,
     );
     if (this.endpoint.enable_logs) {
       console.log("get addProvingTask response:", response);
@@ -497,7 +624,7 @@ export class ZkWasmServiceHelper {
     let response = await this.sendRequestWithSignature<DeployParams>(
       "POST",
       TaskEndpoint.DEPLOY,
-      task
+      task,
     );
     if (this.endpoint.enable_logs) {
       console.log("get addDeployTask response:", response.toString());
@@ -510,7 +637,7 @@ export class ZkWasmServiceHelper {
       "POST",
       TaskEndpoint.RESET,
       task,
-      true
+      true,
     );
 
     if (this.endpoint.enable_logs) {
@@ -523,7 +650,7 @@ export class ZkWasmServiceHelper {
     let response = await this.sendRequestWithSignature<ModifyImageParams>(
       "POST",
       TaskEndpoint.MODIFY,
-      data
+      data,
     );
 
     if (this.endpoint.enable_logs) {
@@ -538,7 +665,7 @@ export class ZkWasmServiceHelper {
         "POST",
         TaskEndpoint.SET_MAINTENANCE_MODE,
         req,
-        true
+        true,
       );
     if (this.endpoint.enable_logs) {
       console.log("setMaintenanceMode response:", response.toString());
@@ -546,13 +673,45 @@ export class ZkWasmServiceHelper {
     return response;
   }
 
+  async forceUnprovableToReprocess(
+    req: WithSignature<ForceUnprovableToReprocessParams>,
+  ) {
+    let response =
+      await this.sendRequestWithSignature<ForceUnprovableToReprocessParams>(
+        "POST",
+        TaskEndpoint.FORCE_UNPROVABLE_TO_REPROCESS,
+        req,
+        true,
+      );
+    if (this.endpoint.enable_logs) {
+      console.log("forceUnprovableToReprocess response:", response.toString());
+    }
+    return response;
+  }
+
+  async forceDryrunFailsToReprocess(
+    req: WithSignature<ForceDryrunFailsToReprocessParams>,
+  ) {
+    let response =
+      await this.sendRequestWithSignature<ForceDryrunFailsToReprocessParams>(
+        "POST",
+        TaskEndpoint.FORCE_DRYRUN_FAILS_TO_REPROCESS,
+        req,
+        true,
+      );
+    if (this.endpoint.enable_logs) {
+      console.log("forceDryrunFailsToReprocess response:", response.toString());
+    }
+    return response;
+  }
+
   async queryEstimateProofFee(
-    query: EstimatedProofFeeParams
+    query: EstimatedProofFeeParams,
   ): Promise<EstimatedProofFee> {
     const config = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.GET_ESTIMATED_PROOF_FEE,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query)),
     );
     if (this.endpoint.enable_logs) {
       console.log("get queryEstimateProofFee response.");
@@ -564,7 +723,7 @@ export class ZkWasmServiceHelper {
     method: "GET" | "POST",
     path: TaskEndpoint,
     task: WithSignature<T>,
-    isFormData = false
+    isFormData = false,
   ): Promise<any> {
     // TODO: create return types for tasks using this method
     let headers = this.createHeaders(task);
@@ -589,7 +748,7 @@ export class ZkWasmServiceHelper {
           } else {
             payload.append(
               key,
-              task_params[key as keyof typeof task_params] as string
+              task_params[key as keyof typeof task_params] as string,
             );
           }
         }
@@ -630,4 +789,6 @@ export enum TaskEndpoint {
   FINAL_BATCH = "/final_batch_proofs",
   GET_ESTIMATED_PROOF_FEE = "/estimated_proof_fee",
   ONLINE_NODES_SUMMARY = "/online_nodes_summary",
+  FORCE_UNPROVABLE_TO_REPROCESS = "/admin/force_unprovable_to_reprocess",
+  FORCE_DRYRUN_FAILS_TO_REPROCESS = "/admin/force_dryrun_fails_to_reprocess",
 }
