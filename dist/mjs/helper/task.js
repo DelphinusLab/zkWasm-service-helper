@@ -69,7 +69,6 @@ export class ZkWasmServiceHelper {
         return config;
     }
     async loadStatistics() {
-        let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
         let st = await this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
         if (this.endpoint.enable_logs) {
@@ -83,7 +82,6 @@ export class ZkWasmServiceHelper {
         };
     }
     async queryNodeStatistics(query) {
-        let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse(JSON.stringify(query));
         let res = await this.endpoint.invokeRequest("GET", `/node_statistics`, queryJson);
         if (this.endpoint.enable_logs) {
@@ -92,7 +90,6 @@ export class ZkWasmServiceHelper {
         return res;
     }
     async queryProverNodeSummary() {
-        let headers = { "Content-Type": "application/json" };
         let res = await this.endpoint.invokeRequest("GET", `/prover_node_summary`, JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
             console.log("loading node summary");
@@ -100,7 +97,6 @@ export class ZkWasmServiceHelper {
         return res;
     }
     async queryOnlineNodesSummary() {
-        let headers = { "Content-Type": "application/json" };
         let res = await this.endpoint.invokeRequest("GET", TaskEndpoint.ONLINE_NODES_SUMMARY, JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
             console.log("loading node summary");
@@ -194,7 +190,6 @@ export class ZkWasmServiceHelper {
         return tasks.length === 1 ? tasks[0] : null;
     }
     async loadTaskList(query) {
-        let headers = { "Content-Type": "application/json" };
         let queryJson = JSON.parse("{}");
         // Validate query params
         if (query.start != null && query.start < 0) {
@@ -354,21 +349,21 @@ export class ZkWasmServiceHelper {
     async addPayment(payRequest) {
         const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
         if (this.endpoint.enable_logs) {
-            console.log("get addPayment response:", response.toString());
+            console.log("get addPayment response:", response);
         }
         return response;
     }
     async addSubscription(subscription) {
         const response = await this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
         if (this.endpoint.enable_logs) {
-            console.log("get addSubscription response:", response.toString());
+            console.log("get addSubscription response:", response);
         }
         return response;
     }
     async addNewWasmImage(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
         if (this.endpoint.enable_logs) {
-            console.log("get addNewWasmImage response:", response.toString());
+            console.log("get addNewWasmImage response:", response);
         }
         return response;
     }
@@ -382,42 +377,42 @@ export class ZkWasmServiceHelper {
     async addDeployTask(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
         if (this.endpoint.enable_logs) {
-            console.log("get addDeployTask response:", response.toString());
+            console.log("get addDeployTask response:", response);
         }
         return response;
     }
     async addResetTask(task) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
         if (this.endpoint.enable_logs) {
-            console.log("get addResetTask response:", response.toString());
+            console.log("get addResetTask response:", response);
         }
         return response;
     }
     async modifyImage(data) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
         if (this.endpoint.enable_logs) {
-            console.log("get modifyImage response:", response.toString());
+            console.log("get modifyImage response:", response);
         }
         return response;
     }
     async setMaintenanceMode(req) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, req, true);
         if (this.endpoint.enable_logs) {
-            console.log("setMaintenanceMode response:", response.toString());
+            console.log("setMaintenanceMode response:", response);
         }
         return response;
     }
     async forceUnprovableToReprocess(req) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_UNPROVABLE_TO_REPROCESS, req, true);
         if (this.endpoint.enable_logs) {
-            console.log("forceUnprovableToReprocess response:", response.toString());
+            console.log("forceUnprovableToReprocess response:", response);
         }
         return response;
     }
     async forceDryrunFailsToReprocess(req) {
         let response = await this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_DRYRUN_FAILS_TO_REPROCESS, req, true);
         if (this.endpoint.enable_logs) {
-            console.log("forceDryrunFailsToReprocess response:", response.toString());
+            console.log("forceDryrunFailsToReprocess response:", response);
         }
         return response;
     }

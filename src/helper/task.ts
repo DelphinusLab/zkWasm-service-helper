@@ -157,7 +157,6 @@ export class ZkWasmServiceHelper {
   }
 
   async loadStatistics(): Promise<Statistics> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
     let st = await this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
@@ -176,7 +175,6 @@ export class ZkWasmServiceHelper {
   async queryNodeStatistics(
     query: NodeStatisticsQueryParams,
   ): Promise<PaginationResult<NodeStatistics[]>> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse(JSON.stringify(query));
 
     let res = await this.endpoint.invokeRequest(
@@ -192,8 +190,6 @@ export class ZkWasmServiceHelper {
   }
 
   async queryProverNodeSummary(): Promise<ProverNodesSummary> {
-    let headers = { "Content-Type": "application/json" };
-
     let res = await this.endpoint.invokeRequest(
       "GET",
       `/prover_node_summary`,
@@ -207,8 +203,6 @@ export class ZkWasmServiceHelper {
   }
 
   async queryOnlineNodesSummary(): Promise<OnlineNodesSummary> {
-    let headers = { "Content-Type": "application/json" };
-
     let res = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ONLINE_NODES_SUMMARY,
@@ -333,7 +327,6 @@ export class ZkWasmServiceHelper {
   async loadTaskList(
     query: QueryParams,
   ): Promise<PaginationResult<ConciseTask[]>> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
     // Validate query params
@@ -576,7 +569,7 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(payRequest)),
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addPayment response:", response.toString());
+      console.log("get addPayment response:", response);
     }
     return response;
   }
@@ -588,7 +581,7 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(subscription)),
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addSubscription response:", response.toString());
+      console.log("get addSubscription response:", response);
     }
     return response;
   }
@@ -602,7 +595,7 @@ export class ZkWasmServiceHelper {
     );
 
     if (this.endpoint.enable_logs) {
-      console.log("get addNewWasmImage response:", response.toString());
+      console.log("get addNewWasmImage response:", response);
     }
     return response;
   }
@@ -627,7 +620,7 @@ export class ZkWasmServiceHelper {
       task,
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addDeployTask response:", response.toString());
+      console.log("get addDeployTask response:", response);
     }
     return response;
   }
@@ -641,7 +634,7 @@ export class ZkWasmServiceHelper {
     );
 
     if (this.endpoint.enable_logs) {
-      console.log("get addResetTask response:", response.toString());
+      console.log("get addResetTask response:", response);
     }
     return response;
   }
@@ -654,7 +647,7 @@ export class ZkWasmServiceHelper {
     );
 
     if (this.endpoint.enable_logs) {
-      console.log("get modifyImage response:", response.toString());
+      console.log("get modifyImage response:", response);
     }
     return response;
   }
@@ -668,7 +661,7 @@ export class ZkWasmServiceHelper {
         true,
       );
     if (this.endpoint.enable_logs) {
-      console.log("setMaintenanceMode response:", response.toString());
+      console.log("setMaintenanceMode response:", response);
     }
     return response;
   }
@@ -684,7 +677,7 @@ export class ZkWasmServiceHelper {
         true,
       );
     if (this.endpoint.enable_logs) {
-      console.log("forceUnprovableToReprocess response:", response.toString());
+      console.log("forceUnprovableToReprocess response:", response);
     }
     return response;
   }
@@ -700,7 +693,7 @@ export class ZkWasmServiceHelper {
         true,
       );
     if (this.endpoint.enable_logs) {
-      console.log("forceDryrunFailsToReprocess response:", response.toString());
+      console.log("forceDryrunFailsToReprocess response:", response);
     }
     return response;
   }
