@@ -7,6 +7,7 @@ export interface Statistics {
 export interface TimingStatistics {
     latest_time_taken_secs: number;
     latest_timestamp: string;
+    latest_task_id: string;
 }
 export interface NodeStatistics {
     address: string;
@@ -14,7 +15,6 @@ export interface NodeStatistics {
         successful_tasks: number;
         failed_tasks: number;
         total_tasks: number;
-        last_successful_task_id?: ObjectId;
         timed_out_count: number;
         last_timed_out: string;
         last_timed_out_task_id?: ObjectId;
