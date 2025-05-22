@@ -80,7 +80,9 @@ import {
   VolumeDetailQuery,
   VolumeDetailResponse,
   VolumeListQuery,
-  VolumeRange,
+  TaskVolumeRange,
+  ArchivedFinalBatchProof,
+  AutoSubmitVolumeRange,
 } from "interface/archive.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
@@ -172,7 +174,9 @@ export type {
   VolumeDetailQuery,
   VolumeDetailResponse,
   VolumeListQuery,
-  VolumeRange,
+  TaskVolumeRange,
   ArchiveQuery,
   ArchiveSummary,
+  AutoSubmitVolumeRange,
+  ArchivedFinalBatchProof,
 };

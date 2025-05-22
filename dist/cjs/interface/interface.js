@@ -35,6 +35,7 @@ var Round2Status;
 (function (Round2Status) {
     Round2Status["ProofNotRegistered"] = "ProofNotRegistered";
     Round2Status["ProofRegistered"] = "ProofRegistered";
+    Round2Status["Archived"] = "Archived";
 })(Round2Status = exports.Round2Status || (exports.Round2Status = {}));
 var AutoSubmitStatus;
 (function (AutoSubmitStatus) {
