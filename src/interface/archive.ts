@@ -83,6 +83,7 @@ export interface ArchivedFinalBatchProof {
   round_1_batch_instances: number[][]; // Round 1 batched result instance
   round_1_shadow_instances: number[][]; // Round 1 batched result shadow instance
   round_1_aux: number[][]; // Round 1 batched result aux, this is unused in final batch process, only used in Solidity verification
+  round_1_target_instances: number[][][]; // Round 1 target instances, equal to all batch instances of underlying aggregate proofs.
   batched_time: string; // The time the batch process done. This will always exist in the archive. (ISO 8601 string)
   internal_message?: string; // a more detailed message for the developer
   static_files_verification_data?: StaticFileVerificationData; // Information about the static files (K params, vkey, aggr-vkey files) and verifier addresses when the task is processing.

@@ -64,6 +64,7 @@ export interface ArchivedFinalBatchProof {
     round_1_batch_instances: number[][];
     round_1_shadow_instances: number[][];
     round_1_aux: number[][];
+    round_1_target_instances: number[][][];
     batched_time: string;
     internal_message?: string;
     static_files_verification_data?: StaticFileVerificationData;
