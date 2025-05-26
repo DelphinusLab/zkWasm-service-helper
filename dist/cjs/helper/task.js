@@ -402,7 +402,16 @@ class ZkWasmServiceHelper {
     }
     queryArchivedAutoSubmitInfoByTaskId(task_id) {
         return __awaiter(this, void 0, void 0, function* () {
-            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${task_id}`, JSON.parse("{}"));
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info_by_task/${task_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitInfoByArchiveId(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${id}`, JSON.parse("{}"));
             if (this.endpoint.enable_logs) {
                 console.log("loading archived auto_submit_info!");
             }

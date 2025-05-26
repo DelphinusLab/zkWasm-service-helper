@@ -83,7 +83,7 @@ import {
   TaskVolumeRange,
   ArchivedFinalBatchProof,
   AutoSubmitVolumeRange,
-} from "interface/archive.js";
+} from "./interface/archive.js";
 
 import { ZkWasmUtil } from "./helper/util.js";
 import { ZkWasmServiceEndpoint } from "./helper/endpoint.js";
