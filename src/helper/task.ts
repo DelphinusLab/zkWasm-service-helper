@@ -532,10 +532,10 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
-  async queryArchivedAutoSubmitInfoByTaskId(task_id: string) {
+  async queryArchivedAutoSubmitInfoByTaskId(task_id: string, chain_id: number) {
     let archiveSummary = await this.endpoint.invokeRequest(
       "GET",
-      `/archive/auto_submit_info_by_task/${task_id}`,
+      `/archive/auto_submit_info_by_task/${task_id}/${chain_id}`,
       JSON.parse("{}")
     );
     if (this.endpoint.enable_logs) {

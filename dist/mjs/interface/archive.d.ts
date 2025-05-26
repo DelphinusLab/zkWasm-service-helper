@@ -58,7 +58,7 @@ export interface ArchivedFinalBatchProof {
     target_instances: number[][];
     proof: number[];
     batch_instances: number[];
-    shadow_instances?: number[];
+    shadow_instances: number[];
     aux: number[];
     round_1_proof: number[][];
     round_1_batch_instances: number[][];

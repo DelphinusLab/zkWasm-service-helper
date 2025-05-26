@@ -73,7 +73,7 @@ export interface ArchivedFinalBatchProof {
   target_instances: number[][]; // 6 or less instances of the Round1 output batch_instances (The batch_instances in Round2BatchProof). e.g the inputs of the Round2BatchProof
   proof: number[]; // Round 2 batched result proof (transcript)
   batch_instances: number[]; // Round 2 batched result instance
-  shadow_instances?: number[]; // Round 2 batched result shadow instance
+  shadow_instances: number[]; // Round 2 batched result shadow instance
   aux: number[]; // Round 2 batched result aux, used to verify the proof in Solidity
 
   // Need to store the 'Round2 Input' values too.
