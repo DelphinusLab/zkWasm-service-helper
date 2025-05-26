@@ -1,5 +1,4 @@
 import type {
-  ConciseTask,
   ObjectId,
   PaginationResult,
   Round2Status,
@@ -65,7 +64,7 @@ export interface ArchiveQuery {
 }
 
 export interface ArchivedFinalBatchProof {
-  _id?: ObjectId;
+  _id: ObjectId;
   original_final_proof_id: string; // The id of the original final proof
   included_md5s: string[]; // The md5s of the included proofs
   round_2_ids: string[]; // 6 Round2 queue item id

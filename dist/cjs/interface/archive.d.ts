@@ -49,7 +49,7 @@ export interface ArchiveQuery {
     limit?: number;
 }
 export interface ArchivedFinalBatchProof {
-    _id?: ObjectId;
+    _id: ObjectId;
     original_final_proof_id: string;
     included_md5s: string[];
     round_2_ids: string[];
