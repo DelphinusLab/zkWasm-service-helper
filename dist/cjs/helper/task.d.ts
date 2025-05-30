@@ -27,8 +27,9 @@ export declare class ZkWasmServiceHelper {
     queryArchiveSummary(): Promise<any>;
     queryVolumeList(query: VolumeListQuery): Promise<any>;
     queryArchivedTask(task_id: string): Promise<any>;
+    queryArchivedAutoSubmitNetworksByTaskId(task_id: string, chain_id: number): Promise<any>;
     queryArchivedAutoSubmitInfoByTaskId(task_id: string, chain_id: number): Promise<any>;
-    queryAutoSubmitInfoByArchiveId(id: string): Promise<any>;
+    queryAutoSubmitInfoByArchiveId(id: string, chain_id: number): Promise<any>;
     queryArchiveServerConfig(): Promise<any>;
     queryTaskVolume(volume_name: string, query: VolumeDetailQuery): Promise<any>;
     queryAutoSubmitVolume(volume_name: string, query: VolumeDetailQuery): Promise<any>;

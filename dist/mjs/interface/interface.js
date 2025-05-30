@@ -32,7 +32,6 @@ export var Round2Status;
 (function (Round2Status) {
     Round2Status["ProofNotRegistered"] = "ProofNotRegistered";
     Round2Status["ProofRegistered"] = "ProofRegistered";
-    Round2Status["Archived"] = "Archived";
 })(Round2Status || (Round2Status = {}));
 export var AutoSubmitStatus;
 (function (AutoSubmitStatus) {

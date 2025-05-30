@@ -329,6 +329,13 @@ export class ZkWasmServiceHelper {
         }
         return archiveSummary;
     }
+    async queryArchivedAutoSubmitNetworksByTaskId(task_id, chain_id) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_networks/${task_id}`, JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archived auto_submit_info!");
+        }
+        return archiveSummary;
+    }
     async queryArchivedAutoSubmitInfoByTaskId(task_id, chain_id) {
         let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_info_by_task/${task_id}/${chain_id}`, JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
@@ -336,8 +343,8 @@ export class ZkWasmServiceHelper {
         }
         return archiveSummary;
     }
-    async queryAutoSubmitInfoByArchiveId(id) {
-        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${id}`, JSON.parse("{}"));
+    async queryAutoSubmitInfoByArchiveId(id, chain_id) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${id}/${chain_id}`, JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
             console.log("loading archived auto_submit_info!");
         }

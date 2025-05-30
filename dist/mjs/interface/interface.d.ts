@@ -201,8 +201,7 @@ export interface Round2Info {
 }
 export declare enum Round2Status {
     ProofNotRegistered = "ProofNotRegistered",
-    ProofRegistered = "ProofRegistered",
-    Archived = "Archived"
+    ProofRegistered = "ProofRegistered"
 }
 export type PaginatedQuery<T> = T & PaginationQuery;
 export interface AutoSubmitProofQuery {
