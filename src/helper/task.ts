@@ -532,10 +532,7 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
-  async queryArchivedAutoSubmitNetworksByTaskId(
-    task_id: string,
-    chain_id: number
-  ) {
+  async queryArchivedAutoSubmitNetworksByTaskId(task_id: string) {
     let archiveSummary = await this.endpoint.invokeRequest(
       "GET",
       `/archive/auto_submit_networks/${task_id}`,

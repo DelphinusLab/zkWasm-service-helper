@@ -329,7 +329,7 @@ export class ZkWasmServiceHelper {
         }
         return archiveSummary;
     }
-    async queryArchivedAutoSubmitNetworksByTaskId(task_id, chain_id) {
+    async queryArchivedAutoSubmitNetworksByTaskId(task_id) {
         let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_networks/${task_id}`, JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
             console.log("loading archived auto_submit_info!");
