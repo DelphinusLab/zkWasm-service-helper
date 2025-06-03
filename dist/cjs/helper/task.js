@@ -382,9 +382,18 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
-    queryVolumeList(query) {
+    queryTaskVolumeList(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/task_volume_list", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume list!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitVolumeList(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/auto_submit_volume_list", JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
                 console.log("loading volume list!");
             }

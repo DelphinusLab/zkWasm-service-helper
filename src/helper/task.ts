@@ -508,10 +508,22 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
-  async queryVolumeList(query: VolumeListQuery) {
+  async queryTaskVolumeList(query: VolumeListQuery) {
     let archiveSummary = await this.endpoint.invokeRequest(
       "GET",
-      "/archive/volume_list",
+      "/archive/task_volume_list",
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading volume list!");
+    }
+    return archiveSummary;
+  }
+
+  async queryAutoSubmitVolumeList(query: VolumeListQuery) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/auto_submit_volume_list",
       JSON.parse(JSON.stringify(query))
     );
     if (this.endpoint.enable_logs) {
