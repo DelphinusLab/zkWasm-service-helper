@@ -25,10 +25,15 @@ export declare class ZkWasmServiceHelper {
     queryRound2Info(query: PaginatedQuery<Round2InfoQuery>): Promise<PaginationResult<Round2Info[]>>;
     queryLogs(query: WithSignature<LogQuery>): Promise<string>;
     queryArchiveSummary(): Promise<any>;
-    queryVolumeList(query: VolumeListQuery): Promise<any>;
+    queryTaskVolumeList(query: VolumeListQuery): Promise<any>;
+    queryAutoSubmitVolumeList(query: VolumeListQuery): Promise<any>;
     queryArchivedTask(task_id: string): Promise<any>;
+    queryArchivedAutoSubmitNetworksByTaskId(task_id: string): Promise<any>;
+    queryArchivedAutoSubmitInfoByTaskId(task_id: string, chain_id: number): Promise<any>;
+    queryAutoSubmitInfoByArchiveId(id: string, chain_id: number): Promise<any>;
     queryArchiveServerConfig(): Promise<any>;
-    queryVolume(volume_name: string, query: VolumeDetailQuery): Promise<any>;
+    queryTaskVolume(volume_name: string, query: VolumeDetailQuery): Promise<any>;
+    queryAutoSubmitVolume(volume_name: string, query: VolumeDetailQuery): Promise<any>;
     queryArchive(query: ArchiveQuery): Promise<any>;
     addPayment(payRequest: PaymentParams): Promise<any>;
     addSubscription(subscription: SubscriptionRequest): Promise<any>;
