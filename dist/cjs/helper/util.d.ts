@@ -76,7 +76,7 @@ export declare class ZkWasmUtil {
     static isHexString(value: string): boolean;
     static convertToMd5(value: Uint8Array): string;
     static convertAmount(balance: Uint8Array): string;
-    static createLogsMesssage(params: LogQuery): string;
+    static createLogsMessage(params: LogQuery): string;
     static createAddImageSignMessage(params: AddImageParams): string;
     static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string;
     static createForceUnprovableToReprocessSignMessage(params: ForceUnprovableToReprocessParams): string;
