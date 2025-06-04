@@ -282,7 +282,7 @@ export class ZkWasmUtil {
     return formatUnits(amt, "ether");
   }
 
-  static createLogsMesssage(params: LogQuery): string {
+  static createLogsMessage(params: LogQuery): string {
     return JSON.stringify(params);
   }
 
