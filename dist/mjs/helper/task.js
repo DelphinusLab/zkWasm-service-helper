@@ -366,14 +366,24 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async addNewWasmImage(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
+        const ordered = ZkWasmUtil.createOrderedAddImageParams(task);
+        const data = {
+            ...ordered,
+            signature: task.signature,
+        };
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, data, true);
         if (this.endpoint.enable_logs) {
             console.log("get addNewWasmImage response:", response.toString());
         }
         return response;
     }
     async addProvingTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
+        const ordered = ZkWasmUtil.createOrderedProvingParams(task);
+        const data = {
+            ...ordered,
+            signature: task.signature,
+        };
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, data, true);
         if (this.endpoint.enable_logs) {
             console.log("get addProvingTask response:", response);
         }
@@ -387,7 +397,12 @@ export class ZkWasmServiceHelper {
         return response;
     }
     async addResetTask(task) {
-        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
+        const ordered = ZkWasmUtil.createOrderedResetImageParams(task);
+        const data = {
+            ...ordered,
+            signature: task.signature,
+        };
+        let response = await this.sendRequestWithSignature("POST", TaskEndpoint.RESET, data, true);
         if (this.endpoint.enable_logs) {
             console.log("get addResetTask response:", response.toString());
         }

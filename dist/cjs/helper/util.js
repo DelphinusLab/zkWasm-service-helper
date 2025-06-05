@@ -140,6 +140,30 @@ class ZkWasmUtil {
     static createLogsMesssage(params) {
         return JSON.stringify(params);
     }
+    static createOrderedAddImageParams(params) {
+        // Ensure keys are in expected order and same as the message to sign.
+        let base = {
+            name: params.name,
+            image_md5: params.image_md5,
+            image: params.image,
+            user_address: params.user_address,
+            description_url: params.description_url,
+            avator_url: params.avator_url,
+            circuit_size: params.circuit_size,
+            prove_payment_src: params.prove_payment_src,
+            auto_submit_network_ids: params.auto_submit_network_ids,
+            add_prove_task_restrictions: params.add_prove_task_restrictions,
+            inherited_merkle_data_md5: params.inherited_merkle_data_md5,
+        };
+        if (params.initial_context) {
+            let ctx = {
+                initial_context_md5: params.initial_context_md5,
+                initial_context: params.initial_context, // This is not signed
+            };
+            base = Object.assign(Object.assign({}, base), ctx);
+        }
+        return base;
+    }
     //this is form data
     static createAddImageSignMessage(params) {
         //sign all the fields except the image itself and signature
@@ -193,6 +217,32 @@ class ZkWasmUtil {
         message += params.user_address;
         return message;
     }
+    static createOrderedProvingParams(params) {
+        // Ensure keys are in expected order and same as the message to sign.
+        let base = {
+            user_address: params.user_address,
+            md5: params.md5,
+            public_inputs: params.public_inputs,
+            private_inputs: params.private_inputs,
+            proof_submit_mode: params.proof_submit_mode,
+        };
+        if (params.input_context_type === interface_js_1.InputContextType.Custom) {
+            let ctx = {
+                input_context_md5: params.input_context_md5,
+                input_context_type: params.input_context_type,
+                input_context: params.input_context, // This is not signed
+            };
+            base = Object.assign(Object.assign({}, base), ctx);
+        }
+        else {
+            let ctx = {
+                input_context_type: params.input_context_type,
+            };
+            // If input_context_type is not Custom, we don't need to include input_context and input_context_md5
+            base = Object.assign(Object.assign({}, base), ctx);
+        }
+        return base;
+    }
     static createProvingSignMessage(params) {
         // No need to sign the file itself, just the md5
         let message = "";
@@ -219,6 +269,25 @@ class ZkWasmUtil {
     static createDeploySignMessage(params) {
         return JSON.stringify(params);
     }
+    static createOrderedResetImageParams(params) {
+        // Ensure keys are in expected order and same as the message to sign.
+        let base = {
+            md5: params.md5,
+            circuit_size: params.circuit_size,
+            user_address: params.user_address,
+            prove_payment_src: params.prove_payment_src,
+            auto_submit_network_ids: params.auto_submit_network_ids,
+            add_prove_task_restrictions: params.add_prove_task_restrictions,
+        };
+        if (params.reset_context) {
+            let ctx = {
+                reset_context_md5: params.reset_context_md5,
+                reset_context: params.reset_context, // This is not signed
+            };
+            base = Object.assign(Object.assign({}, base), ctx);
+        }
+        return base;
+    }
     static createResetImageMessage(params) {
         let message = "";
         message += params.md5;
@@ -228,11 +297,11 @@ class ZkWasmUtil {
         for (const chainId of params.auto_submit_network_ids) {
             message += chainId;
         }
-        if (params.reset_context) {
-            message += params.reset_context_md5;
-        }
         if (params.add_prove_task_restrictions) {
             message += params.add_prove_task_restrictions;
+        }
+        if (params.reset_context) {
+            message += params.reset_context_md5;
         }
         return message;
     }

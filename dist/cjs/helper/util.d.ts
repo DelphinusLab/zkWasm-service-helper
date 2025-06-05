@@ -77,12 +77,15 @@ export declare class ZkWasmUtil {
     static convertToMd5(value: Uint8Array): string;
     static convertAmount(balance: Uint8Array): string;
     static createLogsMesssage(params: LogQuery): string;
+    static createOrderedAddImageParams(params: AddImageParams): AddImageParams;
     static createAddImageSignMessage(params: AddImageParams): string;
     static createSetMaintenanceModeSignMessage(params: SetMaintenanceModeParams): string;
     static createForceUnprovableToReprocessSignMessage(params: ForceUnprovableToReprocessParams): string;
     static createForceDryrunFailsToReprocessSignMessage(params: ForceDryrunFailsToReprocessParams): string;
+    static createOrderedProvingParams(params: ProvingParams): ProvingParams;
     static createProvingSignMessage(params: ProvingParams): string;
     static createDeploySignMessage(params: DeployParams): string;
+    static createOrderedResetImageParams(params: ResetImageParams): ResetImageParams;
     static createResetImageMessage(params: ResetImageParams): string;
     static createModifyImageMessage(params: ModifyImageParams): string;
     static bytesToBN(data: Uint8Array, chunksize?: number): BN[];
