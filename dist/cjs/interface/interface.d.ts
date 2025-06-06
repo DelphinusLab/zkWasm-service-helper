@@ -277,8 +277,8 @@ export interface BaseAddImageParams {
     circuit_size: number;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
-    inherited_merkle_data_md5?: string;
     add_prove_task_restrictions?: AddProveTaskRestrictions;
+    inherited_merkle_data_md5?: string;
 }
 export interface WithInitialContext {
     initial_context: unknown;

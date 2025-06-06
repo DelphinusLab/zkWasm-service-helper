@@ -4,6 +4,7 @@ import {
   ZkWasmUtil,
   ProvePaymentSrc,
   WithInitialContext,
+  AddProveTaskRestrictions,
 } from "zkwasm-service-helper";
 
 import path from "node:path";
@@ -17,7 +18,9 @@ export async function AddNewWasmImage() {
   const contextFilePath = path.resolve(__dirname, "./data/context.data");
   const fileSelected: Buffer = fs.readFileSync(wasmFilePath);
   const md5 = ZkWasmUtil.convertToMd5(fileSelected as Uint8Array);
-
+  const isCreatorOnlyAddProveTask = false; // Set to true if you want to restrict prove task creation to the image creator only
+  const usesInheritedMerkleData = false; // Set to true if you want to use inherited merkle data
+  const inheritedMerkleDataMd5 = "<MD5_TO_INHERIT_FROM>"; // Replace with actual MD5 if using inherited merkle data
   let params: AddImageParams = {
     name: "image.wasm",
     image_md5: md5,
@@ -34,13 +37,20 @@ export async function AddNewWasmImage() {
     // Unsupported networks will be rejected.
     // If empty array, Auto Submitted proofs will be rejected.
     auto_submit_network_ids: [Web3ChainConfig.chainId],
+    add_prove_task_restrictions: isCreatorOnlyAddProveTask
+      ? AddProveTaskRestrictions.CreatorOnly
+      : AddProveTaskRestrictions.Anyone,
+    inherited_merkle_data_md5: usesInheritedMerkleData
+      ? inheritedMerkleDataMd5
+      : undefined,
   };
 
   // Optional Initial Context information
 
   // Upload a binary file first
-  let [contextFile, contextMd5] =
-    await ZkWasmUtil.loadContexFileAsBytes(contextFilePath);
+  let [contextFile, contextMd5] = await ZkWasmUtil.loadContexFileAsBytes(
+    contextFilePath
+  );
 
   if (contextFile) {
     let context_info: WithInitialContext = {
@@ -53,7 +63,7 @@ export async function AddNewWasmImage() {
   let msg = ZkWasmUtil.createAddImageSignMessage(params);
   let signature: string = await ZkWasmUtil.signMessage(
     msg,
-    ServiceHelperConfig.privateKey,
+    ServiceHelperConfig.privateKey
   ); //Need user private key to sign the msg
   let task: WithSignature<AddImageParams> = {
     ...params,
