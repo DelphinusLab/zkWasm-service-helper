@@ -28,9 +28,6 @@ export class ZkWasmServiceEndpoint {
                 );
                 return response.data;
             } catch (e: any) {
-                if (this.enable_logs) {
-                  console.error(e);
-                }
                 return {
                     success: false,
                     error: e.response ? {
@@ -55,9 +52,6 @@ export class ZkWasmServiceEndpoint {
                 );
                 return response.data;
             } catch (e: any) {
-                if (this.enable_logs) {
-                  console.log(e);
-                }
                 return {
                     success: false,
                     error: e.response ? {
@@ -75,9 +69,6 @@ export class ZkWasmServiceEndpoint {
 
     async getJSONResponse(json: any) {
         if (json["success"] !== true) {
-            if (this.enable_logs) {
-              console.error(json);
-            }
             throw new Error(json["error"].message);
         }
         return json["result"];
