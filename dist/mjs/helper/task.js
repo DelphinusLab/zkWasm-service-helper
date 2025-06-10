@@ -315,8 +315,15 @@ export class ZkWasmServiceHelper {
         }
         return archiveSummary;
     }
-    async queryVolumeList(query) {
-        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+    async queryTaskVolumeList(query) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/task_volume_list", JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading volume list!");
+        }
+        return archiveSummary;
+    }
+    async queryAutoSubmitVolumeList(query) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/auto_submit_volume_list", JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
             console.log("loading volume list!");
         }
@@ -329,6 +336,27 @@ export class ZkWasmServiceHelper {
         }
         return archiveSummary;
     }
+    async queryArchivedAutoSubmitNetworksByTaskId(task_id) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_networks/${task_id}`, JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archived auto_submit_info!");
+        }
+        return archiveSummary;
+    }
+    async queryArchivedAutoSubmitInfoByTaskId(task_id, chain_id) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_info_by_task/${task_id}/${chain_id}`, JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archived auto_submit_info!");
+        }
+        return archiveSummary;
+    }
+    async queryAutoSubmitInfoByArchiveId(id, chain_id) {
+        let archiveSummary = await this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${id}/${chain_id}`, JSON.parse("{}"));
+        if (this.endpoint.enable_logs) {
+            console.log("loading archived auto_submit_info!");
+        }
+        return archiveSummary;
+    }
     async queryArchiveServerConfig() {
         let archiveSummary = await this.endpoint.invokeRequest("GET", "/archive/config", JSON.parse("{}"));
         if (this.endpoint.enable_logs) {
@@ -336,11 +364,19 @@ export class ZkWasmServiceHelper {
         }
         return archiveSummary;
     }
-    async queryVolume(volume_name, query) {
-        let url = `/archive/volume/${volume_name}`;
+    async queryTaskVolume(volume_name, query) {
+        let url = `/archive/task_volume/${volume_name}`;
         let archiveSummary = await this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
-            console.log("loading volume detail!");
+            console.log("loading task volume detail!");
+        }
+        return archiveSummary;
+    }
+    async queryAutoSubmitVolume(volume_name, query) {
+        let url = `/archive/auto_submit_volume/${volume_name}`;
+        let archiveSummary = await this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
+        if (this.endpoint.enable_logs) {
+            console.log("loading auto_submit_volume detail!");
         }
         return archiveSummary;
     }
