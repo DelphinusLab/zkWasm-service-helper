@@ -377,9 +377,18 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
-    queryVolumeList(query) {
+    queryTaskVolumeList(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/task_volume_list", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume list!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitVolumeList(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/auto_submit_volume_list", JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
                 console.log("loading volume list!");
             }
@@ -395,6 +404,33 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
+    queryArchivedAutoSubmitNetworksByTaskId(task_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_networks/${task_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchivedAutoSubmitInfoByTaskId(task_id, chain_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info_by_task/${task_id}/${chain_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitInfoByArchiveId(id, chain_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${id}/${chain_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
     queryArchiveServerConfig() {
         return __awaiter(this, void 0, void 0, function* () {
             let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/config", JSON.parse("{}"));
@@ -404,12 +440,22 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
-    queryVolume(volume_name, query) {
+    queryTaskVolume(volume_name, query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let url = `/archive/volume/${volume_name}`;
+            let url = `/archive/task_volume/${volume_name}`;
             let archiveSummary = yield this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
-                console.log("loading volume detail!");
+                console.log("loading task volume detail!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitVolume(volume_name, query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let url = `/archive/auto_submit_volume/${volume_name}`;
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading auto_submit_volume detail!");
             }
             return archiveSummary;
         });
