@@ -577,10 +577,10 @@ export interface ProverNodeTimerangeStatsParams {
     end_ts: string;
 }
 export interface ProverTimeRangeStats {
-    fst_id: string;
-    fst_ts: string;
-    lst_id: string;
-    lst_ts: string;
+    fst_id?: string;
+    fst_ts?: string;
+    lst_id?: string;
+    lst_ts?: string;
     stats: {
         successful: number;
         failed: number;
