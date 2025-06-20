@@ -42,6 +42,8 @@ import {
   EstimatedProofFee,
   ForceUnprovableToReprocessParams,
   ForceDryrunFailsToReprocessParams,
+  ProverNodeTimerangeStatsParams,
+  ProverTimeRangeStats,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -735,6 +737,20 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
+  async queryProverNodeTimerangeStats(
+    query: ProverNodeTimerangeStatsParams,
+  ): Promise<ProverTimeRangeStats> {
+    const config = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
+      JSON.parse(JSON.stringify(query)),
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("get queryProverNodeTimerangeStats response.");
+    }
+    return config;
+  }
+
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
@@ -807,4 +823,5 @@ export enum TaskEndpoint {
   ONLINE_NODES_SUMMARY = "/online_nodes_summary",
   FORCE_UNPROVABLE_TO_REPROCESS = "/admin/force_unprovable_to_reprocess",
   FORCE_DRYRUN_FAILS_TO_REPROCESS = "/admin/force_dryrun_fails_to_reprocess",
+  PROVER_NODE_TIMERANGE_STATS = "/prover_node_timerange_stats",
 }

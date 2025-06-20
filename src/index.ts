@@ -71,6 +71,8 @@ import {
   EstimatedProofFee,
   AddProveTaskRestrictions,
   OnlineNodeInfo,
+  ProverNodeTimerangeStatsParams,
+  ProverTimeRangeStats,
 } from "./interface/interface.js";
 
 import {
@@ -175,4 +177,6 @@ export type {
   VolumeRange,
   ArchiveQuery,
   ArchiveSummary,
+  ProverNodeTimerangeStatsParams,
+  ProverTimeRangeStats,
 };
