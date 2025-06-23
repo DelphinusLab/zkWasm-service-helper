@@ -573,8 +573,8 @@ export interface ForceDryrunFailsToReprocessParams {
 }
 export interface ProverNodeTimeRangeStatsParams {
     address: string;
-    start_ts: string;
-    end_ts: string;
+    start_ts: Date;
+    end_ts: Date;
 }
 export interface ProverNodeTimeRangeStats {
     fst_id?: string;
