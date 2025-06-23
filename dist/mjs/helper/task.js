@@ -443,12 +443,12 @@ export class ZkWasmServiceHelper {
         }
         return config;
     }
-    async queryProverNodeTimerangeStats(query) {
-        const config = await this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
+    async queryProverNodeTimeRangeStats(query) {
+        const result = await this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIME_RANGE_STATS, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
-            console.log("get queryProverNodeTimerangeStats response.");
+            console.log("get queryProverNodeTimeRangeStats response.");
         }
-        return config;
+        return result;
     }
     async sendRequestWithSignature(method, path, task, isFormData = false) {
         // TODO: create return types for tasks using this method
@@ -508,5 +508,5 @@ export var TaskEndpoint;
     TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
     TaskEndpoint["FORCE_UNPROVABLE_TO_REPROCESS"] = "/admin/force_unprovable_to_reprocess";
     TaskEndpoint["FORCE_DRYRUN_FAILS_TO_REPROCESS"] = "/admin/force_dryrun_fails_to_reprocess";
-    TaskEndpoint["PROVER_NODE_TIMERANGE_STATS"] = "/prover_node_timerange_stats";
+    TaskEndpoint["PROVER_NODE_TIME_RANGE_STATS"] = "/prover_node_time_range_stats";
 })(TaskEndpoint || (TaskEndpoint = {}));

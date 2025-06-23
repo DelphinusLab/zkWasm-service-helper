@@ -1,4 +1,4 @@
-import { QueryParams, TaskExternalHostTableParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, TaskExternalHostTable, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee, ForceUnprovableToReprocessParams, ForceDryrunFailsToReprocessParams, ProverNodeTimerangeStatsParams, ProverTimeRangeStats } from "../interface/interface.js";
+import { QueryParams, TaskExternalHostTableParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, TaskExternalHostTable, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee, ForceUnprovableToReprocessParams, ForceDryrunFailsToReprocessParams, ProverNodeTimeRangeStatsParams, ProverNodeTimeRangeStats } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ArchiveQuery, VolumeDetailQuery, VolumeListQuery } from "interface/archive.js";
 export declare class ZkWasmServiceHelper {
@@ -41,7 +41,7 @@ export declare class ZkWasmServiceHelper {
     forceUnprovableToReprocess(req: WithSignature<ForceUnprovableToReprocessParams>): Promise<any>;
     forceDryrunFailsToReprocess(req: WithSignature<ForceDryrunFailsToReprocessParams>): Promise<any>;
     queryEstimateProofFee(query: EstimatedProofFeeParams): Promise<EstimatedProofFee>;
-    queryProverNodeTimerangeStats(query: ProverNodeTimerangeStatsParams): Promise<ProverTimeRangeStats>;
+    queryProverNodeTimeRangeStats(query: ProverNodeTimeRangeStatsParams): Promise<ProverNodeTimeRangeStats>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;
@@ -64,5 +64,5 @@ export declare enum TaskEndpoint {
     ONLINE_NODES_SUMMARY = "/online_nodes_summary",
     FORCE_UNPROVABLE_TO_REPROCESS = "/admin/force_unprovable_to_reprocess",
     FORCE_DRYRUN_FAILS_TO_REPROCESS = "/admin/force_dryrun_fails_to_reprocess",
-    PROVER_NODE_TIMERANGE_STATS = "/prover_node_timerange_stats"
+    PROVER_NODE_TIME_RANGE_STATS = "/prover_node_time_range_stats"
 }
