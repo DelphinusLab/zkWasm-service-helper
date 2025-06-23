@@ -16,6 +16,11 @@ export interface ArchiveVolumeMetadata<R> {
   image_md5s?: string[];
 }
 
+export enum VolumeStatus {
+  Attached = "Attached",
+  Detached = "Detached",
+}
+
 export interface TaskVolumeRange {
   n_records: number;
   fst: ObjectId;
