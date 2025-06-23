@@ -443,7 +443,12 @@ export class ZkWasmServiceHelper {
         }
         return config;
     }
-    async queryProverNodeTimeRangeStats(query) {
+    async queryProverNodeTimeRangeStats(address, start_ts, end_ts) {
+        const query = {
+            address: address,
+            start_ts: start_ts.toISOString(),
+            end_ts: end_ts.toISOString(),
+        };
         const result = await this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
         if (this.endpoint.enable_logs) {
             console.log("get queryProverNodeTimeRangeStats response.");
