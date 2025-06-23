@@ -1,4 +1,4 @@
-import { QueryParams, TaskExternalHostTableParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, TaskExternalHostTable, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee, ForceUnprovableToReprocessParams, ForceDryrunFailsToReprocessParams, ProverNodeTimeRangeStatsParams, ProverNodeTimeRangeStats } from "../interface/interface.js";
+import { QueryParams, TaskExternalHostTableParams, ProvingParams, DeployParams, Statistics, AddImageParams, WithSignature, UserQueryParams, PaymentParams, TxHistoryQueryParams, LogQuery, ResetImageParams, PaginationResult, Task, TaskExternalHostTable, Image, TransactionInfo, AppConfig, OmitSignature, ModifyImageParams, SubscriptionRequest, ERC20DepositInfo, User, Subscription, PaginatedQuery, AutoSubmitProofQuery, Round1InfoQuery, Round1Info, Round2Info, Round2InfoQuery, AutoSubmitProof, ConciseTask, NodeStatistics, NodeStatisticsQueryParams, SetMaintenanceModeParams, ProverNodesSummary, OnlineNodesSummary, EstimatedProofFeeParams, EstimatedProofFee, ForceUnprovableToReprocessParams, ForceDryrunFailsToReprocessParams, ProverNodeTimeRangeStats } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ArchiveQuery, VolumeDetailQuery, VolumeListQuery } from "interface/archive.js";
 export declare class ZkWasmServiceHelper {
@@ -41,7 +41,7 @@ export declare class ZkWasmServiceHelper {
     forceUnprovableToReprocess(req: WithSignature<ForceUnprovableToReprocessParams>): Promise<any>;
     forceDryrunFailsToReprocess(req: WithSignature<ForceDryrunFailsToReprocessParams>): Promise<any>;
     queryEstimateProofFee(query: EstimatedProofFeeParams): Promise<EstimatedProofFee>;
-    queryProverNodeTimeRangeStats(query: ProverNodeTimeRangeStatsParams): Promise<ProverNodeTimeRangeStats>;
+    queryProverNodeTimeRangeStats(address: string, start_ts: string, end_ts: string): Promise<ProverNodeTimeRangeStats>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;
