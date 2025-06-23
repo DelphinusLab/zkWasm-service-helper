@@ -533,13 +533,8 @@ class ZkWasmServiceHelper {
             return config;
         });
     }
-    queryProverNodeTimeRangeStats(address, start_ts, end_ts) {
+    queryProverNodeTimeRangeStats(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = {
-                address: address,
-                start_ts: start_ts.toISOString(),
-                end_ts: end_ts.toISOString(),
-            };
             const result = yield this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
                 console.log("get queryProverNodeTimeRangeStats response.");

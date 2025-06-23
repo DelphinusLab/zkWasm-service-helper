@@ -738,16 +738,8 @@ export class ZkWasmServiceHelper {
   }
 
   async queryProverNodeTimeRangeStats(
-    address: string,
-    start_ts: Date,
-    end_ts: Date,
+    query: ProverNodeTimeRangeStatsParams
   ): Promise<ProverNodeTimeRangeStats> {
-    const query: ProverNodeTimeRangeStatsParams = {
-      address: address,
-      start_ts: start_ts.toISOString(),
-      end_ts: end_ts.toISOString(),
-    };
-
     const result = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
