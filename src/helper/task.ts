@@ -742,7 +742,7 @@ export class ZkWasmServiceHelper {
   ): Promise<ProverNodeTimeRangeStats> {
     const result = await this.endpoint.invokeRequest(
       "GET",
-      TaskEndpoint.PROVER_NODE_TIME_RANGE_STATS,
+      TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
       JSON.parse(JSON.stringify(query)),
     );
     if (this.endpoint.enable_logs) {
@@ -823,5 +823,5 @@ export enum TaskEndpoint {
   ONLINE_NODES_SUMMARY = "/online_nodes_summary",
   FORCE_UNPROVABLE_TO_REPROCESS = "/admin/force_unprovable_to_reprocess",
   FORCE_DRYRUN_FAILS_TO_REPROCESS = "/admin/force_dryrun_fails_to_reprocess",
-  PROVER_NODE_TIME_RANGE_STATS = "/prover_node_time_range_stats",
+  PROVER_NODE_TIMERANGE_STATS = "/prover_node_timerange_stats",
 }

@@ -535,7 +535,7 @@ class ZkWasmServiceHelper {
     }
     queryProverNodeTimeRangeStats(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            const result = yield this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIME_RANGE_STATS, JSON.parse(JSON.stringify(query)));
+            const result = yield this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
                 console.log("get queryProverNodeTimeRangeStats response.");
             }
@@ -603,5 +603,5 @@ var TaskEndpoint;
     TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
     TaskEndpoint["FORCE_UNPROVABLE_TO_REPROCESS"] = "/admin/force_unprovable_to_reprocess";
     TaskEndpoint["FORCE_DRYRUN_FAILS_TO_REPROCESS"] = "/admin/force_dryrun_fails_to_reprocess";
-    TaskEndpoint["PROVER_NODE_TIME_RANGE_STATS"] = "/prover_node_time_range_stats";
+    TaskEndpoint["PROVER_NODE_TIMERANGE_STATS"] = "/prover_node_timerange_stats";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));
