@@ -12,6 +12,7 @@ export const MANUAL_TASK_ID_TO_VERIFY = process.env.MANUAL_TASK_ID_TO_VERIFY;
 export const AUTO_TASK_ID_TO_VERIFY = process.env.AUTO_TASK_ID_TO_VERIFY;
 export const TASK_ID_TO_QUERY = process.env.TASK_ID_TO_QUERY;
 export const MD5_TO_QUERY = process.env.MD5_TO_QUERY;
+export const NODE_ADDRESS_TO_QUERY = process.env.NODE_ADDRESS_TO_QUERY;
 export const SUBMIT_AUTO_SUBMIT_PROOF =
   (process.env.SUBMIT_AUTO_SUBMIT_PROOF || "false") === "true";
 

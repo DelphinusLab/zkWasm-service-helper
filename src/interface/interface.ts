@@ -690,3 +690,21 @@ export interface ForceDryrunFailsToReprocessParams {
   request_type: AdminRequestType;
   user_address: string;
 }
+
+export interface ProverNodeTimeRangeStatsParams {
+  address: string;
+  start_ts: string;
+  end_ts: string;
+}
+
+export interface ProverNodeTimeRangeStats {
+  fst_id?: string;
+  fst_ts?: string;
+  lst_id?: string;
+  lst_ts?: string;
+  stats: {
+    successful: number;
+    failed: number;
+    timed_out: number;
+  };
+}
