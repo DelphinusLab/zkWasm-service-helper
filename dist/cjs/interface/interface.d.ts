@@ -277,8 +277,8 @@ export interface BaseAddImageParams {
     circuit_size: number;
     prove_payment_src: ProvePaymentSrc;
     auto_submit_network_ids: number[];
-    inherited_merkle_data_md5?: string;
     add_prove_task_restrictions?: AddProveTaskRestrictions;
+    inherited_merkle_data_md5?: string;
 }
 export interface WithInitialContext {
     initial_context: unknown;
@@ -570,4 +570,20 @@ export interface ForceDryrunFailsToReprocessParams {
     nonce: number;
     request_type: AdminRequestType;
     user_address: string;
+}
+export interface ProverNodeTimeRangeStatsParams {
+    address: string;
+    start_ts: string;
+    end_ts: string;
+}
+export interface ProverNodeTimeRangeStats {
+    fst_id?: string;
+    fst_ts?: string;
+    lst_id?: string;
+    lst_ts?: string;
+    stats: {
+        successful: number;
+        failed: number;
+        timed_out: number;
+    };
 }

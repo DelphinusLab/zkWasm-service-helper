@@ -489,7 +489,9 @@ class ZkWasmServiceHelper {
     }
     addNewWasmImage(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, task, true);
+            const ordered = util_js_1.ZkWasmUtil.createOrderedAddImageParams(task);
+            const data = Object.assign(Object.assign({}, ordered), { signature: task.signature });
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, data, true);
             if (this.endpoint.enable_logs) {
                 console.log("get addNewWasmImage response:", response);
             }
@@ -498,7 +500,9 @@ class ZkWasmServiceHelper {
     }
     addProvingTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, task, true);
+            const ordered = util_js_1.ZkWasmUtil.createOrderedProvingParams(task);
+            const data = Object.assign(Object.assign({}, ordered), { signature: task.signature });
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.PROVE, data, true);
             if (this.endpoint.enable_logs) {
                 console.log("get addProvingTask response:", response);
             }
@@ -516,7 +520,9 @@ class ZkWasmServiceHelper {
     }
     addResetTask(task) {
         return __awaiter(this, void 0, void 0, function* () {
-            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, task, true);
+            const ordered = util_js_1.ZkWasmUtil.createOrderedResetImageParams(task);
+            const data = Object.assign(Object.assign({}, ordered), { signature: task.signature });
+            let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, data, true);
             if (this.endpoint.enable_logs) {
                 console.log("get addResetTask response:", response);
             }
@@ -566,6 +572,20 @@ class ZkWasmServiceHelper {
                 console.log("get queryEstimateProofFee response.");
             }
             return config;
+        });
+    }
+    queryProverNodeTimeRangeStats(address, start_ts, end_ts) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const query = {
+                address: address,
+                start_ts: start_ts.toISOString(),
+                end_ts: end_ts.toISOString(),
+            };
+            const result = yield this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("get queryProverNodeTimeRangeStats response.");
+            }
+            return result;
         });
     }
     sendRequestWithSignature(method, path, task, isFormData = false) {
@@ -629,4 +649,5 @@ var TaskEndpoint;
     TaskEndpoint["ONLINE_NODES_SUMMARY"] = "/online_nodes_summary";
     TaskEndpoint["FORCE_UNPROVABLE_TO_REPROCESS"] = "/admin/force_unprovable_to_reprocess";
     TaskEndpoint["FORCE_DRYRUN_FAILS_TO_REPROCESS"] = "/admin/force_dryrun_fails_to_reprocess";
+    TaskEndpoint["PROVER_NODE_TIMERANGE_STATS"] = "/prover_node_timerange_stats";
 })(TaskEndpoint = exports.TaskEndpoint || (exports.TaskEndpoint = {}));

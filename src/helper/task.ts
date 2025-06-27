@@ -42,6 +42,8 @@ import {
   EstimatedProofFee,
   ForceUnprovableToReprocessParams,
   ForceDryrunFailsToReprocessParams,
+  ProverNodeTimeRangeStatsParams,
+  ProverNodeTimeRangeStats,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -648,10 +650,15 @@ export class ZkWasmServiceHelper {
   }
 
   async addNewWasmImage(task: WithSignature<AddImageParams>) {
+    const ordered = ZkWasmUtil.createOrderedAddImageParams(task);
+    const data = {
+      ...ordered,
+      signature: task.signature,
+    };
     let response = await this.sendRequestWithSignature<AddImageParams>(
       "POST",
       TaskEndpoint.SETUP,
-      task,
+      data,
       true
     );
 
@@ -662,10 +669,16 @@ export class ZkWasmServiceHelper {
   }
 
   async addProvingTask(task: WithSignature<ProvingParams>) {
+    const ordered = ZkWasmUtil.createOrderedProvingParams(task);
+    const data = {
+      ...ordered,
+      signature: task.signature,
+    };
+
     let response = await this.sendRequestWithSignature<ProvingParams>(
       "POST",
       TaskEndpoint.PROVE,
-      task,
+      data,
       true
     );
     if (this.endpoint.enable_logs) {
@@ -687,10 +700,15 @@ export class ZkWasmServiceHelper {
   }
 
   async addResetTask(task: WithSignature<ResetImageParams>) {
+    const ordered = ZkWasmUtil.createOrderedResetImageParams(task);
+    const data = {
+      ...ordered,
+      signature: task.signature,
+    };
     let response = await this.sendRequestWithSignature<ResetImageParams>(
       "POST",
       TaskEndpoint.RESET,
-      task,
+      data,
       true
     );
 
@@ -773,6 +791,27 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
+  async queryProverNodeTimeRangeStats(
+    address: string,
+    start_ts: Date,
+    end_ts: Date
+  ): Promise<ProverNodeTimeRangeStats> {
+    const query: ProverNodeTimeRangeStatsParams = {
+      address: address,
+      start_ts: start_ts.toISOString(),
+      end_ts: end_ts.toISOString(),
+    };
+    const result = await this.endpoint.invokeRequest(
+      "GET",
+      TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("get queryProverNodeTimeRangeStats response.");
+    }
+    return result;
+  }
+
   async sendRequestWithSignature<T>(
     method: "GET" | "POST",
     path: TaskEndpoint,
@@ -845,4 +884,5 @@ export enum TaskEndpoint {
   ONLINE_NODES_SUMMARY = "/online_nodes_summary",
   FORCE_UNPROVABLE_TO_REPROCESS = "/admin/force_unprovable_to_reprocess",
   FORCE_DRYRUN_FAILS_TO_REPROCESS = "/admin/force_dryrun_fails_to_reprocess",
+  PROVER_NODE_TIMERANGE_STATS = "/prover_node_timerange_stats",
 }

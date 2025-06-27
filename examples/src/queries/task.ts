@@ -6,9 +6,15 @@ import {
   CompressionType,
   TaskExternalHostTableParams,
   TaskExternalHostTable,
+  ProverNodeTimeRangeStats,
 } from "zkwasm-service-helper";
 import BN from "bn.js";
-import { ServiceHelper, MD5_TO_QUERY, TASK_ID_TO_QUERY } from "../config";
+import {
+  ServiceHelper,
+  MD5_TO_QUERY,
+  TASK_ID_TO_QUERY,
+  NODE_ADDRESS_TO_QUERY,
+} from "../config";
 import * as fs from "fs";
 
 // Note: `ServiceHelper.loadTasks` provides task detail such as `aggregate_proof`, `instances`, `aux`,
@@ -169,6 +175,28 @@ export async function queryTaskExternalHostTable(
   return response;
 }
 
+// Example of using `ServiceHelper.queryProverNodeTimeRangeStats` to stats.
+export async function queryProverNodeTimeRangeStats(
+  address: string,
+  start_ts: Date,
+  end_ts: Date,
+) {
+  console.log(
+    "Running query prover node timerange stats with params",
+    address,
+    start_ts,
+    end_ts,
+  );
+  const response: ProverNodeTimeRangeStats =
+    await ServiceHelper.queryProverNodeTimeRangeStats(
+      address,
+      start_ts,
+      end_ts,
+    );
+  console.log(response);
+  return response;
+}
+
 async function runQueries() {
   await queryTasks({
     id: null,
@@ -205,6 +233,12 @@ async function runQueries() {
   await queryTaskExternalHostTable({
     id: TASK_ID_TO_QUERY!,
   });
+
+  await queryProverNodeTimeRangeStats(
+    NODE_ADDRESS_TO_QUERY!,
+    new Date(new Date().setDate(new Date().getMonth() - 1)),
+    new Date(),
+  );
 }
 
 runQueries();

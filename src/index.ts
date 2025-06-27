@@ -71,6 +71,8 @@ import {
   EstimatedProofFee,
   AddProveTaskRestrictions,
   OnlineNodeInfo,
+  ProverNodeTimeRangeStatsParams,
+  ProverNodeTimeRangeStats,
 } from "./interface/interface.js";
 
 import {
@@ -179,4 +181,6 @@ export type {
   ArchiveSummary,
   AutoSubmitVolumeRange,
   ArchivedFinalBatchProof,
+  ProverNodeTimeRangeStatsParams,
+  ProverNodeTimeRangeStats,
 };
