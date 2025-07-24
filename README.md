@@ -1,5 +1,17 @@
 # zkWasm-service-helper
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [How to use it](#how-to-use-it)
+- [How to test](#how-to-test)
+- [Examples](#examples)
+  - [How to run the examples](#how-to-run-the-examples)
+    - [0. Change to the examples directory as the current working directory](#0-change-to-the-examples-directory-as-the-current-working-directory)
+    - [1. Install dependencies](#1-install-dependencies)
+    - [2. Update Config](#2-update-config)
+    - [3. Run the examples](#3-run-the-examples)
+
 ## Introduction
 
 This lib is to help communicate with zkwasm service
@@ -16,25 +28,39 @@ like:
 - async addNewWasmImage(task: WithSignature<AddImageParams>);
 - async addProvingTask(task: WithSignature<ProvingParams>);
 
+## How to test
+
+Test the utility functions:
+
+```bash
+npm run test util
+```
+
+Test the query APIs (GET requests):
+
+```bash
+npm run test queries
+```
+
 ## Examples
 
 There are several examples of how to use this lib in the `examples` folder.
 
-## How to run the examples
+### How to run the examples
 
-### 0. Change to the examples directory as the current working directory
+#### 0. Change to the examples directory as the current working directory
 
 ```bash
 cd examples
 ```
 
-### 1. Install dependencies
+#### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Update Config
+#### 2. Update Config
 
 User specific config values must be provided in the [.env](.env) file:
 
@@ -48,7 +74,7 @@ User specific config values must be provided in the [.env](.env) file:
   - `MD5_TO_QUERY`: Set image MD5 to query, by default this is used for various task fetches in query script.
 - To customize further you may change various variables within each of the scripts.
 
-### 3. Run the examples
+#### 3. Run the examples
 
 Running tasks examples:
 

@@ -1,0 +1,31 @@
+{
+    "details": {
+        "server_url": "http://138.217.142.94:8108",
+        "private_key": "0000000000000000000000000000000000000000000000000000000000000000",
+        "chain_id": 10143,
+        "pedantic_checks": false
+    },
+    "verify": {
+        "provider_url": "https://data-seed-prebsc-1-s3.binance.org:8545",
+        "manual_task_id_to_verify": "68709dcc0a7b4ac8c109b12a"
+    },
+    "query": {
+        "task_id": "68709dcc0a7b4ac8c109b12a",
+        "md5": "5240DD2F488A9348E1A174AFE9C274B3",
+        "node_address": "0x3552f5e0bfccf79a87a304e80455b368af9b56f6"
+    },
+    "auto_submit": {
+        "round1_id": "68806118f5977aee797834c1",
+        "round2_id": "68806191f5977aee797834c2",
+        "task_id_in_auto_submit_batch": "688048e3f5977aee797834b0"
+    },
+    "archive": {
+        "server_url": "http://138.217.142.94:8108",
+        "id": "68709dcc0a7b4ac8c109b12a",
+        "archived_task_id": "68709dcc0a7b4ac8c109b12a",
+        "archive_volume_name": "vol_1"
+    },
+    "tasks": {
+        "image": "./examples/data/image.wasm"
+    }
+}
