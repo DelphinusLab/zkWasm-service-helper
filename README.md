@@ -3,8 +3,8 @@
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [How to use it](#how-to-use-it)
-- [How to test](#how-to-test)
+- [Usage](#usage)
+- [Testing](#testing)
 - [Examples](#examples)
   - [How to run the examples](#how-to-run-the-examples)
     - [0. Change to the examples directory as the current working directory](#0-change-to-the-examples-directory-as-the-current-working-directory)
@@ -16,7 +16,7 @@
 
 This lib is to help communicate with zkwasm service
 
-## How to use it
+## Usage
 
 This lib main provide a ZkWasmServiceHelper class to help user to communicate to zkwasm service backend.
 It mainly provide API to add tasks and get informations to zkwasm service backend.
@@ -28,7 +28,11 @@ like:
 - async addNewWasmImage(task: WithSignature<AddImageParams>);
 - async addProvingTask(task: WithSignature<ProvingParams>);
 
-## How to test
+## Testing
+
+First, update the `tests/config.json` with your specific details.
+
+Note: Server must be up and running with some valid data.
 
 Test the utility functions:
 
@@ -40,6 +44,18 @@ Test the query APIs (GET requests):
 
 ```bash
 npm run test queries
+```
+
+Test the task APIs (POST requests):
+
+```bash
+npm run test tasks
+```
+
+Test the archive server APIs.
+
+```bash
+npm run test archive
 ```
 
 ## Examples
