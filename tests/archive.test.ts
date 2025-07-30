@@ -1,5 +1,5 @@
 import { ZkWasmServiceHelper } from "../dist/mjs/helper/task";
-import { CONFIG } from "./config";
+import { CONFIG } from "./util";
 
 const ZKH = new ZkWasmServiceHelper(CONFIG.archive.server_url, "", "");
 

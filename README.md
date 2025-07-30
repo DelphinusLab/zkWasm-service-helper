@@ -37,7 +37,7 @@ Note: Server must be up and running with some valid data.
 Test the utility functions:
 
 ```bash
-npm run test util
+npm run test zkwasm_util
 ```
 
 Test the query APIs (GET requests):

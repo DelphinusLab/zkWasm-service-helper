@@ -9,7 +9,7 @@ import {
   ProofSubmitMode,
   AddProveTaskRestrictions,
 } from "../dist/mjs/interface/interface";
-import { CONFIG, USER_ADDRESS, ZKH } from "./config";
+import { CONFIG, USER_ADDRESS, ZKH } from "./util";
 
 interface AddTaskResult {
   id: string;

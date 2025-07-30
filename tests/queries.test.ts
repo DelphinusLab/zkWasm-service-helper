@@ -8,7 +8,7 @@ import {
   Round1Status,
   Round2Status,
 } from "../dist/mjs/interface/interface";
-import { CONFIG, USER_ADDRESS, ZKH } from "./config";
+import { CONFIG, USER_ADDRESS, ZKH } from "./util";
 
 function checkPaginatedRes<T>(res: PaginationResult<T>) {
   const data = res.data as T[];
