@@ -1,10 +1,22 @@
 # zkWasm-service-helper
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Examples](#examples)
+  - [How to run the examples](#how-to-run-the-examples)
+    - [0. Change to the examples directory as the current working directory](#0-change-to-the-examples-directory-as-the-current-working-directory)
+    - [1. Install dependencies](#1-install-dependencies)
+    - [2. Update Config](#2-update-config)
+    - [3. Run the examples](#3-run-the-examples)
+
 ## Introduction
 
 This lib is to help communicate with zkwasm service
 
-## How to use it
+## Usage
 
 This lib main provide a ZkWasmServiceHelper class to help user to communicate to zkwasm service backend.
 It mainly provide API to add tasks and get informations to zkwasm service backend.
@@ -16,25 +28,55 @@ like:
 - async addNewWasmImage(task: WithSignature<AddImageParams>);
 - async addProvingTask(task: WithSignature<ProvingParams>);
 
+## Testing
+
+First, update the `tests/config.json` with your specific details.
+
+Note: Server must be up and running with some valid data.
+
+Test the utility functions:
+
+```bash
+npm run test zkwasm_util
+```
+
+Test the query APIs (GET requests):
+
+```bash
+npm run test queries
+```
+
+Test the task APIs (POST requests):
+
+```bash
+npm run test tasks
+```
+
+Test the archive server APIs.
+
+```bash
+npm run test archive
+```
+
 ## Examples
 
 There are several examples of how to use this lib in the `examples` folder.
 
-## How to run the examples
+### How to run the examples
 
-### 0. Change to the examples directory as the current working directory
+#### 0. Change to the examples directory as the current working directory
 
 ```bash
 cd examples
 ```
 
-### 1. Install dependencies
+#### 1. Install dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Update Config
+#### 2. Update Config
 
 User specific config values must be provided in the [.env](.env) file:
 
@@ -48,7 +90,7 @@ User specific config values must be provided in the [.env](.env) file:
   - `MD5_TO_QUERY`: Set image MD5 to query, by default this is used for various task fetches in query script.
 - To customize further you may change various variables within each of the scripts.
 
-### 3. Run the examples
+#### 3. Run the examples
 
 Running tasks examples:
 

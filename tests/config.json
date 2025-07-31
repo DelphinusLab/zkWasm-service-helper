@@ -1,0 +1,32 @@
+{
+    "details": {
+        "server_url": "SERVER_URL",
+        "private_key": "PRIVATE_KEY",
+        "chain_id": CHAIN_ID,
+        "pedantic_checks": false
+    },
+    "verify": {
+        "provider_url": "PROVIDER_URL",
+        "manual_task_id_to_verify": "MANUAL_TASK_ID_TO_VERIFY"
+    },
+    "query": {
+        "task_id": "TASK_ID_TO_QUERY",
+        "md5": "MD5_TO_QUERY",
+        "node_address": "NODE_ADDRESS_TO_QUERY"
+    },
+    "auto_submit": {
+        "round1_id": "ROUND1_ID_TO_QUERY",
+        "round2_id": "ROUND2_ID_TO_QUERY",
+        "task_id_in_auto_submit_batch": "TASK_ID_IN_AUTO_SUBMIT_BATCH_TO_QUERY"
+    },
+    "archive": {
+        "server_url": "ARCHIVE_SERVER_URL",
+        "id": "ARCHIVE_ID_TO_QUERY",
+        "archived_task_id": "ARCHIVED_TASK_ID_TO_QUERY",
+        "archive_volume_name": "ARCHIVE_VOLUME_NAME_TO_QUERY",
+        "archive_auto_submit_volume_name": "ARCHIVE_AUTO_SUBMIT_VOLUME_NAME_TO_QUERY"
+    },
+    "tasks": {
+        "image": "./tests/data/image.wasm"
+    }
+}
