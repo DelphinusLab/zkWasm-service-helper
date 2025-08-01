@@ -98,7 +98,10 @@ describe("ZkWasmServiceHelper", () => {
   });
 
   test("queryLogs", async () => {
-    const params: LogQuery = { id: CONFIG.query.task_id, user_address: USER_ADDRESS };
+    const params: LogQuery = {
+      id: CONFIG.query.task_id,
+      user_address: USER_ADDRESS,
+    };
     let signature = await ZkWasmUtil.signMessage(
       ZkWasmUtil.createLogsMesssage(params),
       CONFIG.details.private_key,
@@ -119,10 +122,9 @@ describe("ZkWasmServiceHelper", () => {
 
   test("queryProverNodeTimeRangeStats", async () => {
     const now = new Date();
-    const then = new Date(new Date().setDate(new Date().getMonth() - 1));
-
+    const then = new Date(new Date().setMonth(now.getMonth() - 1));
     const res = await ZKH.queryProverNodeTimeRangeStats(
-      USER_ADDRESS,
+      CONFIG.query.node_address,
       then,
       now,
     );
@@ -204,6 +206,17 @@ describe("ZkWasmServiceHelper", () => {
       expect(res!._id.$oid).toEqual(CONFIG.query.task_id);
     });
 
+    test("loadTaskList by empty args", async () => {
+      const res = await ZKH.loadTaskList({
+        user_address: null,
+        md5: null,
+        id: null,
+        tasktype: null,
+        taskstatus: null,
+      });
+      checkPaginatedRes(res);
+    });
+
     test("loadTaskList by user_address", async () => {
       const res = await ZKH.loadTaskList({
         user_address: USER_ADDRESS,
@@ -273,6 +286,11 @@ describe("ZkWasmServiceHelper", () => {
   });
 
   describe("auto_submit", () => {
+    test("queryAutoSubmitProofs by empty args", async () => {
+      const res = await ZKH.queryAutoSubmitProofs({});
+      checkPaginatedRes(res);
+    });
+
     test("queryAutoSubmitProofs by task_id", async () => {
       const task_id = CONFIG.auto_submit.task_id_in_auto_submit_batch;
       const res = await ZKH.queryAutoSubmitProofs({ task_id });
@@ -292,6 +310,11 @@ describe("ZkWasmServiceHelper", () => {
       const res = await ZKH.queryAutoSubmitProofs({ chain_id });
       checkPaginatedRes(res);
       expect(res.data[0].auto_submit_network_chain_id).toEqual(chain_id);
+    });
+
+    test("queryRound1Info by empty args", async () => {
+      const res = await ZKH.queryRound1Info({});
+      checkPaginatedRes(res);
     });
 
     test("queryRound1Info by id", async () => {
@@ -322,6 +345,11 @@ describe("ZkWasmServiceHelper", () => {
       expect(res.data[0].auto_submit_network_chain_id).toEqual(chain_id);
     });
 
+    test("queryRound2Info by empty args", async () => {
+      const res = await ZKH.queryRound2Info({});
+      checkPaginatedRes(res);
+    });
+
     test("queryRound2Info by id", async () => {
       const id = CONFIG.auto_submit.round2_id;
       const res = await ZKH.queryRound2Info({ id });
@@ -341,13 +369,13 @@ describe("ZkWasmServiceHelper", () => {
       const res = await ZKH.queryRound2Info({ status });
       checkPaginatedRes(res);
       expect(res.data[0].status).toEqual(status);
-    }, 15_000);
+    });
 
     test("queryRound2Info by chain_id", async () => {
       const chain_id = CONFIG.details.chain_id;
       const res = await ZKH.queryRound2Info({ chain_id });
       checkPaginatedRes(res);
       expect(res.data[0].auto_submit_network_chain_id).toEqual(chain_id);
-    }, 15_000);
+    });
   });
 });
