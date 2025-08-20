@@ -159,7 +159,6 @@ export class ZkWasmServiceHelper {
   }
 
   async loadStatistics(): Promise<Statistics> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
     let st = await this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
@@ -178,7 +177,6 @@ export class ZkWasmServiceHelper {
   async queryNodeStatistics(
     query: NodeStatisticsQueryParams
   ): Promise<PaginationResult<NodeStatistics[]>> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse(JSON.stringify(query));
 
     let res = await this.endpoint.invokeRequest(
@@ -194,8 +192,6 @@ export class ZkWasmServiceHelper {
   }
 
   async queryProverNodeSummary(): Promise<ProverNodesSummary> {
-    let headers = { "Content-Type": "application/json" };
-
     let res = await this.endpoint.invokeRequest(
       "GET",
       `/prover_node_summary`,
@@ -209,8 +205,6 @@ export class ZkWasmServiceHelper {
   }
 
   async queryOnlineNodesSummary(): Promise<OnlineNodesSummary> {
-    let headers = { "Content-Type": "application/json" };
-
     let res = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.ONLINE_NODES_SUMMARY,
@@ -335,7 +329,6 @@ export class ZkWasmServiceHelper {
   async loadTaskList(
     query: QueryParams
   ): Promise<PaginationResult<ConciseTask[]>> {
-    let headers = { "Content-Type": "application/json" };
     let queryJson = JSON.parse("{}");
 
     // Validate query params
@@ -510,10 +503,22 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
-  async queryVolumeList(query: VolumeListQuery) {
+  async queryTaskVolumeList(query: VolumeListQuery) {
     let archiveSummary = await this.endpoint.invokeRequest(
       "GET",
-      "/archive/volume_list",
+      "/archive/task_volume_list",
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading volume list!");
+    }
+    return archiveSummary;
+  }
+
+  async queryAutoSubmitVolumeList(query: VolumeListQuery) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      "/archive/auto_submit_volume_list",
       JSON.parse(JSON.stringify(query))
     );
     if (this.endpoint.enable_logs) {
@@ -534,6 +539,42 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
+  async queryArchivedAutoSubmitNetworksByTaskId(task_id: string) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      `/archive/auto_submit_networks/${task_id}`,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archived auto_submit_info!");
+    }
+    return archiveSummary;
+  }
+
+  async queryArchivedAutoSubmitInfoByTaskId(task_id: string, chain_id: number) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      `/archive/auto_submit_info_by_task/${task_id}/${chain_id}`,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archived auto_submit_info!");
+    }
+    return archiveSummary;
+  }
+
+  async queryAutoSubmitInfoByArchiveId(id: string, chain_id: number) {
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      `/archive/auto_submit_info/${id}/${chain_id}`,
+      JSON.parse("{}")
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading archived auto_submit_info!");
+    }
+    return archiveSummary;
+  }
+
   async queryArchiveServerConfig() {
     let archiveSummary = await this.endpoint.invokeRequest(
       "GET",
@@ -546,15 +587,28 @@ export class ZkWasmServiceHelper {
     return archiveSummary;
   }
 
-  async queryVolume(volume_name: string, query: VolumeDetailQuery) {
-    let url = `/archive/volume/${volume_name}`;
+  async queryTaskVolume(volume_name: string, query: VolumeDetailQuery) {
+    let url = `/archive/task_volume/${volume_name}`;
     let archiveSummary = await this.endpoint.invokeRequest(
       "GET",
       url,
       JSON.parse(JSON.stringify(query))
     );
     if (this.endpoint.enable_logs) {
-      console.log("loading volume detail!");
+      console.log("loading task volume detail!");
+    }
+    return archiveSummary;
+  }
+
+  async queryAutoSubmitVolume(volume_name: string, query: VolumeDetailQuery) {
+    let url = `/archive/auto_submit_volume/${volume_name}`;
+    let archiveSummary = await this.endpoint.invokeRequest(
+      "GET",
+      url,
+      JSON.parse(JSON.stringify(query))
+    );
+    if (this.endpoint.enable_logs) {
+      console.log("loading auto_submit_volume detail!");
     }
     return archiveSummary;
   }
@@ -578,7 +632,7 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(payRequest))
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addPayment response:", response.toString());
+      console.log("get addPayment response:", response);
     }
     return response;
   }
@@ -590,7 +644,7 @@ export class ZkWasmServiceHelper {
       JSON.parse(JSON.stringify(subscription))
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addSubscription response:", response.toString());
+      console.log("get addSubscription response:", response);
     }
     return response;
   }
@@ -609,7 +663,7 @@ export class ZkWasmServiceHelper {
     );
 
     if (this.endpoint.enable_logs) {
-      console.log("get addNewWasmImage response:", response.toString());
+      console.log("get addNewWasmImage response:", response);
     }
     return response;
   }
@@ -640,7 +694,7 @@ export class ZkWasmServiceHelper {
       task
     );
     if (this.endpoint.enable_logs) {
-      console.log("get addDeployTask response:", response.toString());
+      console.log("get addDeployTask response:", response);
     }
     return response;
   }
@@ -659,7 +713,7 @@ export class ZkWasmServiceHelper {
     );
 
     if (this.endpoint.enable_logs) {
-      console.log("get addResetTask response:", response.toString());
+      console.log("get addResetTask response:", response);
     }
     return response;
   }
@@ -672,7 +726,7 @@ export class ZkWasmServiceHelper {
     );
 
     if (this.endpoint.enable_logs) {
-      console.log("get modifyImage response:", response.toString());
+      console.log("get modifyImage response:", response);
     }
     return response;
   }
@@ -686,7 +740,7 @@ export class ZkWasmServiceHelper {
         true
       );
     if (this.endpoint.enable_logs) {
-      console.log("setMaintenanceMode response:", response.toString());
+      console.log("setMaintenanceMode response:", response);
     }
     return response;
   }
@@ -702,7 +756,7 @@ export class ZkWasmServiceHelper {
         true
       );
     if (this.endpoint.enable_logs) {
-      console.log("forceUnprovableToReprocess response:", response.toString());
+      console.log("forceUnprovableToReprocess response:", response);
     }
     return response;
   }
@@ -718,7 +772,7 @@ export class ZkWasmServiceHelper {
         true
       );
     if (this.endpoint.enable_logs) {
-      console.log("forceDryrunFailsToReprocess response:", response.toString());
+      console.log("forceDryrunFailsToReprocess response:", response);
     }
     return response;
   }
@@ -740,7 +794,7 @@ export class ZkWasmServiceHelper {
   async queryProverNodeTimeRangeStats(
     address: string,
     start_ts: Date,
-    end_ts: Date,
+    end_ts: Date
   ): Promise<ProverNodeTimeRangeStats> {
     const query: ProverNodeTimeRangeStatsParams = {
       address: address,
@@ -750,7 +804,7 @@ export class ZkWasmServiceHelper {
     const result = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
-      JSON.parse(JSON.stringify(query)),
+      JSON.parse(JSON.stringify(query))
     );
     if (this.endpoint.enable_logs) {
       console.log("get queryProverNodeTimeRangeStats response.");

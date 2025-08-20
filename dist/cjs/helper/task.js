@@ -109,7 +109,6 @@ class ZkWasmServiceHelper {
     }
     loadStatistics() {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
             let st = yield this.endpoint.invokeRequest("GET", `/statistics`, queryJson);
             if (this.endpoint.enable_logs) {
@@ -125,7 +124,6 @@ class ZkWasmServiceHelper {
     }
     queryNodeStatistics(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse(JSON.stringify(query));
             let res = yield this.endpoint.invokeRequest("GET", `/node_statistics`, queryJson);
             if (this.endpoint.enable_logs) {
@@ -136,7 +134,6 @@ class ZkWasmServiceHelper {
     }
     queryProverNodeSummary() {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let res = yield this.endpoint.invokeRequest("GET", `/prover_node_summary`, JSON.parse("{}"));
             if (this.endpoint.enable_logs) {
                 console.log("loading node summary");
@@ -146,7 +143,6 @@ class ZkWasmServiceHelper {
     }
     queryOnlineNodesSummary() {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let res = yield this.endpoint.invokeRequest("GET", TaskEndpoint.ONLINE_NODES_SUMMARY, JSON.parse("{}"));
             if (this.endpoint.enable_logs) {
                 console.log("loading node summary");
@@ -248,7 +244,6 @@ class ZkWasmServiceHelper {
     }
     loadTaskList(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let headers = { "Content-Type": "application/json" };
             let queryJson = JSON.parse("{}");
             // Validate query params
             if (query.start != null && query.start < 0) {
@@ -382,9 +377,18 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
-    queryVolumeList(query) {
+    queryTaskVolumeList(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/volume_list", JSON.parse(JSON.stringify(query)));
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/task_volume_list", JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading volume list!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitVolumeList(query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/auto_submit_volume_list", JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
                 console.log("loading volume list!");
             }
@@ -400,6 +404,33 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
+    queryArchivedAutoSubmitNetworksByTaskId(task_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_networks/${task_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryArchivedAutoSubmitInfoByTaskId(task_id, chain_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info_by_task/${task_id}/${chain_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitInfoByArchiveId(id, chain_id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", `/archive/auto_submit_info/${id}/${chain_id}`, JSON.parse("{}"));
+            if (this.endpoint.enable_logs) {
+                console.log("loading archived auto_submit_info!");
+            }
+            return archiveSummary;
+        });
+    }
     queryArchiveServerConfig() {
         return __awaiter(this, void 0, void 0, function* () {
             let archiveSummary = yield this.endpoint.invokeRequest("GET", "/archive/config", JSON.parse("{}"));
@@ -409,12 +440,22 @@ class ZkWasmServiceHelper {
             return archiveSummary;
         });
     }
-    queryVolume(volume_name, query) {
+    queryTaskVolume(volume_name, query) {
         return __awaiter(this, void 0, void 0, function* () {
-            let url = `/archive/volume/${volume_name}`;
+            let url = `/archive/task_volume/${volume_name}`;
             let archiveSummary = yield this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
             if (this.endpoint.enable_logs) {
-                console.log("loading volume detail!");
+                console.log("loading task volume detail!");
+            }
+            return archiveSummary;
+        });
+    }
+    queryAutoSubmitVolume(volume_name, query) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let url = `/archive/auto_submit_volume/${volume_name}`;
+            let archiveSummary = yield this.endpoint.invokeRequest("GET", url, JSON.parse(JSON.stringify(query)));
+            if (this.endpoint.enable_logs) {
+                console.log("loading auto_submit_volume detail!");
             }
             return archiveSummary;
         });
@@ -432,7 +473,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.PAY, JSON.parse(JSON.stringify(payRequest)));
             if (this.endpoint.enable_logs) {
-                console.log("get addPayment response:", response.toString());
+                console.log("get addPayment response:", response);
             }
             return response;
         });
@@ -441,7 +482,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.endpoint.invokeRequest("POST", TaskEndpoint.SUBSCRIBE, JSON.parse(JSON.stringify(subscription)));
             if (this.endpoint.enable_logs) {
-                console.log("get addSubscription response:", response.toString());
+                console.log("get addSubscription response:", response);
             }
             return response;
         });
@@ -452,7 +493,7 @@ class ZkWasmServiceHelper {
             const data = Object.assign(Object.assign({}, ordered), { signature: task.signature });
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SETUP, data, true);
             if (this.endpoint.enable_logs) {
-                console.log("get addNewWasmImage response:", response.toString());
+                console.log("get addNewWasmImage response:", response);
             }
             return response;
         });
@@ -472,7 +513,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.DEPLOY, task);
             if (this.endpoint.enable_logs) {
-                console.log("get addDeployTask response:", response.toString());
+                console.log("get addDeployTask response:", response);
             }
             return response;
         });
@@ -483,7 +524,7 @@ class ZkWasmServiceHelper {
             const data = Object.assign(Object.assign({}, ordered), { signature: task.signature });
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.RESET, data, true);
             if (this.endpoint.enable_logs) {
-                console.log("get addResetTask response:", response.toString());
+                console.log("get addResetTask response:", response);
             }
             return response;
         });
@@ -492,7 +533,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.MODIFY, data);
             if (this.endpoint.enable_logs) {
-                console.log("get modifyImage response:", response.toString());
+                console.log("get modifyImage response:", response);
             }
             return response;
         });
@@ -501,7 +542,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.SET_MAINTENANCE_MODE, req, true);
             if (this.endpoint.enable_logs) {
-                console.log("setMaintenanceMode response:", response.toString());
+                console.log("setMaintenanceMode response:", response);
             }
             return response;
         });
@@ -510,7 +551,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_UNPROVABLE_TO_REPROCESS, req, true);
             if (this.endpoint.enable_logs) {
-                console.log("forceUnprovableToReprocess response:", response.toString());
+                console.log("forceUnprovableToReprocess response:", response);
             }
             return response;
         });
@@ -519,7 +560,7 @@ class ZkWasmServiceHelper {
         return __awaiter(this, void 0, void 0, function* () {
             let response = yield this.sendRequestWithSignature("POST", TaskEndpoint.FORCE_DRYRUN_FAILS_TO_REPROCESS, req, true);
             if (this.endpoint.enable_logs) {
-                console.log("forceDryrunFailsToReprocess response:", response.toString());
+                console.log("forceDryrunFailsToReprocess response:", response);
             }
             return response;
         });
