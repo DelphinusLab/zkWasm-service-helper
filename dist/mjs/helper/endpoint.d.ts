@@ -14,6 +14,6 @@ export declare class ZkWasmServiceEndpoint {
     }): Promise<any>;
 }
 export declare class ZkWasmServiceEndpointError extends Error {
-    code: string;
-    constructor(message: string, code: string);
+    code: number;
+    constructor(message: string, code: number);
 }

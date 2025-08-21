@@ -97,8 +97,8 @@ export class ZkWasmServiceEndpoint {
 }
 
 export class ZkWasmServiceEndpointError extends Error {
-  code: string;
-  constructor(message: string, code: string) {
+  code: number;
+  constructor(message: string, code: number) {
     super(message);
     this.code = code;
   }
