@@ -13,3 +13,7 @@ export declare class ZkWasmServiceEndpoint {
         [key: string]: string;
     }): Promise<any>;
 }
+export declare class ZkWasmServiceEndpointError extends Error {
+    code: string;
+    constructor(message: string, code: string);
+}

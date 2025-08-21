@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AddProveTaskRestrictions = exports.CompressionType = exports.ProverLevel = exports.AdminRequestType = exports.MaintenanceModeType = exports.ProvePaymentSrc = exports.ProofSubmitMode = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.AutoSubmitStatus = exports.InputContextType = exports.ERC20Lib = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpoint = void 0;
+exports.AddProveTaskRestrictions = exports.CompressionType = exports.ProverLevel = exports.AdminRequestType = exports.MaintenanceModeType = exports.ProvePaymentSrc = exports.ProofSubmitMode = exports.Round2Status = exports.Round1Status = exports.AutoSubmitProofStatus = exports.AutoSubmitStatus = exports.InputContextType = exports.ERC20Lib = exports.ZkWasmUtil = exports.ZkWasmServiceHelper = exports.ZkWasmServiceEndpointError = exports.ZkWasmServiceEndpoint = void 0;
 const interface_js_1 = require("./interface/interface.js");
 Object.defineProperty(exports, "InputContextType", { enumerable: true, get: function () { return interface_js_1.InputContextType; } });
 Object.defineProperty(exports, "AutoSubmitProofStatus", { enumerable: true, get: function () { return interface_js_1.AutoSubmitProofStatus; } });
@@ -18,6 +18,7 @@ const util_js_1 = require("./helper/util.js");
 Object.defineProperty(exports, "ZkWasmUtil", { enumerable: true, get: function () { return util_js_1.ZkWasmUtil; } });
 const endpoint_js_1 = require("./helper/endpoint.js");
 Object.defineProperty(exports, "ZkWasmServiceEndpoint", { enumerable: true, get: function () { return endpoint_js_1.ZkWasmServiceEndpoint; } });
+Object.defineProperty(exports, "ZkWasmServiceEndpointError", { enumerable: true, get: function () { return endpoint_js_1.ZkWasmServiceEndpointError; } });
 const task_js_1 = require("./helper/task.js");
 Object.defineProperty(exports, "ZkWasmServiceHelper", { enumerable: true, get: function () { return task_js_1.ZkWasmServiceHelper; } });
 const ERC20_js_1 = require("./abi/ERC20.js");

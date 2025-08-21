@@ -66,12 +66,19 @@ export class ZkWasmServiceEndpoint {
             if (this.enable_logs) {
                 console.error(json);
             }
-            throw new Error(json["error"].message);
+            throw new ZkWasmServiceEndpointError(json["error"].message, json["error"].code);
         }
         return json["result"];
     }
     async invokeRequest(method, url, body, headers) {
         let response = await this.prepareRequest(method, url, body, headers);
         return await this.getJSONResponse(response);
+    }
+}
+export class ZkWasmServiceEndpointError extends Error {
+    code;
+    constructor(message, code) {
+        super(message);
+        this.code = code;
     }
 }

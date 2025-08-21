@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ZkWasmServiceEndpoint = void 0;
+exports.ZkWasmServiceEndpointError = exports.ZkWasmServiceEndpoint = void 0;
 const axios_1 = __importDefault(require("axios"));
 class ZkWasmServiceEndpoint {
     constructor(endpoint, username, useraddress, enable_logs = true) {
@@ -78,7 +78,7 @@ class ZkWasmServiceEndpoint {
                 if (this.enable_logs) {
                     console.error(json);
                 }
-                throw new Error(json["error"].message);
+                throw new ZkWasmServiceEndpointError(json["error"].message, json["error"].code);
             }
             return json["result"];
         });
@@ -91,3 +91,10 @@ class ZkWasmServiceEndpoint {
     }
 }
 exports.ZkWasmServiceEndpoint = ZkWasmServiceEndpoint;
+class ZkWasmServiceEndpointError extends Error {
+    constructor(message, code) {
+        super(message);
+        this.code = code;
+    }
+}
+exports.ZkWasmServiceEndpointError = ZkWasmServiceEndpointError;

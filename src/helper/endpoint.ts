@@ -78,7 +78,7 @@ export class ZkWasmServiceEndpoint {
             if (this.enable_logs) {
               console.error(json);
             }
-            throw new Error(json["error"].message);
+            throw new ZkWasmServiceEndpointError(json["error"].message, json["error"].code);
         }
         return json["result"];
     }
@@ -94,4 +94,12 @@ export class ZkWasmServiceEndpoint {
         let response = await this.prepareRequest(method, url, body, headers);
         return await this.getJSONResponse(response);
     }
+}
+
+export class ZkWasmServiceEndpointError extends Error {
+  code: string;
+  constructor(message: string, code: string) {
+    super(message);
+    this.code = code;
+  }
 }
