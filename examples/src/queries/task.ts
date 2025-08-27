@@ -176,6 +176,7 @@ export async function queryTaskExternalHostTable(
 }
 
 // Example of using `ServiceHelper.queryProverNodeTimeRangeStats` to stats.
+// This API is in refining. Do not use it!
 export async function queryProverNodeTimeRangeStats(
   address: string,
   start_ts: Date,
@@ -234,11 +235,14 @@ async function runQueries() {
     id: TASK_ID_TO_QUERY!,
   });
 
+  // This API is in refining. Do not use it!
+  /*
   await queryProverNodeTimeRangeStats(
     NODE_ADDRESS_TO_QUERY!,
     new Date(new Date().setDate(new Date().getMonth() - 1)),
     new Date(),
   );
+  */
 }
 
 runQueries();

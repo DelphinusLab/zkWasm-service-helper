@@ -574,6 +574,7 @@ class ZkWasmServiceHelper {
             return config;
         });
     }
+    // This API is in refining. Do not use it!
     queryProverNodeTimeRangeStats(address, start_ts, end_ts) {
         return __awaiter(this, void 0, void 0, function* () {
             const query = {
