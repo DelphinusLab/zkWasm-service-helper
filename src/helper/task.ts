@@ -44,6 +44,7 @@ import {
   ForceDryrunFailsToReprocessParams,
   ProverNodeTimeRangeStatsParams,
   ProverNodeTimeRangeStats,
+  TimeRangeParams,
 } from "../interface/interface.js";
 import { ZkWasmServiceEndpoint } from "./endpoint.js";
 import { ethers } from "ethers";
@@ -791,21 +792,24 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
-  // This API is in refining. Do not use it!
   async queryProverNodeTimeRangeStats(
     address: string,
-    start_ts: Date,
-    end_ts: Date
-  ): Promise<ProverNodeTimeRangeStats> {
+    ranges: [Date, Date][],
+  ): Promise<ProverNodeTimeRangeStats[]> {
     const query: ProverNodeTimeRangeStatsParams = {
       address: address,
-      start_ts: start_ts.toISOString(),
-      end_ts: end_ts.toISOString(),
+      ranges: ranges.map((it) => {
+        const range: TimeRangeParams = {
+          start_ts: it[0].toISOString(),
+          end_ts: it[1].toISOString(),
+        };
+        return range;
+      }),
     };
     const result = await this.endpoint.invokeRequest(
       "GET",
       TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query)),
     );
     if (this.endpoint.enable_logs) {
       console.log("get queryProverNodeTimeRangeStats response.");

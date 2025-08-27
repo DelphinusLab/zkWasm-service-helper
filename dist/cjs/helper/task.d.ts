@@ -46,7 +46,7 @@ export declare class ZkWasmServiceHelper {
     forceUnprovableToReprocess(req: WithSignature<ForceUnprovableToReprocessParams>): Promise<any>;
     forceDryrunFailsToReprocess(req: WithSignature<ForceDryrunFailsToReprocessParams>): Promise<any>;
     queryEstimateProofFee(query: EstimatedProofFeeParams): Promise<EstimatedProofFee>;
-    queryProverNodeTimeRangeStats(address: string, start_ts: Date, end_ts: Date): Promise<ProverNodeTimeRangeStats>;
+    queryProverNodeTimeRangeStats(address: string, ranges: [Date, Date][]): Promise<ProverNodeTimeRangeStats[]>;
     sendRequestWithSignature<T>(method: "GET" | "POST", path: TaskEndpoint, task: WithSignature<T>, isFormData?: boolean): Promise<any>;
     createHeaders<T>(task: WithSignature<T>): Record<string, string>;
     omitSignature<T>(task: WithSignature<T>): OmitSignature<T>;

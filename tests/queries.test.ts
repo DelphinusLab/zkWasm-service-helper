@@ -125,11 +125,10 @@ describe("ZkWasmServiceHelper", () => {
     const then = new Date(new Date().setMonth(now.getMonth() - 1));
     const res = await ZKH.queryProverNodeTimeRangeStats(
       CONFIG.query.node_address,
-      then,
-      now,
+      [[then, now]],
     );
-    expect(new Date(res.fst_ts!).getTime()).toBeLessThan(now.getTime());
-    expect(new Date(res.lst_ts!).getTime()).toBeGreaterThan(then.getTime());
+    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(now.getTime());
+    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(then.getTime());
   });
 
   describe("task", () => {

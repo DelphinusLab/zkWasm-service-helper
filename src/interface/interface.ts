@@ -692,10 +692,14 @@ export interface ForceDryrunFailsToReprocessParams {
   user_address: string;
 }
 
-export interface ProverNodeTimeRangeStatsParams {
-  address: string;
+export interface TimeRangeParams {
   start_ts: string;
   end_ts: string;
+}
+
+export interface ProverNodeTimeRangeStatsParams {
+  address: string;
+  ranges: TimeRangeParams[];
 }
 
 export interface ProverNodeTimeRangeStats {

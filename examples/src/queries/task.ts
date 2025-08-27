@@ -176,24 +176,17 @@ export async function queryTaskExternalHostTable(
 }
 
 // Example of using `ServiceHelper.queryProverNodeTimeRangeStats` to stats.
-// This API is in refining. Do not use it!
 export async function queryProverNodeTimeRangeStats(
   address: string,
-  start_ts: Date,
-  end_ts: Date,
+  ranges: [Date, Date][],
 ) {
   console.log(
     "Running query prover node timerange stats with params",
     address,
-    start_ts,
-    end_ts,
+    ranges,
   );
-  const response: ProverNodeTimeRangeStats =
-    await ServiceHelper.queryProverNodeTimeRangeStats(
-      address,
-      start_ts,
-      end_ts,
-    );
+  const response: ProverNodeTimeRangeStats[] =
+    await ServiceHelper.queryProverNodeTimeRangeStats(address, ranges);
   console.log(response);
   return response;
 }
@@ -235,14 +228,17 @@ async function runQueries() {
     id: TASK_ID_TO_QUERY!,
   });
 
-  // This API is in refining. Do not use it!
-  /*
-  await queryProverNodeTimeRangeStats(
-    NODE_ADDRESS_TO_QUERY!,
-    new Date(new Date().setDate(new Date().getMonth() - 1)),
-    new Date(),
-  );
-  */
+  await queryProverNodeTimeRangeStats(NODE_ADDRESS_TO_QUERY!, [
+    [new Date(new Date().setDate(new Date().getMonth() - 1)), new Date()],
+    [
+      new Date(new Date().setDate(new Date().getMonth() - 2)),
+      new Date(new Date().setDate(new Date().getMonth() - 1)),
+    ],
+    [
+      new Date(new Date().setDate(new Date().getMonth() - 3)),
+      new Date(new Date().setDate(new Date().getMonth() - 2)),
+    ],
+  ]);
 }
 
 runQueries();
