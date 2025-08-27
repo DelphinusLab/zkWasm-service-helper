@@ -121,14 +121,27 @@ describe("ZkWasmServiceHelper", () => {
   });
 
   test("queryProverNodeTimeRangeStats", async () => {
-    const now = new Date();
-    const then = new Date(new Date().setMonth(now.getMonth() - 1));
+    const now1 = new Date();
+    const then1 = new Date(new Date().setMonth(now1.getMonth() - 1));
+    const now2 = new Date(new Date().setMonth(now1.getMonth() - 2));
+    const then2 = new Date(new Date().setMonth(now1.getMonth() - 4));
+    const now3 = new Date(new Date().setMonth(now1.getMonth() - 4));
+    const then3 = new Date(new Date().setMonth(now1.getMonth() - 5));
     const res = await ZKH.queryProverNodeTimeRangeStats(
       CONFIG.query.node_address,
-      [[then, now]],
+      [
+        [then1, now1],
+        [then2, now2],
+        [then3, now3],
+      ],
     );
-    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(now.getTime());
-    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(then.getTime());
+    expect(res.length).toEqual(3);
+    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(now1.getTime());
+    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(then1.getTime());
+    expect(new Date(res[1].fst_ts!).getTime()).toBeLessThan(now2.getTime());
+    expect(new Date(res[1].lst_ts!).getTime()).toBeGreaterThan(then2.getTime());
+    expect(new Date(res[2].fst_ts!).getTime()).toBeLessThan(now3.getTime());
+    expect(new Date(res[2].lst_ts!).getTime()).toBeGreaterThan(then3.getTime());
   });
 
   describe("task", () => {

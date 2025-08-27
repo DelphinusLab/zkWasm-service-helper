@@ -232,11 +232,11 @@ async function runQueries() {
     [new Date(new Date().setDate(new Date().getMonth() - 1)), new Date()],
     [
       new Date(new Date().setDate(new Date().getMonth() - 2)),
-      new Date(new Date().setDate(new Date().getMonth() - 1)),
+      new Date(new Date().setDate(new Date().getMonth() - 4)),
     ],
     [
-      new Date(new Date().setDate(new Date().getMonth() - 3)),
-      new Date(new Date().setDate(new Date().getMonth() - 2)),
+      new Date(new Date().setDate(new Date().getMonth() - 4)),
+      new Date(new Date().setDate(new Date().getMonth() - 5)),
     ],
   ]);
 }
