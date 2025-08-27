@@ -791,6 +791,7 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
+  // This API is in refining. Do not use it!
   async queryProverNodeTimeRangeStats(
     address: string,
     start_ts: Date,
