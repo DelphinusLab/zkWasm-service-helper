@@ -174,6 +174,47 @@ describe("ZkWasmServiceHelper", () => {
     );
   });
 
+  test("queryProverNodeTimeRangeStats mixed query", async () => {
+    const now = new Date();
+    const rg1 = {
+      address: CONFIG.query.node_addresses[1],
+      start: new Date(new Date().setMonth(now.getMonth() - 1)),
+      end: now,
+    };
+    const rg2 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 4)),
+      end: new Date(new Date().setMonth(now.getMonth() - 2)),
+    };
+    const rg3 = {
+      address: "0x0000000000000000000000000000000000000000",
+      start: new Date(new Date().setMonth(now.getMonth() - 5)),
+      end: new Date(new Date().setMonth(now.getMonth() - 4)),
+    };
+    const rg4 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 4)),
+      end: new Date(new Date().setMonth(now.getMonth() - 6)),
+    };
+    const res = await ZKH.queryProverNodeTimeRangeStats({
+      ranges: [rg1, rg2, rg3, rg4],
+    });
+
+    expect(res.length).toEqual(4);
+    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(rg1.end.getTime());
+    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(
+      rg1.start.getTime()
+    );
+    expect(new Date(res[1].fst_ts!).getTime()).toBeLessThan(rg2.end.getTime());
+    expect(new Date(res[1].lst_ts!).getTime()).toBeGreaterThan(
+      rg2.start.getTime()
+    );
+    expect(res[2].fst_ts).toBeNull();
+    expect(res[2].lst_ts).toBeNull();
+    expect(res[3].fst_ts).toBeNull();
+    expect(res[3].lst_ts).toBeNull();
+  });
+
   test("queryProverNodeTimeRangeStats invalid address", async () => {
     const now = new Date();
     const rg1 = {
@@ -236,9 +277,7 @@ describe("ZkWasmServiceHelper", () => {
     const consErrSpy = jest
       .spyOn(console, "error")
       .mockImplementation(() => { });
-    const consLogSpy = jest
-      .spyOn(console, "log")
-      .mockImplementation(() => { });
+    const consLogSpy = jest.spyOn(console, "log").mockImplementation(() => { });
     await expect(
       ZKH.queryProverNodeTimeRangeStats({ ranges: ranges })
     ).rejects.toThrow();
