@@ -1,5 +1,4 @@
 /// <reference types="node" />
-/// <reference types="node" />
 import BN from "bn.js";
 import { AddImageParams, ProvingParams, DeployParams, ResetImageParams, ModifyImageParams, VerifyProofParams, SetMaintenanceModeParams, LogQuery, ContextHexString, VerifyBatchProofParams, ForceUnprovableToReprocessParams, ForceDryrunFailsToReprocessParams } from "../interface/interface.js";
 import { Contract, Signer } from "ethers";

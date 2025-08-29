@@ -791,21 +791,23 @@ export class ZkWasmServiceHelper {
     return config;
   }
 
-  // This API is in refining. Do not use it!
   async queryProverNodeTimeRangeStats(
-    address: string,
-    start_ts: Date,
-    end_ts: Date
-  ): Promise<ProverNodeTimeRangeStats> {
-    const query: ProverNodeTimeRangeStatsParams = {
-      address: address,
-      start_ts: start_ts.toISOString(),
-      end_ts: end_ts.toISOString(),
+    query: ProverNodeTimeRangeStatsParams
+  ): Promise<ProverNodeTimeRangeStats[]> {
+    const query_str = {
+      ranges: query.ranges.map((it) => {
+        const out = {
+          address: it.address,
+          start: it.start.toISOString(),
+          end: it.end.toISOString(),
+        };
+        return out;
+      }),
     };
     const result = await this.endpoint.invokeRequest(
-      "GET",
+      "POST",
       TaskEndpoint.PROVER_NODE_TIMERANGE_STATS,
-      JSON.parse(JSON.stringify(query))
+      JSON.parse(JSON.stringify(query_str))
     );
     if (this.endpoint.enable_logs) {
       console.log("get queryProverNodeTimeRangeStats response.");

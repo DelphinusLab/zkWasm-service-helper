@@ -574,15 +574,19 @@ class ZkWasmServiceHelper {
             return config;
         });
     }
-    // This API is in refining. Do not use it!
-    queryProverNodeTimeRangeStats(address, start_ts, end_ts) {
+    queryProverNodeTimeRangeStats(query) {
         return __awaiter(this, void 0, void 0, function* () {
-            const query = {
-                address: address,
-                start_ts: start_ts.toISOString(),
-                end_ts: end_ts.toISOString(),
+            const query_str = {
+                ranges: query.ranges.map((it) => {
+                    const out = {
+                        address: it.address,
+                        start: it.start.toISOString(),
+                        end: it.end.toISOString(),
+                    };
+                    return out;
+                }),
             };
-            const result = yield this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
+            const result = yield this.endpoint.invokeRequest("POST", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query_str)));
             if (this.endpoint.enable_logs) {
                 console.log("get queryProverNodeTimeRangeStats response.");
             }

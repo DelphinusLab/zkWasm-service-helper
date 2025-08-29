@@ -1,3 +1,4 @@
+import exp from "constants";
 import { toBigInt } from "ethers";
 import { ZkWasmUtil } from "../dist/mjs/helper/util";
 import {
@@ -5,6 +6,7 @@ import {
   LogQuery,
   PaginationResult,
   ProofSubmitMode,
+  ProverNodeTimeRange,
   Round1Status,
   Round2Status,
 } from "../dist/mjs/interface/interface";
@@ -73,10 +75,10 @@ describe("ZkWasmServiceHelper", () => {
 
   test("queryNodeStatistics by address", async () => {
     const res = await ZKH.queryNodeStatistics({
-      address: USER_ADDRESS,
+      address: CONFIG.query.node_addresses[0],
     });
     checkPaginatedRes(res);
-    expect(res.data[0].address).toEqual(USER_ADDRESS);
+    expect(res.data[0].address).toEqual(CONFIG.query.node_addresses[0]);
   });
 
   test("queryProverNodeSummary", async () => {
@@ -104,7 +106,7 @@ describe("ZkWasmServiceHelper", () => {
     };
     let signature = await ZkWasmUtil.signMessage(
       ZkWasmUtil.createLogsMesssage(params),
-      CONFIG.details.private_key,
+      CONFIG.details.private_key
     );
     const res = await ZKH.queryLogs({ ...params, signature });
     expect(res.length).toBeGreaterThan(0);
@@ -120,16 +122,167 @@ describe("ZkWasmServiceHelper", () => {
     expect(toBigInt(res.max!)).toBeGreaterThan(toBigInt(0));
   });
 
-  test("queryProverNodeTimeRangeStats", async () => {
+  test("queryProverNodeTimeRangeStats single range in query", async () => {
     const now = new Date();
-    const then = new Date(new Date().setMonth(now.getMonth() - 1));
-    const res = await ZKH.queryProverNodeTimeRangeStats(
-      CONFIG.query.node_address,
-      then,
-      now,
+    const rg1 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 6)),
+      end: now,
+    };
+    const res = await ZKH.queryProverNodeTimeRangeStats({ ranges: [rg1] });
+
+    expect(res.length).toEqual(1);
+    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(rg1.end.getTime());
+    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(
+      rg1.start.getTime()
     );
-    expect(new Date(res.fst_ts!).getTime()).toBeLessThan(now.getTime());
-    expect(new Date(res.lst_ts!).getTime()).toBeGreaterThan(then.getTime());
+  });
+
+  test("queryProverNodeTimeRangeStats multiple different ranges in query", async () => {
+    const now = new Date();
+    const rg1 = {
+      address: CONFIG.query.node_addresses[1],
+      start: new Date(new Date().setMonth(now.getMonth() - 1)),
+      end: now,
+    };
+    const rg2 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 4)),
+      end: new Date(new Date().setMonth(now.getMonth() - 2)),
+    };
+    const rg3 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 5)),
+      end: new Date(new Date().setMonth(now.getMonth() - 4)),
+    };
+    const res = await ZKH.queryProverNodeTimeRangeStats({
+      ranges: [rg1, rg2, rg3],
+    });
+
+    expect(res.length).toEqual(3);
+    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(rg1.end.getTime());
+    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(
+      rg1.start.getTime()
+    );
+    expect(new Date(res[1].fst_ts!).getTime()).toBeLessThan(rg2.end.getTime());
+    expect(new Date(res[1].lst_ts!).getTime()).toBeGreaterThan(
+      rg2.start.getTime()
+    );
+    expect(new Date(res[2].fst_ts!).getTime()).toBeLessThan(rg3.end.getTime());
+    expect(new Date(res[2].lst_ts!).getTime()).toBeGreaterThan(
+      rg3.start.getTime()
+    );
+  });
+
+  test("queryProverNodeTimeRangeStats mixed query", async () => {
+    const now = new Date();
+    const rg1 = {
+      address: CONFIG.query.node_addresses[1],
+      start: new Date(new Date().setMonth(now.getMonth() - 1)),
+      end: now,
+    };
+    const rg2 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 4)),
+      end: new Date(new Date().setMonth(now.getMonth() - 2)),
+    };
+    const rg3 = {
+      address: "0x0000000000000000000000000000000000000000",
+      start: new Date(new Date().setMonth(now.getMonth() - 5)),
+      end: new Date(new Date().setMonth(now.getMonth() - 4)),
+    };
+    const rg4 = {
+      address: CONFIG.query.node_addresses[0],
+      start: new Date(new Date().setMonth(now.getMonth() - 4)),
+      end: new Date(new Date().setMonth(now.getMonth() - 6)),
+    };
+    const res = await ZKH.queryProverNodeTimeRangeStats({
+      ranges: [rg1, rg2, rg3, rg4],
+    });
+
+    expect(res.length).toEqual(4);
+    expect(new Date(res[0].fst_ts!).getTime()).toBeLessThan(rg1.end.getTime());
+    expect(new Date(res[0].lst_ts!).getTime()).toBeGreaterThan(
+      rg1.start.getTime()
+    );
+    expect(new Date(res[1].fst_ts!).getTime()).toBeLessThan(rg2.end.getTime());
+    expect(new Date(res[1].lst_ts!).getTime()).toBeGreaterThan(
+      rg2.start.getTime()
+    );
+    expect(res[2].fst_ts).toBeNull();
+    expect(res[2].lst_ts).toBeNull();
+    expect(res[3].fst_ts).toBeNull();
+    expect(res[3].lst_ts).toBeNull();
+  });
+
+  test("queryProverNodeTimeRangeStats invalid address", async () => {
+    const now = new Date();
+    const rg1 = {
+      address: "0x0000000000000000000000000000000000000000",
+      start: new Date(new Date().setMonth(now.getMonth() - 6)),
+      end: now,
+    };
+    const res = await ZKH.queryProverNodeTimeRangeStats({ ranges: [rg1] });
+
+    expect(res.length).toEqual(1);
+    expect(res[0].fst_ts).toBeNull();
+    expect(res[0].lst_ts).toBeNull();
+  });
+
+  test("queryProverNodeTimeRangeStats invalid range", async () => {
+    const now = new Date();
+    const rg1 = {
+      address: CONFIG.query.node_addresses[0],
+      start: now,
+      end: new Date(new Date().setMonth(now.getMonth() - 6)),
+    };
+    const res = await ZKH.queryProverNodeTimeRangeStats({ ranges: [rg1] });
+
+    expect(res.length).toEqual(1);
+    expect(res[0].fst_ts).toBeNull();
+    expect(res[0].lst_ts).toBeNull();
+  });
+
+  test("queryProverNodeTimeRangeStats max range", async () => {
+    const now = new Date();
+    const ranges: ProverNodeTimeRange[] = [];
+    for (let i = 0; i < 100; i++) {
+      const rg1 = {
+        address: CONFIG.query.node_addresses[0],
+        start: new Date(now.getFullYear(), i % 12, now.getDate()),
+        end: new Date(now.getFullYear(), (i + 1) % 12, now.getDate()),
+      };
+      ranges.push(rg1);
+    }
+    const res = await ZKH.queryProverNodeTimeRangeStats({ ranges: ranges });
+
+    expect(res.length).toEqual(100);
+    res.map((it) => {
+      expect(it.fst_ts).toBeDefined();
+      expect(it.lst_ts).toBeDefined();
+    });
+  });
+
+  test("queryProverNodeTimeRangeStats greater than max range", async () => {
+    const now = new Date();
+    const ranges: ProverNodeTimeRange[] = [];
+    for (let i = 0; i < 101; i++) {
+      const rg1 = {
+        address: CONFIG.query.node_addresses[0],
+        start: new Date(now.getFullYear(), i % 12, now.getDate()),
+        end: new Date(now.getFullYear(), (i + 1) % 12, now.getDate()),
+      };
+      ranges.push(rg1);
+    }
+    const consErrSpy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => { });
+    const consLogSpy = jest.spyOn(console, "log").mockImplementation(() => { });
+    await expect(
+      ZKH.queryProverNodeTimeRangeStats({ ranges: ranges })
+    ).rejects.toThrow();
+    consErrSpy.mockRestore();
+    consLogSpy.mockRestore();
   });
 
   describe("task", () => {

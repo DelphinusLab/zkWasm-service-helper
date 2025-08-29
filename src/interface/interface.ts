@@ -8,7 +8,7 @@ export interface Statistics {
 export interface TimingStatistics {
   latest_time_taken_secs: number;
   latest_timestamp: string;
-  latest_task_id: ObjectId,
+  latest_task_id: ObjectId;
 }
 
 export interface NodeStatistics {
@@ -692,10 +692,14 @@ export interface ForceDryrunFailsToReprocessParams {
   user_address: string;
 }
 
-export interface ProverNodeTimeRangeStatsParams {
+export interface ProverNodeTimeRange {
   address: string;
-  start_ts: string;
-  end_ts: string;
+  start: Date;
+  end: Date;
+}
+
+export interface ProverNodeTimeRangeStatsParams {
+  ranges: ProverNodeTimeRange[];
 }
 
 export interface ProverNodeTimeRangeStats {

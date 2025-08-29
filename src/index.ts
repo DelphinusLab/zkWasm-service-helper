@@ -72,6 +72,7 @@ import {
   AddProveTaskRestrictions,
   OnlineNodeInfo,
   ProverNodeTimeRangeStatsParams,
+  ProverNodeTimeRange,
   ProverNodeTimeRangeStats,
 } from "./interface/interface.js";
 
@@ -182,5 +183,6 @@ export type {
   AutoSubmitVolumeRange,
   ArchivedFinalBatchProof,
   ProverNodeTimeRangeStatsParams,
+  ProverNodeTimeRange,
   ProverNodeTimeRangeStats,
 };
