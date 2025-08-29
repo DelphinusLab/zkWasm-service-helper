@@ -6,7 +6,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "tsx": "^4.16.0",
-    "zkwasm-service-helper": "git+https://github.com/DelphinusLab/zkWasm-service-helper.git#ZKWAS-591-update-timerange-api"
+    "zkwasm-service-helper": "git+https://github.com/DelphinusLab/zkWasm-service-helper.git"
   },
   "scripts": {
     "build": "rm -fr dist/* && npx tsc -p tsconfig.json && npx tsc -p tsconfig-cjs.json && sh ./addhybridpackage.sh"
