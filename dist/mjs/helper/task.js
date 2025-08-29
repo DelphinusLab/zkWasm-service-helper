@@ -474,15 +474,18 @@ export class ZkWasmServiceHelper {
         }
         return config;
     }
-    async queryProverNodeTimeRangeStats(address, ranges) {
-        const start_times = ranges.map((it) => it[0].toISOString());
-        const end_times = ranges.map((it) => it[1].toISOString());
-        const query = {
-            address: address,
-            start_times: start_times.join(","),
-            end_times: end_times.join(","),
+    async queryProverNodeTimeRangeStats(query) {
+        const query_str = {
+            ranges: query.ranges.map((it) => {
+                const out = {
+                    address: it.address,
+                    start: it.start.toISOString(),
+                    end: it.end.toISOString(),
+                };
+                return out;
+            }),
         };
-        const result = await this.endpoint.invokeRequest("GET", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query)));
+        const result = await this.endpoint.invokeRequest("POST", TaskEndpoint.PROVER_NODE_TIMERANGE_STATS, JSON.parse(JSON.stringify(query_str)));
         if (this.endpoint.enable_logs) {
             console.log("get queryProverNodeTimeRangeStats response.");
         }

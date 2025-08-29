@@ -7,6 +7,7 @@ import {
   TaskExternalHostTableParams,
   TaskExternalHostTable,
   ProverNodeTimeRangeStats,
+  ProverNodeTimeRangeStatsParams,
 } from "zkwasm-service-helper";
 import BN from "bn.js";
 import {
@@ -126,7 +127,7 @@ export async function queryOneTaskIdThenDetail(queryParams: QueryParams) {
 export async function queryMultipleTaskIdThenDetail(queryParams: QueryParams) {
   console.log(
     "Running query multiple task ids then detail with params",
-    queryParams,
+    queryParams
   );
 
   // Query concise task
@@ -151,11 +152,11 @@ export async function queryMultipleTaskIdThenDetail(queryParams: QueryParams) {
 //
 // Example of using `ServiceHelper.getTaskExternalHostTable` to fetch the external host table of a task.
 export async function queryTaskExternalHostTable(
-  queryParams: TaskExternalHostTableParams,
+  queryParams: TaskExternalHostTableParams
 ) {
   console.log(
     "Running query task external host table with params",
-    queryParams,
+    queryParams
   );
 
   const response: TaskExternalHostTable =
@@ -177,16 +178,11 @@ export async function queryTaskExternalHostTable(
 
 // Example of using `ServiceHelper.queryProverNodeTimeRangeStats` to stats.
 export async function queryProverNodeTimeRangeStats(
-  address: string,
-  ranges: [Date, Date][],
+  query: ProverNodeTimeRangeStatsParams
 ) {
-  console.log(
-    "Running query prover node timerange stats with params",
-    address,
-    ranges,
-  );
+  console.log("Running query prover node timerange stats with params", query);
   const response: ProverNodeTimeRangeStats[] =
-    await ServiceHelper.queryProverNodeTimeRangeStats(address, ranges);
+    await ServiceHelper.queryProverNodeTimeRangeStats(query);
   console.log(response);
   return response;
 }
@@ -228,17 +224,26 @@ async function runQueries() {
     id: TASK_ID_TO_QUERY!,
   });
 
-  await queryProverNodeTimeRangeStats(NODE_ADDRESS_TO_QUERY!, [
-    [new Date(new Date().setDate(new Date().getMonth() - 1)), new Date()],
-    [
-      new Date(new Date().setDate(new Date().getMonth() - 2)),
-      new Date(new Date().setDate(new Date().getMonth() - 4)),
+  const now = new Date();
+  await queryProverNodeTimeRangeStats({
+    ranges: [
+      {
+        address: NODE_ADDRESS_TO_QUERY!,
+        start: new Date(new Date().setMonth(now.getMonth() - 1)),
+        end: now,
+      },
+      {
+        address: NODE_ADDRESS_TO_QUERY!,
+        start: new Date(new Date().setMonth(now.getMonth() - 4)),
+        end: new Date(new Date().setMonth(now.getMonth() - 2)),
+      },
+      {
+        address: NODE_ADDRESS_TO_QUERY!,
+        start: new Date(new Date().setMonth(now.getMonth() - 5)),
+        end: new Date(new Date().setMonth(now.getMonth() - 4)),
+      },
     ],
-    [
-      new Date(new Date().setDate(new Date().getMonth() - 4)),
-      new Date(new Date().setDate(new Date().getMonth() - 5)),
-    ],
-  ]);
+  });
 }
 
 runQueries();

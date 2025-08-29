@@ -16,7 +16,7 @@ export interface TestConfig {
   query: {
     task_id: string;
     md5: string;
-    node_address: string;
+    node_addresses: string[];
   };
   auto_submit: {
     round1_id: string;

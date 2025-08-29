@@ -571,10 +571,13 @@ export interface ForceDryrunFailsToReprocessParams {
     request_type: AdminRequestType;
     user_address: string;
 }
-export interface ProverNodeTimeRangeStatsParams {
+export interface ProverNodeTimeRange {
     address: string;
-    start_times: string;
-    end_times: string;
+    start: Date;
+    end: Date;
+}
+export interface ProverNodeTimeRangeStatsParams {
+    ranges: ProverNodeTimeRange[];
 }
 export interface ProverNodeTimeRangeStats {
     fst_id?: string;
